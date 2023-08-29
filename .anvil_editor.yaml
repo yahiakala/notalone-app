@@ -1,7 +1,10 @@
 unique_ids:
   forms:
-    Form1: 3UD5DNFI7UWY2BWTNYET73WRBB3KZA7P
-  modules: {}
+    HomeAnonComponent: '1693347022931729745428367.3757'
+    HomeDetailComponent: '1693347031545163377105726.6531'
+    HomeForm: 3UD5DNFI7UWY2BWTNYET73WRBB3KZA7P
+  modules:
+    Global: '1693347401289686873536251.8141'
   server_modules: {}
   assets:
     standard-page.html: WGYFLAX22KMVWRNHYUQA2ZFR6HCT5MH6
