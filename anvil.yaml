@@ -64,5 +64,8 @@ db_schema:
     - name: payment_email
       type: string
       admin_ui: {width: 200, order: 13}
+    - name: fee
+      admin_ui: {width: 200}
+      type: number
     title: Users
 renamed: true
