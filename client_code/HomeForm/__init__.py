@@ -2,8 +2,11 @@ from ._anvil_designer import HomeFormTemplate
 from anvil import *
 import anvil.users
 
+from functools import partial
+
 from ..HomeAnonComponent import HomeAnonComponent
 from ..HomeDetailComponent import HomeDetailComponent
+from ..ApplicantComponent import ApplicantComponent
 from .. import Global
 
 
@@ -13,6 +16,7 @@ class HomeForm(HomeFormTemplate):
         self.init_components(**properties)
 
         self.link_home.add_event_handler('click', self.go_home)
+        self.link_apply.add_event_handler('click', partial(self.go_page, 'apply'))
         self.go_home()
 
     def link_login_click(self, **event_args):
@@ -31,8 +35,8 @@ class HomeForm(HomeFormTemplate):
     def go_home(self,  **event_args):
         """This method is called when the link is clicked"""
         self.set_active_nav('home')
-        # user = self.require_account()
         if Global.user:
+            self.set_account_state(Global.user)
             self.load_component(HomeDetailComponent())
         else:
             self.load_component(HomeAnonComponent())
@@ -55,3 +59,11 @@ class HomeForm(HomeFormTemplate):
 
     def set_active_nav(self, state):
         self.link_home.role = 'selected' if state == 'home' else None
+        self.link_apply.role = 'selected' if state == 'apply' else None
+
+    def go_page(self, page_name, **event_args):
+        """Go to a page."""
+        self.set_active_nav(page_name)
+        user = self.require_account()
+        if page_name == 'apply' and user:
+            self.load_component(ApplicantComponent())

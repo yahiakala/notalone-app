@@ -1,0 +1,46 @@
+container:
+  type: ColumnPanel
+  properties: {col_widths: '{}'}
+components:
+- type: ColumnPanel
+  properties: {role: outlined-card, col_widths: '{}'}
+  name: cp_1
+  layout_properties: {grid_position: 'NSGBLX,ZIUBDI'}
+  components:
+  - type: RichText
+    properties: {role: null, align: left, tooltip: '', enable_slots: true, border: '',
+      foreground: '', visible: true, font_size: null, content: "# Applicants\nEvery\
+        \ one of our applicants goes through 1-2 interviews with our screening team.\
+        \ \n\n\n### What to Expect\nThese interviews are about 30 minutes in length.\
+        \ We use the time to get to know you, tell you about our group, and make sure\
+        \ there's a good fit!\n\n### What to Bring\nPlease bring your ID to the call\
+        \ and make sure you're in a private place where you can speak on video.",
+      font: '', spacing_above: small, spacing_below: small, data: null, background: '',
+      format: markdown}
+    name: rt_applicants
+    layout_properties: {grid_position: 'FQGWFU,WIWRTG'}
+  - type: Label
+    properties: {role: null, align: left, tooltip: '', border: '', foreground: '',
+      visible: true, text: 'Please choose one of the screeners below to book your
+        interview with. ', font_size: null, font: '', spacing_above: small, icon_align: left,
+      spacing_below: small, italic: false, background: '', bold: false, underline: false,
+      icon: ''}
+    name: lbl_book_instr
+    layout_properties: {grid_position: 'YYPSON,GGZMWC'}
+  - type: Link
+    properties: {role: null, url: 'https://calendly.com/yahya-exmto/screening', align: center,
+      tooltip: '', border: '', foreground: '', visible: true, text: Book an Interview with Yahya,
+      font_size: null, wrap_on: mobile, font: '', col_spacing: medium, spacing_above: small,
+      icon_align: left, col_widths: '', spacing_below: small, italic: false, background: '',
+      bold: true, underline: true, icon: 'fa:calendar'}
+    name: link_yahya_book
+    layout_properties: {grid_position: 'CJEIQS,WCVFGC'}
+  - type: Link
+    properties: {role: null, url: 'https://calendly.com/zee-exmto/30min', align: center,
+      tooltip: '', border: '', foreground: '', visible: true, text: Book an Interview with Zee,
+      font_size: null, wrap_on: mobile, font: '', col_spacing: medium, spacing_above: small,
+      icon_align: left, col_widths: '', spacing_below: small, italic: false, background: '',
+      bold: true, underline: true, icon: 'fa:calendar'}
+    name: link_zee_book
+    layout_properties: {grid_position: 'CJEIQS,SXXYGA'}
+is_package: true
