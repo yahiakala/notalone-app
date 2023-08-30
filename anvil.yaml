@@ -70,5 +70,8 @@ db_schema:
     - name: consent_check
       admin_ui: {width: 200}
       type: bool
+    - name: payment_enrolled
+      type: bool
+      admin_ui: {width: 200, order: 16}
     title: Users
 renamed: true

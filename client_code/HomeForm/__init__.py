@@ -8,7 +8,8 @@ from ..HomeAnonComponent import HomeAnonComponent
 from ..HomeDetailComponent import HomeDetailComponent
 from ..BookingComponent import BookingComponent
 from ..ProfileComponent import ProfileComponent
-from ..ScreenerComponent import ScreenerComponent
+from ..ApplicantsComponent import ApplicantsComponent
+from ..MembersComponent import MembersComponent
 from .. import Global
 
 
@@ -21,6 +22,7 @@ class HomeForm(HomeFormTemplate):
         self.link_apply.add_event_handler('click', partial(self.go_page, 'apply'))
         self.link_profile.add_event_handler('click', partial(self.go_page, 'profile'))
         self.link_applicants.add_event_handler('click', partial(self.go_page, 'applicants'))
+        self.link_members.add_event_handler('click', partial(self.go_page, 'members'))
         self.user = Global.user
         self.set_account_state(self.user)
         self.go_home()
@@ -62,6 +64,8 @@ class HomeForm(HomeFormTemplate):
         self.link_apply.visible = False
         self.link_profile.visible = False
         self.link_applicants.visible = False
+        self.link_members.visible = False
+        
         if user:
             if user['roles'] is None or user['roles'] == []:
                 self.link_apply.visible = True
@@ -69,6 +73,8 @@ class HomeForm(HomeFormTemplate):
                 self.link_profile.visible = True
                 if 'screener' in user['roles']:
                     self.link_applicants.visible = True
+                if 'leader' in user['roles']:
+                    self.link_members.visible = True
 
     def load_component(self, cmpt):
         self.content_panel.clear()
@@ -79,6 +85,7 @@ class HomeForm(HomeFormTemplate):
         self.link_apply.role = 'selected' if state == 'apply' else None
         self.link_profile.role = 'selected' if state == 'profile' else None
         self.link_applicants.role = 'selected' if state == 'applicants' else None
+        self.link_members.role = 'selected' if state == 'members' else None
 
     def go_page(self, page_name, **event_args):
         """Go to a page."""
@@ -90,4 +97,7 @@ class HomeForm(HomeFormTemplate):
             self.load_component(ProfileComponent())
         elif page_name == 'applicants' and user:
             if 'screener' in user['roles']:
-                self.load_component(ScreenerComponent())
+                self.load_component(ApplicantsComponent())
+        elif page_name == 'members' and user:
+            if 'leader' in user['roles']:
+                self.load_component(MembersComponent())
