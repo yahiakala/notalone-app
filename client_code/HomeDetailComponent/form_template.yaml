@@ -1,0 +1,14 @@
+container:
+  type: ColumnPanel
+  properties: {col_widths: '{}'}
+components:
+- type: RichText
+  properties: {role: null, align: left, tooltip: '', enable_slots: true, border: '',
+    foreground: '', visible: true, font_size: null, content: '# Home
+
+      First time here? Book an interview by selecting the ''Screening'' menu on the
+      left.', font: '', spacing_above: small, spacing_below: small, data: null, background: '',
+    format: markdown}
+  name: rt_intro
+  layout_properties: {grid_position: 'HKHFDH,WJXNLH'}
+is_package: true

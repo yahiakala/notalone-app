@@ -1,11 +1,74 @@
-allow_embedding: false
-package_name: notalone_app
-name: notalone app
-startup_form: Form1
-renamed: true
-runtime_options: {version: 2, client_version: '3', server_version: python3-full, server_spec: null}
 dependencies: []
 services:
 - source: /runtime/services/tables.yml
   client_config: {}
   server_config: {}
+- source: /runtime/services/anvil/users.yml
+  client_config: {mfa_timeout_days: 1, require_secure_passwords: true, use_email: true,
+    allow_remember_me: true, allow_signup: true, enable_automatically: true, confirm_email: true,
+    require_mfa: true, remember_me_days: 30, use_google: true}
+  server_config: {user_table: users}
+- source: /runtime/services/google.yml
+  client_config: {}
+  server_config: {}
+startup: {type: form, module: HomeForm}
+package_name: notalone_app
+allow_embedding: false
+name: notalone app
+runtime_options: {version: 2, client_version: '3', server_version: python3-full, server_spec: null}
+startup_form: null
+db_schema:
+  users:
+    client: none
+    server: full
+    columns:
+    - name: email
+      type: string
+      admin_ui: {order: 0, width: 200}
+    - name: enabled
+      type: bool
+      admin_ui: {order: 1, width: 200}
+    - name: last_login
+      type: datetime
+      admin_ui: {order: 2, width: 200}
+    - name: password_hash
+      type: string
+      admin_ui: {order: 3, width: 200}
+    - name: n_password_failures
+      type: number
+      admin_ui: {order: 4, width: 200}
+    - name: confirmed_email
+      type: bool
+      admin_ui: {order: 5, width: 200}
+    - name: remembered_logins
+      type: simpleObject
+      admin_ui: {order: 6, width: 200}
+    - name: mfa
+      type: simpleObject
+      admin_ui: {order: 7, width: 200}
+    - name: signed_up
+      type: datetime
+      admin_ui: {order: 8, width: 200}
+    - name: first_name
+      type: string
+      admin_ui: {width: 200, order: 9}
+    - name: last_name
+      type: string
+      admin_ui: {width: 200, order: 10}
+    - name: roles
+      type: simpleObject
+      admin_ui: {width: 200, order: 11}
+    - name: fb_url
+      type: string
+      admin_ui: {width: 200, order: 12}
+    - name: payment_email
+      type: string
+      admin_ui: {width: 200, order: 13}
+    - name: fee
+      admin_ui: {width: 200}
+      type: number
+    - name: consent_check
+      admin_ui: {width: 200}
+      type: bool
+    title: Users
+renamed: true
