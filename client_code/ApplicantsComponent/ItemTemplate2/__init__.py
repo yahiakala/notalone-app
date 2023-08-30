@@ -20,5 +20,5 @@ class ItemTemplate2(ItemTemplate2Template):
 
     def btn_added_click(self, **event_args):
         """This method is called when the button is clicked"""
-        Global.applicants = anvil.server.call('reassign_roles', self.item, ['member'])
+        self.item = anvil.server.call('reassign_roles', self.item, ['member'])
         self.parent.raise_event('x-refresh1')

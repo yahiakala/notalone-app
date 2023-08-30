@@ -16,12 +16,32 @@ class ItemTemplate3(ItemTemplate3Template):
 
     def btn_remove_click(self, **event_args):
         """This method is called when the button is clicked"""
-        self.item['roles'] = []
+        self.item['roles'] = ['removed']
         self.parent.raise_event('x-refresh1')
 
     def btn_ban_click(self, **event_args):
         """This method is called when the button is clicked"""
         self.item['roles'] = ['banned']
         self.parent.raise_event('x-refresh1')
+
+    def btn_left_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        self.item['roles'] = ['left']
+        self.parent.raise_event('x-refresh1')
+
+    def btn_screener_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        if 'screener' not in self.item['roles']:
+            self.item['roles'] = self.item['roles'] + ['screener']
+        self.btn_screener.visible = False
+
+    def btn_leader_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        if 'leader' not in self.item['roles']:
+            self.item['roles'] = self.item['roles'] + ['leader']
+        self.btn_leader.visible = False
+
+
+
 
 

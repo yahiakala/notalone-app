@@ -13,5 +13,5 @@ class MembersComponent(MembersComponentTemplate):
         self.rp_members.add_event_handler('x-refresh1', self.update_stuff)
 
     def update_stuff(self, **event_args):
-        self.members = Global.users
+        self.members = Global.users.search(roles=['member'])
         self.refresh_data_bindings()

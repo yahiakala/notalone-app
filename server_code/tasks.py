@@ -14,7 +14,7 @@ def role_leader(user):
 
 def clean_up_user(user):
     if not user['roles']:
-        user['roles'] = []
+        user['roles'] = ['applied']
     if not user['first_name']:
         user['first_name'] = ''
     if not user['last_name']:
@@ -24,7 +24,7 @@ def clean_up_user(user):
 
 def clean_up_users():
     for user in app_tables.users.search(roles=None):
-        user['roles'] = []
+        user['roles'] = ['applied']
     for user in app_tables.users.search(first_name=None):
         user['first_name'] = ''
     for user in app_tables.users.search(last_name=None):
@@ -51,7 +51,7 @@ def get_users():
 def get_applied():
     """Get a full list of the users."""
     clean_up_users()
-    return app_tables.users.search(roles=q.any_of(None, [], ['pending']))
+    return app_tables.users.search(roles=['applied'])
 
 
 @anvil.server.callable(require_user=role_screener)
@@ -66,4 +66,4 @@ def reassign_roles(user_dict, roles):
     """Add pending status to applicant."""
     user_ref = app_tables.users.get(email=user_dict['email'])
     user_ref['roles'] = roles
-    return get_applicants()
+    return user_ref
