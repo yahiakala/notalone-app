@@ -6,8 +6,9 @@ from functools import partial
 
 from ..HomeAnonComponent import HomeAnonComponent
 from ..HomeDetailComponent import HomeDetailComponent
-from ..ApplicantComponent import ApplicantComponent
+from ..BookingComponent import BookingComponent
 from ..ProfileComponent import ProfileComponent
+from ..ScreenerComponent import ScreenerComponent
 from .. import Global
 
 
@@ -19,6 +20,7 @@ class HomeForm(HomeFormTemplate):
         self.link_home.add_event_handler('click', self.go_home)
         self.link_apply.add_event_handler('click', partial(self.go_page, 'apply'))
         self.link_profile.add_event_handler('click', partial(self.go_page, 'profile'))
+        self.link_applicants.add_event_handler('click', partial(self.go_page, 'applicants'))
         self.user = Global.user
         self.set_account_state(self.user)
         self.go_home()
@@ -59,11 +61,14 @@ class HomeForm(HomeFormTemplate):
         
         self.link_apply.visible = False
         self.link_profile.visible = False
+        self.link_applicants.visible = False
         if user:
             if user['roles'] is None or user['roles'] == []:
                 self.link_apply.visible = True
             elif 'member' in user['roles']:
                 self.link_profile.visible = True
+                if 'screener' in user['roles']:
+                    self.link_applicants.visible = True
 
     def load_component(self, cmpt):
         self.content_panel.clear()
@@ -73,12 +78,16 @@ class HomeForm(HomeFormTemplate):
         self.link_home.role = 'selected' if state == 'home' else None
         self.link_apply.role = 'selected' if state == 'apply' else None
         self.link_profile.role = 'selected' if state == 'profile' else None
+        self.link_applicants.role = 'selected' if state == 'applicants' else None
 
     def go_page(self, page_name, **event_args):
         """Go to a page."""
         self.set_active_nav(page_name)
         user = self.require_account()
         if page_name == 'apply' and user:
-            self.load_component(ApplicantComponent())
+            self.load_component(BookingComponent())
         elif page_name == 'profile' and user:
             self.load_component(ProfileComponent())
+        elif page_name == 'applicants' and user:
+            if 'screener' in user['roles']:
+                self.load_component(ScreenerComponent())
