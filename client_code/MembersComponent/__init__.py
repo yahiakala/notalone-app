@@ -9,6 +9,7 @@ import datetime as dt
 class MembersComponent(MembersComponentTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.
+        # TODO: add lazy load like you did elsewhere.
         print("Client: Getting members ", dt.datetime.now().strftime("%H:%M:%S.%f"))
         self.members = Global.users.search(roles=['member'])
         print("Client: Got members ", dt.datetime.now().strftime("%H:%M:%S.%f"))
