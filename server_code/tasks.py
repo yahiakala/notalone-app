@@ -2,6 +2,8 @@ import anvil.server
 import anvil.users
 from anvil.tables import app_tables
 
+def
+
 @anvil.server.callable(require_user=True)
 def update_user(user_dict):
     user = anvil.users.get_user(allow_remembered=True)
@@ -28,3 +30,6 @@ def get_applicants():
         return app_tables.users.search(roles=None)
     else:
         return None
+
+
+@anvil.server.callable(require_user=True)
