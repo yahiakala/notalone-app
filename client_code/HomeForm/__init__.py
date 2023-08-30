@@ -19,6 +19,8 @@ class HomeForm(HomeFormTemplate):
         self.link_home.add_event_handler('click', self.go_home)
         self.link_apply.add_event_handler('click', partial(self.go_page, 'apply'))
         self.link_profile.add_event_handler('click', partial(self.go_page, 'profile'))
+        self.user = Global.user
+        self.set_account_state(self.user)
         self.go_home()
 
     def link_login_click(self, **event_args):
@@ -54,7 +56,14 @@ class HomeForm(HomeFormTemplate):
     def set_account_state(self, user):
         self.link_logout.visible = user is not None  # TODO: remove link
         self.link_login.visible = user is None
-        self.link_apply.visible = user['roles'] is None or len(user['roles']) == 0
+        
+        self.link_apply.visible = False
+        self.link_profile.visible = False
+        if user:
+            if user['roles'] is None or user['roles'] == []:
+                self.link_apply.visible = True
+            elif 'member' in user['roles']:
+                self.link_profile.visible = True
 
     def load_component(self, cmpt):
         self.content_panel.clear()

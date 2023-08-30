@@ -27,5 +27,3 @@ class ProfileComponent(ProfileComponentTemplate):
             else self.lbl_10 if self.tb_donation.text < 50
             else self.lbl_50
         )
-
-
