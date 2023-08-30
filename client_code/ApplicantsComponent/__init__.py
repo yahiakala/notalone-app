@@ -9,6 +9,8 @@ class ApplicantsComponent(ApplicantsComponentTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.
         self.applicants = Global.applicants
+        self.applied = [i for i in self.applicants if i['roles'] == []]
+        self.pending = [i for i in self.applicants if i['roles'] == ['pending']]
         self.init_components(**properties)
 
         print('Pending Applicants: ', [i for i in self.applicants if 'pending' in i['roles']])
@@ -18,5 +20,7 @@ class ApplicantsComponent(ApplicantsComponentTemplate):
 
     def update_stuff(self, **event_args):
         self.applicants = Global.applicants
+        self.applied = [i for i in self.applicants if i['roles'] == []]
+        self.pending = [i for i in self.applicants if i['roles'] == ['pending']]
         print('Updated applicants: ', self.applicants)
         self.refresh_data_bindings()
