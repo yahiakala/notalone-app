@@ -18,4 +18,6 @@ components:
     properties: {item_template: ScreenerComponent.ItemTemplate1}
     name: rp_applicants
     layout_properties: {grid_position: 'JIXLKI,ZEIEKY'}
+    data_bindings:
+    - {property: items, code: self.applicants}
 is_package: true

@@ -16,7 +16,15 @@ def get_users():
     user = anvil.users.get_user(allow_remembered=True)
     if 'leader' in user['roles']:
         return app_tables.users.client_writable()
-    elif 'screener' in user['roles']:
+    else:
+        return None
+
+
+@anvil.server.callable(require_user=True)
+def get_applicants():
+    """Get a full list of the users."""
+    user = anvil.users.get_user(allow_remembered=True)
+    if 'screener' in user['roles']:
         return app_tables.users.search(roles=None)
     else:
         return None

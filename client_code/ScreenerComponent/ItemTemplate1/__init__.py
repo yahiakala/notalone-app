@@ -7,3 +7,13 @@ class ItemTemplate1(ItemTemplate1Template):
         self.init_components(**properties)
 
         # Any code you write here will run before the form opens.
+
+    def btn_accept_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        pass
+
+    def btn_reject_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        pass
+
+
