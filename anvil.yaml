@@ -11,6 +11,9 @@ services:
 - source: /runtime/services/google.yml
   client_config: {}
   server_config: {}
+- source: /runtime/services/anvil/secrets.yml
+  client_config: {}
+  server_config: {}
 startup: {type: form, module: HomeForm}
 package_name: notalone_app
 allow_embedding: false
@@ -73,5 +76,15 @@ db_schema:
     - name: payment_enrolled
       type: bool
       admin_ui: {width: 200, order: 16}
+    - name: paypal_sub_id
+      admin_ui: {width: 200}
+      type: string
     title: Users
+secrets:
+  paypal_client_id:
+    value: {T4BTSIBAI26CJ3RZ: z0JaieiqHt5mAySpe0CyP8l7CcI6X05wn+0dEesu3NMFYZv4QVFre0uh4aUkFfh/QNnAjL09sVz/1NUf+FNrpBfMtwb6SqP/FAOfTFnmyixrFOPTTqt26tXSbaaOPG7yn46l+vfy9Aso/0ZwOjTJcdPTR/YgLycournbmrgS6EHxE3ri8ayI5JDFT0cX8BLpatnKPBCUxmh23yShonuHlLTu+1p1Hy4Lw9bR0oAnPg==}
+    type: secret
+  paypal_secret:
+    value: {T4BTSIBAI26CJ3RZ: 6LlRH3bPhha/AZT9lpmOrA3Cxk/pSMTdXmT8/gZ517UAJ2S0vbY/AC7nH4Phkv9jplnV/PLud6ZRAnlxkI+qvOiZ+WDqQB0xwWMEOEg+dWHJ2DCWLeh3BJulYA+dAEQT7+ZWiv3/+iuhxVS1YGoGs/jSy7J+UWJYZcy/suGandwBDhKihKdLsztwsv+Ws4Gt5MbGNwTq2CJzVEBQnnWoAPKWZgp+W0RpkPKT2hycOg==}
+    type: secret
 renamed: true
