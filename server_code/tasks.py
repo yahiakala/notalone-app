@@ -48,7 +48,14 @@ def get_users():
 
 
 @anvil.server.callable(require_user=role_screener)
-def get_applicants():
+def get_applied():
+    """Get a full list of the users."""
+    clean_up_users()
+    return app_tables.users.search(roles=q.any_of(None, [], ['pending']))
+
+
+@anvil.server.callable(require_user=role_screener)
+def get_pending():
     """Get a full list of the users."""
     clean_up_users()
     return app_tables.users.search(roles=q.any_of(None, [], ['pending']))
