@@ -2,7 +2,7 @@ import anvil.server
 import anvil.secrets
 
 import requests
-
+# https://developer.paypal.com/docs/api/subscriptions/v1/#subscriptions_create
 
 def get_paypal_auth():
     client_id = anvil.secrets.get_secret('paypal_client_id')
