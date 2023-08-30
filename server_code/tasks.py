@@ -15,12 +15,20 @@ def role_leader(user):
 def clean_up_user(user):
     if not user['roles']:
         user['roles'] = []
+    if not user['first_name']:
+        user['first_name'] = ''
+    if not user['last_name']:
+        user['last_name'] = ''
     return user
 
 
 def clean_up_users():
     for user in app_tables.users.search(roles=None):
         user['roles'] = []
+    for user in app_tables.users.search(first_name=None):
+        user['first_name'] = ''
+    for user in app_tables.users.search(last_name=None):
+        user['last_name'] = ''
 
 
 @anvil.server.callable(require_user=True)
