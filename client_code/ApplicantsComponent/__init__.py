@@ -11,7 +11,7 @@ class ApplicantsComponent(ApplicantsComponentTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.
         print("Client: Getting Applicants ", dt.datetime.now().strftime("%H:%M:%S.%f"))
-        self.applicants = Global.applicants
+        self.applied = Global.applied
         print("Client: Getting applied ", dt.datetime.now().strftime("%H:%M:%S.%f"))
         self.applied = [i for i in self.applicants if i['roles'] == []]
         print("Client: Getting pending ", dt.datetime.now().strftime("%H:%M:%S.%f"))
