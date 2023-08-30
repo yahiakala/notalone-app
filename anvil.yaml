@@ -67,5 +67,8 @@ db_schema:
     - name: fee
       admin_ui: {width: 200}
       type: number
+    - name: consent_check
+      admin_ui: {width: 200}
+      type: bool
     title: Users
 renamed: true

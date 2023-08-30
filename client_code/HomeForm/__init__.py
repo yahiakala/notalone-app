@@ -7,6 +7,7 @@ from functools import partial
 from ..HomeAnonComponent import HomeAnonComponent
 from ..HomeDetailComponent import HomeDetailComponent
 from ..ApplicantComponent import ApplicantComponent
+from ..ProfileComponent import ProfileComponent
 from .. import Global
 
 
@@ -17,6 +18,7 @@ class HomeForm(HomeFormTemplate):
 
         self.link_home.add_event_handler('click', self.go_home)
         self.link_apply.add_event_handler('click', partial(self.go_page, 'apply'))
+        self.link_profile.add_event_handler('click', partial(self.go_page, 'profile'))
         self.go_home()
 
     def link_login_click(self, **event_args):
@@ -52,6 +54,7 @@ class HomeForm(HomeFormTemplate):
     def set_account_state(self, user):
         self.link_logout.visible = user is not None  # TODO: remove link
         self.link_login.visible = user is None
+        self.link_apply.visible = user['roles'] is None or len(user['roles']) == 0
 
     def load_component(self, cmpt):
         self.content_panel.clear()
@@ -60,6 +63,7 @@ class HomeForm(HomeFormTemplate):
     def set_active_nav(self, state):
         self.link_home.role = 'selected' if state == 'home' else None
         self.link_apply.role = 'selected' if state == 'apply' else None
+        self.link_profile.role = 'selected' if state == 'profile' else None
 
     def go_page(self, page_name, **event_args):
         """Go to a page."""
@@ -67,3 +71,5 @@ class HomeForm(HomeFormTemplate):
         user = self.require_account()
         if page_name == 'apply' and user:
             self.load_component(ApplicantComponent())
+        elif page_name == 'profile' and user:
+            self.load_component(ProfileComponent())
