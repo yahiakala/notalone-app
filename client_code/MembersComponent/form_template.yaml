@@ -2,10 +2,34 @@ container:
   type: ColumnPanel
   properties: {col_widths: '{}'}
 components:
+- type: TextBox
+  properties: {role: outlined, align: left, hide_text: false, tooltip: '', placeholder: Search for a member,
+    border: '', enabled: true, foreground: '', visible: true, text: '', font_size: null,
+    font: '', spacing_above: small, type: text, spacing_below: small, italic: false,
+    background: '', bold: false, underline: false}
+  name: tb_mb_search
+  layout_properties: {grid_position: 'URRSMO,GEHGAQ'}
+  event_bindings: {pressed_enter: tb_mb_search_pressed_enter}
+- type: Button
+  properties: {role: elevated-button, align: center, tooltip: '', border: '', enabled: true,
+    foreground: '', visible: false, text: Clear Search, font_size: null, font: '',
+    spacing_above: small, icon_align: left, spacing_below: small, italic: false, background: '',
+    bold: false, underline: false, icon: ''}
+  name: btn_clear_search
+  layout_properties: {grid_position: 'VZWTYA,ULGKKP'}
+  event_bindings: {click: btn_clear_search_click}
 - type: RepeatingPanel
   properties: {item_template: MembersComponent.ItemTemplate3}
   name: rp_members
   layout_properties: {grid_position: 'XTODFR,LDLSAT'}
   data_bindings:
-  - {property: items, code: self.members}
+  - {property: items, code: 'self.members[:self.mb_count_show]'}
+- type: Button
+  properties: {role: elevated-button, align: center, tooltip: '', border: '', enabled: true,
+    foreground: '', visible: true, text: Show More, font_size: null, font: '', spacing_above: small,
+    icon_align: left, spacing_below: small, italic: false, background: '', bold: false,
+    underline: false, icon: 'fa:plus'}
+  name: btn_show_more
+  layout_properties: {grid_position: 'SPURVC,IINHIR'}
+  event_bindings: {click: btn_show_more_click}
 is_package: true
