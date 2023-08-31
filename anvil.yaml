@@ -1,9 +1,9 @@
 scheduled_tasks:
 - task_name: check_subs
   time_spec:
-    n: 10
-    every: minute
-    at: {}
+    n: 1
+    every: week
+    at: {minute: 0, hour: 10, day: 1}
   job_id: DVJGVVKY
 dependencies: []
 services:
