@@ -10,11 +10,7 @@ class ItemTemplate2(ItemTemplate2Template):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
         self.pmt_success = 'The applicant has paid.'
-        if self.item['payment_email']:
-            pmt_email = self.item['payment_email']
-        else:
-            pmt_email = ''
-        self.pmt_fail = 'The applicant has not paid or is not using the email(s): ' + self.item['email'] + ', ' + pmt_email
+        self.pmt_fail = 'The applicant has not paid'
         self.lbl_payment_status.text = self.pmt_success if self.item['payment_enrolled'] else self.pmt_fail
         self.btn_added.visible = self.item['payment_enrolled']
 
