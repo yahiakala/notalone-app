@@ -15,8 +15,8 @@ class MembersComponent(MembersComponentTemplate):
         print("Client: Got members ", dt.datetime.now().strftime("%H:%M:%S.%f"))
         self.mb_count = len(self.members)
         self.mb_count_show = min(10, self.mb_count)
+        self.rp_members.items = self.members[:self.mb_count_show]
         self.init_components(**properties)
-        print("Client: Got data bindings ", dt.datetime.now().strftime("%H:%M:%S.%f"))
 
         self.rp_members.add_event_handler('x-refresh1', self.update_stuff)
 
@@ -54,11 +54,17 @@ class MembersComponent(MembersComponentTemplate):
     def btn_notactive_click(self, **event_args):
         """This method is called when the button is clicked"""
         self.members = Global.users.search(
-            paypal_sub_id=q.not_(None),
-            payment_enrolled=False,
-            roles=q.all_of(
-                q.not_(['leader'], ['screener']),
-                ['member']
+            q.all_of(
+                q.all_of(
+                    paypal_sub_id=q.not_(None),
+                    payment_enrolled=False,
+                    roles=q.none_of(['leader'], ['screener'])
+                ),
+                q.all_of(
+                    paypal_sub_id=q.not_(None),
+                    payment_enrolled=False,
+                    roles=['member']
+                )
             )
         )
         self.refresh_data_bindings()
@@ -67,8 +73,16 @@ class MembersComponent(MembersComponentTemplate):
     def btn_nosub_click(self, **event_args):
         """This method is called when the button is clicked"""
         self.members = Global.users.search(
-            paypal_sub_id=None,
-            roles=['member']
+            q.all_of(
+                q.all_of(
+                    paypal_sub_id=None,
+                    roles=q.none_of(['leader'], ['screener'])
+                ),
+                q.all_of(
+                    paypal_sub_id=None,
+                    roles=['member']
+                )
+            )
         )
         self.refresh_data_bindings()
         self.btn_clear_search.visible = True
