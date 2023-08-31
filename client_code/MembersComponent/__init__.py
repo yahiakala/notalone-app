@@ -56,7 +56,10 @@ class MembersComponent(MembersComponentTemplate):
         self.members = Global.users.search(
             paypal_sub_id=q.not_(None),
             payment_enrolled=False,
-            roles=['member']
+            roles=q.all_of(
+                q.not_(['leader'], ['screener']),
+                ['member']
+            )
         )
         self.refresh_data_bindings()
         self.btn_clear_search.visible = True
