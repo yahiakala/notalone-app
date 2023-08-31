@@ -2,6 +2,28 @@ container:
   type: ColumnPanel
   properties: {col_widths: '{}'}
 components:
+- type: FlowPanel
+  properties: {role: null, spacing: medium, align: center, tooltip: '', border: '',
+    foreground: '', visible: true, spacing_above: small, spacing_below: small, background: ''}
+  name: fp_quickfilters
+  layout_properties: {grid_position: 'GYCPND,DMGFXC'}
+  components:
+  - type: Button
+    properties: {role: tonal-button, align: center, tooltip: '', border: '', enabled: true,
+      foreground: '', visible: true, text: Inactive Subscriptions, font_size: null,
+      font: '', spacing_above: small, icon_align: left, spacing_below: small, italic: false,
+      background: '', bold: false, underline: false, icon: ''}
+    name: btn_notactive
+    layout_properties: {grid_position: 'KPIXKB,RAVJIZ'}
+    event_bindings: {click: btn_notactive_click}
+  - type: Button
+    properties: {role: tonal-button, align: center, tooltip: '', border: '', enabled: true,
+      foreground: '', visible: true, text: Missing Subscriptions, font_size: null,
+      font: '', spacing_above: small, icon_align: left, spacing_below: small, italic: false,
+      background: '', bold: false, underline: false, icon: ''}
+    name: btn_nosub
+    layout_properties: {}
+    event_bindings: {click: btn_nosub_click}
 - type: TextBox
   properties: {role: outlined, align: left, hide_text: false, tooltip: '', placeholder: Search for a member,
     border: '', enabled: true, foreground: '', visible: true, text: '', font_size: null,

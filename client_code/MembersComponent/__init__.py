@@ -39,7 +39,7 @@ class MembersComponent(MembersComponentTemplate):
                 last_name=q.ilike(search_txt),
                 email=q.ilike(search_txt)
             ),
-            roles=['member'],
+            roles=['member']
         )
         self.refresh_data_bindings()
         self.btn_clear_search.visible = True
@@ -50,4 +50,25 @@ class MembersComponent(MembersComponentTemplate):
         self.refresh_data_bindings()
         self.tb_mb_search.text = None
         self.btn_clear_search.visible = False
+
+    def btn_notactive_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        self.members = Global.users.search(
+            paypal_sub_id=q.not_(None),
+            payment_enrolled=False,
+            roles=['member']
+        )
+        self.refresh_data_bindings()
+        self.btn_clear_search.visible = True
+
+    def btn_nosub_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        self.members = Global.users.search(
+            paypal_sub_id=None,
+            roles=['member']
+        )
+        self.refresh_data_bindings()
+        self.btn_clear_search.visible = True
+
+
 
