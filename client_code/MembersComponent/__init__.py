@@ -17,6 +17,7 @@ class MembersComponent(MembersComponentTemplate):
         self.mb_count_show = min(10, self.mb_count)
         self.rp_members.items = self.members[:self.mb_count_show]
         self.init_components(**properties)
+        self.payment_exempt = [['screener', 'leader']]
 
         self.rp_members.add_event_handler('x-refresh1', self.update_stuff)
 
@@ -58,7 +59,7 @@ class MembersComponent(MembersComponentTemplate):
                 q.all_of(
                     paypal_sub_id=q.not_(None),
                     payment_enrolled=False,
-                    roles=q.none_of(['leader'], ['screener'])
+                    roles=q.none_of(*self.payment_exempt)
                 ),
                 q.all_of(
                     paypal_sub_id=q.not_(None),
@@ -76,7 +77,7 @@ class MembersComponent(MembersComponentTemplate):
             q.all_of(
                 q.all_of(
                     paypal_sub_id=None,
-                    roles=q.none_of(['leader'], ['screener'])
+                    roles=q.none_of(*self.payment_exempt)
                 ),
                 q.all_of(
                     paypal_sub_id=None,
