@@ -11,6 +11,9 @@ def role_screener(user):
 def role_leader(user):
     return 'leader' in user['roles']
 
+def role_pending_plus(user):
+    return 'pending' in user['roles'] or 'member' in user['roles']
+
 
 def clean_up_user(user):
     if not user['roles']:
@@ -34,7 +37,7 @@ def clean_up_users():
 @anvil.server.callable(require_user=True)
 def update_user(user_dict):
     user = anvil.users.get_user(allow_remembered=True)
-    for key in ['first_name', 'last_name', 'fb_url', 'fee', 'payment_email', 'consent_check']:
+    for key in ['first_name', 'last_name', 'fb_url', 'fee', 'payment_email', 'consent_check', 'paypal_sub_id']:
         if user[key] != user_dict[key]:
             user[key] = user_dict[key]
     user = clean_up_user(user)

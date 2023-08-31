@@ -79,6 +79,9 @@ db_schema:
     - name: paypal_sub_id
       admin_ui: {width: 200}
       type: string
+    - name: last_check
+      type: date
+      admin_ui: {width: 200, order: 18}
     title: Users
 secrets:
   paypal_client_id:

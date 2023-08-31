@@ -24,6 +24,7 @@ class HomeForm(HomeFormTemplate):
         self.link_applicants.add_event_handler('click', partial(self.go_page, 'applicants'))
         self.link_members.add_event_handler('click', partial(self.go_page, 'members'))
         self.user = Global.user
+        
         self.set_account_state(self.user)
         self.go_home()
 

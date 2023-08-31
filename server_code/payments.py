@@ -1,7 +1,10 @@
 import anvil.server
 import anvil.secrets
+import anvil.http
+from anvil.tables import app_tables
+import anvil.tables.query as q
 
-
+from .tasks import role_pending_plus
 # https://developer.paypal.com/docs/api/subscriptions/v1/#subscriptions_create
 
 def get_paypal_auth():
@@ -31,24 +34,51 @@ def get_subscriptions(subscription_id):
     return status == 'ACTIVE'
 
 
+@anvil.server.callable(require_user=role_pending_plus)
 def create_sub(plan_id):
     import requests
     access_token = get_paypal_auth()
+    print(anvil.server.get_app_origin())
 
-    response = anvil.http.request(
-        'https://api.paypal.com/v1/billing/subscriptions',
-        method='POST',
-        headers={
-            'Authorization': f'Bearer {access_token}',
-            'Content-Type': 'application/json',
-        },
-        json={
-            'plan_id': plan_id,
-            'application_context': {
-                'return_url': 'https://your-return-url',
-                'cancel_url': 'https://your-cancel-url',
+    try:
+        response = anvil.http.request(
+            'https://api.paypal.com/v1/billing/subscriptions',
+            method='POST',
+            headers={
+                'Authorization': f'Bearer {access_token}',
+                'Content-Type': 'application/json'
             },
-        },
-    )
-    return response['id'], response['links'][0]['href']
-    
+            data={
+                'plan_id': plan_id,
+                'application_context': {
+                    'return_url': anvil.server.get_api_origin() + '/capture-sub',
+                    'cancel_url': anvil.server.get_api_origin() + '/cancel-sub'
+                }
+            },
+            json=True
+        )
+        return response['id'], response['links'][0]['href']
+    except anvil.http.HttpError as e:
+        print(f"Error {e.status} {e.content}")
+
+
+@anvil.server.http_endpoint('/capture-sub')
+def capture_sub(**params):
+    row = app_tables.users.get(paypal_sub_id=params['subscription_id'])
+    row['payment_enrolled'] = True
+    return 'Payment success! You can close this tab.'
+
+
+@anvil.server.http_endpoint('/cancel-sub')
+def cancel_sub(**params):
+    row = app_tables.users.get(paypal_sub_id=params['subscription_id'])
+    row['paypal_sub_id'] = None
+    return 'You have cancelled enrollment. You can close this tab.'
+
+#%% Scheduled Task -------------------------------
+# @anvil.server.background_task
+# def check_sub():
+#     users = app_tables.users.search(
+#         last_check=q.less_than('7 days ago'),
+        
+#     )

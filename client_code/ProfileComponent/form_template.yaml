@@ -116,9 +116,16 @@ components:
     - {property: checked, code: 'self.user[''consent_check'']', writeback: true}
 - type: ColumnPanel
   properties: {role: outlined-card, col_widths: '{}'}
-  name: outlined_card_1
+  name: cp_membership_payments
   layout_properties: {grid_position: 'MBRPGF,TZPVGS'}
   components:
+  - type: Label
+    properties: {role: title, align: center, tooltip: '', border: '', foreground: '',
+      visible: true, text: Enroll in Membership Payments, font_size: null, font: '',
+      spacing_above: small, icon_align: left, spacing_below: small, italic: false,
+      background: '', bold: false, underline: false, icon: ''}
+    name: lbl_plan_title
+    layout_properties: {grid_position: 'ELJPLP,GBZPUL'}
   - type: RichText
     properties: {role: null, align: left, tooltip: '', enable_slots: true, border: '',
       foreground: '', visible: true, font_size: null, content: 'Our fee schedule is
@@ -139,44 +146,43 @@ components:
       background: '', bold: false, underline: false, icon: ''}
     name: lbl_fee
     layout_properties: {grid_position: 'REFMJL,RJFOTL'}
-  - type: TextBox
-    properties: {role: outlined, align: left, hide_text: false, tooltip: '', placeholder: Enter yearly fee,
-      border: '', enabled: true, foreground: '', visible: true, text: '', font_size: null,
-      font: '', spacing_above: small, type: number, spacing_below: small, italic: false,
-      background: '', bold: false, underline: false}
-    name: tb_donation
-    layout_properties: {grid_position: 'REFMJL,FVGFSO'}
+  - type: DropDown
+    properties:
+      role: outlined
+      align: full
+      tooltip: ''
+      placeholder: ''
+      border: ''
+      enabled: true
+      foreground: ''
+      items: ['']
+      visible: true
+      font_size: null
+      font: ''
+      spacing_above: small
+      spacing_below: small
+      italic: false
+      background: ''
+      bold: false
+      underline: false
+      include_placeholder: false
+    name: dd_membertier
+    layout_properties: {grid_position: 'REFMJL,HMCTMQ'}
     data_bindings:
-    - {property: text, code: 'self.user[''fee'']', writeback: true}
-    event_bindings: {change: tb_donation_change}
-  - type: Link
-    properties: {role: headline, url: '', align: left, tooltip: '', border: '', foreground: '',
-      visible: true, text: Payment Link, font_size: null, wrap_on: mobile, font: '',
-      col_spacing: medium, spacing_above: small, icon_align: left, col_widths: '{}',
-      spacing_below: small, italic: false, background: '', bold: false, underline: false,
-      icon: ''}
-    name: link_payment
-    layout_properties: {grid_position: 'UPXIMI,HDLSSG'}
-    data_bindings:
-    - {property: url, code: ''''' if not self.tb_donation.text else self.lbl_10 if
-        self.tb_donation.text < 50 else self.lbl_50'}
-    components: []
-  - type: Label
-    properties: {role: null, align: left, tooltip: '', border: '', foreground: '',
-      visible: true, text: Email used for payment (if different from user email),
-      font_size: null, font: '', spacing_above: small, icon_align: left, spacing_below: small,
-      italic: false, background: '', bold: false, underline: false, icon: ''}
-    name: lbl_payment_email
-    layout_properties: {grid_position: 'TKLBVN,UUMJGW'}
-  - type: TextBox
-    properties: {role: outlined, align: left, hide_text: false, tooltip: '', placeholder: Email used for payment,
-      border: '', enabled: true, foreground: '', visible: true, text: '', font_size: null,
-      font: '', spacing_above: small, type: text, spacing_below: small, italic: false,
-      background: '', bold: false, underline: false}
-    name: tb_payment_email
-    layout_properties: {grid_position: 'TKLBVN,GBOBKI'}
-    data_bindings:
-    - {property: text, code: 'self.user[''payment_email'']', writeback: true}
+    - {property: selected_value, code: 'self.user[''fee'']', writeback: true}
+    - {property: items, code: '[("10", 10), ("50", 50)]'}
+    event_bindings: {}
+  - type: Button
+    properties: {role: elevated-button, align: center, tooltip: '', border: '', enabled: true,
+      foreground: '', visible: true, text: Pay via PayPal, font_size: null, font: '',
+      spacing_above: small, icon_align: left, spacing_below: small, italic: false,
+      background: '', bold: false, underline: false, icon: ''}
+    name: btn_pay_new
+    layout_properties: {grid_position: 'CDIKXF,XLWVDB'}
+    event_bindings: {click: btn_pay_new_click}
+    data_bindings: []
+  data_bindings:
+  - {property: visible, code: 'self.user[''paypal_sub_id''] is None'}
 - type: Button
   properties: {role: filled-button, align: center, tooltip: '', border: '', enabled: true,
     foreground: '', visible: true, text: Save Changes, font_size: null, font: '',

@@ -29,3 +29,21 @@ class ProfileComponent(ProfileComponentTemplate):
             else self.lbl_10 if self.tb_donation.text < 50
             else self.lbl_50
         )
+
+    def btn_pay_new_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        from anvil.js import window
+        plan_id = (
+            'P-4KE37959PY660271HMCR4POQ'
+            if self.user['fee'] == 10
+            else 'P-97F27333BM300020TMCR4PGI'
+        )
+        self.user['paypal_sub_id'], self.payment_url = anvil.server.call(
+            'create_sub', plan_id
+        )
+        self.btn_save_click()
+        window.open(self.payment_url)
+        self.refresh_data_bindings()
+
+
+
