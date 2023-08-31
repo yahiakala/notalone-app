@@ -54,6 +54,8 @@ class MembersComponent(MembersComponentTemplate):
         self.refresh_data_bindings()
         self.tb_mb_search.text = None
         self.btn_clear_search.visible = False
+        self.btn_nosub.role = 'tonal-button'
+        self.btn_notactive.role = 'tonal-button'
 
     def btn_notactive_click(self, **event_args):
         """This method is called when the button is clicked"""
@@ -67,6 +69,7 @@ class MembersComponent(MembersComponentTemplate):
         self.mb_count_show = min(5, self.mb_count)
         self.refresh_data_bindings()
         self.btn_clear_search.visible = True
+        self.btn_notactive.role = 'filled-button'
 
     def btn_nosub_click(self, **event_args):
         """This method is called when the button is clicked"""
@@ -79,6 +82,7 @@ class MembersComponent(MembersComponentTemplate):
         self.mb_count_show = min(5, self.mb_count)
         self.refresh_data_bindings()
         self.btn_clear_search.visible = True
+        self.btn_nosub.role = 'filled-button'
 
 
 
