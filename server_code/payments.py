@@ -4,7 +4,7 @@ import anvil.http
 from anvil.tables import app_tables
 import anvil.tables.query as q
 
-from .tasks import role_pending_plus
+from .tasks import role_pending_plus, role_leader
 # https://developer.paypal.com/docs/api/subscriptions/v1/#subscriptions_create
 
 def get_paypal_auth():
@@ -82,11 +82,19 @@ def cancel_sub(**params):
     row['paypal_sub_id'] = None
     return 'You have cancelled enrollment. You can close this tab.'
 
+
+@anvil.server.callable(require_user=role_leader)
+def check_sub_bk(user_dict):
+    user_ref = app_tables.users.get(email=user_dict['email'])
+    user_ref['payment_enrolled'] = get_subscriptions(user['paypal_sub_id'])
+    return user_ref
+
 #%% Scheduled Task -------------------------------
 @anvil.server.background_task
 def check_subs():
     for user in app_tables.users.search(roles=['member']):
-        if get_subscriptions(user['paypal_sub_id']):
-            user['payment_enrolled'] = True
-        else:
-            user['payment_enrolled'] = False
+        user['payment_enrolled'] = get_subscriptions(user['paypal_sub_id'])
+
+
+
+    

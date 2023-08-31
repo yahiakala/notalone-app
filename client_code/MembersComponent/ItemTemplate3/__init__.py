@@ -11,12 +11,13 @@ class ItemTemplate3(ItemTemplate3Template):
         self.init_components(**properties)
         print("Client: Got member data binding ", dt.datetime.now().strftime("%H:%M:%S.%f"))
         self.pmt_success = 'Member is in good standing with payments.'
-        if self.item['payment_email']:
-            pmt_email = self.item['payment_email']
-        else:
-            pmt_email = ''
-        self.pmt_fail = 'The member has not paid or is not using the email(s): ' + self.item['email'] + ', ' + pmt_email
-        self.lbl_payment_status.text = self.pmt_success if self.item['payment_enrolled'] else self.pmt_fail
+        self.pmt_noid = 'Member has no linked paypal subscription.'
+        self.pmt_inactive = "Member's paypal subscription is inactive."
+        self.lbl_payment_status.text = (
+            self.pmt_success if self.item['payment_enrolled'] else
+            self.pmt_inactive if self.item['paypal_sub_id'] is not None else
+            self.pmt_noid
+        )
 
     
     def btn_remove_click(self, **event_args):
