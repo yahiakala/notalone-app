@@ -35,10 +35,15 @@ def get_subscriptions(subscription_id):
 
 
 @anvil.server.callable(require_user=role_pending_plus)
-def create_sub(plan_id):
+def create_sub(plan_amt):
     import requests
     access_token = get_paypal_auth()
     print(anvil.server.get_app_origin())
+
+    if plan_amt == 10:
+        plan_id = anvil.secrets.get_secret('pp_plan_id_10')
+    else:
+        plan_id = anvil.secrets.get_secret('pp_plan_id_50')
 
     try:
         response = anvil.http.request(

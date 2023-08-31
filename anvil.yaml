@@ -90,4 +90,10 @@ secrets:
   paypal_secret:
     value: {T4BTSIBAI26CJ3RZ: 6LlRH3bPhha/AZT9lpmOrA3Cxk/pSMTdXmT8/gZ517UAJ2S0vbY/AC7nH4Phkv9jplnV/PLud6ZRAnlxkI+qvOiZ+WDqQB0xwWMEOEg+dWHJ2DCWLeh3BJulYA+dAEQT7+ZWiv3/+iuhxVS1YGoGs/jSy7J+UWJYZcy/suGandwBDhKihKdLsztwsv+Ws4Gt5MbGNwTq2CJzVEBQnnWoAPKWZgp+W0RpkPKT2hycOg==}
     type: secret
+  pp_plan_id_10:
+    value: {T4BTSIBAI26CJ3RZ: rDvJfmw0kO198rBJmrYXvLyMlLwR5pI70CaRzbz88RUQYMxTlI4kloXQR9+YGx4p96Nvsl5xb71HB/QlwjOlbxWc01MBDgYTZBG3zsp/X3sQkWPI0VQtAEy1EVhmrp59dCNwE42rCsl1laCWGDhDEhb9GidhNgVVsA==}
+    type: secret
+  pp_plan_id_50:
+    value: {T4BTSIBAI26CJ3RZ: Dug8rgZYlJuaeD2QY3f8L+fTnmIzJFmUODQLWxYBWH+o6RdcdxYFF/hc/pUUyYA2psMOTazIoDNi3nG3EJvjoUlvK00xLRFGp6e4fsNnMS24257G0SSpPdWLYhEDOjb5ZnBdoNwuXoIcE6qKu+eAe683kzq1fNM07Q==}
+    type: secret
 renamed: true
