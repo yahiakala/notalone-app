@@ -23,6 +23,8 @@ def get_paypal_auth():
 
 
 def get_subscriptions(subscription_id):
+    if not subscription_id:
+        return False
     import requests
     access_token = get_paypal_auth()
     headers = {
@@ -81,9 +83,10 @@ def cancel_sub(**params):
     return 'You have cancelled enrollment. You can close this tab.'
 
 #%% Scheduled Task -------------------------------
-# @anvil.server.background_task
-# def check_sub():
-#     users = app_tables.users.search(
-#         last_check=q.less_than('7 days ago'),
-        
-#     )
+@anvil.server.background_task
+def check_subs():
+    for user in app_tables.users.search(roles=['member']):
+        if get_subscriptions(user['paypal_sub_id']):
+            user['payment_enrolled'] = True
+        else:
+            user['payment_enrolled'] = False
