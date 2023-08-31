@@ -15,7 +15,7 @@ class ItemTemplate3(ItemTemplate3Template):
         self.pmt_noid = 'Member has no linked paypal subscription.'
         self.pmt_inactive = "Member's paypal subscription is inactive."
         self.lbl_payment_status.text = (
-            self.pmt_success if self.item['payment_enrolled'] else
+            self.pmt_success if (self.item['payment_enrolled'] or 'leader' in self.item['roles'] or 'screener' in self.item['roles']) else
             self.pmt_inactive if self.item['paypal_sub_id'] is not None else
             self.pmt_noid
         )
