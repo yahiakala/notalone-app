@@ -1,5 +1,6 @@
 from ._anvil_designer import ItemTemplate3Template
 from anvil import *
+import anvil.server
 
 import datetime as dt
 
@@ -46,6 +47,12 @@ class ItemTemplate3(ItemTemplate3Template):
         if 'leader' not in self.item['roles']:
             self.item['roles'] = self.item['roles'] + ['leader']
         self.btn_leader.visible = False
+
+    def btn_refresh_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        self.item = anvil.server.call('check_sub')
+        self.refresh_data_bindings()
+
 
 
 

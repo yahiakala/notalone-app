@@ -84,7 +84,7 @@ def cancel_sub(**params):
 
 
 @anvil.server.callable(require_user=role_leader)
-def check_sub_bk(user_dict):
+def check_sub(user_dict):
     user_ref = app_tables.users.get(email=user_dict['email'])
     user_ref['payment_enrolled'] = get_subscriptions(user['paypal_sub_id'])
     return user_ref

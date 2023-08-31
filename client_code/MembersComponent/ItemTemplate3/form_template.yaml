@@ -21,6 +21,7 @@ components:
       underline: false, icon: 'fa:refresh'}
     name: btn_refresh
     layout_properties: {grid_position: 'FRXGOQ,LLSLKE'}
+    event_bindings: {click: btn_refresh_click}
   - type: Label
     properties: {}
     name: lbl_payment_status
