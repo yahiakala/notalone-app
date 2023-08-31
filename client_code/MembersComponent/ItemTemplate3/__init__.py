@@ -50,7 +50,7 @@ class ItemTemplate3(ItemTemplate3Template):
 
     def btn_refresh_click(self, **event_args):
         """This method is called when the button is clicked"""
-        self.item = anvil.server.call('check_sub')
+        self.item = anvil.server.call('check_sub', self.item)
         self.refresh_data_bindings()
 
 

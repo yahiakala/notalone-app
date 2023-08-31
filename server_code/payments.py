@@ -32,7 +32,10 @@ def get_subscriptions(subscription_id):
         'Content-Type': 'application/json',
     }
     subscription_detail_response = requests.get(f'https://api.paypal.com/v1/billing/subscriptions/{subscription_id}', headers=headers)
-    status = subscription_detail_response.json()['status']
+    try:
+        status = subscription_detail_response.json()['status']
+    except KeyError as e:
+        status = None
     return status == 'ACTIVE'
 
 
@@ -86,7 +89,7 @@ def cancel_sub(**params):
 @anvil.server.callable(require_user=role_leader)
 def check_sub(user_dict):
     user_ref = app_tables.users.get(email=user_dict['email'])
-    user_ref['payment_enrolled'] = get_subscriptions(user['paypal_sub_id'])
+    user_ref['payment_enrolled'] = get_subscriptions(user_ref['paypal_sub_id'])
     return user_ref
 
 #%% Scheduled Task -------------------------------
