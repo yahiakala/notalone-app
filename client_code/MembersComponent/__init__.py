@@ -15,7 +15,6 @@ class MembersComponent(MembersComponentTemplate):
         print("Client: Got members ", dt.datetime.now().strftime("%H:%M:%S.%f"))
         self.mb_count = len(self.members)
         self.mb_count_show = min(5, self.mb_count)
-        self.rp_members.items = self.members[:self.mb_count_show]
         self.init_components(**properties)
         self.payment_exempt = [['screener', 'leader']]
 
@@ -42,12 +41,16 @@ class MembersComponent(MembersComponentTemplate):
             ),
             roles=['member']
         )
+        self.mb_count = len(self.members)
+        self.mb_count_show = min(5, self.mb_count)
         self.refresh_data_bindings()
         self.btn_clear_search.visible = True
 
     def btn_clear_search_click(self, **event_args):
         """This method is called when the button is clicked"""
         self.members = Global.users.search(roles=['member'])
+        self.mb_count = len(self.members)
+        self.mb_count_show = min(5, self.mb_count)
         self.refresh_data_bindings()
         self.tb_mb_search.text = None
         self.btn_clear_search.visible = False
@@ -60,6 +63,8 @@ class MembersComponent(MembersComponentTemplate):
             fee=q.not_(0),
             roles=['member']
         )
+        self.mb_count = len(self.members)
+        self.mb_count_show = min(5, self.mb_count)
         self.refresh_data_bindings()
         self.btn_clear_search.visible = True
 
@@ -70,6 +75,8 @@ class MembersComponent(MembersComponentTemplate):
             fee=q.not_(0),
             roles=['member']
         )
+        self.mb_count = len(self.members)
+        self.mb_count_show = min(5, self.mb_count)
         self.refresh_data_bindings()
         self.btn_clear_search.visible = True
 
