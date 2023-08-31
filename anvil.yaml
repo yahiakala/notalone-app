@@ -71,9 +71,6 @@ db_schema:
     - name: fb_url
       type: string
       admin_ui: {width: 200, order: 12}
-    - name: payment_email
-      type: string
-      admin_ui: {width: 200, order: 13}
     - name: fee
       admin_ui: {width: 200}
       type: number
