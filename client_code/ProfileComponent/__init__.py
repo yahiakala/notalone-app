@@ -4,6 +4,8 @@ import anvil.server
 
 from .. import Global
 
+# subscription_id, url = anvil.server.call('create_paypal_subscription')
+
 
 class ProfileComponent(ProfileComponentTemplate):
     def __init__(self, **properties):
