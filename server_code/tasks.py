@@ -15,6 +15,19 @@ def role_pending_plus(user):
     return 'pending' in user['roles'] or 'member' in user['roles']
 
 
+def role_check(user, permissions):
+    # Put together all the permissions into one dict
+    {'has this': True}
+    user_perms = []
+    for perm in user['roles']:
+        user_perms = max([i for i in user['roles'] if i[perm] == True])
+        
+    for permission in permissions:
+        perm_refs = app_tables.roles.search(tenant=user['tenant'], )
+        user['roles']
+        
+
+
 def clean_up_user(user):
     if not user['roles']:
         user['roles'] = ['applied']

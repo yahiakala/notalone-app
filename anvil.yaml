@@ -97,10 +97,9 @@ db_schema:
       type: link_single
       target: tenants
     - name: roles
-      type: liveObjectArray
-      admin_ui: {width: 200, order: 22}
-      table_id: 505156
-      backend: anvil.tables.Row
+      admin_ui: {width: 200}
+      type: link_multiple
+      target: roles
     title: Users
   tenants:
     client: none
