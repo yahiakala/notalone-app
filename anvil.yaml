@@ -77,21 +77,21 @@ db_schema:
     - name: consent_check
       admin_ui: {width: 200}
       type: bool
-    - name: payment_enrolled
-      type: bool
-      admin_ui: {width: 200, order: 16}
     - name: paypal_sub_id
       admin_ui: {width: 200}
       type: string
-    - name: last_check
-      type: date
-      admin_ui: {width: 200, order: 18}
     - name: booking_link
       admin_ui: {width: 200}
       type: string
     - name: payment_expiry
       admin_ui: {width: 200}
       type: date
+    - name: payment_status
+      type: string
+      admin_ui: {width: 200, order: 21}
+    - name: good_standing
+      admin_ui: {width: 200}
+      type: bool
     title: Users
 secrets:
   paypal_client_id:

@@ -11,8 +11,8 @@ class ItemTemplate2(ItemTemplate2Template):
         self.init_components(**properties)
         self.pmt_success = 'The applicant has paid.'
         self.pmt_fail = 'The applicant has not paid'
-        self.lbl_payment_status.text = self.pmt_success if self.item['payment_enrolled'] else self.pmt_fail
-        self.btn_added.visible = self.item['payment_enrolled']
+        self.lbl_payment_status.text = self.pmt_success if self.item['good_standing'] else self.pmt_fail
+        self.btn_added.visible = self.item['good_standing']
 
     def btn_added_click(self, **event_args):
         """This method is called when the button is clicked"""

@@ -24,6 +24,22 @@ components:
     name: btn_nosub
     layout_properties: {}
     event_bindings: {click: btn_nosub_click}
+  - type: Button
+    properties: {role: tonal-button, align: center, tooltip: '', border: '', enabled: true,
+      foreground: '', visible: true, text: Expiring Soon, font_size: null, font: '',
+      spacing_above: small, icon_align: left, spacing_below: small, italic: false,
+      background: '', bold: false, underline: false, icon: ''}
+    name: btn_expiring_soon
+    layout_properties: {}
+    event_bindings: {click: btn_expiring_soon_click}
+  - type: Button
+    properties: {role: tonal-button, align: center, tooltip: '', border: '', enabled: true,
+      foreground: '', visible: true, text: Expired Subscription, font_size: null,
+      font: '', spacing_above: small, icon_align: left, spacing_below: small, italic: false,
+      background: '', bold: false, underline: false, icon: ''}
+    name: btn_expired
+    layout_properties: {}
+    event_bindings: {click: btn_expired_click}
 - type: TextBox
   properties: {role: outlined, align: left, hide_text: false, tooltip: '', placeholder: Search for a member,
     border: '', enabled: true, foreground: '', visible: true, text: '', font_size: null,
@@ -65,4 +81,13 @@ components:
   event_bindings: {click: btn_show_more_click}
   data_bindings:
   - {property: visible, code: self.mb_count_show < self.mb_count}
+- type: Button
+  properties: {role: tonal-button, align: center, tooltip: '', border: '', enabled: true,
+    foreground: '', visible: true, text: Missing Subscriptions, font_size: null, font: '',
+    spacing_above: small, icon_align: left, spacing_below: small, italic: false, background: '',
+    bold: false, underline: false, icon: ''}
+  name: btn_nosub_copy
+  layout_properties:
+    col_widths: {}
+    grid_position: SQXCOM,FHZACB
 is_package: true

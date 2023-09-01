@@ -13,9 +13,9 @@ class ItemTemplate3(ItemTemplate3Template):
         print("Client: Got member data binding ", dt.datetime.now().strftime("%H:%M:%S.%f"))
         self.pmt_success = 'Member is in good standing with payments.'
         self.pmt_noid = 'Member has no linked paypal subscription.'
-        self.pmt_inactive = "Member's paypal subscription is inactive."
+        self.pmt_inactive = "Member's paypal subscription is expired."
         self.lbl_payment_status.text = (
-            self.pmt_success if (self.item['payment_enrolled'] or 'leader' in self.item['roles'] or 'screener' in self.item['roles']) else
+            self.pmt_success if self.item['good_standing'] else
             self.pmt_inactive if self.item['paypal_sub_id'] is not None else
             self.pmt_noid
         )

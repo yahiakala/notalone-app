@@ -59,6 +59,7 @@ class MembersComponent(MembersComponentTemplate):
 
     def btn_notactive_click(self, **event_args):
         """This method is called when the button is clicked"""
+        # TODO: deprecated
         self.members = Global.users.search(
             paypal_sub_id=q.not_(None),
             payment_enrolled=False,
@@ -83,6 +84,16 @@ class MembersComponent(MembersComponentTemplate):
         self.refresh_data_bindings()
         self.btn_clear_search.visible = True
         self.btn_nosub.role = 'filled-button'
+
+    def btn_expiring_soon_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        pass
+
+    def btn_expired_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        pass
+
+
 
 
 

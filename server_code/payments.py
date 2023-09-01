@@ -23,8 +23,10 @@ def get_paypal_auth():
 
 
 def get_subscriptions(subscription_id):
+    import datetime as dt
+    
     if not subscription_id:
-        return False
+        return None, None
     import requests
     access_token = get_paypal_auth()
     headers = {
@@ -34,9 +36,13 @@ def get_subscriptions(subscription_id):
     subscription_detail_response = requests.get(f'https://api.paypal.com/v1/billing/subscriptions/{subscription_id}', headers=headers)
     try:
         status = subscription_detail_response.json()['status']
+        last_payment = dt.datetime.fromisoformat(
+            subscription_detail_response.json()['billing_info']['last_payment']['time'].replace("Z", "+00:00")
+        ).date()
     except KeyError as e:
         status = None
-    return status == 'ACTIVE'
+        last_payment = None
+    return status, last_payment
 
 
 @anvil.server.callable(require_user=role_pending_plus)
@@ -75,7 +81,7 @@ def create_sub(plan_amt):
 @anvil.server.http_endpoint('/capture-sub')
 def capture_sub(**params):
     row = app_tables.users.get(paypal_sub_id=params['subscription_id'])
-    row['payment_enrolled'] = True
+    row['good_standing'] = True
     return 'Payment success! You can close this tab.'
 
 
@@ -88,15 +94,22 @@ def cancel_sub(**params):
 
 @anvil.server.callable(require_user=role_leader)
 def check_sub(user_dict):
+    from dateutil.relativedelta import relativedelta
+    import datetime as dt
+    
     user_ref = app_tables.users.get(email=user_dict['email'])
-    user_ref['payment_enrolled'] = get_subscriptions(user_ref['paypal_sub_id'])
+    status, last_payment = get_subscriptions(user_ref['paypal_sub_id'])
+    user_ref['payment_status'] = status
+    user_ref['payment_expiry'] = last_payment + relativedelta(years=1)
+    if user_ref['payment_expiry'] >= dt.date.today() or status == 'ACTIVE' or user_ref['fee'] == 0:
+        user_ref['good_standing'] = True
     return user_ref
 
 #%% Scheduled Task -------------------------------
 @anvil.server.background_task
 def check_subs():
     for user in app_tables.users.search(roles=['member']):
-        user['payment_enrolled'] = get_subscriptions(user['paypal_sub_id'])
+        _ = check_sub(user)
 
 
 
