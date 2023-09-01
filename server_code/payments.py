@@ -100,7 +100,8 @@ def check_sub(user_dict):
     user_ref = app_tables.users.get(email=user_dict['email'])
     status, last_payment = get_subscriptions(user_ref['paypal_sub_id'])
     user_ref['payment_status'] = status
-    user_ref['payment_expiry'] = last_payment + relativedelta(years=1)
+    if last_payment:
+        user_ref['payment_expiry'] = last_payment + relativedelta(years=1)
     if user_ref['payment_expiry'] >= dt.date.today() or status == 'ACTIVE' or user_ref['fee'] == 0:
         user_ref['good_standing'] = True
     return user_ref
