@@ -89,6 +89,9 @@ db_schema:
     - name: booking_link
       admin_ui: {width: 200}
       type: string
+    - name: payment_expiry
+      admin_ui: {width: 200}
+      type: date
     title: Users
 secrets:
   paypal_client_id:
