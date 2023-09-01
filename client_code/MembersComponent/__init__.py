@@ -30,6 +30,16 @@ class MembersComponent(MembersComponentTemplate):
         self.refresh_data_bindings()
         self.btn_show_more.scroll_into_view()
 
+    def refresh_search(self):
+        self.btn_nosub.role = 'tonal-button'
+        self.btn_expiring_soon.role = 'tonal-button'
+        self.btn_expired.role = 'tonal-button'
+        
+        self.mb_count = len(self.members)
+        self.mb_count_show = min(5, self.mb_count)
+        self.refresh_data_bindings()
+        self.btn_clear_search.visible = True
+
     def tb_mb_search_pressed_enter(self, **event_args):
         """This method is called when the user presses Enter in this text box"""
         search_txt = '%' + self.tb_mb_search.text + '%'
@@ -41,36 +51,16 @@ class MembersComponent(MembersComponentTemplate):
             ),
             roles=['member']
         )
-        self.mb_count = len(self.members)
-        self.mb_count_show = min(5, self.mb_count)
-        self.refresh_data_bindings()
-        self.btn_clear_search.visible = True
+        self.refresh_search()
 
     def btn_clear_search_click(self, **event_args):
         """This method is called when the button is clicked"""
         self.members = Global.users.search(roles=['member'])
-        self.mb_count = len(self.members)
-        self.mb_count_show = min(5, self.mb_count)
-        self.refresh_data_bindings()
+        self.refresh_search()
         self.tb_mb_search.text = None
         self.btn_clear_search.visible = False
-        self.btn_nosub.role = 'tonal-button'
-        self.btn_notactive.role = 'tonal-button'
-
-    def btn_notactive_click(self, **event_args):
-        """This method is called when the button is clicked"""
-        # TODO: deprecated
-        self.members = Global.users.search(
-            paypal_sub_id=q.not_(None),
-            payment_enrolled=False,
-            fee=q.not_(0),
-            roles=['member']
-        )
-        self.mb_count = len(self.members)
-        self.mb_count_show = min(5, self.mb_count)
-        self.refresh_data_bindings()
-        self.btn_clear_search.visible = True
-        self.btn_notactive.role = 'filled-button'
+        
+        
 
     def btn_nosub_click(self, **event_args):
         """This method is called when the button is clicked"""
@@ -79,19 +69,37 @@ class MembersComponent(MembersComponentTemplate):
             fee=q.not_(0),
             roles=['member']
         )
-        self.mb_count = len(self.members)
-        self.mb_count_show = min(5, self.mb_count)
-        self.refresh_data_bindings()
-        self.btn_clear_search.visible = True
+        self.refresh_search()
         self.btn_nosub.role = 'filled-button'
 
     def btn_expiring_soon_click(self, **event_args):
         """This method is called when the button is clicked"""
-        pass
+        self.members = Global.users.search(
+            paypal_sub_id=q.not_(None),
+            payment_status=q.not_('ACTIVE'),
+            fee=q.not_(0),
+            roles=['member'],
+            payment_expiry=q.between(
+                min=dt.date.today(),
+                max=dt.date.today() + dt.timedelta(days=30),
+                min_inclusive=True,
+                max_inclusive=False
+            )
+        )
+        self.refresh_search()
+        self.btn_expiring_soon.role = 'filled-button'
 
     def btn_expired_click(self, **event_args):
         """This method is called when the button is clicked"""
-        pass
+        self.members = Global.users.search(
+            paypal_sub_id=q.not_(None),
+            payment_status=q.not_('ACTIVE'),
+            fee=q.not_(0),
+            roles=['member'],
+            payment_expiry=q.less_than(dt.date.today())
+        )
+        self.refresh_search()
+        self.btn_expired.role = 'filled-button'
 
 
 
