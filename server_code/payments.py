@@ -102,8 +102,8 @@ def check_sub(user_dict):
     user_ref['payment_status'] = status
     if last_payment:
         user_ref['payment_expiry'] = last_payment + relativedelta(years=1)
-    if user_ref['payment_expiry'] >= dt.date.today() or status == 'ACTIVE' or user_ref['fee'] == 0:
-        user_ref['good_standing'] = True
+        if user_ref['payment_expiry'] >= dt.date.today() or status == 'ACTIVE' or user_ref['fee'] == 0:
+            user_ref['good_standing'] = True
     return user_ref
 
 #%% Scheduled Task -------------------------------
