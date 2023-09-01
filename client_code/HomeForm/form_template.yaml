@@ -13,6 +13,13 @@ components:
   name: navbar_links
   layout_properties: {slot: nav-right}
   components:
+  - type: Button
+    properties: {role: filled-button, align: center, tooltip: '', border: '', enabled: true,
+      foreground: '', visible: false, text: DEV, font_size: null, font: '', spacing_above: small,
+      icon_align: left, spacing_below: small, italic: false, background: '', bold: false,
+      underline: false, icon: ''}
+    name: btn_test
+    layout_properties: {}
   - type: Link
     properties: {role: null, url: '', align: left, tooltip: '', border: '', foreground: '',
       visible: true, text: Login, font_size: null, wrap_on: mobile, font: '', col_spacing: medium,

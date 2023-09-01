@@ -10,6 +10,8 @@ from ..BookingComponent import BookingComponent
 from ..ProfileComponent import ProfileComponent
 from ..ApplicantsComponent import ApplicantsComponent
 from ..MembersComponent import MembersComponent
+from anvil_labs.ClientTestComponent import ClientTestComponent
+
 from .. import Global
 
 
@@ -23,7 +25,12 @@ class HomeForm(HomeFormTemplate):
         self.link_profile.add_event_handler('click', partial(self.go_page, 'profile'))
         self.link_applicants.add_event_handler('click', partial(self.go_page, 'applicants'))
         self.link_members.add_event_handler('click', partial(self.go_page, 'members'))
+
         self.user = Global.user
+
+        self.btn_test.add_event_handler('click', partial(self.go_page, 'tests'))
+        if 'Debug' in anvil.app.environment.name:
+            self.btn_test.visible = True
         
         self.set_account_state(self.user)
         self.go_home()
@@ -96,3 +103,13 @@ class HomeForm(HomeFormTemplate):
             self.load_component(ApplicantsComponent())
         elif page_name == 'members' and user:
             self.load_component(MembersComponent())
+        elif page_name == 'tests' and user:
+            from .. import test_onboarding
+            self.load_component(
+                ClientTestComponent(
+                    test_modules=[test_onboarding],
+                    card_roles=['tonal-card', 'elevated-card', 'elevated-card'],
+                    icon_size=30,
+                    btn_role='filled-button',
+                )
+            )
