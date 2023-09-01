@@ -65,9 +65,9 @@ db_schema:
     - name: last_name
       type: string
       admin_ui: {width: 200, order: 10}
-    - name: roles
+    - name: rolesi
+      admin_ui: {order: 13, width: 200}
       type: simpleObject
-      admin_ui: {width: 200, order: 11}
     - name: fb_url
       type: string
       admin_ui: {width: 200, order: 12}
@@ -96,6 +96,11 @@ db_schema:
       admin_ui: {width: 200}
       type: link_single
       target: tenants
+    - name: roles
+      type: liveObjectArray
+      admin_ui: {width: 200, order: 22}
+      table_id: 505156
+      backend: anvil.tables.Row
     title: Users
   tenants:
     client: none
@@ -117,15 +122,24 @@ db_schema:
       admin_ui: {width: 200}
       type: bool
     - name: members
-      admin_ui: {width: 200}
+      admin_ui: {order: 2, width: 134}
       type: bool
     - name: profile
-      admin_ui: {width: 200}
+      admin_ui: {order: 3, width: 124}
       type: bool
     - name: tenant
-      admin_ui: {width: 200}
+      admin_ui: {order: 0.5, width: 179}
       type: link_single
       target: tenants
+    - name: payment_exempt
+      type: bool
+      admin_ui: {width: 200, order: 4}
+    - name: roles
+      admin_ui: {order: 5, width: 126}
+      type: bool
+    - name: volunteer_exempt
+      admin_ui: {width: 200}
+      type: bool
 secrets:
   paypal_client_id:
     value: {T4BTSIBAI26CJ3RZ: z0JaieiqHt5mAySpe0CyP8l7CcI6X05wn+0dEesu3NMFYZv4QVFre0uh4aUkFfh/QNnAjL09sVz/1NUf+FNrpBfMtwb6SqP/FAOfTFnmyixrFOPTTqt26tXSbaaOPG7yn46l+vfy9Aso/0ZwOjTJcdPTR/YgLycournbmrgS6EHxE3ri8ayI5JDFT0cX8BLpatnKPBCUxmh23yShonuHlLTu+1p1Hy4Lw9bR0oAnPg==}
