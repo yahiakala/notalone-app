@@ -5,7 +5,10 @@ scheduled_tasks:
     every: day
     at: {minute: 0, hour: 10}
   job_id: DVJGVVKY
-dependencies: []
+dependencies:
+- dep_id: dep_vscdshbjqihr0e
+  version: {dev: false}
+  resolution_hints: {app_id: 6VBEPOB6UHF74UKK, name: Anvil Labs, package_name: anvil_labs}
 services:
 - source: /runtime/services/tables.yml
   client_config: {enable_v2: true}
