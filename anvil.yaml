@@ -11,7 +11,7 @@ services:
   client_config: {}
   server_config: {}
 - source: /runtime/services/anvil/users.yml
-  client_config: {mfa_timeout_days: 1, require_secure_passwords: true, use_email: true,
+  client_config: {mfa_timeout_days: 7, require_secure_passwords: true, use_email: true,
     allow_remember_me: true, allow_signup: true, enable_automatically: true, confirm_email: true,
     require_mfa: true, remember_me_days: 30, use_google: true}
   server_config: {user_table: users}
