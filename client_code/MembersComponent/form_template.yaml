@@ -73,13 +73,4 @@ components:
   event_bindings: {click: btn_show_more_click}
   data_bindings:
   - {property: visible, code: self.mb_count_show < self.mb_count}
-- type: Button
-  properties: {role: tonal-button, align: center, tooltip: '', border: '', enabled: true,
-    foreground: '', visible: true, text: Missing Subscriptions, font_size: null, font: '',
-    spacing_above: small, icon_align: left, spacing_below: small, italic: false, background: '',
-    bold: false, underline: false, icon: ''}
-  name: btn_nosub_copy
-  layout_properties:
-    col_widths: {}
-    grid_position: SQXCOM,FHZACB
 is_package: true
