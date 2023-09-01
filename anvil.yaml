@@ -8,7 +8,7 @@ scheduled_tasks:
 dependencies: []
 services:
 - source: /runtime/services/tables.yml
-  client_config: {}
+  client_config: {enable_v2: true}
   server_config: {}
 - source: /runtime/services/anvil/users.yml
   client_config: {mfa_timeout_days: 7, require_secure_passwords: true, use_email: true,
@@ -92,7 +92,40 @@ db_schema:
     - name: good_standing
       admin_ui: {width: 200}
       type: bool
+    - name: tenant
+      admin_ui: {width: 200}
+      type: link_single
+      target: tenants
     title: Users
+  tenants:
+    client: none
+    server: full
+    columns:
+    - name: email
+      type: string
+      admin_ui: {width: 200, order: 0}
+    title: Tenants
+  roles:
+    title: Roles
+    client: none
+    server: full
+    columns:
+    - name: name
+      admin_ui: {width: 200}
+      type: string
+    - name: screenings
+      admin_ui: {width: 200}
+      type: bool
+    - name: members
+      admin_ui: {width: 200}
+      type: bool
+    - name: profile
+      admin_ui: {width: 200}
+      type: bool
+    - name: tenant
+      admin_ui: {width: 200}
+      type: link_single
+      target: tenants
 secrets:
   paypal_client_id:
     value: {T4BTSIBAI26CJ3RZ: z0JaieiqHt5mAySpe0CyP8l7CcI6X05wn+0dEesu3NMFYZv4QVFre0uh4aUkFfh/QNnAjL09sVz/1NUf+FNrpBfMtwb6SqP/FAOfTFnmyixrFOPTTqt26tXSbaaOPG7yn46l+vfy9Aso/0ZwOjTJcdPTR/YgLycournbmrgS6EHxE3ri8ayI5JDFT0cX8BLpatnKPBCUxmh23yShonuHlLTu+1p1Hy4Lw9bR0oAnPg==}

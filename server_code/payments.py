@@ -111,7 +111,3 @@ def check_sub(user_dict):
 def check_subs():
     for user in app_tables.users.search(roles=['member']):
         _ = check_sub(user)
-
-
-
-    

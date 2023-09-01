@@ -47,27 +47,31 @@ def update_user(user_dict):
 def get_users():
     """Get a full list of the users."""
     clean_up_users()
-    return app_tables.users.client_writable()
+    user = anvil.users.get_user(allow_remembered=True)
+    return app_tables.users.client_writable(tenant=user['tenant'])
 
 
 @anvil.server.callable(require_user=role_screener)
 def get_applied():
     """Get a full list of the users."""
     clean_up_users()
-    return app_tables.users.search(roles=['applied'])
+    user = anvil.users.get_user(allow_remembered=True)
+    return app_tables.users.search(roles=['applied'], tenant=user['tenant'])
 
 
 @anvil.server.callable(require_user=role_screener)
 def get_pending():
     """Get a full list of the users."""
     clean_up_users()
-    return app_tables.users.search(roles=['pending'])
+    user = anvil.users.get_user(allow_remembered=True)
+    return app_tables.users.search(roles=['pending'], tenant=user['tenant'])
 
 
 @anvil.server.callable(require_user=role_screener)
 def reassign_roles(user_dict, roles):
     """Add pending status to applicant."""
-    user_ref = app_tables.users.get(email=user_dict['email'])
+    user = anvil.users.get_user(allow_remembered=True)
+    user_ref = app_tables.users.get(email=user_dict['email'], tenant=user['tenant'])
     user_ref['roles'] = roles
     return user_ref
 
@@ -75,12 +79,13 @@ def reassign_roles(user_dict, roles):
 def get_screener_link():
     """Get random screener."""
     import random
+    user = anvil.users.get_user(allow_remembered=True)
     return random.choice(
         [
             {
                 'first_name': r['first_name'],
                 'booking_link': r['booking_link'],
             }
-            for r in app_tables.users.search(roles=['screener'])
+            for r in app_tables.users.search(roles=['screener'], tenant=user['tenant'])
         ]
     )
