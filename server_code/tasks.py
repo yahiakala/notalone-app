@@ -3,29 +3,19 @@ import anvil.users
 from anvil.tables import app_tables
 import anvil.tables.query as q
 
+from .helpers import role_check
 
-def role_screener(user):
-    return 'screener' in user['roles'] or 'leader' in user['roles']
+from functools import partial
 
-
-def role_leader(user):
-    return 'leader' in user['roles']
-
-def role_pending_plus(user):
-    return 'pending' in user['roles'] or 'member' in user['roles']
+# def role_screener(user):
+#     return 'screener' in user['roles'] or 'leader' in user['roles']
 
 
-def role_check(user, permissions):
-    # Put together all the permissions into one dict
-    {'has this': True}
-    user_perms = []
-    for perm in user['roles']:
-        user_perms = max([i for i in user['roles'] if i[perm] == True])
-        
-    for permission in permissions:
-        perm_refs = app_tables.roles.search(tenant=user['tenant'], )
-        user['roles']
-        
+# def role_leader(user):
+#     return 'leader' in user['roles']
+
+# def role_pending_plus(user):
+#     return 'pending' in user['roles'] or 'member' in user['roles']
 
 
 def clean_up_user(user):
@@ -39,8 +29,8 @@ def clean_up_user(user):
 
 
 def clean_up_users():
-    for user in app_tables.users.search(roles=None):
-        user['roles'] = ['applied']
+    # for user in app_tables.users.search(roles=None):
+    #     user['roles'] = ['applied']
     for user in app_tables.users.search(first_name=None):
         user['first_name'] = ''
     for user in app_tables.users.search(last_name=None):
@@ -56,7 +46,8 @@ def update_user(user_dict):
     user = clean_up_user(user)
     return user
 
-@anvil.server.callable(require_user=role_leader)
+
+@anvil.server.callable(require_user=partial(role_check, permissions=['members']))
 def get_users():
     """Get a full list of the users."""
     clean_up_users()
@@ -64,15 +55,15 @@ def get_users():
     return app_tables.users.client_writable(tenant=user['tenant'])
 
 
-@anvil.server.callable(require_user=role_screener)
+@anvil.server.callable(require_user=partial(role_check, permissions=['screenings']))
 def get_applied():
     """Get a full list of the users."""
     clean_up_users()
     user = anvil.users.get_user(allow_remembered=True)
-    return app_tables.users.search(roles=['applied'], tenant=user['tenant'])
+    return app_tables.users.search(roles=None, tenant=user['tenant'])
 
 
-@anvil.server.callable(require_user=role_screener)
+@anvil.server.callable(require_user=partial(role_check, permissions=['screenings']))
 def get_pending():
     """Get a full list of the users."""
     clean_up_users()
@@ -80,7 +71,7 @@ def get_pending():
     return app_tables.users.search(roles=['pending'], tenant=user['tenant'])
 
 
-@anvil.server.callable(require_user=role_screener)
+@anvil.server.callable(require_user=partial(role_check, permissions=['screenings']))
 def reassign_roles(user_dict, roles):
     """Add pending status to applicant."""
     user = anvil.users.get_user(allow_remembered=True)
@@ -88,17 +79,20 @@ def reassign_roles(user_dict, roles):
     user_ref['roles'] = roles
     return user_ref
 
+
 @anvil.server.callable(require_user=True)
 def get_screener_link():
     """Get random screener."""
     import random
     user = anvil.users.get_user(allow_remembered=True)
+    screener_roles = app_tables.roles.search(screenings=True)
     return random.choice(
         [
             {
                 'first_name': r['first_name'],
                 'booking_link': r['booking_link'],
             }
-            for r in app_tables.users.search(roles=['screener'], tenant=user['tenant'])
+            for r in app_tables.users.search(booking_link=q.not_(None), tenant=user['tenant'])
+            if any(role in r['roles'] for role in screener_roles)
         ]
     )

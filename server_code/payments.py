@@ -4,8 +4,12 @@ import anvil.http
 from anvil.tables import app_tables
 import anvil.tables.query as q
 
-from .tasks import role_pending_plus, role_leader
+# from .tasks import role_pending_plus, role_leader
+from .helpers import role_check
 # https://developer.paypal.com/docs/api/subscriptions/v1/#subscriptions_create
+
+from functools import partial
+
 
 def get_paypal_auth():
     import requests
@@ -45,7 +49,7 @@ def get_subscriptions(subscription_id):
     return status, last_payment
 
 
-@anvil.server.callable(require_user=role_pending_plus)
+@anvil.server.callable(require_user=partial(role_check, permissions=['profile']))
 def create_sub(plan_amt):
     import requests
     access_token = get_paypal_auth()
@@ -92,12 +96,13 @@ def cancel_sub(**params):
     return 'You have cancelled enrollment. You can close this tab.'
 
 
-@anvil.server.callable(require_user=role_leader)
+@anvil.server.callable(require_user=partial(role_check, permissions=['members']))
 def check_sub(user_dict):
     from dateutil.relativedelta import relativedelta
     import datetime as dt
+    user = anvil.users.get_user(allow_remembered=True)
     
-    user_ref = app_tables.users.get(email=user_dict['email'])
+    user_ref = app_tables.users.get(email=user_dict['email'], tenant=user['tenant'])
     status, last_payment = get_subscriptions(user_ref['paypal_sub_id'])
     user_ref['payment_status'] = status
     if last_payment:
@@ -106,8 +111,9 @@ def check_sub(user_dict):
             user_ref['good_standing'] = True
     return user_ref
 
+
 #%% Scheduled Task -------------------------------
 @anvil.server.background_task
 def check_subs():
-    for user in app_tables.users.search(roles=['member']):
+    for user in app_tables.users.search():
         _ = check_sub(user)
