@@ -66,16 +66,12 @@ class HomeForm(HomeFormTemplate):
         self.link_profile.visible = False
         self.link_applicants.visible = False
         self.link_members.visible = False
-        
+
         if user:
-            if user['roles'] is None or user['roles'] == []:
-                self.link_apply.visible = True
-            elif 'member' in user['roles']:
-                self.link_profile.visible = True
-                if 'screener' in user['roles']:
-                    self.link_applicants.visible = True
-                if 'leader' in user['roles']:
-                    self.link_members.visible = True
+            self.link_apply.visible = not user['auth_profile']
+            self.link_profile.visible = user['auth_profile']
+            self.link_applicants.visible = user['auth_screenings']
+            self.link_members.visible = user['auth_members']
 
     def load_component(self, cmpt):
         self.content_panel.clear()
@@ -97,8 +93,6 @@ class HomeForm(HomeFormTemplate):
         elif page_name == 'profile' and user:
             self.load_component(ProfileComponent())
         elif page_name == 'applicants' and user:
-            if 'screener' in user['roles']:
-                self.load_component(ApplicantsComponent())
+            self.load_component(ApplicantsComponent())
         elif page_name == 'members' and user:
-            if 'leader' in user['roles']:
-                self.load_component(MembersComponent())
+            self.load_component(MembersComponent())

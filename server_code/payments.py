@@ -4,11 +4,8 @@ import anvil.http
 from anvil.tables import app_tables
 import anvil.tables.query as q
 
-# from .tasks import role_pending_plus, role_leader
-from .helpers import role_check
 # https://developer.paypal.com/docs/api/subscriptions/v1/#subscriptions_create
-
-from functools import partial
+from .helpers import permission_required
 
 
 def get_paypal_auth():
@@ -49,7 +46,7 @@ def get_subscriptions(subscription_id):
     return status, last_payment
 
 
-@anvil.server.callable(require_user=partial(role_check, permissions=['profile']))
+@anvil.server.callable(require_user=True)
 def create_sub(plan_amt):
     import requests
     access_token = get_paypal_auth()
@@ -96,7 +93,7 @@ def cancel_sub(**params):
     return 'You have cancelled enrollment. You can close this tab.'
 
 
-@anvil.server.callable(require_user=partial(role_check, permissions=['members']))
+@permission_required('auth_members')
 def check_sub(user_dict):
     from dateutil.relativedelta import relativedelta
     import datetime as dt

@@ -5,10 +5,7 @@ scheduled_tasks:
     every: day
     at: {minute: 0, hour: 10}
   job_id: DVJGVVKY
-dependencies:
-- dep_id: dep_xw2eskp2fzsmy6
-  version: {dev: false}
-  resolution_hints: {app_id: CVAFGUBPSRFZNPZD, name: anvil_extras, package_name: anvil_extras}
+dependencies: []
 services:
 - source: /runtime/services/tables.yml
   client_config: {enable_v2: true}
@@ -68,9 +65,6 @@ db_schema:
     - name: last_name
       type: string
       admin_ui: {width: 200, order: 10}
-    - name: rolesi
-      admin_ui: {order: 13, width: 200}
-      type: simpleObject
     - name: fb_url
       type: string
       admin_ui: {width: 200, order: 12}
@@ -99,10 +93,21 @@ db_schema:
       admin_ui: {width: 200}
       type: link_single
       target: tenants
-    - name: roles
-      admin_ui: {width: 200}
-      type: link_multiple
-      target: roles
+    - name: auth_screenings
+      type: bool
+      admin_ui: {width: 200, order: 22}
+    - name: auth_members
+      type: bool
+      admin_ui: {width: 200, order: 23}
+    - name: auth_profile
+      type: bool
+      admin_ui: {width: 200, order: 24}
+    - name: vol_exempt
+      admin_ui: {order: 21.75, width: 200}
+      type: bool
+    - name: auth_forumchat
+      type: bool
+      admin_ui: {width: 200, order: 29}
     title: Users
   tenants:
     client: none
@@ -112,36 +117,6 @@ db_schema:
       type: string
       admin_ui: {width: 200, order: 0}
     title: Tenants
-  roles:
-    title: Roles
-    client: none
-    server: full
-    columns:
-    - name: name
-      admin_ui: {width: 200}
-      type: string
-    - name: screenings
-      admin_ui: {order: 1, width: 107}
-      type: bool
-    - name: members
-      admin_ui: {order: 2, width: 134}
-      type: bool
-    - name: profile
-      admin_ui: {order: 3, width: 124}
-      type: bool
-    - name: tenant
-      admin_ui: {order: 0.5, width: 179}
-      type: link_single
-      target: tenants
-    - name: payment_exempt
-      admin_ui: {order: 4, width: 152}
-      type: bool
-    - name: roles
-      admin_ui: {order: 5, width: 99}
-      type: bool
-    - name: volunteer_exempt
-      admin_ui: {width: 200}
-      type: bool
 secrets:
   paypal_client_id:
     value: {T4BTSIBAI26CJ3RZ: z0JaieiqHt5mAySpe0CyP8l7CcI6X05wn+0dEesu3NMFYZv4QVFre0uh4aUkFfh/QNnAjL09sVz/1NUf+FNrpBfMtwb6SqP/FAOfTFnmyixrFOPTTqt26tXSbaaOPG7yn46l+vfy9Aso/0ZwOjTJcdPTR/YgLycournbmrgS6EHxE3ri8ayI5JDFT0cX8BLpatnKPBCUxmh23yShonuHlLTu+1p1Hy4Lw9bR0oAnPg==}

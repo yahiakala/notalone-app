@@ -2,23 +2,39 @@ import anvil.server
 from anvil.tables import app_tables
 import anvil.tables.query as q
 
-
-# def role_check(user, permissions):
-#     "Validate that a users role(s) have all the required permissions"
-#     perm_dict = {}
-#     for perm in permissions:
-#         for role in user['roles']:
-#             if role[perm] == True:
-#                 perm_dict[perm] = True
-#     print(perm_dict, len(perm_dict), len(permissions))
-#     return len(perm_dict) == len(permissions)
+from functools import wraps, partial
 
 
-# def perm_to_roles(permissions, all=True):
-#     perm_dict = {perm: True}
-#     app_tables.roles.search(
-#         tenant=user['tenant'],
-#         q.all_of(
-#             **perm_dict
-#         )
-#     )
+def permission_required(permissions):
+    def decorator(func):
+        @wraps(func)
+        def wrapper(*args, **kwargs):
+            return func(*args, **kwargs)
+        return anvil.server.callable(require_user=partial(check_user_auth, permissions=permissions))(wrapper)
+    return decorator
+
+
+def check_user_auth(user, permissions):
+    if user is None:
+        return False
+        
+    if isinstance(permissions, str):
+        required_permissions = set([permissions])
+    else:
+        required_permissions = set(permissions)
+
+    try:
+        user_permissions = set(
+            [
+                permission
+                for permission in required_permissions
+                if user[permission] == True
+            ]
+        )
+    except Exception:
+        return False
+        
+    if not required_permissions.issubset(user_permissions):
+        return False
+        
+    return True
