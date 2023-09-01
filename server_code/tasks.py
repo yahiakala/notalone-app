@@ -70,3 +70,17 @@ def reassign_roles(user_dict, roles):
     user_ref = app_tables.users.get(email=user_dict['email'])
     user_ref['roles'] = roles
     return user_ref
+
+@anvil.server.callable(require_user=True)
+def get_screener_link():
+    """Get random screener."""
+    import random
+    return random.choice(
+        [
+            {
+                'first_name': r['first_name'],
+                'booking_link': r['booking_link'],
+            }
+            for r in app_tables.users.search(roles=['screener'])
+        ]
+    )

@@ -21,26 +21,19 @@ components:
     layout_properties: {grid_position: 'FQGWFU,WIWRTG'}
   - type: Label
     properties: {role: null, align: left, tooltip: '', border: '', foreground: '',
-      visible: true, text: 'Please choose one of the screeners below to book your
-        interview with. ', font_size: null, font: '', spacing_above: small, icon_align: left,
-      spacing_below: small, italic: false, background: '', bold: false, underline: false,
-      icon: ''}
+      visible: true, text: 'Please use the link below to book your interview. ', font_size: null,
+      font: '', spacing_above: small, icon_align: left, spacing_below: small, italic: false,
+      background: '', bold: false, underline: false, icon: ''}
     name: lbl_book_instr
     layout_properties: {grid_position: 'YYPSON,GGZMWC'}
   - type: Link
-    properties: {role: null, url: 'https://calendly.com/yahya-exmto/screening', align: center,
-      tooltip: '', border: '', foreground: '', visible: true, text: Book an Interview with Yahya,
-      font_size: null, wrap_on: mobile, font: '', col_spacing: medium, spacing_above: small,
-      icon_align: left, col_widths: '', spacing_below: small, italic: false, background: '',
-      bold: true, underline: true, icon: 'fa:calendar'}
-    name: link_yahya_book
+    properties: {role: title, url: '', align: center, tooltip: '', border: '', foreground: '',
+      visible: true, text: '', font_size: null, wrap_on: mobile, font: '', col_spacing: medium,
+      spacing_above: small, icon_align: left, col_widths: '', spacing_below: small,
+      italic: false, background: '', bold: true, underline: true, icon: 'fa:calendar'}
+    name: link_book
     layout_properties: {grid_position: 'CJEIQS,WCVFGC'}
-  - type: Link
-    properties: {role: null, url: 'https://calendly.com/zee-exmto/30min', align: center,
-      tooltip: '', border: '', foreground: '', visible: true, text: Book an Interview with Zee,
-      font_size: null, wrap_on: mobile, font: '', col_spacing: medium, spacing_above: small,
-      icon_align: left, col_widths: '', spacing_below: small, italic: false, background: '',
-      bold: true, underline: true, icon: 'fa:calendar'}
-    name: link_zee_book
-    layout_properties: {grid_position: 'CJEIQS,SXXYGA'}
+    data_bindings:
+    - {property: text, code: '''Book interview with '' + self.item[''first_name'']'}
+    - {property: url, code: 'self.item[''booking_link'']'}
 is_package: true

@@ -6,7 +6,8 @@ global_dict = {
     'user': None,
     'users': None,
     'applied': None,
-    'pending': None
+    'pending': None,
+    'screener_link': None
 }
 
 

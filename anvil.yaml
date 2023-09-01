@@ -86,6 +86,9 @@ db_schema:
     - name: last_check
       type: date
       admin_ui: {width: 200, order: 18}
+    - name: booking_link
+      admin_ui: {width: 200}
+      type: string
     title: Users
 secrets:
   paypal_client_id:
