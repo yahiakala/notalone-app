@@ -75,7 +75,7 @@ class HomeForm(HomeFormTemplate):
         self.link_members.visible = False
 
         if user:
-            self.link_apply.visible = not user['auth_profile']
+            self.link_apply.visible = user['auth_booking']
             self.link_profile.visible = user['auth_profile']
             self.link_applicants.visible = user['auth_screenings']
             self.link_members.visible = user['auth_members']

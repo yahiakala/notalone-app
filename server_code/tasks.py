@@ -58,45 +58,37 @@ def get_users():
     return app_tables.users.client_writable(tenant=user['tenant'])
 
 
-# @permission_required('auth_screenings')
-# def get_applied():
-#     """Get users that have applied but not screened yet."""
-#     clean_up_users()
-#     user = anvil.users.get_user(allow_remembered=True)
-#     return app_tables.users.search(auth_profile=False, isolated=False, tenant=user['tenant'])
-
-
-# @permission_required('auth_screenings')
-# def get_pending():
-#     """Get users that have been screened and approved."""
-#     clean_up_users()
-#     user = anvil.users.get_user(allow_remembered=True)
-#     return app_tables.users.search(auth_profile=True, auth_forumchat=False, tenant=user['tenant'])
-
-
 @permission_required('auth_screenings')
 def get_applicants():
-    """Get restricted, client writable view of applicants."""
+    """Get restricted, client readable view of applicants."""
     clean_up_users()
     user = anvil.users.get_user(allow_remembered=True)
-    return app_tables.users.client_readable(
-        q.only_cols("email", "first_name", "last_name", "auth_profile", "auth_forumchat", "isolated", "good_standing"),
+    readable_view = app_tables.users.client_readable(
+        q.only_cols("email", "first_name", "last_name", "auth_profile", "auth_forumchat", "good_standing"),
         tenant=user['tenant']
     )
+    # TODO: if this doesn't work, can use advanced stuff in 'search'
+    writable_view = app_tables.users.client_writable(
+        q.only_cols('auth_profile', 'auth_forumchat'),
+        tenant=user['tenant'],
+        auth_forumchat=q.not_(True)
+    )
+    return readable_view, writable_view
 
 
-@permission_required('auth_screenings')
-def reassign_roles(user_dict, role_dict):
-    """Reset roles for a user."""
-    user = anvil.users.get_user(allow_remembered=True)
-    user_ref = app_tables.users.get(email=user_dict['email'], tenant=user['tenant'])
-    for col_name, val in role_dict.items():
-        if col_name in ['auth_profile', 'auth_forumchat', 'isolated']:
-            user_ref[col_name] = val
-    return user_ref
+# @permission_required('auth_screenings')
+# def reassign_roles(user_dict, role_dict):
+#     """Reset roles for a user."""
+#     # TODO: refactor with a client writable view
+#     user = anvil.users.get_user(allow_remembered=True)
+#     user_ref = app_tables.users.get(email=user_dict['email'], tenant=user['tenant'])
+#     for col_name, val in role_dict.items():
+#         if col_name in ['auth_profile', 'auth_forumchat']:
+#             user_ref[col_name] = val
+#     return user_ref
 
 
-@anvil.server.callable(require_user=True)
+@permission_required('auth_booking')
 def get_screener_link():
     """Get random screener."""
     import random
