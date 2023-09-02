@@ -114,6 +114,9 @@ db_schema:
     - name: auth_forumchat
       type: bool
       admin_ui: {width: 200, order: 29}
+    - name: isolated
+      type: bool
+      admin_ui: {width: 200, order: 30}
     title: Users
   tenants:
     client: none
@@ -122,6 +125,9 @@ db_schema:
     - name: email
       type: string
       admin_ui: {width: 200, order: 0}
+    - name: name
+      admin_ui: {width: 598, order: 1}
+      type: string
     title: Tenants
 secrets:
   paypal_client_id:

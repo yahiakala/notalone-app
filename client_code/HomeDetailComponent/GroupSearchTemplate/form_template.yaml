@@ -1,0 +1,25 @@
+container:
+  type: ColumnPanel
+  properties: {col_widths: '{}'}
+components:
+- type: ColumnPanel
+  properties: {role: outlined-card, col_widths: '{"LVBGCU":50,"JUAODC":10}'}
+  name: cp_groupresult
+  layout_properties: {grid_position: 'RRGQSB,PXUSVI'}
+  components:
+  - type: Label
+    properties: {}
+    name: lbl_group_name
+    layout_properties: {grid_position: 'GHFHVP,LVBGCU'}
+    data_bindings:
+    - {property: text, code: 'self.item[''name'']'}
+  - type: Button
+    properties: {role: tonal-button, align: center, tooltip: '', border: '', enabled: true,
+      foreground: '', visible: true, text: Join, font_size: null, font: '', spacing_above: small,
+      icon_align: left, spacing_below: small, italic: false, background: '', bold: false,
+      underline: false, icon: ''}
+    name: btn_join
+    layout_properties: {grid_position: 'GHFHVP,JUAODC'}
+    data_bindings: []
+    event_bindings: {click: btn_join_click}
+is_package: true

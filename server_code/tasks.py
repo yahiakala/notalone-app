@@ -22,6 +22,23 @@ def clean_up_users():
 
 
 @anvil.server.callable(require_user=True)
+def get_tenants():
+    user = anvil.users.get_user(allow_remembered=True)
+    if user['tenant'] is None:
+        return app_tables.tenants.client_readable(q.only_cols('name'))
+    else:
+        return []
+
+
+@anvil.server.callable(require_user=True)
+def join_tenant(id):
+    user = anvil.users.get_user(allow_remembered=True)
+    if user['tenant'] is None:
+        user['tenant'] = app_tables.tenants.get_by_id(id)
+    return user
+
+
+@anvil.server.callable(require_user=True)
 def update_user(user_dict):
     user = anvil.users.get_user(allow_remembered=True)
     for key in ['first_name', 'last_name', 'fb_url', 'fee', 'payment_email', 'consent_check', 'paypal_sub_id']:
@@ -39,29 +56,41 @@ def get_users():
     return app_tables.users.client_writable(tenant=user['tenant'])
 
 
+# @permission_required('auth_screenings')
+# def get_applied():
+#     """Get users that have applied but not screened yet."""
+#     clean_up_users()
+#     user = anvil.users.get_user(allow_remembered=True)
+#     return app_tables.users.search(auth_profile=False, isolated=False, tenant=user['tenant'])
+
+
+# @permission_required('auth_screenings')
+# def get_pending():
+#     """Get users that have been screened and approved."""
+#     clean_up_users()
+#     user = anvil.users.get_user(allow_remembered=True)
+#     return app_tables.users.search(auth_profile=True, auth_forumchat=False, tenant=user['tenant'])
+
+
 @permission_required('auth_screenings')
-def get_applied():
-    """Get users that have applied but not screened yet."""
+def get_applicants():
+    """Get restricted, client writable view of applicants."""
     clean_up_users()
     user = anvil.users.get_user(allow_remembered=True)
-    return app_tables.users.search(auth_profile=False, tenant=user['tenant'])
+    return app_tables.users.client_readable(
+        q.only_cols("email", "first_name", "last_name", "auth_profile", "auth_forumchat", "isolated", "good_standing"),
+        tenant=user['tenant']
+    )
 
 
 @permission_required('auth_screenings')
-def get_pending():
-    """Get users that have been screened and approved."""
-    clean_up_users()
-    user = anvil.users.get_user(allow_remembered=True)
-    return app_tables.users.search(auth_profile=True, auth_forumchat=False, tenant=user['tenant'])
-
-
-@permission_required('auth_screenings')
-def reassign_roles(user_dict, roles):
+def reassign_roles(user_dict, role_dict):
     """Reset roles for a user."""
     user = anvil.users.get_user(allow_remembered=True)
     user_ref = app_tables.users.get(email=user_dict['email'], tenant=user['tenant'])
-    for role, val in roles.items():
-        user_ref[role] = val
+    for col_name, val in role_dict.items():
+        if col_name in ['auth_profile', 'auth_forumchat', 'isolated']:
+            user_ref[col_name] = val
     return user_ref
 
 

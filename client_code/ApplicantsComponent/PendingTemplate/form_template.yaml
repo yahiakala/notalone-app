@@ -1,13 +1,14 @@
 container:
   type: ColumnPanel
-  properties: {col_widths: '{"DCOHLJ":11,"EMQXVQ":44,"ZJUSDP":25}'}
+  properties: {col_widths: '{"DCOHLJ":28,"EMQXVQ":27,"ZJUSDP":25}'}
 components:
 - type: Label
   properties: {}
   name: lbl_name
   layout_properties: {grid_position: 'URUZIO,DCOHLJ'}
   data_bindings:
-  - {property: text, code: 'self.item[''first_name''] + '' '' + self.item[''last_name'']'}
+  - {property: text, code: 'self.item[''first_name''] + '' '' + self.item[''last_name'']
+      + '' ('' + self.item[''email''] + '')'''}
 - type: Label
   properties: {}
   name: lbl_payment_status

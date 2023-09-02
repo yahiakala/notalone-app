@@ -58,7 +58,7 @@ components:
   data_bindings:
   - {property: text, code: str(self.mb_count) + ' result(s)'}
 - type: RepeatingPanel
-  properties: {item_template: MembersComponent.ItemTemplate3}
+  properties: {item_template: MembersComponent.MemberTemplate}
   name: rp_members
   layout_properties: {grid_position: 'XTODFR,LDLSAT'}
   data_bindings:

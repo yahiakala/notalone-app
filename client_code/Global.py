@@ -5,7 +5,9 @@ import anvil.users
 global_dict = {
     'user': None,
     'users': None,
+    'tenants': None,
     'applied': None,
+    'applicants': None,
     'pending': None,
     'screener_link': None
 }

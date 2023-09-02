@@ -1,11 +1,9 @@
-from ._anvil_designer import ItemTemplate1Template
+from ._anvil_designer import ApplicantTemplateTemplate
 from anvil import *
 import anvil.server
 
-from .. import Global
 
-
-class ItemTemplate1(ItemTemplate1Template):
+class ApplicantTemplate(ApplicantTemplateTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
@@ -13,10 +11,10 @@ class ItemTemplate1(ItemTemplate1Template):
 
     def btn_accept_click(self, **event_args):
         """This method is called when the button is clicked"""
-        self.item = anvil.server.call('reassign_roles', self.item, ['pending'])
-        self.parent.raise_event('x-refresh1')
+        _ = anvil.server.call('reassign_roles', self.item, {'auth_profile': True})
+        self.parent.raise_event('x-refresh')
 
     def btn_reject_click(self, **event_args):
         """This method is called when the button is clicked"""
-        self.item = anvil.server.call('reassign_roles', self.item, ['rejected'])
-        self.parent.raise_event('x-refresh1')
+        _ = anvil.server.call('reassign_roles', self.item, {'isolated': True})
+        self.parent.raise_event('x-refresh')

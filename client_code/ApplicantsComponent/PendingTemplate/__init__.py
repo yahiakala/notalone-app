@@ -1,11 +1,11 @@
-from ._anvil_designer import ItemTemplate2Template
+from ._anvil_designer import PendingTemplateTemplate
 from anvil import *
 import anvil.server
 
 from ... import Global
 
 
-class ItemTemplate2(ItemTemplate2Template):
+class PendingTemplate(PendingTemplateTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
@@ -16,5 +16,5 @@ class ItemTemplate2(ItemTemplate2Template):
 
     def btn_added_click(self, **event_args):
         """This method is called when the button is clicked"""
-        self.item = anvil.server.call('reassign_roles', self.item, ['member'])
-        self.parent.raise_event('x-refresh1')
+        _ = anvil.server.call('reassign_roles', self.item, {'auth_forumchat': True})
+        self.parent.raise_event('x-refresh')

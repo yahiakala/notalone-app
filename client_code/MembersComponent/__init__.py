@@ -10,19 +10,19 @@ import datetime as dt
 class MembersComponent(MembersComponentTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.
-        print("Client: Getting members ", dt.datetime.now().strftime("%H:%M:%S.%f"))
-        self.members = Global.users.search(roles=['member'])
-        print("Client: Got members ", dt.datetime.now().strftime("%H:%M:%S.%f"))
-        self.mb_count = len(self.members)
-        self.mb_count_show = min(5, self.mb_count)
+        # print("Client: Getting members ", dt.datetime.now().strftime("%H:%M:%S.%f"))
+        # self.members = Global.users.search(auth_profile=True)
+        # print("Client: Got members ", dt.datetime.now().strftime("%H:%M:%S.%f"))
+        self.populate_rp()
         self.init_components(**properties)
         self.payment_exempt = [['screener', 'leader']]
 
-        self.rp_members.add_event_handler('x-refresh1', self.update_stuff)
+        # self.rp_members.add_event_handler('x-refresh', self.populate_rp)
 
-    def update_stuff(self, **event_args):
-        self.members = Global.users.search(roles=['member'])
-        self.refresh_data_bindings()
+    def populate_rp(self, **event_args):
+        self.members = Global.users.search()
+        self.mb_count = len(self.members)
+        self.mb_count_show = min(5, self.mb_count)
 
     def btn_show_more_click(self, **event_args):
         """This method is called when the button is clicked"""
@@ -48,26 +48,23 @@ class MembersComponent(MembersComponentTemplate):
                 first_name=q.ilike(search_txt),
                 last_name=q.ilike(search_txt),
                 email=q.ilike(search_txt)
-            ),
-            roles=['member']
+            )
         )
         self.refresh_search()
 
     def btn_clear_search_click(self, **event_args):
         """This method is called when the button is clicked"""
-        self.members = Global.users.search(roles=['member'])
+        self.populate_rp()
         self.refresh_search()
         self.tb_mb_search.text = None
         self.btn_clear_search.visible = False
         
-        
-
     def btn_nosub_click(self, **event_args):
         """This method is called when the button is clicked"""
         self.members = Global.users.search(
             paypal_sub_id=None,
             fee=q.not_(0),
-            roles=['member']
+            auth_forumchat=True
         )
         self.refresh_search()
         self.btn_nosub.role = 'filled-button'
@@ -78,13 +75,13 @@ class MembersComponent(MembersComponentTemplate):
             paypal_sub_id=q.not_(None),
             payment_status=q.not_('ACTIVE'),
             fee=q.not_(0),
-            roles=['member'],
             payment_expiry=q.between(
                 min=dt.date.today(),
                 max=dt.date.today() + dt.timedelta(days=30),
                 min_inclusive=True,
                 max_inclusive=False
-            )
+            ),
+            auth_forumchat=True
         )
         self.refresh_search()
         self.btn_expiring_soon.role = 'filled-button'
@@ -95,7 +92,7 @@ class MembersComponent(MembersComponentTemplate):
             paypal_sub_id=q.not_(None),
             payment_status=q.not_('ACTIVE'),
             fee=q.not_(0),
-            roles=['member'],
+            auth_forumchat=True,
             payment_expiry=q.less_than(dt.date.today())
         )
         self.refresh_search()
