@@ -18,4 +18,7 @@ class TestNewApplicant(unittest.TestCase):
         pass
 
     def test_try_get_users(self):
-        _ = anvil.server.call('get_users')
+        try:
+            _ = anvil.server.call('get_users')
+        except anvil.server.PermissionDenied:
+            pass

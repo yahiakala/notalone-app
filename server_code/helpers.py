@@ -1,6 +1,4 @@
 import anvil.server
-from anvil.tables import app_tables
-import anvil.tables.query as q
 
 from functools import wraps, partial
 
@@ -15,7 +13,7 @@ def permission_required(permissions):
 
 
 def check_user_auth(user, permissions):
-    print('Checking user auth')
+    print('Checking user auth: ', permissions)
     if user is None:
         return False
         
