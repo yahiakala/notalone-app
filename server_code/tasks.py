@@ -35,6 +35,8 @@ def join_tenant(id):
     user = anvil.users.get_user(allow_remembered=True)
     if user['tenant'] is None:
         user['tenant'] = app_tables.tenants.get_by_id(id)
+        # Now let the user book an interview
+        user['auth_booking'] = True
     return user
 
 
