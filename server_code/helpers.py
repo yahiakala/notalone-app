@@ -15,6 +15,7 @@ def permission_required(permissions):
 
 
 def check_user_auth(user, permissions):
+    print('Checking user auth')
     if user is None:
         return False
         

@@ -1,4 +1,4 @@
-"""Test onboarding process."""
+"""Test onboarding process. Need to be logged in as a user with no auth privileges."""
 import unittest
 import anvil.server
 import time
@@ -16,3 +16,6 @@ class TestNewApplicant(unittest.TestCase):
 
     def test_book_interview(self):
         pass
+
+    def test_try_get_users(self):
+        _ = anvil.server.call('get_users')

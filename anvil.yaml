@@ -9,6 +9,9 @@ dependencies:
 - dep_id: dep_vscdshbjqihr0e
   version: {version_tag: v0.06}
   resolution_hints: {app_id: 6VBEPOB6UHF74UKK, name: Anvil Labs, package_name: anvil_labs}
+- dep_id: dep_dmhomulhrajp9w
+  version: {dev: false}
+  resolution_hints: {app_id: CVAFGUBPSRFZNPZD, name: anvil_extras, package_name: anvil_extras}
 services:
 - source: /runtime/services/tables.yml
   client_config: {enable_v2: true}
