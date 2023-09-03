@@ -67,25 +67,25 @@ def get_applicants():
         q.only_cols("email", "first_name", "last_name", "auth_profile", "auth_forumchat", "good_standing"),
         tenant=user['tenant']
     )
-    # TODO: if this doesn't work, can use advanced stuff in 'search'
+    # TODO: might not be necessary.
     writable_view = app_tables.users.client_writable(
         q.only_cols('auth_profile', 'auth_forumchat'),
         tenant=user['tenant'],
         auth_forumchat=q.not_(True)
     )
-    return readable_view, writable_view
+    return readable_view
 
 
-# @permission_required('auth_screenings')
-# def reassign_roles(user_dict, role_dict):
-#     """Reset roles for a user."""
-#     # TODO: refactor with a client writable view
-#     user = anvil.users.get_user(allow_remembered=True)
-#     user_ref = app_tables.users.get(email=user_dict['email'], tenant=user['tenant'])
-#     for col_name, val in role_dict.items():
-#         if col_name in ['auth_profile', 'auth_forumchat']:
-#             user_ref[col_name] = val
-#     return user_ref
+@permission_required('auth_screenings')
+def reassign_roles(user_dict, role_dict):
+    """Reset roles for a user."""
+    # TODO: refactor with a client writable view?
+    user = anvil.users.get_user(allow_remembered=True)
+    user_ref = app_tables.users.get(email=user_dict['email'], tenant=user['tenant'])
+    for col_name, val in role_dict.items():
+        if col_name in ['auth_profile', 'auth_forumchat']:
+            user_ref[col_name] = val
+    return user_ref
 
 
 @permission_required('auth_booking')
