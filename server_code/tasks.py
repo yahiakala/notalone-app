@@ -43,11 +43,10 @@ def join_tenant(id):
 @anvil.server.callable(require_user=True)
 def leave_tenant():
     user = anvil.users.get_user(allow_remembered=True)
-    if user['tenant'] is not None:
-        user['tenant'] = None
-        for key, val in user.items():
-            if 'auth_' in key and 'auth_dev' not in key:
-                user[key] = False
+    for key, val in user.items():
+        if 'auth_' in key and 'auth_dev' not in key:
+            user[key] = False
+    user['tenant'] = None
     return user
 
 

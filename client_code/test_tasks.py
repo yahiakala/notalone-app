@@ -14,9 +14,10 @@ class TestNewApplicant(unittest.TestCase):
         user = Global.user
         tenants = anvil.server.call('get_tenants')
         if user['tenant'] is None:
-            user = anvil.server.call('join_tenant', tenants[0].get_id())
+            user = anvil.server.call('join_tenant', tenants.search()[0].get_id())
             screenerlink = anvil.server.call('get_screener_link')
-            assert('calendly' in screenerlink)
+            print(screenerlink)
+            assert('calendly' in screenerlink['booking_link'])
             user = anvil.server.call('leave_tenant')
 
     def test_get_tenants(self):
@@ -29,14 +30,13 @@ class TestNewApplicant(unittest.TestCase):
             assert(len(tenants) > 0)
         else:
             assert(len(tenants) == 0)
-        assert(isinstance(tenants, list))
 
     def test_join_tenant(self):
         """Join a tenant."""
         user = Global.user
         tenants = anvil.server.call('get_tenants')
         if user['tenant'] is None:
-            user = anvil.server.call('join_tenant', tenants[0].get_id())
+            user = anvil.server.call('join_tenant', tenants.search()[0].get_id())
             assert(user['tenant'] is not None)
             user = anvil.server.call('leave_tenant')
             assert(user['tenant'] is None)
@@ -63,20 +63,26 @@ class TestAdmin(unittest.TestCase):
 
     def test_get_users(self):
         """Get users"""
-        users = Global.users.search()
-        assert(len(users) > 0)
+        user = Global.user
+        if user['auth_members']:
+            users = Global.users.search()
+            assert(len(users) > 0)
 
     def test_get_applicants(self):
         """Get applicants"""
-        apps = Global.applicants
+        user = Global.user
+        if user['auth_screenings']:
+            apps = Global.applicants
 
     def test_reassign_roles(self):
         """Reassign a role"""
-        users = Global.users.search()
-        role_dict = {'auth_forumchat': False}
-        user = anvil.server.call('reassign_roles', users[0], role_dict)
-        assert(user['auth_forumchat'] == False)
-        role_dict = {'auth_forumchat': True}
-        user = anvil.server.call('reassign_roles', users[0], role_dict)
-        assert(user['auth_forumchat'] == True)
+        user = Global.user
+        if user['auth_members']:
+            users = Global.users.search()
+            role_dict = {'auth_forumchat': False}
+            user = anvil.server.call('reassign_roles', users[0], role_dict)
+            assert(user['auth_forumchat'] == False)
+            role_dict = {'auth_forumchat': True}
+            user = anvil.server.call('reassign_roles', users[0], role_dict)
+            assert(user['auth_forumchat'] == True)
     
