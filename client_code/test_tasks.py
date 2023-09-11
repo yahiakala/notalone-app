@@ -1,4 +1,4 @@
-"""Test onboarding process. Need to be logged in as a user with no auth privileges."""
+"""Test onboarding process."""
 import unittest
 import anvil.server
 import time
@@ -18,6 +18,7 @@ class TestNewApplicant(unittest.TestCase):
         pass
 
     def test_try_get_users(self):
+        # TODO: check user privileges and change test logic based on that.
         try:
             _ = anvil.server.call('get_users')
         except anvil.server.PermissionDenied:

@@ -114,9 +114,6 @@ db_schema:
     - name: auth_forumchat
       type: bool
       admin_ui: {width: 200, order: 29}
-    - name: isolated
-      type: bool
-      admin_ui: {width: 200, order: 30}
     - name: auth_booking
       type: bool
       admin_ui: {width: 200, order: 31}

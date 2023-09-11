@@ -25,16 +25,12 @@ class MemberTemplate(MemberTemplateTemplate):
         for i, j in self.item.items():
             if i.startswith('auth_'):
                 self.item[i] = False
-        self.item['isolated'] = True
         self.refresh_data_bindings()
 
     def btn_restore_click(self, **event_args):
         """This method is called when the button is clicked"""
-        for i, j in self.item.items():
-            if i.startswith('auth_'):
-                self.item[i] = False
-        self.item['isolated'] = False
         self.item['auth_profile'] = True
+        self.item['auth_forumchat'] = True
         self.refresh_data_bindings()
 
     def btn_refresh_click(self, **event_args):
