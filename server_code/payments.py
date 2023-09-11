@@ -98,8 +98,13 @@ def check_sub(user_dict):
     from dateutil.relativedelta import relativedelta
     import datetime as dt
     user = anvil.users.get_user(allow_remembered=True)
-
+    if user_dict['tenant'] != user['tenant']:
+        return None
+        
     user_ref = app_tables.users.get(email=user_dict['email'], tenant=user['tenant'])
+    if not user_ref:
+        return None
+
     status, last_payment = get_subscriptions(user_ref['paypal_sub_id'])
     user_ref['payment_status'] = status
     if last_payment:

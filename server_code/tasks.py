@@ -41,9 +41,20 @@ def join_tenant(id):
 
 
 @anvil.server.callable(require_user=True)
+def leave_tenant():
+    user = anvil.users.get_user(allow_remembered=True)
+    if user['tenant'] is not None:
+        user['tenant'] = None
+        for key, val in user.items():
+            if 'auth_' in key and 'auth_dev' not in key:
+                user[key] = False
+    return user
+
+
+@anvil.server.callable(require_user=True)
 def update_user(user_dict):
     user = anvil.users.get_user(allow_remembered=True)
-    for key in ['first_name', 'last_name', 'fb_url', 'fee', 'payment_email', 'consent_check', 'paypal_sub_id']:
+    for key in ['first_name', 'last_name', 'fb_url', 'fee', 'consent_check', 'paypal_sub_id']:
         if user[key] != user_dict[key]:
             user[key] = user_dict[key]
     user = clean_up_user(user)
@@ -68,11 +79,11 @@ def get_applicants():
         tenant=user['tenant']
     )
     # TODO: might not be necessary.
-    writable_view = app_tables.users.client_writable(
-        q.only_cols('auth_profile', 'auth_forumchat'),
-        tenant=user['tenant'],
-        auth_forumchat=q.not_(True)
-    )
+    # writable_view = app_tables.users.client_writable(
+    #     q.only_cols('auth_profile', 'auth_forumchat'),
+    #     tenant=user['tenant'],
+    #     auth_forumchat=q.not_(True)
+    # )
     return readable_view
 
 

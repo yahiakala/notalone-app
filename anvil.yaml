@@ -66,8 +66,8 @@ db_schema:
       type: datetime
       admin_ui: {order: 8, width: 200}
     - name: first_name
+      admin_ui: {order: 9, width: 200}
       type: string
-      admin_ui: {width: 200, order: 9}
     - name: last_name
       type: string
       admin_ui: {width: 200, order: 10}
@@ -117,6 +117,9 @@ db_schema:
     - name: auth_booking
       type: bool
       admin_ui: {width: 200, order: 31}
+    - name: auth_dev
+      type: bool
+      admin_ui: {width: 200, order: 32}
     title: Users
   tenants:
     client: none

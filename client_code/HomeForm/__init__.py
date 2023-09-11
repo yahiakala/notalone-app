@@ -104,10 +104,10 @@ class HomeForm(HomeFormTemplate):
         elif page_name == 'members' and user:
             self.load_component(MembersComponent())
         elif page_name == 'tests' and user:
-            from .. import test_onboarding
+            from .. import test_forms, test_server, test_tasks
             self.load_component(
                 ClientTestComponent(
-                    test_modules=[test_onboarding],
+                    test_modules=[test_forms, test_server, test_tasks],
                     card_roles=['tonal-card', 'elevated-card', 'elevated-card'],
                     icon_size=30,
                     btn_role='filled-button',

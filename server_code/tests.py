@@ -10,11 +10,13 @@ from . import tasks
 @permission_required('auth_dev')
 def test_clean_up_user():
     user = anvil.users.get_user(allow_remembered=True)
-    clean_up_user(user)
+    tasks.clean_up_user(user)
+
 
 @permission_required('auth_dev')
 def test_clean_up_users():
-    clean_up_users()
+    tasks.clean_up_users()
+
 
 @permission_required('auth_dev')
 def test_get_paypal_auth():
@@ -23,4 +25,17 @@ def test_get_paypal_auth():
 
 @permission_required('auth_dev')
 def test_get_subscriptions():
-    payments.get_subscriptions()
+    user = anvil.users.get_user(allow_remembered=True)
+    if user['paypal_sub_id']:
+        payments.get_subscriptions(user['paypal_sub_id'])
+
+
+@permission_required('auth_dev')
+def test_check_subs():
+    payments.check_subs()
+
+
+@permission_required('auth_dev')
+def test_check_sub():
+    user = anvil.users.get_user(allow_remembered=True)
+    payments.check_sub(user)
