@@ -83,6 +83,7 @@ class HomeForm(HomeFormTemplate):
     def load_component(self, cmpt):
         self.content_panel.clear()
         self.content_panel.add_component(cmpt)
+        cmpt.add_event_handler('x-refresh', self.refresh_everything)
 
     def set_active_nav(self, state):
         self.link_home.role = 'selected' if state == 'home' else None
@@ -113,3 +114,9 @@ class HomeForm(HomeFormTemplate):
                     btn_role='filled-button',
                 )
             )
+
+    def refresh_everything(self, **event_args):
+        """Refresh mainly the menu links."""
+        self.user = Global.user
+        self.set_account_state(user)
+        self.refresh_data_bindings()
