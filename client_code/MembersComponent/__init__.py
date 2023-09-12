@@ -64,6 +64,7 @@ class MembersComponent(MembersComponentTemplate):
         self.members = Global.users.search(
             paypal_sub_id=None,
             fee=q.not_(0),
+            good_standing=False,
             auth_forumchat=True
         )
         self.refresh_search()
