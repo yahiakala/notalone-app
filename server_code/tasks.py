@@ -111,7 +111,7 @@ def reassign_roles(user_dict, role_dict):
     user = anvil.users.get_user(allow_remembered=True)
     user_ref = app_tables.users.get(email=user_dict['email'], tenant=user['tenant'])
     for col_name, val in role_dict.items():
-        if col_name in ['auth_profile', 'auth_forumchat']:
+        if col_name in ['auth_profile', 'auth_forumchat', 'auth_booking']:
             user_ref[col_name] = val
     return user_ref
 
