@@ -46,13 +46,13 @@ class ApplyNowForm(unittest.TestCase):
 
     def setUp(self):
         self.user = Global.user
-        from .BookingComponent import BookingComponent
+        # from .BookingComponent import BookingComponent
         from .HomeForm import HomeForm
-        self.form = BookingComponent()
+        # self.form = BookingComponent()
         self.home = HomeForm()
         print('Setup Complete')
 
-    def test_apply_now_visible(self):
+    def test_apply_now_visible_1(self):
         if self.user['auth_booking']:
             assert(self.home.link_apply.visible == True)
         else:
@@ -60,4 +60,10 @@ class ApplyNowForm(unittest.TestCase):
 
     def test_apply_now_visible_2(self):
         """Test that the apply now button becomes visible once you select a group."""
-        pass
+        if not self.user['auth_booking']:
+            tenants = anvil.server.call('get_tenants')
+            search_term = self.home.cmpt.tb_search_group.text = 'e'
+            self.home.cmpt.tb_search_group.raise_event('pressed_enter')
+            # first_thing = self.home.cmpt.rp_groups.get_components()[0]
+            # user = anvil.server.call('join_tenant', tenants.search()[0].get_id())
+            

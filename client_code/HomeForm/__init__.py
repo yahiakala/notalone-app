@@ -81,6 +81,7 @@ class HomeForm(HomeFormTemplate):
             self.link_members.visible = user['auth_members']
 
     def load_component(self, cmpt):
+        self.cmpt = cmpt
         self.content_panel.clear()
         self.content_panel.add_component(cmpt)
         cmpt.add_event_handler('x-refresh', self.refresh_everything)
