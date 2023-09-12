@@ -15,7 +15,7 @@ class MembersComponent(MembersComponentTemplate):
         # print("Client: Got members ", dt.datetime.now().strftime("%H:%M:%S.%f"))
         self.populate_rp()
         self.init_components(**properties)
-        self.payment_exempt = [['screener', 'leader']]
+        # self.payment_exempt = [['screener', 'leader']]
 
         # self.rp_members.add_event_handler('x-refresh', self.populate_rp)
 

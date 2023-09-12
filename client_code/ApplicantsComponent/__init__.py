@@ -19,10 +19,10 @@ class ApplicantsComponent(ApplicantsComponentTemplate):
 
     def populate_rp(self, **event_args):
         self.rp_applicants.items = Global.applicants.search(
-            auth_profile=q.not_(True)
+            auth_profile=q.not_(True),
+            auth_booking=True
         )
         self.rp_pending.items = Global.applicants.search(
-            auth_profile=True,
-            auth_forumchat=q.not_(True)
+            auth_profile=True
         )
         self.raise_event('x-refresh')

@@ -30,4 +30,22 @@ components:
     name: btn_reject
     layout_properties: {grid_position: 'ZCTPLG,VNYJID'}
     event_bindings: {click: btn_reject_click}
+  - type: TextArea
+    properties: {role: outlined, align: left, height: '', tooltip: '', placeholder: Write notes here,
+      border: '', enabled: true, foreground: '', visible: true, text: '', font_size: null,
+      auto_expand: true, font: '', spacing_above: small, spacing_below: small, italic: false,
+      background: '', bold: false, underline: false}
+    name: ta_notes
+    layout_properties: {grid_position: 'PZMMBU,KDDKMD'}
+    event_bindings: {lost_focus: ta_notes_lost_focus}
+    data_bindings:
+    - {property: text, code: self.user_notes, writeback: true}
+  - type: Button
+    properties: {role: elevated-button, align: center, tooltip: '', border: '', enabled: true,
+      foreground: '', visible: true, text: Save Notes, font_size: null, font: '',
+      spacing_above: small, icon_align: left, spacing_below: small, italic: false,
+      background: '', bold: false, underline: false, icon: ''}
+    name: btn_save_notes
+    layout_properties: {grid_position: 'JRRWZP,DGUQJJ'}
+    event_bindings: {click: btn_save_notes_click}
 is_package: true

@@ -68,21 +68,39 @@ def get_users():
     return app_tables.users.client_writable(tenant=user['tenant'])
 
 
-@permission_required('auth_screenings')
+@permission_required(['auth_members', 'auth_screenings'])
+def get_user_notes(user_email):
+    """Get the notes for a particular user."""
+    clean_up_users()
+    user = anvil.users.get_user(allow_remembered=True)
+    user_row = app_tables.users.get(email=user_email, tenant=user['tenant'])
+
+    note_row = app_tables.notes.get(user=user_row, tenant=user['tenant'])
+    if note_row:
+        return note_row
+    else:
+        return app_tables.notes.add_row(user=user_row, tenant=user['tenant'])
+
+
+@permission_required(['auth_members', 'auth_screenings'])
+def save_user_notes(user_email, new_note):
+    """Save user notes."""
+    user = anvil.users.get_user(allow_remembered=True)
+    user_row = app_tables.users.get(email=user_email, tenant=user['tenant'])
+    note_row = app_tables.notes.get(user=user_row, tenant=user['tenant'])
+    note_row['notes'] = new_note
+
+
+@permission_required(['auth_screenings', 'auth_members'])
 def get_applicants():
     """Get restricted, client readable view of applicants."""
     clean_up_users()
     user = anvil.users.get_user(allow_remembered=True)
     readable_view = app_tables.users.client_readable(
-        q.only_cols("email", "first_name", "last_name", "auth_profile", "auth_forumchat", "good_standing"),
-        tenant=user['tenant']
+        q.only_cols("email", "first_name", "last_name", "auth_profile", "auth_forumchat", "auth_booking", "good_standing"),
+        tenant=user['tenant'],
+        auth_forumchat=q.not_(True)
     )
-    # TODO: might not be necessary.
-    # writable_view = app_tables.users.client_writable(
-    #     q.only_cols('auth_profile', 'auth_forumchat'),
-    #     tenant=user['tenant'],
-    #     auth_forumchat=q.not_(True)
-    # )
     return readable_view
 
 

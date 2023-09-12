@@ -85,4 +85,10 @@ class TestAdmin(unittest.TestCase):
             role_dict = {'auth_forumchat': True}
             user = anvil.server.call('reassign_roles', users[0], role_dict)
             assert(user['auth_forumchat'] == True)
+
+    def test_get_user_notes(self):
+        assert False
+
+    def test_save_user_notes(self):
+        assert False
     

@@ -18,7 +18,7 @@ services:
   server_config: {}
 - source: /runtime/services/anvil/users.yml
   client_config: {mfa_timeout_days: 7, require_secure_passwords: true, use_email: true,
-    allow_remember_me: true, allow_signup: true, enable_automatically: true, confirm_email: true,
+    allow_remember_me: true, allow_signup: true, enable_automatically: true, confirm_email: false,
     require_mfa: true, remember_me_days: 30, use_google: true}
   server_config: {user_table: users}
 - source: /runtime/services/google.yml
@@ -132,6 +132,22 @@ db_schema:
       admin_ui: {width: 598, order: 1}
       type: string
     title: Tenants
+  notes:
+    client: none
+    server: full
+    columns:
+    - name: notes
+      admin_ui: {width: 200}
+      type: string
+    - name: user
+      admin_ui: {width: 200}
+      type: link_single
+      target: users
+    - name: tenant
+      admin_ui: {width: 200}
+      type: link_single
+      target: tenants
+    title: Notes
 secrets:
   paypal_client_id:
     value: {T4BTSIBAI26CJ3RZ: z0JaieiqHt5mAySpe0CyP8l7CcI6X05wn+0dEesu3NMFYZv4QVFre0uh4aUkFfh/QNnAjL09sVz/1NUf+FNrpBfMtwb6SqP/FAOfTFnmyixrFOPTTqt26tXSbaaOPG7yn46l+vfy9Aso/0ZwOjTJcdPTR/YgLycournbmrgS6EHxE3ri8ayI5JDFT0cX8BLpatnKPBCUxmh23yShonuHlLTu+1p1Hy4Lw9bR0oAnPg==}
