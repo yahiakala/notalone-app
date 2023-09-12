@@ -16,6 +16,7 @@ class TestLoadForms(unittest.TestCase):
 
     def test_load_applicant_0(self):
         """Try and fail to load other links."""
+        pass
         # TODO: fail to load other links
 
     def test_load_applicant_1(self):
@@ -43,7 +44,7 @@ class TestLoadForms(unittest.TestCase):
 class ApplyNowForm(unittest.TestCase):
     """Apply now form functionality."""
 
-    def set_up_manual(self):
+    def setUp(self):
         self.user = Global.user
         from .BookingComponent import BookingComponent
         from .HomeForm import HomeForm
@@ -52,7 +53,6 @@ class ApplyNowForm(unittest.TestCase):
         print('Setup Complete')
 
     def test_apply_now_visible(self):
-        self.set_up_manual()
         if self.user['auth_booking']:
             assert(self.home.link_apply.visible == True)
         else:

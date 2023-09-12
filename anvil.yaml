@@ -7,7 +7,7 @@ scheduled_tasks:
   job_id: DVJGVVKY
 dependencies:
 - dep_id: dep_vscdshbjqihr0e
-  version: {version_tag: v0.06}
+  version: {version_tag: v0.07}
   resolution_hints: {app_id: 6VBEPOB6UHF74UKK, name: Anvil Labs, package_name: anvil_labs}
 - dep_id: dep_dmhomulhrajp9w
   version: {version_tag: v01}
