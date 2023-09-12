@@ -37,8 +37,9 @@ class HomeForm(HomeFormTemplate):
 
     def link_login_click(self, **event_args):
         """This method is called when the link is clicked"""
-        user = anvil.users.login_with_form(allow_cancel=True, show_signup_option=True)
-        self.set_account_state(user)
+        Global.user = anvil.users.login_with_form(allow_cancel=True, show_signup_option=True)
+        self.set_account_state(Global.user)
+        self.user = Global.user
         self.go_home()
 
     def link_logout_click(self, **event_args):
