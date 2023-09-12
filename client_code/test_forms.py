@@ -43,14 +43,21 @@ class TestLoadForms(unittest.TestCase):
 class ApplyNowForm(unittest.TestCase):
     """Apply now form functionality."""
 
-    def setUp(self):
+    def set_up_manual(self):
         self.user = Global.user
         from .BookingComponent import BookingComponent
+        from .HomeForm import HomeForm
         self.form = BookingComponent()
-        print('')
+        self.home = HomeForm()
+        print('Setup Complete')
 
     def test_apply_now_visible(self):
+        self.set_up_manual()
         if self.user['auth_booking']:
-            assert(self.form.link_apply.visible == True)
+            assert(self.home.link_apply.visible == True)
         else:
-            assert(self.form.link_apply.visible == False)
+            assert(self.home.link_apply.visible == False)
+
+    def test_apply_now_visible_2(self):
+        """Test that the apply now button becomes visible once you select a group."""
+        pass
