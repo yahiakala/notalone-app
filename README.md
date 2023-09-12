@@ -4,6 +4,8 @@
 
 First, create an Anvil account. I recommend the Personal Plan which is approx 15 USD per month.
 
+Complete this free course: https://training.talkpython.fm/courses/explore_anvil/anvil-web-apps-with-just-python
+
 Fork this repository to your own GitHub user account. Click on the top right of this repo to fork it to your own account.
 
 Follow this tutorial to clone the forked repository into your Anvil account: [https://anvil.works/docs/version-control-new-ide/git](https://anvil.works/docs/version-control-new-ide/git#cloning-a-github-repo-into-a-new-app)
