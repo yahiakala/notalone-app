@@ -4,13 +4,11 @@ import anvil.server
 
 from .. import Global
 
-# subscription_id, url = anvil.server.call('create_paypal_subscription')
-
 
 class ProfileComponent(ProfileComponentTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.
-        self.user = Global.user
+        self.user = dict(Global.user)  # so I can save over it
         self.init_components(**properties)
 
         # Any code you write here will run before the form opens.
@@ -37,6 +35,7 @@ class ProfileComponent(ProfileComponentTemplate):
         self.btn_save_click()
         window.open(self.payment_url)
         self.refresh_data_bindings()
+        self.raise_event('x-go-home')
 
 
 

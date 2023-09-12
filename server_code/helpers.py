@@ -32,8 +32,13 @@ def check_user_auth(user, permissions):
         )
     except Exception:
         return False
-        
-    if not required_permissions.issubset(user_permissions):
+
+    # ALL permissions option
+    # if not required_permissions.issubset(user_permissions):
+    #     return False
+
+    # ANY permissions option
+    if not len(user_permissions) > 0:
         return False
         
     return True

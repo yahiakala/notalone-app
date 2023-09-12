@@ -52,18 +52,46 @@ class ApplyNowForm(unittest.TestCase):
         self.home = HomeForm()
         print('Setup Complete')
 
+        if self.user['last_name'] == 'Applicant':
+            Global.user = anvil.server.call('leave_tenant')
+            self.user = Global.user
+
     def test_apply_now_visible_1(self):
-        if self.user['auth_booking']:
+        if not self.user['last_name'] == 'Applicant':
             assert(self.home.link_apply.visible == True)
         else:
             assert(self.home.link_apply.visible == False)
 
     def test_apply_now_visible_2(self):
         """Test that the apply now button becomes visible once you select a group."""
-        if not self.user['auth_booking']:
+        if self.user['last_name'] == 'Applicant':
+            assert(self.home.link_apply.visible == False)
             tenants = anvil.server.call('get_tenants')
             search_term = self.home.cmpt.tb_search_group.text = 'e'
             self.home.cmpt.tb_search_group.raise_event('pressed_enter')
-            # first_thing = self.home.cmpt.rp_groups.get_components()[0]
-            # user = anvil.server.call('join_tenant', tenants.search()[0].get_id())
+            first_thing = self.home.cmpt.rp_groups.get_components()[0]
+            first_thing.btn_join.raise_event('click')
+            assert(self.home.link_apply.visible == True)
+            Global.user = anvil.server.call('leave_tenant')
+            self.user = Global.user
+
+    def test_profile_visible(self):
+        """Fill out profile after passing screening."""
+        if self.user['last_name'] == 'Applicant':
+            assert(self.home.link_profile.visible == False)
+            tenants = anvil.server.call('get_tenants')
+            search_term = self.home.cmpt.tb_search_group.text = 'e'
+            self.home.cmpt.tb_search_group.raise_event('pressed_enter')
+            first_thing = self.home.cmpt.rp_groups.get_components()[0]
+            first_thing.btn_join.raise_event('click')
+
+            # Now they pass screening
+            Global.user = anvil.server.call('reassign_roles_dev', self.user, {'auth_profile': True})
+            self.user = Global.user
+            
+            self.home.cmpt.raise_event('x-refresh')
+            # Now they should see the profile page
+            assert(self.home.link_profile.visible == True)
+            
+            self.user = anvil.server.call('leave_tenant')
             

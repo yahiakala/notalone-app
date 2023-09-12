@@ -25,3 +25,4 @@ class ApplicantsComponent(ApplicantsComponentTemplate):
             auth_profile=True,
             auth_forumchat=q.not_(True)
         )
+        self.raise_event('x-refresh')

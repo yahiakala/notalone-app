@@ -18,7 +18,7 @@ class HomeDetailComponent(HomeDetailComponentTemplate):
         self.groups = []
         self.user = Global.user
         self.refresh_data_bindings()
-        self.parent.raise_event('x-refresh')
+        self.raise_event('x-refresh')
 
     def tb_search_group_pressed_enter(self, **event_args):
         """This method is called when the user presses Enter in this text box"""

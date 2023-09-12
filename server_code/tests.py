@@ -32,6 +32,9 @@ def test_get_subscriptions():
 
 @permission_required('auth_dev')
 def test_check_subs():
+    appuser = app_tables.users.get(last_name='Applicant')
+    appuser['paypal_sub_id'] = 'alsdjfwlf'
+    # TODO: add a blank paypal_sub_id for a different user
     payments.check_subs()
 
 
@@ -39,3 +42,8 @@ def test_check_subs():
 def test_check_sub():
     user = anvil.users.get_user(allow_remembered=True)
     payments.check_sub(user)
+
+
+@permission_required('auth_dev')
+def reassign_roles_dev(user_dict, role_dict):
+    return tasks.reassign_roles(user_dict, role_dict)
