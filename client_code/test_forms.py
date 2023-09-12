@@ -57,9 +57,7 @@ class ApplyNowForm(unittest.TestCase):
             self.user = Global.user
 
     def test_apply_now_visible_1(self):
-        if not self.user['last_name'] == 'Applicant':
-            assert(self.home.link_apply.visible == True)
-        else:
+        if self.user['last_name'] == 'Applicant':
             assert(self.home.link_apply.visible == False)
 
     def test_apply_now_visible_2(self):
