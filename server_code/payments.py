@@ -23,7 +23,7 @@ def get_paypal_auth():
     return access_token
 
 
-def get_subscriptions(subscription_id):
+def get_subscriptions(subscription_id, verbose=False):
     import datetime as dt
     
     if not subscription_id:
@@ -35,6 +35,8 @@ def get_subscriptions(subscription_id):
         'Content-Type': 'application/json',
     }
     subscription_detail_response = requests.get(f'https://api.paypal.com/v1/billing/subscriptions/{subscription_id}', headers=headers)
+    if verbose:
+        print(subscription_detail_response.json())
     try:
         status = subscription_detail_response.json()['status']
         last_payment = dt.datetime.fromisoformat(
