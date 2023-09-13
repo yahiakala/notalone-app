@@ -1,6 +1,7 @@
 """Test the form functionality."""
 import unittest
 import anvil.server
+import anvil.users
 import time
 
 from . import Global
@@ -13,6 +14,8 @@ class TestLoadForms(unittest.TestCase):
         self.user = Global.user
         from .HomeForm import HomeForm
         self.form = HomeForm()
+        self.user = anvil.server.call('')
+        self.user = anvil.users.force_login(self.user, remember=True)
 
     def test_load_applicant_0(self):
         """Try and fail to load other links."""
