@@ -9,7 +9,7 @@ from . import Global
 
 class Applicant0(unittest.TestCase):
     """Test cases for an applicant."""
-    
+
     def setUp(self):
         self.user = Global.user
         from .HomeForm import HomeForm
@@ -30,7 +30,7 @@ class Applicant0(unittest.TestCase):
             assert(self.form.link_profile.visible == False)
             assert(self.form.link_applicants.visible == False)
             self.form.link_home.raise_event('click')
-    
+
     def test_apply_now_visible_1(self):
         assert(self.home.link_apply.visible == False)
 
