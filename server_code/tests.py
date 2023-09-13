@@ -1,6 +1,7 @@
 """Test the functions that are not callables."""
 import anvil.server
 import anvil.users
+from anvil.tables import app_tables
 
 from .helpers import permission_required
 from . import payments
@@ -47,3 +48,9 @@ def test_check_sub():
 @permission_required('auth_dev')
 def reassign_roles_dev(user_dict, role_dict):
     return tasks.reassign_roles(user_dict, role_dict)
+
+
+@permission_required('auth_dev')
+def get_test_user(user_name):
+    """Get a test user."""
+    return app_tables.users.get(last_name=user_name, auth_dev=True)
