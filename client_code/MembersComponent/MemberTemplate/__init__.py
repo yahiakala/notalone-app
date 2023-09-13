@@ -37,7 +37,11 @@ class MemberTemplate(MemberTemplateTemplate):
     def btn_refresh_click(self, **event_args):
         """This method is called when the button is clicked"""
         self.item = anvil.server.call('check_sub', self.item)
-        self.refresh_data_bindings()
+        self.lbl_payment_status.text = (
+            self.pmt_success if self.item['good_standing'] else
+            self.pmt_inactive if self.item['paypal_sub_id'] is not None else
+            self.pmt_noid
+        )
 
     def btn_notes_click(self, **event_args):
         """This method is called when the button is clicked"""
