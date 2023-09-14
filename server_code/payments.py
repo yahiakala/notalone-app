@@ -41,6 +41,8 @@ def get_subscriptions(subscription_id, verbose=False):
         status = subscription_detail_response.json()['status']
         last_payment = dt.datetime.fromisoformat(
             subscription_detail_response.json()['billing_info']['last_payment']['time'].replace("Z", "+00:00")
+            # TODO: add payment amount as a return value
+            # float(subscription_detail_response.json()['billing_info']['last_payment']['amount']['value'])
         ).date()
     except KeyError as e:
         status = None
@@ -104,12 +106,19 @@ def check_sub(user_dict):
     if not user_ref:
         return None
 
+    # TODO: add payment amount to the col in the db
     status, last_payment = get_subscriptions(user_ref['paypal_sub_id'])
     user_ref['payment_status'] = status
     if last_payment:
         user_ref['payment_expiry'] = last_payment + relativedelta(years=1)
         if user_ref['payment_expiry'] >= dt.date.today() or status == 'ACTIVE' or user_ref['fee'] == 0:
             user_ref['good_standing'] = True
+            # Allow the user in the forum if they have not been banned/removed.
+            if user_ref['auth_profile']:
+                user_ref['auth_forumchat'] = True
+        else:
+            user_ref['good_standing'] = False
+            user_ref['auth_forumchat'] = False
     return user_ref
 
 
