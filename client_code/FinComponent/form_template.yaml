@@ -1,3 +1,21 @@
-container: {type: ColumnPanel}
-components: []
+container:
+  type: ColumnPanel
+  properties: {col_widths: '{}'}
+components:
+- type: ColumnPanel
+  properties: {role: outlined-card, col_widths: '{}'}
+  name: cp_rev
+  layout_properties: {grid_position: 'DVPHPM,ZDTJSV'}
+  components:
+  - type: Label
+    properties: {role: null, align: right, tooltip: '', border: '', foreground: '',
+      visible: true, text: Estimated 12 Month Revenue, font_size: null, font: '',
+      spacing_above: small, icon_align: left, spacing_below: small, italic: false,
+      background: '', bold: false, underline: false, icon: ''}
+    name: lbl_rev12
+    layout_properties: {grid_position: 'YTVPVZ,GRKCYX'}
+  - type: Label
+    properties: {}
+    name: lbl_rev12num
+    layout_properties: {grid_position: 'YTVPVZ,KGBPBH'}
 is_package: true

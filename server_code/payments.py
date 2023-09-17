@@ -117,13 +117,24 @@ def check_sub(user_dict):
             if user_ref['auth_profile']:
                 user_ref['auth_forumchat'] = True
         else:
+            # Disable the user's forum privileges until back in good standing.
             user_ref['good_standing'] = False
             user_ref['auth_forumchat'] = False
     return user_ref
-
+      
 
 #%% Scheduled Task -------------------------------
 @anvil.server.background_task
 def check_subs():
     for user in app_tables.users.search():
+        # TODO: break up check_sub to accept a user tenant
         _ = check_sub(user)
+
+
+@anvil.server.background_task
+def calc_rev12():
+    for tenant in app_tables.tenants.search():
+        total_rev = 0
+        for user_ref in app_tables.users.search(tenant=tenant, fee=q.not_(None)):
+            total_rev += user_ref['fee']
+        tenant['total_rev12'] = total_rev

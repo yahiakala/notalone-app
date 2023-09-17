@@ -78,6 +78,14 @@ components:
       italic: false, background: '', bold: false, underline: false, icon: ''}
     name: link_members
     layout_properties: {grid_position: 'VAEWZT,CGKTBU'}
+  - type: Link
+    properties: {role: null, url: '', align: left, tooltip: '', border: '', foreground: '',
+      visible: true, text: Financials, font_size: null, wrap_on: mobile, font: '',
+      col_spacing: medium, spacing_above: small, icon_align: left, col_widths: '',
+      spacing_below: small, italic: false, background: '', bold: false, underline: false,
+      icon: ''}
+    name: link_fin
+    layout_properties: {grid_position: 'FXEWLL,PYXVXJ'}
 - type: Label
   properties: {role: null, align: left, tooltip: '', border: '', foreground: '', visible: true,
     text: You Are Not Alone, font_size: null, font: '', spacing_above: small, icon_align: left,

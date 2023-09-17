@@ -131,6 +131,9 @@ db_schema:
     - name: name
       admin_ui: {width: 598, order: 1}
       type: string
+    - name: total_rev12
+      type: number
+      admin_ui: {width: 200, order: 2}
     title: Tenants
   notes:
     client: none
