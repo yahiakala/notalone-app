@@ -15,5 +15,6 @@ from anvil import *
 class FinComponent(FinComponentTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.
+        self.tenant = Global.tenant
         self.init_components(**properties)
         

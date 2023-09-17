@@ -18,4 +18,6 @@ components:
     properties: {}
     name: lbl_rev12num
     layout_properties: {grid_position: 'YTVPVZ,KGBPBH'}
+    data_bindings:
+    - {property: text, code: 'self.tenant[''total_rev12'']'}
 is_package: true
