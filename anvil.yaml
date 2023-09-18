@@ -120,6 +120,10 @@ db_schema:
     - name: auth_dev
       type: bool
       admin_ui: {width: 200, order: 32}
+    - name: roles
+      admin_ui: {width: 200}
+      type: link_multiple
+      target: roles
     title: Users
   tenants:
     client: none
