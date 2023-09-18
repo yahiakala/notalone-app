@@ -18,6 +18,7 @@ from .. import Global
 class FinComponent(FinComponentTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.
-        self.tenant = Global.tenant
+        self.user = Global.user
+        self.tenant = self.user['tenant']
         self.init_components(**properties)
         

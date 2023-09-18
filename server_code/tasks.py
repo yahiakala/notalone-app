@@ -53,7 +53,7 @@ def leave_tenant():
 @permission_required('auth_members')
 def get_tenant():
     user = anvil.users.get_user(allow_remembered=True)
-    return app_tables.tenants.get(tenant=user['tenant'])
+    return user['tenant']
 
 
 @anvil.server.callable(require_user=True)
