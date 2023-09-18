@@ -12,6 +12,9 @@ from anvil import *
 # TODO: Bar chart of last payments throughout the year
 # TODO: projected 12 month revenue from active subs
 
+from .. import Global
+
+
 class FinComponent(FinComponentTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.
