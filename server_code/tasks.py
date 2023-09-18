@@ -50,12 +50,6 @@ def leave_tenant():
     return user
 
 
-@permission_required('auth_members')
-def get_tenant():
-    user = anvil.users.get_user(allow_remembered=True)
-    return user['tenant']
-
-
 @anvil.server.callable(require_user=True)
 def update_user(user_dict):
     user = anvil.users.get_user(allow_remembered=True)
