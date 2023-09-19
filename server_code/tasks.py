@@ -132,3 +132,10 @@ def get_screener_link():
                                              auth_screenings=True)
         ]
     )
+
+
+@permission_required('auth_members')
+def get_finances():
+    """Get financial info."""
+    user = anvil.users.get_user(allow_remembered=True)
+    return app_tables.finances.client_writable(tenant=user['tenant']).get()

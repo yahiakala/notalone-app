@@ -19,11 +19,13 @@ components:
     name: lbl_rev12num
     layout_properties: {grid_position: 'YTVPVZ,KGBPBH'}
     data_bindings:
-    - {property: text, code: 'self.tenant[''total_rev12'']'}
+    - {property: text, code: 'self.finances[''rev_12'']'}
 - type: ColumnPanel
-  properties: {role: outlined-card, col_widths: '{}'}
+  properties: {role: outlined-card, tooltip: '', border: '', foreground: '', visible: true,
+    wrap_on: mobile, col_spacing: medium, spacing_above: small, col_widths: '{"GBBUSD":50,"XWZNSW":10}',
+    spacing_below: small, background: ''}
   name: cp_budget
-  layout_properties: {grid_position: 'HUILAS,FZQRRE'}
+  layout_properties: {grid_position: 'HUILAS,FZQRRE', full_width_row: false}
   components:
   - type: Label
     properties: {role: title, align: center, tooltip: '', border: '', foreground: '',
@@ -32,4 +34,65 @@ components:
       underline: false, icon: ''}
     name: lbl_budg_title
     layout_properties: {grid_position: 'LPGRSW,KFKRAX'}
+  - type: RepeatingPanel
+    properties: {item_template: FinComponent.BudgetTemplate}
+    name: rp_budget
+    layout_properties: {grid_position: 'SSFUCR,DVLJUF'}
+    data_bindings:
+    - {property: items, code: 'self.finances[''budgets'']'}
+  - type: Button
+    properties: {role: elevated-button, align: center, tooltip: '', border: '', enabled: true,
+      foreground: '', visible: true, text: Add Budget, font_size: null, font: '',
+      spacing_above: small, icon_align: left, spacing_below: small, italic: false,
+      background: '', bold: false, underline: false, icon: ''}
+    name: btn_add_budget
+    layout_properties: {grid_position: 'CSRZOT,OVEQZC'}
+    data_bindings: []
+    event_bindings: {click: btn_add_budget_click}
+  - type: ColumnPanel
+    properties: {role: outlined-card, tooltip: '', border: '', foreground: '', visible: false,
+      wrap_on: mobile, col_spacing: medium, spacing_above: small, col_widths: '{"VYKXZG":50,"MMXRLM":10}',
+      spacing_below: small, background: ''}
+    name: cp_add_budget
+    layout_properties: {grid_position: 'INXFZN,FBCUQG'}
+    components:
+    - type: TextBox
+      properties: {role: null, align: left, hide_text: false, tooltip: '', placeholder: Budget Name,
+        border: '', enabled: true, foreground: '', visible: true, text: '', font_size: null,
+        font: '', spacing_above: small, type: text, spacing_below: small, italic: false,
+        background: '', bold: false, underline: false}
+      name: tb_budg_name
+      layout_properties: {grid_position: 'OPGQZP,VYKXZG'}
+    - type: TextBox
+      properties: {role: null, align: left, hide_text: false, tooltip: '', placeholder: Amount,
+        border: '', enabled: true, foreground: '', visible: true, text: '', font_size: null,
+        font: '', spacing_above: small, type: number, spacing_below: small, italic: false,
+        background: '', bold: false, underline: false}
+      name: tb_budget_amt
+      layout_properties: {grid_position: 'OPGQZP,MMXRLM'}
+    - type: Button
+      properties: {role: elevated-button, align: center, tooltip: '', border: '',
+        enabled: true, foreground: '', visible: true, text: Save, font_size: null,
+        font: '', spacing_above: small, icon_align: left, spacing_below: small, italic: false,
+        background: '', bold: false, underline: false, icon: ''}
+      name: btn_save_budget
+      layout_properties: {grid_position: 'CVTLTH,LEFUYE'}
+      event_bindings: {click: btn_save_budget_click}
+    data_bindings: []
+  - type: Label
+    properties: {role: null, align: right, tooltip: '', border: '', foreground: '',
+      visible: true, text: Total Budget, font_size: null, font: '', spacing_above: small,
+      icon_align: left, spacing_below: small, italic: false, background: '', bold: true,
+      underline: false, icon: ''}
+    name: lbl_budg_total
+    layout_properties: {grid_position: 'IIENKJ,GBBUSD'}
+  - type: Label
+    properties: {role: null, align: right, tooltip: '', border: '', foreground: '',
+      visible: true, text: '', font_size: null, font: '', spacing_above: small, icon_align: left,
+      spacing_below: small, italic: false, background: '', bold: false, underline: false,
+      icon: ''}
+    name: lbl_budg_total_amt
+    layout_properties: {grid_position: 'IIENKJ,XWZNSW'}
+    data_bindings:
+    - {property: text, code: 'sum([i[''amount''] for i in self.finances[''budgets'']])'}
 is_package: true

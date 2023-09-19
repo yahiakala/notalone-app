@@ -133,14 +133,8 @@ db_schema:
       type: string
       admin_ui: {width: 200, order: 0}
     - name: name
-      admin_ui: {width: 598, order: 1}
+      admin_ui: {order: 1, width: 348}
       type: string
-    - name: total_rev12
-      type: number
-      admin_ui: {width: 200, order: 2}
-    - name: budgets
-      type: simpleObject
-      admin_ui: {width: 200, order: 3}
     title: Tenants
   notes:
     client: none
@@ -169,6 +163,21 @@ db_schema:
       type: string
       admin_ui: {width: 200, order: 1}
     title: Roles
+  finances:
+    client: none
+    server: full
+    columns:
+    - name: rev_12
+      type: number
+      admin_ui: {width: 200, order: 0}
+    - name: budgets
+      type: simpleObject
+      admin_ui: {width: 200, order: 1}
+    - name: tenant
+      admin_ui: {order: -1, width: 200}
+      type: link_single
+      target: tenants
+    title: Finances
 secrets:
   paypal_client_id:
     value: {T4BTSIBAI26CJ3RZ: z0JaieiqHt5mAySpe0CyP8l7CcI6X05wn+0dEesu3NMFYZv4QVFre0uh4aUkFfh/QNnAjL09sVz/1NUf+FNrpBfMtwb6SqP/FAOfTFnmyixrFOPTTqt26tXSbaaOPG7yn46l+vfy9Aso/0ZwOjTJcdPTR/YgLycournbmrgS6EHxE3ri8ayI5JDFT0cX8BLpatnKPBCUxmh23yShonuHlLTu+1p1Hy4Lw9bR0oAnPg==}
