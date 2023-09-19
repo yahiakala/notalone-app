@@ -10,7 +10,6 @@ from anvil import *
 # TODO: calc amount lost from expired or non-subs
 
 # TODO: Bar chart of last payments throughout the year
-# TODO: projected 12 month revenue from active subs
 
 from .. import Global
 

@@ -20,4 +20,16 @@ components:
     layout_properties: {grid_position: 'YTVPVZ,KGBPBH'}
     data_bindings:
     - {property: text, code: 'self.tenant[''total_rev12'']'}
+- type: ColumnPanel
+  properties: {role: outlined-card, col_widths: '{}'}
+  name: cp_budget
+  layout_properties: {grid_position: 'HUILAS,FZQRRE'}
+  components:
+  - type: Label
+    properties: {role: title, align: center, tooltip: '', border: '', foreground: '',
+      visible: true, text: Budgeting, font_size: null, font: '', spacing_above: small,
+      icon_align: left, spacing_below: small, italic: false, background: '', bold: false,
+      underline: false, icon: ''}
+    name: lbl_budg_title
+    layout_properties: {grid_position: 'LPGRSW,KFKRAX'}
 is_package: true

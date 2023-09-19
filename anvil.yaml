@@ -138,6 +138,9 @@ db_schema:
     - name: total_rev12
       type: number
       admin_ui: {width: 200, order: 2}
+    - name: budgets
+      type: simpleObject
+      admin_ui: {width: 200, order: 3}
     title: Tenants
   notes:
     client: none
