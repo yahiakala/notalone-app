@@ -87,7 +87,7 @@ components:
     name: lbl_budg_total
     layout_properties: {grid_position: 'IIENKJ,GBBUSD'}
   - type: Label
-    properties: {role: null, align: right, tooltip: '', border: '', foreground: '',
+    properties: {role: null, align: center, tooltip: '', border: '', foreground: '',
       visible: true, text: '', font_size: null, font: '', spacing_above: small, icon_align: left,
       spacing_below: small, italic: false, background: '', bold: false, underline: false,
       icon: ''}

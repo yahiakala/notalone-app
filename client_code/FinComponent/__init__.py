@@ -38,6 +38,3 @@ class FinComponent(FinComponentTemplate):
 
     def refresh_data(self, **event_args):
         self.refresh_data_bindings()
-
-
-        
