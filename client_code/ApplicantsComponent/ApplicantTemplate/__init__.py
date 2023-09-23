@@ -14,6 +14,7 @@ class ApplicantTemplate(ApplicantTemplateTemplate):
     def btn_accept_click(self, **event_args):
         """This method is called when the button is clicked"""
         _ = anvil.server.call('reassign_roles', self.item, {'auth_profile': True, 'auth_booking': False})
+        anvil.server.call('notify_accept', self.item['email'])
         self.parent.raise_event('x-refresh')
 
     def btn_reject_click(self, **event_args):

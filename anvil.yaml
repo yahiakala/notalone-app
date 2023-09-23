@@ -27,6 +27,9 @@ services:
 - source: /runtime/services/anvil/secrets.yml
   client_config: {}
   server_config: {}
+- source: /runtime/services/anvil/email.yml
+  client_config: {}
+  server_config: {}
 startup: {type: form, module: HomeForm}
 package_name: notalone_app
 allow_embedding: false
