@@ -6,6 +6,7 @@ import time
 
 from . import Global
 
+# TODO: can't use force_login in client code
 
 class Applicant0(unittest.TestCase):
     """Test cases for an applicant."""
