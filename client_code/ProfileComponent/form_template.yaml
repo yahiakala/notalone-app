@@ -182,7 +182,7 @@ components:
     event_bindings: {click: btn_pay_new_click}
     data_bindings: []
   data_bindings:
-  - {property: visible, code: 'self.user[''good_standing''] == False'}
+  - {property: visible, code: 'self.user[''good_standing''] != True'}
 - type: Button
   properties: {role: filled-button, align: center, tooltip: '', border: '', enabled: true,
     foreground: '', visible: true, text: Save Changes, font_size: null, font: '',
