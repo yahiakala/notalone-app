@@ -21,12 +21,12 @@ Setting up SSH is essential for secure communication. Below are the links to set
 - [Set up SSH on Windows](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account)
 - [Set up SSH on Mac](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/adding-a-new-ssh-key-to-your-github-account)
 
-## Set up a GitHub Account
+### Set up a GitHub Account
 
 After creating your GitHub account, set up SSH with your GitHub account by following the instructions in this [GitHub guide](https://docs.github.com/en/authentication/connecting-to-github-with-ssh).
 
 
-## Set up Amoni
+### Set up Amoni
 
 Amoni is a tool that helps you manage your Anvil apps. To install and initialize Amoni, open your command line interface and run the following commands:
 
