@@ -141,15 +141,15 @@ def get_finances():
     return app_tables.finances.client_writable(tenant=user['tenant']).get()
 
 
-@permission_required('auth_screening')
+@permission_required('auth_screenings')
 def notify_accept(email_to):
     """Notify the applicant they've been accepted."""
     msg_body = """
     Hi! This is an automated message from the NotAlone community platform.
     
-    You have passed the screening interview.
+    You have passed the screening interview!
 
-    Please log into the app for next steps. Fill out your profile and make the membership payment.
+    Please log into the app for next steps. Fill out your profile, read the community guidelines, and make the membership payment.
 
     Regards,
     NotAlone team.
@@ -158,8 +158,8 @@ def notify_accept(email_to):
     anvil.email.send(
         to=email_to,
         cc=user['email'],
-        from_address="support",
+        from_address="admin",
         from_name="NotAlone",
-        subject="Welcome to the NotAlone Platform!",
+        subject="Welcome to the NotAlone Community!",
         html=msg_body
     )
