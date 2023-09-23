@@ -2,6 +2,7 @@ import anvil.server
 import anvil.users
 from anvil.tables import app_tables
 import anvil.tables.query as q
+import anvil.email
 
 from .helpers import permission_required
 
@@ -145,14 +146,14 @@ def get_finances():
 def notify_accept(email_to):
     """Notify the applicant they've been accepted."""
     msg_body = """
-    Hi! This is an automated message from the NotAlone community platform.
+    <p>Hi! This is an automated message from the NotAlone community platform.</p>
     
-    You have passed the screening interview!
+    <p>You have passed the screening interview!</p>
 
-    Please log into the app for next steps. Fill out your profile, read the community guidelines, and make the membership payment.
+    <p>Please log into the app for next steps. Fill out your profile, read the community guidelines, and make the membership payment.</p>
 
-    Regards,
-    NotAlone team.
+    <p>Regards,</p>
+    <p>NotAlone team.</p>
     """
     user = anvil.users.get_user(allow_remembered=True)
     anvil.email.send(
