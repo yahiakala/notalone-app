@@ -91,4 +91,7 @@ class TestAdmin(unittest.TestCase):
 
     def test_save_user_notes(self):
         assert False
+
+    def test_notify_accept(self):
+        assert False
     
