@@ -158,7 +158,7 @@ def notify_accept(email_to):
     user = anvil.users.get_user(allow_remembered=True)
     anvil.email.send(
         to=email_to,
-        cc=user['email'],
+        bcc=user['email'],
         from_address="admin",
         from_name="NotAlone",
         subject="Welcome to the NotAlone Community!",
