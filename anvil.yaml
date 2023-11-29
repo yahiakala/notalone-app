@@ -184,6 +184,21 @@ db_schema:
       type: link_single
       target: tenants
     title: Finances
+  forum:
+    title: Forum
+    client: none
+    server: full
+    columns:
+    - name: discourse_secret
+      admin_ui: {width: 200}
+      type: string
+    - name: discourse_url
+      admin_ui: {width: 200}
+      type: string
+    - name: tenant
+      admin_ui: {width: 200}
+      type: link_single
+      target: tenants
 secrets:
   paypal_client_id:
     value: {T4BTSIBAI26CJ3RZ: z0JaieiqHt5mAySpe0CyP8l7CcI6X05wn+0dEesu3NMFYZv4QVFre0uh4aUkFfh/QNnAjL09sVz/1NUf+FNrpBfMtwb6SqP/FAOfTFnmyixrFOPTTqt26tXSbaaOPG7yn46l+vfy9Aso/0ZwOjTJcdPTR/YgLycournbmrgS6EHxE3ri8ayI5JDFT0cX8BLpatnKPBCUxmh23yShonuHlLTu+1p1Hy4Lw9bR0oAnPg==}
@@ -196,5 +211,8 @@ secrets:
     type: secret
   pp_plan_id_50:
     value: {T4BTSIBAI26CJ3RZ: Dug8rgZYlJuaeD2QY3f8L+fTnmIzJFmUODQLWxYBWH+o6RdcdxYFF/hc/pUUyYA2psMOTazIoDNi3nG3EJvjoUlvK00xLRFGp6e4fsNnMS24257G0SSpPdWLYhEDOjb5ZnBdoNwuXoIcE6qKu+eAe683kzq1fNM07Q==}
+    type: secret
+  discourse_secret:
+    value: {T4BTSIBAI26CJ3RZ: wHhd9ER+uDUeHtShD4KDi9jCIpIJK6MC19Todz70FxMfiNPWnAz3yuEZoSSdqbEpNBRFJ7GQhlR3/HqlW1DReDHkP5uljmqjkdW1/ems8pad2LARo2ardL7fmPlVFZ1wsI3bNvlh+dpGGIi2zg6ICSZ8gT+BOCS0KAw=}
     type: secret
 renamed: true
