@@ -9,4 +9,4 @@ def login_sso(**params):
     if user:
         return user
     else:
-        return 'no user'
+        anvil.users.login_with_form(allow_remembered=True)
