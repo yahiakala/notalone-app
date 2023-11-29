@@ -30,6 +30,7 @@ def login_sso(sso, sig):
         return "User not logged in or does not have access to forum."
 
     discourse_url = app_tables.forum.get(tenant=user['tenant'])['discourse_url']
+    print(discourse_url)
     
     # Prepare the return payload with user info
     user_info = {
@@ -40,6 +41,7 @@ def login_sso(sso, sig):
         'name': user['first_name'] + ' ' + user['last_name']
     }
     return_payload = '&'.join([f"{key}={urllib.parse.quote_plus(str(value))}" for key, value in user_info.items()])
+    print(return_payload)
 
     # Sign the return payload
     return_sig = hmac.new(secret_key.encode(), msg=return_payload.encode(), digestmod=hashlib.sha256).hexdigest()
