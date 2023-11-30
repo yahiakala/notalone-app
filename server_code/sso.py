@@ -38,19 +38,17 @@ def login_sso(sso, sig):
     user_info = {
         'nonce': nonce,
         'email': user['email'],
-        'external_id': app_tables.users.get(email=user['email']).get_id(),
+        'external_id': user.get_id(),
         'username': user['first_name'] + '_' + user['last_name'],
         'name': user['first_name'] + ' ' + user['last_name']
     }
     print(user_info)
+    # unsigned payload generated
     # return_payload = '&'.join([f"{key}={urllib.parse.quote_plus(str(value))}" for key, value in user_info.items()])
     return_payload = '&'.join([f"{key}={value}" for key, value in user_info.items()])
     print(return_payload)
 
-    # Sign the return payload
-    return_sig = hmac.new(secret_key.encode(), msg=return_payload.encode(), digestmod=hashlib.sha256).hexdigest()
-    print('return sig')
-    print(return_sig)
+    
 
     # Base64-encode and URL-encode the return payload
     b64_return_payload = base64.b64encode(return_payload.encode()).decode()
@@ -59,6 +57,11 @@ def login_sso(sso, sig):
     url_encoded_payload = urllib.parse.quote_plus(b64_return_payload)
     print('url encoded payload')
     print(url_encoded_payload)
+
+    # Sign the return payload
+    return_sig = hmac.new(secret_key.encode(), msg=b64_return_payload.encode(), digestmod=hashlib.sha256).hexdigest()
+    print('return sig')
+    print(return_sig)
 
     # Redirect back to Discourse
     discourse_redirect_url = f"https://{discourse_url}/session/sso_login?sso={url_encoded_payload}&sig={return_sig}"
