@@ -1,3 +1,7 @@
 container: {type: ColumnPanel}
-components: []
+components:
+- name: outlined_card_1
+  properties: {role: outlined-card}
+  type: ColumnPanel
+  layout_properties: {grid_position: 'DFBQHW,KWOVLF'}
 is_package: true
