@@ -48,10 +48,16 @@ def login_sso(sso, sig):
 
     # Sign the return payload
     return_sig = hmac.new(secret_key.encode(), msg=return_payload.encode(), digestmod=hashlib.sha256).hexdigest()
+    print('return sig')
+    print(return_sig)
 
     # Base64-encode and URL-encode the return payload
     b64_return_payload = base64.b64encode(return_payload.encode()).decode()
+    print('b64 return payload')
+    print(b64_return_payload)
     url_encoded_payload = urllib.parse.quote_plus(b64_return_payload)
+    print('url encoded payload')
+    print(url_encoded_payload)
 
     # Redirect back to Discourse
     discourse_redirect_url = f"https://{discourse_url}/session/sso_login?sso={url_encoded_payload}&sig={return_sig}"
