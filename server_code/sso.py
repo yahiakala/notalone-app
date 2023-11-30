@@ -9,7 +9,7 @@ import hashlib
 import urllib.parse
 
 
-@anvil.server.http_endpoint('/login-sso', cross_site_session=True)
+@anvil.server.http_endpoint('/login-sso', cross_site_session=True, enable_cors=True)
 def login_sso(sso, sig):
     # params['key']
     # print(sso)
