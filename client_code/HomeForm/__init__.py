@@ -79,6 +79,7 @@ class HomeForm(HomeFormTemplate):
         self.link_applicants.visible = False
         self.link_members.visible = False
         self.link_fin.visible = False
+        self.link_forum.visible = False
 
         if user:
             self.link_apply.visible = user['auth_booking']
@@ -86,6 +87,7 @@ class HomeForm(HomeFormTemplate):
             self.link_applicants.visible = user['auth_screenings']
             self.link_members.visible = user['auth_members']
             self.link_fin.visible = user['auth_members']
+            self.link_forum.visible = user['auth_forumchat']
 
     def load_component(self, cmpt):
         self.cmpt = cmpt
@@ -100,6 +102,7 @@ class HomeForm(HomeFormTemplate):
         self.link_profile.role = 'selected' if state == 'profile' else None
         self.link_applicants.role = 'selected' if state == 'applicants' else None
         self.link_members.role = 'selected' if state == 'members' else None
+        self.link_forum.role = 'selected' if state == 'forum' else None
 
     def go_page(self, page_name, **event_args):
         """Go to a page."""
@@ -116,7 +119,7 @@ class HomeForm(HomeFormTemplate):
         elif page_name == 'financials' and user:
             self.load_component(FinComponent())
         elif page_name == 'forum' and user:
-            self.load_component(ForumComponent)
+            self.load_component(ForumComponent())
         elif page_name == 'tests' and user:
             from .. import test_forms, test_server, test_tasks
             self.load_component(
