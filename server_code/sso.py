@@ -38,12 +38,13 @@ def login_sso(sso, sig):
     user_info = {
         'nonce': nonce,
         'email': user['email'],
-        'external_id': user.get_id(),
+        'external_id': app_tables.users.get(email=user['email']).get_id(),
         'username': user['first_name'] + '_' + user['last_name'],
         'name': user['first_name'] + ' ' + user['last_name']
     }
     print(user_info)
-    return_payload = '&'.join([f"{key}={urllib.parse.quote_plus(str(value))}" for key, value in user_info.items()])
+    # return_payload = '&'.join([f"{key}={urllib.parse.quote_plus(str(value))}" for key, value in user_info.items()])
+    return_payload = '&'.join([f"{key}={value}" for key, value in user_info.items()])
     print(return_payload)
 
     # Sign the return payload
