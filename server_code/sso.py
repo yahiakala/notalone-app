@@ -12,6 +12,8 @@ import urllib.parse
 @anvil.server.http_endpoint('/login-sso', cross_site_session=True)
 def login_sso(sso, sig):
     # params['key']
+    print(sso)
+    print(sig)
 
     secret_key = anvil.secrets.get_secret('discourse_secret')
 
