@@ -42,6 +42,7 @@ def login_sso(sso, sig):
         'username': user['first_name'] + '_' + user['last_name'],
         'name': user['first_name'] + ' ' + user['last_name']
     }
+    print(user_info)
     return_payload = '&'.join([f"{key}={urllib.parse.quote_plus(str(value))}" for key, value in user_info.items()])
     print(return_payload)
 
