@@ -142,6 +142,13 @@ def get_finances():
     return app_tables.finances.client_writable(tenant=user['tenant']).get()
 
 
+@permission_required('auth_forumchat')
+def get_forumlink():
+    """Get financial info."""
+    user = anvil.users.get_user(allow_remembered=True)
+    return 'https://' + app_tables.forum.get(tenant=user['tenant'])['discourse_url']
+
+
 @permission_required('auth_screenings')
 def notify_accept(email_to):
     """Notify the applicant they've been accepted."""

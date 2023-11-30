@@ -11,6 +11,7 @@ from ..ProfileComponent import ProfileComponent
 from ..ApplicantsComponent import ApplicantsComponent
 from ..MembersComponent import MembersComponent
 from ..FinComponent import FinComponent
+from ..ForumComponent import ForumComponent
 from anvil_labs.ClientTestComponent import ClientTestComponent
 
 from .. import Global
@@ -27,6 +28,7 @@ class HomeForm(HomeFormTemplate):
         self.link_applicants.add_event_handler('click', partial(self.go_page, 'applicants'))
         self.link_members.add_event_handler('click', partial(self.go_page, 'members'))
         self.link_fin.add_event_handler('click', partial(self.go_page, 'financials'))
+        self.link_forum.add_event_handler('click', partial(self.go_page, 'forum'))
 
         self.user = Global.user
 
@@ -113,6 +115,8 @@ class HomeForm(HomeFormTemplate):
             self.load_component(MembersComponent())
         elif page_name == 'financials' and user:
             self.load_component(FinComponent())
+        elif page_name == 'forum' and user:
+            self.load_component(ForumComponent)
         elif page_name == 'tests' and user:
             from .. import test_forms, test_server, test_tasks
             self.load_component(
