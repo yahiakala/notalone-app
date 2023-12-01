@@ -11,7 +11,8 @@ from ..ProfileComponent import ProfileComponent
 from ..ApplicantsComponent import ApplicantsComponent
 from ..MembersComponent import MembersComponent
 from ..FinComponent import FinComponent
-from ..ForumComponent import ForumComponent
+# from ..ForumComponent import ForumComponent
+from ..ForumiComponent import ForumiComponent
 from anvil_labs.ClientTestComponent import ClientTestComponent
 
 from .. import Global
@@ -119,7 +120,7 @@ class HomeForm(HomeFormTemplate):
         elif page_name == 'financials' and user:
             self.load_component(FinComponent())
         elif page_name == 'forum' and user:
-            self.load_component(ForumComponent())
+            self.load_component(ForumiComponent())
         elif page_name == 'tests' and user:
             from .. import test_forms, test_server, test_tasks
             self.load_component(

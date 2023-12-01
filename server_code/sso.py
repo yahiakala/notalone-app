@@ -10,7 +10,7 @@ import urllib.parse
 
 
 @anvil.server.http_endpoint('/login-sso', cross_site_session=True, enable_cors=True)
-def login_sso(sso, sig):
+def login_sso(sso, sig, session_id=None):
     # params['key']
     # print(sso)
     # print(sig)
@@ -27,7 +27,11 @@ def login_sso(sso, sig):
     params = dict(urllib.parse.parse_qsl(payload))
     nonce = params['nonce']
 
-    user = anvil.users.get_user(allow_remembered=True)
+    user = None
+    if session_id:
+        user = get_user_by_session_id(session_id)
+    if not user:
+        user = anvil.users.get_user(allow_remembered=True)
     print('user')
     print(user)
     if not user or user['auth_forumchat'] != True:
