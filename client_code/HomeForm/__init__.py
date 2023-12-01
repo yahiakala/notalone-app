@@ -121,6 +121,7 @@ class HomeForm(HomeFormTemplate):
             self.load_component(FinComponent())
         elif page_name == 'forum' and user:
             self.load_component(ForumiComponent())
+            self.cmpt.form_show()
         elif page_name == 'tests' and user:
             from .. import test_forms, test_server, test_tasks
             self.load_component(

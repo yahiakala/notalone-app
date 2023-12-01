@@ -1,5 +1,6 @@
 from ._anvil_designer import ForumiComponentTemplate
 from anvil import *
+import anvil.server
 
 
 class ForumiComponent(ForumiComponentTemplate):
@@ -9,8 +10,5 @@ class ForumiComponent(ForumiComponentTemplate):
 
     def form_show(self, **event_args):
         """This method is called when the HTML panel is shown on the screen"""
-        print('changing url')
-        # self.call_js('setIframeSrc', "https://www.wikipedia.com")
-        # pass
-    def show(self, **event_args):
-        print('show event')
+        self.call_js('setIframeSrc', anvil.server.call('get_forumlink'))
+        # self.call_js('setIframeSrc', 'https://en.wikipedia.org/wiki/Florence_Petty')

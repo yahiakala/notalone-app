@@ -19,7 +19,7 @@
     </style>
 </head>
 <body>
-    <iframe id="myIframe" src="https://apnews.com"></iframe>
+    <iframe id="myIframe" src=""></iframe>
     <script>
         
         function adjustIframe() {
@@ -34,6 +34,7 @@
                 iframe.style.width = 'calc(100% - ' + leftNavWidth + 'px)';
 
                 iframe.style.top = topNavHeight + 'px';
+                /*iframe.style.top = '56px'*/
                 iframe.style.height = 'calc(100% - ' + topNavHeight + 'px)';
             }
         }
@@ -41,6 +42,7 @@
         function setIframeSrc(url) {
             var iframe = document.getElementById('myIframe');
             iframe.src = url;
+            adjustIframe()
         }
         window.onload = adjustIframe;
         window.onresize = adjustIframe;
