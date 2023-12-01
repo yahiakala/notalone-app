@@ -1,27 +1,5 @@
 container:
   type: HtmlTemplate
-  properties: {html: "<!DOCTYPE html>\n<html>\n<head>\n    <style>\n        body,\
-      \ html {\n            margin: 0;\n            padding: 0;\n            height:\
-      \ 100%;\n            overflow: hidden;\n        }\n        #myIframe {\n   \
-      \         position: fixed;\n            top: 0;\n            left: 0;\n    \
-      \        width: 100%;\n            height: 100%;\n            border: none;\n\
-      \        }\n    </style>\n</head>\n<body>\n    \n    <script>\n        function\
-      \ createAndSetIframeSrc(url) {\n            var iframe = document.createElement('iframe');\n\
-      \            iframe.id = 'myIframe';\n            iframe.style.position = 'fixed';\n\
-      \            iframe.style.top = '0';\n            iframe.style.left = '0';\n\
-      \            iframe.style.width = '100%';\n            iframe.style.height =\
-      \ '100%';\n            iframe.style.border = 'none';\n            iframe.src\
-      \ = url;\n            document.body.appendChild(iframe);\n\n            adjustIframe();\n\
-      \        }\n        \n        function adjustIframe() {\n            var leftNav\
-      \ = document.querySelector('.left-nav.anvil-measure-this');\n            var\
-      \ topNav = document.querySelector('.app-bar');\n            \n            if\
-      \ (leftNav) {\n                var leftNavWidth = leftNav.offsetWidth;\n   \
-      \             var topNavHeight = topNav.offsetHeight;\n                var iframe\
-      \ = document.getElementById('myIframe');\n                iframe.style.left\
-      \ = leftNavWidth + 'px';\n                iframe.style.width = 'calc(100% -\
-      \ ' + leftNavWidth + 'px)';\n\n                iframe.style.top = topNavHeight\
-      \ + 'px';\n                iframe.style.height = 'calc(100% - ' + topNavHeight\
-      \ + 'px)';\n            }\n        }\n        /*window.onload = adjustIframe;*/\n\
-      \        window.onresize = adjustIframe;\n\n    </script>\n</body>\n</html>\n"}
+  properties: {html: '@theme:discourse.html'}
 components: []
 is_package: true

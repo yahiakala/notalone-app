@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+        }
+        #myIframe {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <iframe id="myIframe" src="https://apnews.com"></iframe>
+    <script>
+        
+        function adjustIframe() {
+            var leftNav = document.querySelector('.left-nav.anvil-measure-this');
+            var topNav = document.querySelector('.app-bar');
+            
+            if (leftNav) {
+                var leftNavWidth = leftNav.offsetWidth;
+                var topNavHeight = topNav.offsetHeight;
+                var iframe = document.getElementById('myIframe');
+                iframe.style.left = leftNavWidth + 'px';
+                iframe.style.width = 'calc(100% - ' + leftNavWidth + 'px)';
+
+                iframe.style.top = topNavHeight + 'px';
+                iframe.style.height = 'calc(100% - ' + topNavHeight + 'px)';
+            }
+        }
+        
+        function setIframeSrc(url) {
+            var iframe = document.getElementById('myIframe');
+            iframe.src = url;
+        }
+        window.onload = adjustIframe;
+        window.onresize = adjustIframe;
+
+    </script>
+</body>
+</html>
