@@ -28,6 +28,8 @@ def login_sso(sso, sig):
     nonce = params['nonce']
 
     user = anvil.users.get_user(allow_remembered=True)
+    print('user')
+    print(user)
     if not user or user['auth_forumchat'] != True:
         return "User not logged in or does not have access to forum."
 

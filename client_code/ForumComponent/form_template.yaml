@@ -1,11 +1,12 @@
 container: {type: ColumnPanel}
 components:
 - name: outlined_card_1
-  properties: {role: outlined-card, visible: false}
+  properties: {role: outlined-card, visible: true}
   type: ColumnPanel
   layout_properties: {grid_position: 'PJIRPF,JHRXVZ'}
 - name: link_1
-  properties: {text: Go to Forum, icon: 'fa:wechat', align: center, role: headline}
+  properties: {text: Go to Forum, icon: 'fa:wechat', align: center, role: headline,
+    visible: false}
   type: Link
   layout_properties: {grid_position: 'WUQBLZ,YRFHMR'}
 is_package: true
