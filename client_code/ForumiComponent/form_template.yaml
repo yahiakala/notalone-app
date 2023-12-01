@@ -1,8 +1,19 @@
 container:
   type: HtmlTemplate
-  properties: {html: "<!DOCTYPE html>\n<iframe src=\"https://wikipedia.org\" style=\"\
-      position:fixed; top:0; left:0; bottom:0; right:0; width:100%; height:100%; border:none;\
-      \ margin:0; padding:0; overflow:hidden; z-index:999999;\">\n    Your browser\
-      \ doesn't support iframes\n</iframe>"}
+  properties: {html: "<!DOCTYPE html>\n<html>\n<head>\n    <style>\n        body,\
+      \ html {\n            margin: 0;\n            padding: 0;\n            height:\
+      \ 100%;\n            overflow: hidden;\n        }\n        #myIframe {\n   \
+      \         position: fixed;\n            top: 56px; /* Height of your top nav\
+      \ bar */\n            left: 0;\n            width: 100%;\n            height:\
+      \ calc(100% - 56px); /* Adjusted for the height of the top nav bar */\n    \
+      \        border: none;\n        }\n    </style>\n</head>\n<body>\n    <iframe\
+      \ id=\"myIframe\" src=\"https://wikipedia.com\"></iframe>\n    <script>\n  \
+      \      function adjustIframe() {\n            var leftNav = document.querySelector('.left-nav.anvil-measure-this');\n\
+      \            if (leftNav) {\n                var leftNavWidth = leftNav.offsetWidth;\n\
+      \                var iframe = document.getElementById('myIframe');\n       \
+      \         iframe.style.left = leftNavWidth + 'px';\n                iframe.style.width\
+      \ = 'calc(100% - ' + leftNavWidth + 'px)';\n            }\n        }\n\n   \
+      \     window.onload = adjustIframe;\n        window.onresize = adjustIframe;\n\
+      \    </script>\n</body>\n</html>\n"}
 components: []
 is_package: true
