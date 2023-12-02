@@ -19,13 +19,20 @@ class FinComponent(FinComponentTemplate):
         # Set Form properties and Data Bindings.
         self.finances = Global.finances
         self.init_components(**properties)
+        if self.finances['budgets']:
+            self.lbl_budg_total_amt.text = sum([i['amount'] for i in self.finances['budgets']])
         self.rp_budget.add_event_handler('x-refresh', self.refresh_data)
 
     def btn_save_budget_click(self, **event_args):
         """This method is called when the button is clicked"""
-        self.finances['budgets'] = self.finances['budgets'] + [
-            {'name': self.tb_budg_name.text, 'amount': self.tb_budget_amt.text}
-        ]
+        if self.finances['budgets']:
+            self.finances['budgets'] = self.finances['budgets'] + [
+                {'name': self.tb_budg_name.text, 'amount': self.tb_budget_amt.text}
+            ]
+        else:
+            self.finances['budgets'] = [
+                {'name': self.tb_budg_name.text, 'amount': self.tb_budget_amt.text}
+            ]
         Global.finances = self.finances
         self.cp_add_budget.visible = False
         self.btn_add_budget.visible = True

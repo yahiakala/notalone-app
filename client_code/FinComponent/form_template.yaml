@@ -8,18 +8,32 @@ components:
   layout_properties: {grid_position: 'DVPHPM,ZDTJSV'}
   components:
   - type: Label
-    properties: {role: null, align: right, tooltip: '', border: '', foreground: '',
-      visible: true, text: Estimated 12 Month Revenue, font_size: null, font: '',
-      spacing_above: small, icon_align: left, spacing_below: small, italic: false,
-      background: '', bold: false, underline: false, icon: ''}
+    properties: {role: null, align: right, tooltip: Revenue from all members who are in good standing. This may include members who cancelled their recurring payments but their membership hasn't expired yet.,
+      border: '', foreground: '', visible: true, text: Estimated 12 Month Revenue,
+      font_size: null, font: '', spacing_above: small, icon_align: left, spacing_below: small,
+      italic: false, background: '', bold: false, underline: false, icon: 'fa:question-circle'}
     name: lbl_rev12
-    layout_properties: {grid_position: 'YTVPVZ,GRKCYX'}
+    layout_properties: {grid_position: 'YTVPVZ,GRKCYX THMASY,HRWBJZ'}
+  - name: lbl_rev12_active
+    properties: {role: null, align: right, tooltip: Revenue from members who have active subscriptions.,
+      border: '', foreground: '', visible: true, text: Estimated 12 Month Active Revenue,
+      font_size: null, font: '', spacing_above: small, icon_align: left, spacing_below: small,
+      italic: false, background: '', bold: false, underline: false, icon: 'fa:question-circle'}
+    type: Label
+    layout_properties: {grid_position: 'YTVPVZ,GRKCYX LWVQMC,HMXMDW'}
   - type: Label
     properties: {}
     name: lbl_rev12num
-    layout_properties: {grid_position: 'YTVPVZ,KGBPBH'}
+    layout_properties: {grid_position: 'YTVPVZ,KGBPBH SNCGVR,BURKGS'}
     data_bindings:
-    - {property: text, code: 'self.finances[''rev_12'']'}
+    - {property: text, code: '"{0:.2f}".format(self.finances[''rev_12''])', writeback: false}
+  - name: lbl_rev12num_active
+    properties: {}
+    type: Label
+    layout_properties: {grid_position: 'YTVPVZ,KGBPBH QYSMTW,LNNYAP'}
+    data_bindings:
+    - {property: text, code: '"{0:.2f}".format(self.finances[''rev_12_active''])',
+      writeback: false}
 - type: ColumnPanel
   properties: {role: outlined-card, tooltip: '', border: '', foreground: '', visible: true,
     wrap_on: mobile, col_spacing: medium, spacing_above: small, col_widths: '{"GBBUSD":50,"XWZNSW":10}',
@@ -88,11 +102,10 @@ components:
     layout_properties: {grid_position: 'IIENKJ,GBBUSD'}
   - type: Label
     properties: {role: null, align: center, tooltip: '', border: '', foreground: '',
-      visible: true, text: '', font_size: null, font: '', spacing_above: small, icon_align: left,
+      visible: true, text: '0', font_size: null, font: '', spacing_above: small, icon_align: left,
       spacing_below: small, italic: false, background: '', bold: false, underline: false,
       icon: ''}
     name: lbl_budg_total_amt
     layout_properties: {grid_position: 'IIENKJ,XWZNSW'}
-    data_bindings:
-    - {property: text, code: 'sum([i[''amount''] for i in self.finances[''budgets'']])'}
+    data_bindings: []
 is_package: true

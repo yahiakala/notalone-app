@@ -138,7 +138,12 @@ def check_subs():
 @anvil.server.background_task
 def calc_rev12():
     for tenant in app_tables.tenants.search():
+        tenantfin = app_tables.finances.get(tenant=tenant)
         total_rev = 0
         for user_ref in app_tables.users.search(tenant=tenant, fee=q.not_(None), good_standing=True):
             total_rev += user_ref['fee']*0.97-0.3
-        tenant['total_rev12'] = total_rev
+        tenantfin['rev_12'] = total_rev
+        total_rev = 0
+        for user_ref in app_tables.users.search(tenant=tenant, fee=q.not_(None), good_standing=True, payment_status='ACTIVE'):
+            total_rev += user_ref['fee']*0.97-0.3
+        tenantfin['rev_12_active'] = total_rev

@@ -189,6 +189,9 @@ db_schema:
       admin_ui: {order: -1, width: 200}
       type: link_single
       target: tenants
+    - name: rev_12_active
+      admin_ui: {width: 200, order: 3}
+      type: number
     title: Finances
   forum:
     title: Forum
