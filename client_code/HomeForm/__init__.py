@@ -11,7 +11,7 @@ from ..ProfileComponent import ProfileComponent
 from ..ApplicantsComponent import ApplicantsComponent
 from ..MembersComponent import MembersComponent
 from ..FinComponent import FinComponent
-from ..ForumiComponent import ForumiComponent
+# from ..ForumiComponent import ForumiComponent
 from anvil_labs.ClientTestComponent import ClientTestComponent
 
 from .. import Global
@@ -28,7 +28,7 @@ class HomeForm(HomeFormTemplate):
         self.link_applicants.add_event_handler('click', partial(self.go_page, 'applicants'))
         self.link_members.add_event_handler('click', partial(self.go_page, 'members'))
         self.link_fin.add_event_handler('click', partial(self.go_page, 'financials'))
-        self.link_forum.add_event_handler('click', partial(self.go_page, 'forum'))
+        # self.link_forum.add_event_handler('click', partial(self.go_page, 'forum'))
 
         self.user = Global.user
 
@@ -79,7 +79,7 @@ class HomeForm(HomeFormTemplate):
         self.link_applicants.visible = False
         self.link_members.visible = False
         self.link_fin.visible = False
-        self.link_forum.visible = False
+        # self.link_forum.visible = False
 
         if user:
             self.link_apply.visible = user['auth_booking']
@@ -87,7 +87,7 @@ class HomeForm(HomeFormTemplate):
             self.link_applicants.visible = user['auth_screenings']
             self.link_members.visible = user['auth_members']
             self.link_fin.visible = user['auth_members']
-            self.link_forum.visible = user['auth_members']  # TODO: Change later.
+            # self.link_forum.visible = user['auth_members']  # TODO: Change later.
 
     def load_component(self, cmpt):
         self.cmpt = cmpt
@@ -102,7 +102,7 @@ class HomeForm(HomeFormTemplate):
         self.link_profile.role = 'selected' if state == 'profile' else None
         self.link_applicants.role = 'selected' if state == 'applicants' else None
         self.link_members.role = 'selected' if state == 'members' else None
-        self.link_forum.role = 'selected' if state == 'forum' else None
+        # self.link_forum.role = 'selected' if state == 'forum' else None
 
     def go_page(self, page_name, **event_args):
         """Go to a page."""
@@ -118,9 +118,9 @@ class HomeForm(HomeFormTemplate):
             self.load_component(MembersComponent())
         elif page_name == 'financials' and user:
             self.load_component(FinComponent())
-        elif page_name == 'forum' and user:
-            self.load_component(ForumiComponent())
-            self.cmpt.form_show()
+        # elif page_name == 'forum' and user:
+            # self.load_component(ForumiComponent())
+            # self.cmpt.form_show()
         elif page_name == 'tests' and user:
             from .. import test_forms, test_server, test_tasks
             self.load_component(
