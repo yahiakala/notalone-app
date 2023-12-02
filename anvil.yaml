@@ -30,6 +30,9 @@ services:
 - source: /runtime/services/anvil/email.yml
   client_config: {}
   server_config: {}
+- source: /runtime/services/anvil/files.yml
+  client_config: {}
+  server_config: {file_table: files}
 startup: {type: form, module: HomeForm}
 package_name: notalone_app
 allow_embedding: false
@@ -141,6 +144,9 @@ db_schema:
     - name: waiver
       admin_ui: {width: 200}
       type: string
+    - name: logo
+      admin_ui: {width: 200, order: 3}
+      type: media
     title: Tenants
   notes:
     client: none
@@ -199,6 +205,20 @@ db_schema:
       admin_ui: {width: 200}
       type: link_single
       target: tenants
+  files:
+    client: none
+    server: full
+    columns:
+    - name: path
+      admin_ui: {order: 0, width: 200}
+      type: string
+    - name: file
+      admin_ui: {order: 1, width: 200}
+      type: media
+    - name: file_version
+      admin_ui: {order: 2, width: 200}
+      type: string
+    title: Files
 secrets:
   paypal_client_id:
     value: {T4BTSIBAI26CJ3RZ: z0JaieiqHt5mAySpe0CyP8l7CcI6X05wn+0dEesu3NMFYZv4QVFre0uh4aUkFfh/QNnAjL09sVz/1NUf+FNrpBfMtwb6SqP/FAOfTFnmyixrFOPTTqt26tXSbaaOPG7yn46l+vfy9Aso/0ZwOjTJcdPTR/YgLycournbmrgS6EHxE3ri8ayI5JDFT0cX8BLpatnKPBCUxmh23yShonuHlLTu+1p1Hy4Lw9bR0oAnPg==}
