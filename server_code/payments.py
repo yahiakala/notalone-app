@@ -101,8 +101,12 @@ def cancel_sub(**params):
 def check_sub(user_dict):
     from dateutil.relativedelta import relativedelta
     import datetime as dt
-    user = anvil.users.get_user(allow_remembered=True)
-    user_ref = app_tables.users.get(email=user_dict['email'], tenant=user['tenant'])
+    if user_dict:
+        user_ref = app_tables.users.get(email=user_dict['email'])
+    else:
+        user = anvil.users.get_user(allow_remembered=True)
+        user_ref = app_tables.users.get(email=user_dict['email'], tenant=user['tenant'])
+
     if not user_ref:
         return None
 
