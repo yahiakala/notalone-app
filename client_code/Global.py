@@ -10,7 +10,8 @@ global_dict = {
     'applicants': None,
     'pending': None,
     'screener_link': None,
-    'finances': None
+    'finances': None,
+    'forumlink': None
 }
 
 
