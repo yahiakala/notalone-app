@@ -1,6 +1,5 @@
 from ._anvil_designer import HomeAnonComponentTemplate
 from anvil import *
-import anvil.server
 
 
 class HomeAnonComponent(HomeAnonComponentTemplate):
