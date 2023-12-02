@@ -40,4 +40,6 @@ components:
       - {property: items, code: self.groups}
     data_bindings:
     - {property: visible, code: 'self.user[''tenant''] is None'}
+  data_bindings:
+  - {property: visible, code: 'self.user[''tenant''] is None', writeback: false}
 is_package: true
