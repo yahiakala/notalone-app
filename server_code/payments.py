@@ -27,7 +27,7 @@ def get_subscriptions(subscription_id, verbose=False):
     import datetime as dt
     
     if not subscription_id:
-        return None, None
+        return None, None, None
     import requests
     access_token = get_paypal_auth()
     headers = {
@@ -41,13 +41,13 @@ def get_subscriptions(subscription_id, verbose=False):
         status = subscription_detail_response.json()['status']
         last_payment = dt.datetime.fromisoformat(
             subscription_detail_response.json()['billing_info']['last_payment']['time'].replace("Z", "+00:00")
-            # TODO: add payment amount as a return value
-            # float(subscription_detail_response.json()['billing_info']['last_payment']['amount']['value'])
         ).date()
+        payment_amt = float(subscription_detail_response.json()['billing_info']['last_payment']['amount']['value'])
     except KeyError as e:
         status = None
         last_payment = None
-    return status, last_payment
+        payment_amt = None
+    return status, last_payment, payment_amt
 
 
 @anvil.server.callable(require_user=True)
@@ -111,8 +111,9 @@ def check_sub(user_dict):
         return None
 
     # TODO: add payment amount to the col in the db
-    status, last_payment = get_subscriptions(user_ref['paypal_sub_id'])
+    status, last_payment, payment_amt = get_subscriptions(user_ref['paypal_sub_id'])
     user_ref['payment_status'] = status
+    user_ref['fee'] = payment_amt
     if last_payment:
         user_ref['payment_expiry'] = last_payment + relativedelta(years=1)
         if user_ref['payment_expiry'] >= dt.date.today() or status == 'ACTIVE' or user_ref['fee'] == 0:
