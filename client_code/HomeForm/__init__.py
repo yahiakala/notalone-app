@@ -79,6 +79,7 @@ class HomeForm(HomeFormTemplate):
         self.link_applicants.visible = False
         self.link_members.visible = False
         self.link_fin.visible = False
+        self.link_forum_nav.visible = False
         # self.link_forum.visible = False
 
         if user:
@@ -87,6 +88,7 @@ class HomeForm(HomeFormTemplate):
             self.link_applicants.visible = user['auth_screenings']
             self.link_members.visible = user['auth_members']
             self.link_fin.visible = user['auth_members']
+            self.link_forum_nav.visible = user['auth_forumchat']
             # self.link_forum.visible = user['auth_members']  # TODO: Change later.
 
     def load_component(self, cmpt):
@@ -137,3 +139,7 @@ class HomeForm(HomeFormTemplate):
         self.user = Global.user
         self.set_account_state(self.user)
         self.refresh_data_bindings()
+
+    def link_forum_nav_click(self, **event_args):
+        """This method is called when the link is clicked"""
+        anvil.js.window.location.href = Global.forumlink
