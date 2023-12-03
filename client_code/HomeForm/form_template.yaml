@@ -38,9 +38,9 @@ components:
     event_bindings: {click: link_login_click}
   - type: Link
     properties: {role: null, url: '', align: left, tooltip: '', border: '', foreground: '',
-      visible: false, text: Logout, font_size: null, wrap_on: mobile, font: '', col_spacing: medium,
+      visible: false, text: '', font_size: null, wrap_on: mobile, font: '', col_spacing: medium,
       spacing_above: small, icon_align: left, col_widths: '', spacing_below: small,
-      italic: false, background: '', bold: false, underline: false, icon: ''}
+      italic: false, background: '', bold: false, underline: false, icon: 'fa:sign-out'}
     name: link_logout
     layout_properties: {}
     event_bindings: {click: link_logout_click}
@@ -106,7 +106,7 @@ components:
     event_bindings: {}
 - type: Label
   properties: {role: null, align: left, tooltip: '', border: '', foreground: '', visible: true,
-    text: You Are Not Alone, font_size: null, font: '', spacing_above: small, icon_align: left,
+    text: Not Alone, font_size: null, font: '', spacing_above: small, icon_align: left,
     spacing_below: small, italic: false, background: '', bold: false, underline: false,
     icon: ''}
   name: lbl_app_title
