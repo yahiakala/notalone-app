@@ -28,8 +28,8 @@ def login_sso(sso, sig, session_id=None):
     nonce = params['nonce']
 
     user = None
-    if session_id:
-        user = get_user_by_session_id(session_id)
+    # if session_id:
+    #     user = get_user_by_session_id(session_id)
     if not user:
         user = anvil.users.get_user(allow_remembered=True)
     print('user')
@@ -53,8 +53,6 @@ def login_sso(sso, sig, session_id=None):
     # return_payload = '&'.join([f"{key}={urllib.parse.quote_plus(str(value))}" for key, value in user_info.items()])
     return_payload = '&'.join([f"{key}={value}" for key, value in user_info.items()])
     # print(return_payload)
-
-    
 
     # Base64-encode and URL-encode the return payload
     b64_return_payload = base64.b64encode(return_payload.encode()).decode()
