@@ -101,6 +101,7 @@ def cancel_sub(**params):
 def check_sub(user_dict):
     from dateutil.relativedelta import relativedelta
     import datetime as dt
+    
     if user_dict:
         user_ref = app_tables.users.get(email=user_dict['email'])
     else:
@@ -110,11 +111,11 @@ def check_sub(user_dict):
     if not user_ref:
         return None
 
-    # TODO: add payment amount to the col in the db
     status, last_payment, payment_amt = get_subscriptions(user_ref['paypal_sub_id'])
     user_ref['payment_status'] = status
     user_ref['fee'] = payment_amt
-    if last_payment:
+    
+    if last_payment and user_ref['fee'] != 0:
         user_ref['payment_expiry'] = last_payment + relativedelta(years=1)
         if user_ref['payment_expiry'] >= dt.date.today() or status == 'ACTIVE' or user_ref['fee'] == 0:
             user_ref['good_standing'] = True
@@ -125,6 +126,12 @@ def check_sub(user_dict):
             # Disable the user's forum privileges until back in good standing.
             user_ref['good_standing'] = False
             user_ref['auth_forumchat'] = False
+    elif user_ref['fee'] == 0:
+        user_ref['good_standing'] = True
+        user_ref['auth_forumchat'] = True
+    else:
+        user_ref['good_standing'] = False
+        user_ref['auth_forumchat'] = False
     return user_ref
       
 

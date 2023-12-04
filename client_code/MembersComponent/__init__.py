@@ -64,8 +64,7 @@ class MembersComponent(MembersComponentTemplate):
         self.members = Global.users.search(
             paypal_sub_id=None,
             fee=q.not_(0),
-            good_standing=False,
-            auth_forumchat=True
+            good_standing=False
         )
         self.refresh_search()
         self.btn_nosub.role = 'filled-button'
