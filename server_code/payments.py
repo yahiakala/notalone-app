@@ -180,10 +180,12 @@ def notify_payment(user_ref, tenant=None):
 
     <p>Regards,</p>
     <p>{tenant['name']}</p>
+    <p>Reply to: {tenant['email']}</p>
     """
     anvil.email.send(
         to=user_ref['email'],
-        from_address=tenant['email'],
+        from_address='noreply',
+        bcc=tenant['email'],
         from_name="NotAlone",
         subject="Membership Payment",
         html=msg_body
