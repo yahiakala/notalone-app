@@ -148,3 +148,37 @@ def calc_rev12():
         for user_ref in app_tables.users.search(tenant=tenant, fee=q.not_(None), good_standing=True, payment_status='ACTIVE'):
             total_rev += user_ref['fee']*0.97-0.3
         tenantfin['rev_12_active'] = total_rev
+
+
+@permission_required('auth_members')
+def notify_payment(user_ref):
+    """Notify the member they need to make a payment."""
+    msg_body = f"""
+    <p>Hi {user_ref['first_name']}!</p>
+
+    <p>You are getting this message because either your membership payment has expired or
+    your payments are not linked to your profile on our NotAlone platform.</p>
+
+    <p>Please sign in to your account with this email: <b>{user_ref['email']}</b></p>
+
+    <p>Sign in here: {anvil.server.get_app_origin()}</p>
+
+    <h2>First Time Logging In?</h2>
+    <p>If your email is not a gmail account, reset your password.</p>
+    <p>If it is your first time and you do have a gmail account, log in with Google.</p>
+
+    <p>Regards,</p>
+    <p>{user_ref['tenant']['name']}</p>
+    """
+    anvil.email.send(
+        to=user_ref['email'],
+        from_address=user_ref['tenant']['email'],
+        from_name="NotAlone",
+        subject="Membership Payment",
+        html=msg_body
+    )
+
+@anvil.server.background_task
+def check_expired_payments():
+    for user in app_tables.users.search(good_standing=False, auth_profile=True):
+        notify_payment(user)

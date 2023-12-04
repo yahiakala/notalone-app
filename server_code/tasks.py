@@ -171,3 +171,5 @@ def notify_accept(email_to):
         subject="Welcome to the NotAlone Community!",
         html=msg_body
     )
+
+
