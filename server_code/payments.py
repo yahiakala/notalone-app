@@ -158,8 +158,12 @@ def calc_rev12():
 
 
 @permission_required('auth_members')
-def notify_payment(user_ref):
+def notify_payment(user_ref, tenant=None):
     """Notify the member they need to make a payment."""
+    if not tenant:
+        user = anvil.users.get_user(allow_remembered=True)
+        tenant = {'name': user['tenant']['name'], 'email': user['tenant']['email']}
+
     msg_body = f"""
     <p>Hi {user_ref['first_name']}!</p>
 
@@ -175,11 +179,11 @@ def notify_payment(user_ref):
     <p>If it is your first time and you do have a gmail account, log in with Google.</p>
 
     <p>Regards,</p>
-    <p>{user_ref['tenant']['name']}</p>
+    <p>{tenant['name']}</p>
     """
     anvil.email.send(
         to=user_ref['email'],
-        from_address=user_ref['tenant']['email'],
+        from_address=tenant['email'],
         from_name="NotAlone",
         subject="Membership Payment",
         html=msg_body
@@ -194,4 +198,4 @@ def notify_all_payments():
 @anvil.server.background_task
 def check_expired_payments():
     for user in app_tables.users.search(good_standing=False, auth_profile=True):
-        notify_payment(user)
+        notify_payment(user, user['tenant'])
