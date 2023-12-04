@@ -80,8 +80,7 @@ class MembersComponent(MembersComponentTemplate):
                 max=dt.date.today() + dt.timedelta(days=30),
                 min_inclusive=True,
                 max_inclusive=False
-            ),
-            auth_forumchat=True
+            )
         )
         self.refresh_search()
         self.btn_expiring_soon.role = 'filled-button'
@@ -92,7 +91,6 @@ class MembersComponent(MembersComponentTemplate):
             paypal_sub_id=q.not_(None),
             payment_status=q.not_('ACTIVE'),
             fee=q.not_(0),
-            auth_forumchat=True,
             payment_expiry=q.less_than(dt.date.today())
         )
         self.refresh_search()
