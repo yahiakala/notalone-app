@@ -60,6 +60,10 @@ class MemberTemplate(MemberTemplateTemplate):
         """This method is called when the text area loses focus"""
         anvil.server.call('save_user_notes', self.item['email'], self.user_notes)
 
+    def btn_remind_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        anvil.server.call('notify_payment', self.item)
+
 
 
             

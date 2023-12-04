@@ -142,7 +142,7 @@ components:
     name: rt_fee
     layout_properties: {grid_position: 'XPBDSR,AJQRIN'}
   - type: Label
-    properties: {role: null, align: left, tooltip: '', border: '', foreground: '',
+    properties: {role: null, align: right, tooltip: '', border: '', foreground: '',
       visible: true, text: Enter Fee (Minimum $10/yr), font_size: null, font: '',
       spacing_above: small, icon_align: left, spacing_below: small, italic: false,
       background: '', bold: false, underline: false, icon: ''}
@@ -185,6 +185,43 @@ components:
     data_bindings: []
   data_bindings:
   - {property: visible, code: 'self.user[''good_standing''] != True'}
+- name: outlined_card_1
+  properties: {role: outlined-card}
+  type: ColumnPanel
+  layout_properties: {grid_position: 'HRLXBQ,SDCPJN'}
+  components:
+  - name: lbl_plan_title_copy
+    properties: {role: title, align: center, tooltip: '', border: '', foreground: '',
+      visible: true, text: Your Payment Status, font_size: null, font: '', spacing_above: small,
+      icon_align: left, spacing_below: small, italic: false, background: '', bold: false,
+      underline: false, icon: ''}
+    type: Label
+    layout_properties: {grid_position: 'NDUJEA,IUDGMY'}
+  - name: lbl_fee_paid_copy
+    properties: {role: null, align: center, tooltip: '', border: '', foreground: '',
+      visible: true, text: Your membership is in good standing., font_size: null,
+      font: '', spacing_above: small, icon_align: left, spacing_below: small, italic: false,
+      background: '', bold: false, underline: false, icon: ''}
+    type: Label
+    layout_properties: {grid_position: 'QANJMA,LHVDUQ'}
+  - name: lbl_fee_paid
+    properties: {role: null, align: right, tooltip: '', border: '', foreground: '',
+      visible: true, text: 'Your annual fee that you''ve subscribed to:', font_size: null,
+      font: '', spacing_above: small, icon_align: left, spacing_below: small, italic: false,
+      background: '', bold: false, underline: false, icon: ''}
+    type: Label
+    layout_properties: {grid_position: 'DNBQAE,EDUGKI'}
+  - name: lbl_fee_paid_amt
+    properties: {role: null, align: left, tooltip: '', border: '', foreground: '',
+      visible: true, text: '', font_size: null, font: '', spacing_above: small, icon_align: left,
+      spacing_below: small, italic: false, background: '', bold: false, underline: false,
+      icon: ''}
+    type: Label
+    layout_properties: {grid_position: 'DNBQAE,FZJEGC'}
+    data_bindings:
+    - {property: text, code: 'self.user[''fee'']', writeback: false}
+  data_bindings:
+  - {property: visible, code: 'self.user[''good_standing''] == True', writeback: false}
 - type: Button
   properties: {role: filled-button, align: center, tooltip: '', border: '', enabled: true,
     foreground: '', visible: true, text: Save Changes, font_size: null, font: '',

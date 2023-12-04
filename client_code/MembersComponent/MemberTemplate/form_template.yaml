@@ -134,4 +134,15 @@ components:
       data_bindings:
       - {property: visible, code: 'False if self.item[''auth_forumchat''] else True'}
       event_bindings: {click: btn_restore_click}
+    - name: btn_remind
+      properties: {role: filled-button, align: center, tooltip: '', border: '', enabled: true,
+        foreground: '', visible: true, text: Payment Reminder, font_size: null, font: '',
+        spacing_above: small, icon_align: left, spacing_below: small, italic: false,
+        background: '', bold: false, underline: false, icon: 'fa:mail-forward'}
+      type: Button
+      layout_properties: {}
+      data_bindings:
+      - {property: visible, code: 'False if self.item[''good_standing''] else True',
+        writeback: false}
+      event_bindings: {click: btn_remind_click}
 is_package: true

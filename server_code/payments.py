@@ -178,6 +178,12 @@ def notify_payment(user_ref):
         html=msg_body
     )
 
+
+@permission_required('auth_members')
+def notify_all_payments():
+    anvil.server.launch_background_task('check_expired_payments')
+
+
 @anvil.server.background_task
 def check_expired_payments():
     for user in app_tables.users.search(good_standing=False, auth_profile=True):
