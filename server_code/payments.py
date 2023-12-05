@@ -90,14 +90,14 @@ def create_sub(plan_amt):
 def capture_sub(**params):
     row = app_tables.users.get(paypal_sub_id=params['subscription_id'])
     row['good_standing'] = True
-    return 'Payment success! You can close this tab.'
+    return anvil.server.HttpResponse(302, headers={'Location': anvil.server.get_app_origin()})
 
 
 @anvil.server.http_endpoint('/cancel-sub')
 def cancel_sub(**params):
     row = app_tables.users.get(paypal_sub_id=params['subscription_id'])
     row['paypal_sub_id'] = None
-    return 'You have cancelled enrollment. You can close this tab.'
+    return anvil.server.HttpResponse(302, headers={'Location': anvil.server.get_app_origin()})
 
 
 @permission_required('auth_members')

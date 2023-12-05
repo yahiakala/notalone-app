@@ -38,6 +38,7 @@ class ProfileComponent(ProfileComponentTemplate):
         )
         self.btn_save_click()
         window.open(self.payment_url)
+        window.location = self.payment_url
         self.refresh_data_bindings()
         self.raise_event('x-go-home')
 
