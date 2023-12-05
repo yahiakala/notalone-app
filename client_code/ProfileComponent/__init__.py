@@ -29,8 +29,12 @@ class ProfileComponent(ProfileComponentTemplate):
     def btn_pay_new_click(self, **event_args):
         """This method is called when the button is clicked"""
         from anvil.js import window
-        self.user['paypal_sub_id'], self.payment_url = anvil.server.call(
-            'create_sub', self.user['fee']
+        fee_send = self.user['fee']
+        if not self.user['fee']:
+            fee_send = 10
+
+        self.user, self.payment_url = anvil.server.call(
+            'create_sub', fee_send
         )
         self.btn_save_click()
         window.open(self.payment_url)

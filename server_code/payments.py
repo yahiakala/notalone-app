@@ -3,6 +3,7 @@ import anvil.secrets
 import anvil.http
 from anvil.tables import app_tables
 import anvil.tables.query as q
+import anvil.users
 
 # https://developer.paypal.com/docs/api/subscriptions/v1/#subscriptions_create
 from .helpers import permission_required
@@ -52,9 +53,10 @@ def get_subscriptions(subscription_id, verbose=False):
 
 @anvil.server.callable(require_user=True)
 def create_sub(plan_amt):
-    import requests
+    # import requests
     access_token = get_paypal_auth()
     print(anvil.server.get_app_origin())
+    user = anvil.users.get_user(allow_remembered=True)
 
     if plan_amt == 10:
         plan_id = anvil.secrets.get_secret('pp_plan_id_10')
@@ -78,7 +80,8 @@ def create_sub(plan_amt):
             },
             json=True
         )
-        return response['id'], response['links'][0]['href']
+        user['paypal_sub_id'] = response['id']
+        return user, response['links'][0]['href']
     except anvil.http.HttpError as e:
         print(f"Error {e.status} {e.content}")
 
