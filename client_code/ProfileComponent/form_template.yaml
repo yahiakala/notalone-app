@@ -63,7 +63,7 @@ components:
     data_bindings:
     - {property: text, code: 'self.user[''email'']', writeback: true}
 - type: ColumnPanel
-  properties: {role: outlined-card, col_widths: '{"NFZYMY":10,"WZCJJP":50}'}
+  properties: {role: outlined-card, col_widths: '{"NFZYMY":10,"WZCJJP":50,"FSIGED":10,"GDPJAW":50}'}
   name: cp_social
   layout_properties: {grid_position: 'WQFGLG,FLTJBP'}
   components:
@@ -91,6 +91,23 @@ components:
     layout_properties: {grid_position: 'EQOMRC,WZCJJP'}
     data_bindings:
     - {property: text, code: 'self.user[''fb_url'']', writeback: true}
+  - name: lbl_discord_user
+    properties: {role: null, align: left, tooltip: '', border: '', foreground: '',
+      visible: true, text: Discord Username, font_size: null, font: '', spacing_above: small,
+      icon_align: left, spacing_below: small, italic: false, background: '', bold: false,
+      underline: false, icon: ''}
+    type: Label
+    layout_properties: {grid_position: 'OKHKDC,FSIGED'}
+    data_bindings: []
+  - name: tb_discord_user
+    properties: {role: outlined, align: left, hide_text: false, tooltip: '', placeholder: Discord Username,
+      border: '', enabled: true, foreground: '', visible: true, text: '', font_size: null,
+      font: '', spacing_above: small, type: text, spacing_below: small, italic: false,
+      background: '', bold: false, underline: false}
+    type: TextBox
+    layout_properties: {grid_position: 'OKHKDC,GDPJAW'}
+    data_bindings:
+    - {property: text, code: 'self.user[''discord'']', writeback: true}
 - type: ColumnPanel
   properties: {role: outlined-card, col_widths: '{}'}
   name: cp_module

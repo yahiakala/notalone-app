@@ -12,6 +12,10 @@ def clean_up_user(user):
         user['first_name'] = ''
     if not user['last_name']:
         user['last_name'] = ''
+    if not user['fb_url']:
+        user['fb_url'] = ''
+    if not user['discord']:
+        user['discord'] = ''
     return user
 
 
@@ -20,7 +24,10 @@ def clean_up_users():
         user['first_name'] = ''
     for user in app_tables.users.search(last_name=None):
         user['last_name'] = ''
-
+    for user in app_tables.users.search(fb_url=None):
+        user['fb_url'] = ''
+    for user in app_tables.users.search(discord=None):
+        user['discord'] = ''
 
 @anvil.server.callable(require_user=True)
 def get_tenants():

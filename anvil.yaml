@@ -127,6 +127,9 @@ db_schema:
       admin_ui: {width: 200}
       type: link_multiple
       target: roles
+    - name: discord
+      admin_ui: {width: 200}
+      type: string
     title: Users
   tenants:
     client: none

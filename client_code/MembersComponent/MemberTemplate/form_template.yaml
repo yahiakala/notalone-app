@@ -22,6 +22,18 @@ components:
     name: btn_refresh
     layout_properties: {grid_position: 'FRXGOQ,LLSLKE'}
     event_bindings: {click: btn_refresh_click}
+  - name: lbl_fb_url
+    properties: {}
+    type: Label
+    layout_properties: {grid_position: 'BXBGCU,YALWAF'}
+    data_bindings:
+    - {property: text, code: '''Facebook: '' + self.item[''fb_url'']', writeback: false}
+  - name: lbl_discord_user
+    properties: {}
+    type: Label
+    layout_properties: {grid_position: 'CVGIDR,QRQZXB'}
+    data_bindings:
+    - {property: text, code: '''Discord: '' + self.item[''discord'']', writeback: false}
   - type: Label
     properties: {}
     name: lbl_payment_status
