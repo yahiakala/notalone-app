@@ -35,6 +35,7 @@ package_name: notalone_app
 allow_embedding: false
 name: notalone app
 runtime_options: {version: 2, client_version: '3', server_version: python3-full, server_spec: null}
+metadata: {logo_img: 'asset:notalone.png'}
 startup_form: null
 db_schema:
   users:
