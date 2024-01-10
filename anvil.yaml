@@ -1,10 +1,4 @@
-scheduled_tasks:
-- task_name: check_subs
-  time_spec:
-    n: 7
-    every: day
-    at: {minute: 0, hour: 10}
-  job_id: DVJGVVKY
+scheduled_tasks: null
 dependencies:
 - dep_id: dep_vscdshbjqihr0e
   version: {version_tag: v0.07}
