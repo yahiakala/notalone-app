@@ -18,7 +18,8 @@ class ApplicantTemplate(ApplicantTemplateTemplate):
         self.parent.raise_event('x-refresh')
 
     def btn_reject_click(self, **event_args):
-        """This method is called when the button is clicked"""
+        """Just remove their ability to book another screening."""
+        # TODO: notify them and delete their user account
         _ = anvil.server.call('reassign_roles', self.item, {'auth_booking': False})
         self.parent.raise_event('x-refresh')
 

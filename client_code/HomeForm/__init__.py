@@ -80,9 +80,12 @@ class HomeForm(HomeFormTemplate):
         self.link_members.visible = False
         self.link_fin.visible = False
         self.link_forum_nav.visible = False
+        self.lbl_user.visible = False
         # self.link_forum.visible = False
 
         if user:
+            self.lbl_user.visible = True
+            self.lbl_user.text = 'Account:\n' + user['email']
             self.link_apply.visible = user['auth_booking']
             self.link_profile.visible = user['auth_profile']
             self.link_applicants.visible = user['auth_screenings']

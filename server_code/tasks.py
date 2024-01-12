@@ -29,6 +29,7 @@ def clean_up_users():
     for user in app_tables.users.search(discord=None):
         user['discord'] = ''
 
+
 @anvil.server.callable(require_user=True)
 def get_tenants():
     user = anvil.users.get_user(allow_remembered=True)
@@ -105,7 +106,8 @@ def get_applicants():
     clean_up_users()
     user = anvil.users.get_user(allow_remembered=True)
     readable_view = app_tables.users.client_readable(
-        q.only_cols("email", "first_name", "last_name", "auth_profile", "auth_forumchat", "auth_booking", "good_standing"),
+        q.only_cols("email", "first_name", "last_name", "auth_profile",
+                    "auth_forumchat", "auth_booking", "good_standing", "signed_up"),
         tenant=user['tenant'],
         auth_forumchat=q.not_(True)
     )
