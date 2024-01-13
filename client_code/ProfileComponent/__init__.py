@@ -12,6 +12,54 @@ class ProfileComponent(ProfileComponentTemplate):
         self.init_components(**properties)
 
         # Any code you write here will run before the form opens.
+        self.slots = [
+            {
+                "day": 0,
+                "end": 17,
+                "start": 9,
+                "available": True
+            },
+            {
+                "day": 1,
+                "end": 17,
+                "start": 9,
+                "available": True
+            },
+            {
+                "day": 2,
+                "end": 17,
+                "start": 9,
+                "available": True
+            },
+            {
+                "day": 3,
+                "end": 17,
+                "start": 9,
+                "available": True
+            },
+            {
+                "day": 4,
+                "end": 17,
+                "start": 9,
+                "available": True
+            },
+            {
+                "day": 5,
+                "end": 17,
+                "start": 9,
+                "available": True
+            },
+            {
+                "day": 6,
+                "end": 17,
+                "start": 9,
+                "available": True
+            }
+        ]
+        from .DaySelector import DaySelector
+        for slot in self.slots:
+            self.fp_daily.add_component(DaySelector(item=slot))
+        # TODO: integrate with existing save button
 
     def btn_save_click(self, **event_args):
         """This method is called when the button is clicked"""

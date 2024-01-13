@@ -36,4 +36,9 @@ components:
     data_bindings:
     - {property: text, code: '''Book interview with '' + self.item[''first_name'']'}
     - {property: url, code: 'self.item[''booking_link'']'}
+- name: cp_booking
+  properties: {role: outlined-card}
+  type: ColumnPanel
+  layout_properties: {grid_position: 'NVCXKO,AUJCEE'}
+  components: []
 is_package: true

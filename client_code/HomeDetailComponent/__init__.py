@@ -13,7 +13,8 @@ class HomeDetailComponent(HomeDetailComponentTemplate):
 
         # Any code you write here will run before the form opens.
         self.rp_groups.add_event_handler('x-refresh', self.update_stuff)
-        self.tb_search_group_pressed_enter()
+        if not self.user['tenant']:
+            self.tb_search_group_pressed_enter()
 
     def update_stuff(self, **event_args):
         self.groups = []
