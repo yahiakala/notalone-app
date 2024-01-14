@@ -128,6 +128,9 @@ db_schema:
     - name: screening_slots
       admin_ui: {width: 200}
       type: simpleObject
+    - name: email_confirmation_key
+      admin_ui: {width: 200}
+      type: string
     title: Users
   tenants:
     client: none
