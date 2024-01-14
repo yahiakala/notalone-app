@@ -125,6 +125,9 @@ db_schema:
     - name: discord
       admin_ui: {width: 200}
       type: string
+    - name: screening_slots
+      admin_ui: {width: 200, order: 34}
+      type: simpleObject
     title: Users
   tenants:
     client: none

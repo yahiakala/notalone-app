@@ -11,7 +11,7 @@ components:
     layout_properties: {}
     data_bindings:
     - {property: text, code: 'self.day_of_week[self.item[''day'']]', writeback: false}
-    - {property: checked, code: 'self.item[''available'']', writeback: false}
+    - {property: checked, code: 'self.item[''available'']', writeback: true}
     event_bindings: {change: cb_dayofweek_change}
 - name: lbl_start
   properties: {text: Start, align: center, underline: true}

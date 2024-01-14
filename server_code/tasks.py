@@ -62,7 +62,7 @@ def leave_tenant():
 @anvil.server.callable(require_user=True)
 def update_user(user_dict):
     user = anvil.users.get_user(allow_remembered=True)
-    for key in ['first_name', 'last_name', 'fb_url', 'fee', 'consent_check', 'paypal_sub_id']:
+    for key in ['first_name', 'last_name', 'fb_url', 'fee', 'consent_check', 'paypal_sub_id', 'email', 'screening_slots']:
         if user[key] != user_dict[key]:
             user[key] = user_dict[key]
     user = clean_up_user(user)
