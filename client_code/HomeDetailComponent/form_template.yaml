@@ -55,4 +55,6 @@ components:
   - name: img_tenant
     properties: {}
     type: Image
+    data_bindings:
+    - {property: source, code: Global., writeback: false}
 is_package: true
