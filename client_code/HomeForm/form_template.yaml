@@ -21,7 +21,7 @@ components:
     name: btn_test
     layout_properties: {}
   - name: tb_impersonate
-    properties: {visible: false}
+    properties: {visible: false, role: outlined}
     type: TextBox
     layout_properties: {}
     event_bindings: {pressed_enter: tb_impersonate_pressed_enter}
