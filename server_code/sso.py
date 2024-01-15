@@ -35,7 +35,7 @@ def login_sso(sso, sig, session_id=None):
     print('user')
     print(user)
     if not user or user['auth_forumchat'] != True:
-        return "User not logged in or does not have access to forum."
+        return anvil.server.HttpResponse(302, headers={"Location": anvil.server.get_app_origin()})
 
     discourse_url = app_tables.forum.get(tenant=user['tenant'])['discourse_url']
     # print(discourse_url)
