@@ -256,3 +256,17 @@ def add_role(role_name, reports_to, role_members):
         }
     )
     return role_members
+
+
+@permission_required('auth_members')
+def upload_role_guide(role_name, file):
+    user = anvil.users.get_user(allow_remembered=True)
+    role = app_tables.roles.get(name=role_name, tenant=user['tenant'])
+    role['guide'] = file
+
+
+@permission_required('auth_forumchat')
+def download_role_guide(role_name):
+    user = anvil.users.get_user(allow_remembered=True)
+    role = app_tables.roles.get(name=role_name, tenant=user['tenant'])
+    return role['guide']
