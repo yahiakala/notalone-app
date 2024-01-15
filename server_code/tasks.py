@@ -6,6 +6,8 @@ import anvil.email
 
 from .helpers import permission_required
 
+import datetime as dt
+
 
 def clean_up_user(user):
     if not user['first_name']:
@@ -196,3 +198,89 @@ def notify_accept(email_to):
     )
 
 
+@permission_required('auth_forumchat')
+def get_roles():
+    user = anvil.users.get_user(allow_remembered=True)
+    return app_tables.roles.search(tenant=user['tenant'])
+
+
+@permission_required('auth_members')
+def get_roles_to_members():
+    """Get a dict that maps roles to users."""
+    user = anvil.users.get_user(allow_remembered=True)
+    role_members = []
+    users = list(app_tables.users.search(tenant=user['tenant']))
+    for role in app_tables.roles.search(tenant=user['tenant']):
+        role_members.append(
+            {
+                'name': role['name'],
+                'last_update': role['last_update'],
+                'reports_to': role['reports_to'],
+                'member': [i for i in app_tables.users.search(tenant=user['tenant'], roles=[role])],
+                'users': users
+            }
+        )
+    return role_members
+
+@permission_required('auth_members')
+def add_role_to_member(role_name, member_email):
+    user = anvil.users.get_user(allow_remembered=True)
+    role = app_tables.roles.get(name=role_name, tenant=user['tenant'])
+    role['last_update'] = dt.date.today()
+    member = app_tables.users.get(tenant=user['tenant'], email=member_email)
+    # member['roles'] += [role]
+    if member['roles']:
+        if [role] not in member['roles']:
+            print('adding additional role')
+            member['roles'] += [role]
+    else:
+        member['roles'] = [role]
+    return member
+
+
+@permission_required('auth_members')
+def remove_role_from_member(role_name, member_email):
+    user = anvil.users.get_user(allow_remembered=True)
+    role = app_tables.roles.get(name=role_name, tenant=user['tenant'])
+    role['last_update'] = dt.date.today()
+    member = app_tables.users.get(tenant=user['tenant'], email=member_email)
+    member['roles'] = [i for i in member['roles'] if i != role]
+
+
+@permission_required('auth_members')
+def add_role(role_name, reports_to, role_members):
+    user = anvil.users.get_user(allow_remembered=True)
+    if not app_tables.roles.get(tenant=user['tenant'], name=role_name):
+        app_tables.roles.add_row(name=role_name, reports_to=reports_to, tenant=user['tenant'], last_update=dt.date.today())
+    role_members.append(
+        {
+            'name': role_name,
+            'last_update': dt.date.today(),
+            'reports_to': reports_to,
+            'member': [],
+            'users': role_members[-1]['users']
+        }
+    )
+    return role_members
+
+
+@permission_required('auth_members')
+def upload_role_guide(role_name, file):
+    user = anvil.users.get_user(allow_remembered=True)
+    role = app_tables.roles.get(name=role_name, tenant=user['tenant'])
+    role['guide'] = file
+
+
+@permission_required('auth_forumchat')
+def download_role_guide(role_name):
+    user = anvil.users.get_user(allow_remembered=True)
+    role = app_tables.roles.get(name=role_name, tenant=user['tenant'])
+    return role['guide']
+
+
+@permission_required('auth_members')
+def update_role(role_name, new_role_dict):
+    user = anvil.users.get_user(allow_remembered=True)
+    role = app_tables.roles.get(name=role_name, tenant=user['tenant'])
+    for key, val in new_role_dict.items():
+        role[key] = val

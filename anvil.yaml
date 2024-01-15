@@ -178,6 +178,16 @@ db_schema:
     - name: reports_to
       type: string
       admin_ui: {width: 200, order: 1}
+    - name: tenant
+      admin_ui: {width: 200, order: 2}
+      type: link_single
+      target: tenants
+    - name: guide
+      admin_ui: {width: 200, order: 3}
+      type: media
+    - name: last_update
+      admin_ui: {width: 200, order: 4}
+      type: date
     title: Roles
   finances:
     client: none
