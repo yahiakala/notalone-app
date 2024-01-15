@@ -1,0 +1,10 @@
+container: {type: ColumnPanel}
+components:
+- name: btn_del
+  properties: {text: '', icon: 'fa:remove', role: outlined-button, icon_align: right}
+  type: Button
+  layout_properties: {grid_position: 'IGRRSZ,WJBSTF'}
+  data_bindings:
+  - {property: text, code: 'self.item[''member'']', writeback: false}
+  - {property: enabled, code: 'self.user[''auth_members'']', writeback: false}
+is_package: true

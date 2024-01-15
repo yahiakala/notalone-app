@@ -2,12 +2,12 @@ is_package: true
 container: {type: ColumnPanel}
 components:
 - name: cp_volrole
-  properties: {role: tonal-card}
+  properties: {role: tonal-card, col_widths: '{"AGWNQU":10,"VMKXPK":50,"OXIQSY":10,"BXXRXF":50,"LXDZPR":10,"LEOVPD":50}'}
   type: ColumnPanel
   layout_properties: {grid_position: 'RSIOSV,AQNTFT'}
   components:
   - name: lbl_name
-    properties: {}
+    properties: {align: right, text: Name}
     type: Label
     layout_properties: {grid_position: 'TBKGML,AGWNQU'}
   - name: tb_name
@@ -16,8 +16,9 @@ components:
     layout_properties: {grid_position: 'TBKGML,VMKXPK'}
     data_bindings:
     - {property: enabled, code: 'self.user[''auth_members'']', writeback: false}
+    - {property: text, code: 'self.item[''name'']', writeback: false}
   - name: lbl_reports_to
-    properties: {}
+    properties: {align: right, text: Reports To}
     type: Label
     layout_properties: {grid_position: 'CJSCQM,OXIQSY'}
   - name: tb_reports_to
@@ -26,6 +27,23 @@ components:
     layout_properties: {grid_position: 'CJSCQM,BXXRXF'}
     data_bindings:
     - {property: enabled, code: 'self.user[''auth_members'']', writeback: false}
+    - {property: text, code: 'self.item[''reports_to'']', writeback: false}
+  - name: lbl_assigned
+    properties: {align: left, text: Assigned To}
+    type: Label
+    layout_properties: {grid_position: 'PTCRDA,LXDZPR'}
+  - name: fp_assigned_to
+    properties: {}
+    type: FlowPanel
+    layout_properties: {grid_position: 'PTCRDA,LEOVPD'}
+  - name: lbl_assign
+    properties: {align: right, text: 'Assign to Members:'}
+    type: Label
+    layout_properties: {grid_position: 'ILFTKC,MGLQRF'}
+  - name: dd_addmember
+    properties: {role: outlined}
+    type: DropDown
+    layout_properties: {grid_position: 'ILFTKC,GOOLMB'}
   - name: btn_guide
     properties: {text: View Guide, role: outlined-button, align: right}
     type: Button

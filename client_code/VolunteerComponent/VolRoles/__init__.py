@@ -6,4 +6,7 @@ class VolRoles(VolRolesTemplate):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
 
-        # Any code you write here will run before the form opens.
+        assigned_members = Global.roles_to_members[self.item['name']]
+        from .Chipz import Chipz
+        for x in x:
+            self.fp_assigned_to.add_component(Chipz(item=x))
