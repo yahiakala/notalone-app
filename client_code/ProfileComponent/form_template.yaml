@@ -199,7 +199,7 @@ components:
       role: outlined
       align: full
       tooltip: ''
-      placeholder: ''
+      placeholder: None
       border: ''
       enabled: true
       foreground: ''
@@ -213,13 +213,13 @@ components:
       background: ''
       bold: false
       underline: false
-      include_placeholder: false
+      include_placeholder: true
     name: dd_membertier
     layout_properties: {grid_position: 'REFMJL,HMCTMQ'}
     data_bindings:
     - {property: selected_value, code: 'self.user[''fee'']', writeback: true}
     - {property: items, code: '[("10", 10), ("50", 50)]'}
-    event_bindings: {}
+    event_bindings: {show: btn_save_click, change: btn_save_click}
   - type: Button
     properties: {role: elevated-button, align: center, tooltip: '', border: '', enabled: true,
       foreground: '', visible: true, text: Pay via PayPal, font_size: null, font: '',

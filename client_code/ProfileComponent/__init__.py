@@ -10,7 +10,7 @@ class ProfileComponent(ProfileComponentTemplate):
         # Set Form properties and Data Bindings.
         self.user = dict(Global.user)  # Avoid errors with data bindings
         self.init_components(**properties)
-
+        print('fee: ' + str(self.user['fee']))
         # Any code you write here will run before the form opens.
 
     def btn_save_click(self, **event_args):
@@ -19,6 +19,7 @@ class ProfileComponent(ProfileComponentTemplate):
             self.lbl_namealert.visible = True
         else:
             self.lbl_namealert.visible = False
+        print('fee: ' + str(self.user['fee']))
         Global.user = anvil.server.call('update_user', self.user)
         self.user = dict(Global.user)
 
@@ -41,6 +42,7 @@ class ProfileComponent(ProfileComponentTemplate):
             'create_sub', fee_send
         )
         self.user = dict(self.user)  # avoid errors with data bindings
+        print('fee: ' + str(self.user['fee']))
         self.btn_save_click()
         window.open(self.payment_url)
         window.location = self.payment_url

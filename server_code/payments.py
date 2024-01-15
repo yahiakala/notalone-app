@@ -60,8 +60,10 @@ def create_sub(plan_amt):
 
     if plan_amt == 10:
         plan_id = anvil.secrets.get_secret('pp_plan_id_10')
+        user['fee'] = 10
     else:
         plan_id = anvil.secrets.get_secret('pp_plan_id_50')
+        user['fee'] = 50
 
     try:
         response = anvil.http.request(
