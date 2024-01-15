@@ -90,8 +90,8 @@ def create_sub(plan_amt):
 def capture_sub(**params):
     row = app_tables.users.get(paypal_sub_id=params['subscription_id'])
     row['good_standing'] = True
-    screeners = app_tables.users.search(auth_screenings=True)
-    for screener in screenings:
+    screeners = app_tables.users.search(auth_screenings=True, tenant=row['tenant'])
+    for screener in screeners:
         notify_paid(screener, row)
     return anvil.server.HttpResponse(302, headers={'Location': anvil.server.get_app_origin()})
 
