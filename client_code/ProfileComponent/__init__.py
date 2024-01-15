@@ -8,15 +8,19 @@ from .. import Global
 class ProfileComponent(ProfileComponentTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.
-        self.user = dict(Global.user)  # so I can save over it
+        self.user = dict(Global.user)  # Avoid errors with data bindings
         self.init_components(**properties)
 
         # Any code you write here will run before the form opens.
 
     def btn_save_click(self, **event_args):
         """This method is called when the button is clicked"""
-        self.user = anvil.server.call('update_user', self.user)
-        Global.user = self.user
+        if self.user['first_name'] == '' or self.user['last_name'] == '':
+            self.lbl_namealert.visible = True
+        else:
+            self.lbl_namealert.visible = False
+        Global.user = anvil.server.call('update_user', self.user)
+        self.user = dict(Global.user)
 
     def tb_donation_change(self, **event_args):
         """This method is called when the text in this text box is edited"""
@@ -36,6 +40,7 @@ class ProfileComponent(ProfileComponentTemplate):
         self.user, self.payment_url = anvil.server.call(
             'create_sub', fee_send
         )
+        self.user = dict(self.user)  # avoid errors with data bindings
         self.btn_save_click()
         window.open(self.payment_url)
         window.location = self.payment_url

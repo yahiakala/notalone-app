@@ -90,7 +90,11 @@ class HomeForm(HomeFormTemplate):
             self.link_applicants.visible = user['auth_screenings']
             self.link_members.visible = user['auth_members']
             self.link_fin.visible = user['auth_members']
-            self.link_forum_nav.visible = user['auth_forumchat']
+            self.link_forum_nav.visible = (
+                user['auth_forumchat'] and
+                user['first_name'] != '' and
+                user['last_name'] != ''
+            )
             # self.link_forum.visible = user['auth_members']  # TODO: Change later.
             self.btn_test.visible = user['auth_dev']
             self.tb_impersonate.visible = user['auth_dev']
