@@ -255,6 +255,37 @@ components:
     - {property: text, code: 'self.user[''fee'']', writeback: false}
   data_bindings:
   - {property: visible, code: 'self.user[''good_standing''] == True', writeback: false}
+- name: cp_booking_link
+  properties: {role: outlined-card, col_widths: '{"NAEOZB":10,"FJNBOS":50}'}
+  type: ColumnPanel
+  layout_properties: {grid_position: 'ALALGY,HZOREC'}
+  components:
+  - name: lbl_screening_title
+    properties: {role: title, align: center, tooltip: '', border: '', foreground: '',
+      visible: true, text: Screener Settings, font_size: null, font: '', spacing_above: small,
+      icon_align: left, spacing_below: small, italic: false, background: '', bold: false,
+      underline: false, icon: ''}
+    type: Label
+    layout_properties: {grid_position: 'XBRXAD,XNAGJH'}
+  - name: lbl_booking_link
+    properties: {role: null, align: left, tooltip: '', border: '', foreground: '',
+      visible: true, text: Booking Link, font_size: null, font: '', spacing_above: small,
+      icon_align: left, spacing_below: small, italic: false, background: '', bold: false,
+      underline: false, icon: ''}
+    type: Label
+    layout_properties: {grid_position: 'KBYNLO,NAEOZB'}
+    data_bindings: []
+  - name: tb_booking_link
+    properties: {role: outlined, align: left, hide_text: false, tooltip: '', placeholder: Booking Link,
+      border: '', enabled: true, foreground: '', visible: true, text: Booking Link,
+      font_size: null, font: '', spacing_above: small, type: text, spacing_below: small,
+      italic: false, background: '', bold: false, underline: false}
+    type: TextBox
+    layout_properties: {grid_position: 'KBYNLO,FJNBOS'}
+    data_bindings:
+    - {property: text, code: 'self.user[''booking_link'']', writeback: true}
+  data_bindings:
+  - {property: visible, code: 'self.user[''auth_screenings'']', writeback: false}
 - type: Button
   properties: {role: filled-button, align: center, tooltip: '', border: '', enabled: true,
     foreground: '', visible: true, text: Save Changes, font_size: null, font: '',

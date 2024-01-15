@@ -28,9 +28,6 @@ class HomeDetailComponent(HomeDetailComponentTemplate):
     def tb_search_group_pressed_enter(self, **event_args):
         """This method is called when the user presses Enter in this text box"""
         search_txt = '%' + self.tb_search_group.text + '%'
-        print(self.user['email'])
-        print(self.user['tenant'])
-        print(Global.tenants)
         self.groups = Global.tenants.search(
             name=q.ilike(search_txt)
         )
