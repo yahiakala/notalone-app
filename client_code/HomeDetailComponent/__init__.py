@@ -14,6 +14,8 @@ class HomeDetailComponent(HomeDetailComponentTemplate):
 
         # Any code you write here will run before the form opens.
         self.rp_groups.add_event_handler('x-refresh', self.update_stuff)
+        if self.user['tenant']:
+            self.img_tenant.source = self.user['tenant']['logo']
         if not self.user['tenant']:
             self.tb_search_group_pressed_enter()
 
@@ -26,6 +28,9 @@ class HomeDetailComponent(HomeDetailComponentTemplate):
     def tb_search_group_pressed_enter(self, **event_args):
         """This method is called when the user presses Enter in this text box"""
         search_txt = '%' + self.tb_search_group.text + '%'
+        print(self.user['email'])
+        print(self.user['tenant'])
+        print(Global.tenants)
         self.groups = Global.tenants.search(
             name=q.ilike(search_txt)
         )

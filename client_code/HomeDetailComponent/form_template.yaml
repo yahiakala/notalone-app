@@ -55,7 +55,6 @@ components:
   - name: img_tenant
     properties: {display_mode: fill_width}
     type: Image
-    data_bindings:
-    - {property: source, code: 'self.user[''tenant''][''logo'']', writeback: false}
+    data_bindings: []
     layout_properties: {}
 is_package: true

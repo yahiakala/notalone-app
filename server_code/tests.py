@@ -10,7 +10,9 @@ from . import tasks
 
 @permission_required('auth_dev')
 def impersonate_user(email):
-    return app_tables.users.get(email=email)
+    new_user = app_tables.users.get(email=email)
+    anvil.users.force_login(new_user)
+    return new_user
 
 
 @permission_required('auth_dev')

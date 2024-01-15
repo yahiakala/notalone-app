@@ -162,12 +162,7 @@ class HomeForm(HomeFormTemplate):
         """This method is called when the user presses Enter in this text box"""
         self.user = anvil.server.call('impersonate_user', self.tb_impersonate.text)
         # reset the globals
+        Global.clear_global_attributes()
         Global.user = self.user
-        Global.users = None
-        Global.tenants = None
-        Global.applied = None
-        Global.applicants = None
-        Global.pending = None
-        Global.screener_link = None
-        Global.finances = None
-        Global.forumlink = None
+        self.refresh_everything()
+        self.go_home()
