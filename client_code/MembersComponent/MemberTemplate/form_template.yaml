@@ -34,6 +34,12 @@ components:
     layout_properties: {grid_position: 'CVGIDR,QRQZXB'}
     data_bindings:
     - {property: text, code: '''Discord: '' + self.item[''discord'']', writeback: false}
+  - name: lbl_payment_tier
+    properties: {}
+    type: Label
+    layout_properties: {grid_position: 'IDFNJL,XSNPNR'}
+    data_bindings:
+    - {property: text, code: '''Payment Tier: '' + str(self.item[''fee''])', writeback: false}
   - type: Label
     properties: {}
     name: lbl_payment_status
