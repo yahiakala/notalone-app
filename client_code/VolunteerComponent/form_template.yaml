@@ -1,0 +1,20 @@
+container: {type: ColumnPanel}
+components:
+- name: cp_volunteer
+  properties: {role: outlined-card}
+  type: ColumnPanel
+  layout_properties: {grid_position: 'QNJJZO,IOGRRB'}
+  components:
+  - name: btn_add
+    properties: {text: Add Volunteer Role, role: outlined-button, icon: 'fa:plus',
+      align: right}
+    type: Button
+    layout_properties: {grid_position: 'RVRVOY,KSDAAW'}
+    event_bindings: {click: btn_add_click}
+    data_bindings:
+    - {property: visible, code: 'self.user[''auth_members'']', writeback: false}
+  - name: rp_vol_roles
+    properties: {item_template: VolunteerComponent.VolRoles}
+    type: RepeatingPanel
+    layout_properties: {grid_position: 'OJCFBF,XROAJT'}
+is_package: true
