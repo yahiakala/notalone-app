@@ -121,6 +121,8 @@ class HomeForm(HomeFormTemplate):
         self.link_profile.role = 'selected' if state == 'profile' else None
         self.link_applicants.role = 'selected' if state == 'applicants' else None
         self.link_members.role = 'selected' if state == 'members' else None
+        self.link_fin.role = 'selected' if state == 'financials' else None
+        self.link_volunteers.role = 'selected' if state == 'volunteers' else None
         # self.link_forum.role = 'selected' if state == 'forum' else None
 
     def go_page(self, page_name, **event_args):
