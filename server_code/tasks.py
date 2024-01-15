@@ -143,6 +143,7 @@ def get_screener_link():
     #                                          auth_screenings=True)
     #     ]
     # )
+    # Trying a better method to be random
     records = [
         {
             'first_name': r['first_name'],
