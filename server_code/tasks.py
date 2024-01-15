@@ -132,17 +132,29 @@ def get_screener_link():
     """Get random screener."""
     import random
     user = anvil.users.get_user(allow_remembered=True)
-    return random.choice(
-        [
-            {
-                'first_name': r['first_name'],
-                'booking_link': r['booking_link'],
-            }
-            for r in app_tables.users.search(booking_link=q.not_(None),
-                                             tenant=user['tenant'],
-                                             auth_screenings=True)
-        ]
-    )
+    # return random.choice(
+    #     [
+    #         {
+    #             'first_name': r['first_name'],
+    #             'booking_link': r['booking_link'],
+    #         }
+    #         for r in app_tables.users.search(booking_link=q.not_(None),
+    #                                          tenant=user['tenant'],
+    #                                          auth_screenings=True)
+    #     ]
+    # )
+    records = [
+        {
+            'first_name': r['first_name'],
+            'booking_link': r['booking_link'],
+        }
+        for r in app_tables.users.search(booking_link=q.not_(None),
+                                         tenant=user['tenant'],
+                                         auth_screenings=True)
+    ]
+    # Shuffle the records list
+    random.shuffle(records)
+    return random.choice(records)
 
 
 @permission_required('auth_members')
