@@ -20,6 +20,11 @@ components:
       underline: false, icon: ''}
     name: btn_test
     layout_properties: {}
+  - name: tb_impersonate
+    properties: {visible: false}
+    type: TextBox
+    layout_properties: {}
+    event_bindings: {pressed_enter: tb_impersonate_pressed_enter}
   - name: link_forum_nav
     properties: {role: null, url: '', align: left, tooltip: '', border: '', foreground: '',
       visible: false, text: Forum, font_size: null, wrap_on: mobile, font: '', col_spacing: medium,
@@ -28,6 +33,11 @@ components:
     type: Link
     layout_properties: {}
     event_bindings: {click: link_forum_nav_click}
+  - name: link_help
+    properties: {icon: 'fa:question-circle', align: center}
+    type: Link
+    layout_properties: {}
+    event_bindings: {click: link_help_click}
   - type: Link
     properties: {role: null, url: '', align: left, tooltip: '', border: '', foreground: '',
       visible: true, text: Login / Signup, font_size: null, wrap_on: mobile, font: '',

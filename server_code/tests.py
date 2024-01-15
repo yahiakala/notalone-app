@@ -9,6 +9,11 @@ from . import tasks
 
 
 @permission_required('auth_dev')
+def impersonate_user(email):
+    return app_tables.users.get(email=email)
+
+
+@permission_required('auth_dev')
 def test_clean_up_user():
     user = anvil.users.get_user(allow_remembered=True)
     tasks.clean_up_user(user)

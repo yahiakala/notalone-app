@@ -9,6 +9,7 @@ class HomeDetailComponent(HomeDetailComponentTemplate):
         # Set Form properties and Data Bindings.
         self.groups = []
         self.user = Global.user
+        # self.tenant_logo = Global.tenant_logo
         self.init_components(**properties)
 
         # Any code you write here will run before the form opens.

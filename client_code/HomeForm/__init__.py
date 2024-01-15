@@ -35,6 +35,7 @@ class HomeForm(HomeFormTemplate):
         self.btn_test.add_event_handler('click', partial(self.go_page, 'tests'))
         if 'Debug' in anvil.app.environment.name:
             self.btn_test.visible = True
+            self.tb_impersonate.visible = True
         
         self.set_account_state(self.user)
         self.go_home()
@@ -81,6 +82,7 @@ class HomeForm(HomeFormTemplate):
         self.link_fin.visible = False
         self.link_forum_nav.visible = False
         self.lbl_user.visible = False
+        self.link_help.visible = False
         # self.link_forum.visible = False
 
         if user:
@@ -93,6 +95,10 @@ class HomeForm(HomeFormTemplate):
             self.link_fin.visible = user['auth_members']
             self.link_forum_nav.visible = user['auth_forumchat']
             # self.link_forum.visible = user['auth_members']  # TODO: Change later.
+            if user['tenant']:
+                self.lbl_app_title.text = user['tenant']['name']
+                self.link_help.visible = True
+                
 
     def load_component(self, cmpt):
         self.cmpt = cmpt
@@ -146,3 +152,22 @@ class HomeForm(HomeFormTemplate):
     def link_forum_nav_click(self, **event_args):
         """This method is called when the link is clicked"""
         anvil.js.window.location.href = Global.forumlink
+
+    def link_help_click(self, **event_args):
+        """This method is called when the link is clicked"""
+        if self.user and self.user['tenant']:
+            alert('For help, contact ' + self.user['tenant']['email'])
+
+    def tb_impersonate_pressed_enter(self, **event_args):
+        """This method is called when the user presses Enter in this text box"""
+        self.user = anvil.server.call('impersonate_user', self.tb_impersonate.text)
+        # reset the globals
+        Global.user = self.user
+        Global.users = None
+        Global.tenants = None
+        Global.applied = None
+        Global.applicants = None
+        Global.pending = None
+        Global.screener_link = None
+        Global.finances = None
+        Global.forumlink = None

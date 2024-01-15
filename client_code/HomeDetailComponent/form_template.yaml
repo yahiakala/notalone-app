@@ -53,8 +53,9 @@ components:
   - {property: visible, code: 'self.user[''tenant''] is not None', writeback: false}
   components:
   - name: img_tenant
-    properties: {}
+    properties: {display_mode: fill_width}
     type: Image
     data_bindings:
-    - {property: source, code: Global., writeback: false}
+    - {property: source, code: 'self.user[''tenant''][''logo'']', writeback: false}
+    layout_properties: {}
 is_package: true
