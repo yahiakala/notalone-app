@@ -17,6 +17,7 @@ components:
     data_bindings:
     - {property: enabled, code: 'self.user[''auth_members'']', writeback: false}
     - {property: text, code: 'self.item[''name'']', writeback: false}
+    event_bindings: {lost_focus: update_role, pressed_enter: update_role}
   - name: lbl_reports_to
     properties: {align: right, text: Reports To}
     type: Label
@@ -28,6 +29,7 @@ components:
     data_bindings:
     - {property: enabled, code: 'self.user[''auth_members'']', writeback: false}
     - {property: text, code: 'self.item[''reports_to'']', writeback: false}
+    event_bindings: {lost_focus: update_role, pressed_enter: update_role}
   - name: lbl_assigned
     properties: {align: right, text: Assigned To}
     type: Label
@@ -51,6 +53,11 @@ components:
     layout_properties: {grid_position: 'ILFTKC,GOOLMB'}
     data_bindings: []
     event_bindings: {change: dd_addmember_change}
+  - name: lbl_last_update
+    properties: {}
+    type: Label
+    layout_properties: {grid_position: 'JVYIXD,ZEOQZG'}
+    data_bindings: []
   - name: btn_guide
     properties: {text: View Guide, role: outlined-button, align: right}
     type: Button
