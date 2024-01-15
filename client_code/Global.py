@@ -11,7 +11,9 @@ global_dict = {
     'pending': None,
     'screener_link': None,
     'finances': None,
-    'forumlink': None
+    'forumlink': None,
+    'roles_to_members': None,
+    'roles': None
 }
 
 attributes_to_clear = list(global_dict.keys())

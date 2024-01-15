@@ -11,6 +11,7 @@ from ..ProfileComponent import ProfileComponent
 from ..ApplicantsComponent import ApplicantsComponent
 from ..MembersComponent import MembersComponent
 from ..FinComponent import FinComponent
+from ..VolunteerComponent import VolunteerComponent
 # from ..ForumiComponent import ForumiComponent
 from anvil_labs.ClientTestComponent import ClientTestComponent
 
@@ -28,6 +29,7 @@ class HomeForm(HomeFormTemplate):
         self.link_applicants.add_event_handler('click', partial(self.go_page, 'applicants'))
         self.link_members.add_event_handler('click', partial(self.go_page, 'members'))
         self.link_fin.add_event_handler('click', partial(self.go_page, 'financials'))
+        self.link_volunteers.add_event_handler('click', partial(self.go_page, 'volunteers'))
         # self.link_forum.add_event_handler('click', partial(self.go_page, 'forum'))
 
         self.user = Global.user
@@ -77,6 +79,7 @@ class HomeForm(HomeFormTemplate):
         self.link_applicants.visible = False
         self.link_members.visible = False
         self.link_fin.visible = False
+        self.link_volunteers.visible = False
         self.link_forum_nav.visible = False
         self.lbl_user.visible = False
         self.link_help.visible = False
@@ -90,6 +93,7 @@ class HomeForm(HomeFormTemplate):
             self.link_applicants.visible = user['auth_screenings']
             self.link_members.visible = user['auth_members']
             self.link_fin.visible = user['auth_members']
+            self.link_volunteers.visible = user['auth_members']
             self.link_forum_nav.visible = (
                 user['auth_forumchat'] and
                 user['first_name'] != '' and
@@ -133,6 +137,8 @@ class HomeForm(HomeFormTemplate):
             self.load_component(MembersComponent())
         elif page_name == 'financials' and user:
             self.load_component(FinComponent())
+        elif page_name == 'volunteers' and user:
+            self.load_component(VolunteerComponent())
         # elif page_name == 'forum' and user:
             # self.load_component(ForumiComponent())
             # self.cmpt.form_show()

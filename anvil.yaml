@@ -178,6 +178,10 @@ db_schema:
     - name: reports_to
       type: string
       admin_ui: {width: 200, order: 1}
+    - name: tenant
+      admin_ui: {width: 200, order: 2}
+      type: link_single
+      target: tenants
     title: Roles
   finances:
     client: none

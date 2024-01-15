@@ -2,7 +2,7 @@ is_package: true
 container: {type: ColumnPanel}
 components:
 - name: cp_volrole
-  properties: {role: tonal-card, col_widths: '{"AGWNQU":10,"VMKXPK":50,"OXIQSY":10,"BXXRXF":50,"LXDZPR":10,"LEOVPD":50}'}
+  properties: {role: tonal-card, col_widths: '{"AGWNQU":10,"VMKXPK":50,"OXIQSY":10,"BXXRXF":50,"LXDZPR":10,"LEOVPD":50,"MGLQRF":10,"GOOLMB":50}'}
   type: ColumnPanel
   layout_properties: {grid_position: 'RSIOSV,AQNTFT'}
   components:
@@ -29,21 +29,28 @@ components:
     - {property: enabled, code: 'self.user[''auth_members'']', writeback: false}
     - {property: text, code: 'self.item[''reports_to'']', writeback: false}
   - name: lbl_assigned
-    properties: {align: left, text: Assigned To}
+    properties: {align: right, text: Assigned To}
     type: Label
     layout_properties: {grid_position: 'PTCRDA,LXDZPR'}
-  - name: fp_assigned_to
-    properties: {}
-    type: FlowPanel
+  - name: outlined_card_1
+    properties: {role: outlined-card, background: 'theme:Surface Variant'}
+    type: ColumnPanel
     layout_properties: {grid_position: 'PTCRDA,LEOVPD'}
+    components:
+    - name: fp_assigned_to
+      properties: {border: '', background: ''}
+      type: FlowPanel
+      layout_properties: {grid_position: 'EVWQNT,JMVSUT'}
   - name: lbl_assign
-    properties: {align: right, text: 'Assign to Members:'}
+    properties: {align: right, text: Assign to Members}
     type: Label
     layout_properties: {grid_position: 'ILFTKC,MGLQRF'}
   - name: dd_addmember
-    properties: {role: outlined}
+    properties: {role: outlined, placeholder: None, include_placeholder: true}
     type: DropDown
     layout_properties: {grid_position: 'ILFTKC,GOOLMB'}
+    data_bindings: []
+    event_bindings: {change: dd_addmember_change}
   - name: btn_guide
     properties: {text: View Guide, role: outlined-button, align: right}
     type: Button
