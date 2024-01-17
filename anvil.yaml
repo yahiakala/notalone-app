@@ -52,7 +52,7 @@ db_schema:
       type: datetime
       admin_ui: {order: 2, width: 200}
     - name: password_hash
-      admin_ui: {order: 3, width: 229}
+      admin_ui: {order: 3, width: 203}
       type: string
     - name: n_password_failures
       type: number
