@@ -92,6 +92,7 @@ def create_sub(plan_amt):
 def capture_sub(**params):
     row = app_tables.users.get(paypal_sub_id=params['subscription_id'])
     row['good_standing'] = True
+    row['auth_forumchat'] = True
     screeners = app_tables.users.search(auth_screenings=True, tenant=row['tenant'])
     for screener in screeners:
         notify_paid(screener, row)
