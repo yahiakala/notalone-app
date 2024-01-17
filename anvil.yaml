@@ -1,7 +1,7 @@
 scheduled_tasks:
 - task_name: check_subs
   time_spec:
-    n: 10
+    n: 1
     every: day
     at: {minute: 0, hour: 3}
   job_id: KGSFSYSW
