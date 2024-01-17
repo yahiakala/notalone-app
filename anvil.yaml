@@ -52,8 +52,8 @@ db_schema:
       type: datetime
       admin_ui: {order: 2, width: 200}
     - name: password_hash
+      admin_ui: {order: 3, width: 229}
       type: string
-      admin_ui: {order: 3, width: 200}
     - name: n_password_failures
       type: number
       admin_ui: {order: 4, width: 200}
@@ -100,7 +100,7 @@ db_schema:
       admin_ui: {width: 200}
       type: bool
     - name: tenant
-      admin_ui: {width: 200}
+      admin_ui: {order: 1.5, width: 200}
       type: link_single
       target: tenants
     - name: auth_screenings
