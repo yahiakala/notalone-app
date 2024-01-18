@@ -103,7 +103,7 @@ def capture_sub(**params):
 
 def notify_paid(user_ref, applicant):
     """Notify the screeners that someone paid."""
-
+    print('Sending email.')
     msg_body = f"""
     <p>Hi {user_ref['first_name']}!</p>
 
@@ -191,6 +191,7 @@ def calc_rev12():
 @permission_required('auth_members')
 def notify_payment(user_ref, tenant=None):
     """Notify the member they need to make a payment."""
+    print('Sending email.')
     if not tenant:
         user = anvil.users.get_user(allow_remembered=True)
         tenant = {'name': user['tenant']['name'], 'email': user['tenant']['email']}
