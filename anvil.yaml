@@ -58,8 +58,8 @@ db_schema:
       type: number
       admin_ui: {order: 4, width: 200}
     - name: confirmed_email
+      admin_ui: {order: 3.9375, width: 200}
       type: bool
-      admin_ui: {order: 5, width: 200}
     - name: remembered_logins
       type: simpleObject
       admin_ui: {order: 6, width: 200}
@@ -67,8 +67,8 @@ db_schema:
       type: simpleObject
       admin_ui: {order: 7, width: 200}
     - name: signed_up
+      admin_ui: {order: 3.875, width: 200}
       type: datetime
-      admin_ui: {order: 8, width: 200}
     - name: first_name
       admin_ui: {order: 3.5, width: 200}
       type: string
@@ -129,7 +129,7 @@ db_schema:
       type: link_multiple
       target: roles
     - name: discord
-      admin_ui: {width: 200}
+      admin_ui: {order: 27.5, width: 200}
       type: string
     - name: screening_slots
       admin_ui: {width: 200}
