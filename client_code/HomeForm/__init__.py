@@ -12,7 +12,6 @@ from ..ApplicantsComponent import ApplicantsComponent
 from ..MembersComponent import MembersComponent
 from ..FinComponent import FinComponent
 from ..VolunteerComponent import VolunteerComponent
-# from ..ForumiComponent import ForumiComponent
 from anvil_labs.ClientTestComponent import ClientTestComponent
 
 from .. import Global

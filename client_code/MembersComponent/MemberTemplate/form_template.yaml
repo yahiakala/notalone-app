@@ -44,6 +44,16 @@ components:
     properties: {}
     name: lbl_payment_status
     layout_properties: {grid_position: 'EHWZRG,QWRLJF'}
+  - name: lbl_signed_up
+    properties: {visible: false}
+    type: Label
+    layout_properties: {grid_position: 'BELIBB,QBYTEL'}
+    data_bindings: []
+  - name: lbl_last_login
+    properties: {visible: false}
+    type: Label
+    layout_properties: {grid_position: 'OJGZLL,OASEOQ'}
+    data_bindings: []
   - type: FlowPanel
     properties: {role: null, spacing: medium, align: left, tooltip: '', border: '',
       foreground: '', visible: true, spacing_above: small, spacing_below: small, background: ''}

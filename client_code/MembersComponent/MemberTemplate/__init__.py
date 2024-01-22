@@ -20,6 +20,12 @@ class MemberTemplate(MemberTemplateTemplate):
             self.pmt_inactive if self.item['paypal_sub_id'] is not None else
             self.pmt_noid
         )
+        if self.item['last_login']:
+            self.lbl_last_login.text = 'Last login: ' + self.item['last_login'].strftime('%Y-%m-%d')
+            self.lbl_last_login.visible = True
+        if self.item['signed_up']:
+            self.lbl_signed_up.text = 'Signed up: ' + self.item['signed_up'].strftime('%Y-%m-%d')
+            self.lbl_signed_up.visible = True
 
     def btn_remove_click(self, **event_args):
         """This method is called when the button is clicked"""
