@@ -35,8 +35,6 @@ class HomeForm(HomeFormTemplate):
 
         self.btn_test.add_event_handler('click', partial(self.go_page, 'tests'))
 
-
-        
         self.set_account_state(self.user)
         self.go_home()
 
