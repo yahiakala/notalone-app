@@ -100,7 +100,7 @@ class HomeForm(HomeFormTemplate):
             )
             # self.link_forum.visible = user['auth_members']  # TODO: Change later.
             self.btn_test.visible = user['auth_dev']
-            self.tb_impersonate.visible = user['auth_dev']
+            # self.tb_impersonate.visible = user['auth_dev']
             
             if user['tenant']:
                 self.lbl_app_title.text = user['tenant']['name']
@@ -144,6 +144,7 @@ class HomeForm(HomeFormTemplate):
             # self.load_component(ForumiComponent())
             # self.cmpt.form_show()
         elif page_name == 'tests' and user:
+            self.tb_impersonate.visible = True
             from .. import test_forms, test_server, test_tasks
             self.load_component(
                 ClientTestComponent(
