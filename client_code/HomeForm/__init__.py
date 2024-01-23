@@ -42,8 +42,8 @@ class HomeForm(HomeFormTemplate):
 
         from anvil.js.window import navigator
         import re
-        mobile_devices = "Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini"
-        # is_mobile = re.search(mobile_devices, navigator.userAgent) is not None
+        # mobile_devices = "Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini"
+        is_mobile = re.search(mobile_devices, navigator.userAgent) is not None
         is_mobile = anvil.js.window.navigator.userAgent.lower().find("mobi") > -1
         if is_mobile:
             self.lbl_app_title.visible = False
