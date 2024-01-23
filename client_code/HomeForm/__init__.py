@@ -34,9 +34,20 @@ class HomeForm(HomeFormTemplate):
         self.user = Global.user
 
         self.btn_test.add_event_handler('click', partial(self.go_page, 'tests'))
+
+
         
         self.set_account_state(self.user)
         self.go_home()
+
+        from anvil.js.window import navigator
+        import re
+        mobile_devices = "Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini"
+        # is_mobile = re.search(mobile_devices, navigator.userAgent) is not None
+        is_mobile = anvil.js.window.navigator.userAgent.lower().find("mobi") > -1
+        if is_mobile:
+            self.lbl_app_title.visible = False
+            self.link_forum_nav.text = ''
 
     def link_login_click(self, **event_args):
         """This method is called when the link is clicked"""
