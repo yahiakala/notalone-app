@@ -94,7 +94,7 @@ class HomeForm(HomeFormTemplate):
             self.link_fin.visible = user['auth_members']
             self.link_volunteers.visible = user['auth_members']
             self.link_forum_nav.visible = (
-                user['auth_forumchat'] and
+                user['auth_forumchat'] == True and
                 user['first_name'] != '' and
                 user['last_name'] != ''
             )
