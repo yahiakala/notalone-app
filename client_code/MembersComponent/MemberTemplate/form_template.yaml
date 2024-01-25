@@ -152,6 +152,15 @@ components:
       event_bindings: {click: btn_remove_click}
       data_bindings:
       - {property: visible, code: 'True if self.item[''auth_forumchat''] else False'}
+    - name: btn_del
+      properties: {role: filled-button, align: center, tooltip: '', border: '', enabled: true,
+        foreground: '', visible: true, text: Delete, font_size: null, font: '', spacing_above: small,
+        icon_align: left, spacing_below: small, italic: false, background: 'theme:On
+          Tertiary Container', bold: false, underline: false, icon: ''}
+      type: Button
+      layout_properties: {}
+      event_bindings: {click: btn_del_click}
+      data_bindings: []
     - type: Button
       properties: {role: filled-button, align: center, tooltip: '', border: '', enabled: true,
         foreground: '', visible: true, text: Restore, font_size: null, font: '', spacing_above: small,
@@ -173,4 +182,23 @@ components:
       - {property: visible, code: 'False if self.item[''good_standing''] else True',
         writeback: false}
       event_bindings: {click: btn_remind_click}
+  - name: cp_confirm_del
+    properties: {role: outlined-card, col_widths: '{"RMJMMR":45,"CNQKFH":15}', visible: false}
+    type: ColumnPanel
+    layout_properties: {grid_position: 'EGJIMD,LRZIMX'}
+    components:
+    - name: tb_email_del_confirm
+      properties: {role: outlined, placeholder: Type in the user's email to confirm deletion.}
+      type: TextBox
+      layout_properties: {grid_position: 'TSPIJI,RMJMMR'}
+    - name: btn_del_confirm
+      properties: {text: Confirm Deletion, role: outlined-button}
+      type: Button
+      layout_properties: {grid_position: 'TSPIJI,CNQKFH'}
+      event_bindings: {click: btn_del_confirm_click}
+    - name: lbl_confirm_del_err
+      properties: {text: The email you typed in doesn't match the user's email., visible: false,
+        foreground: 'theme:Error'}
+      type: Label
+      layout_properties: {grid_position: 'NGKWCI,WALDPL'}
 is_package: true

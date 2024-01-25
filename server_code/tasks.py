@@ -73,6 +73,12 @@ def update_user(user_dict):
 
 
 @permission_required('auth_members')
+def delete_user(user_dict):
+    user_del = app_tables.users.get(email=user_dict['email'], auth_members=q.not_(True))
+    user_del.delete()
+
+
+@permission_required('auth_members')
 def get_users():
     """Get a full list of the users."""
     clean_up_users()

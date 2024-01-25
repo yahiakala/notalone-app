@@ -1,12 +1,13 @@
 from ._anvil_designer import ApplicantTemplateTemplate
 from anvil import *
 import anvil.server
-
+from ... import Global
 
 class ApplicantTemplate(ApplicantTemplateTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.
         self.user_notes = None
+        self.user = Global.user
         self.init_components(**properties)
         self.user_notes = anvil.server.call('get_user_notes', self.item['email'])['notes']
         self.refresh_data_bindings()
@@ -31,4 +32,16 @@ class ApplicantTemplate(ApplicantTemplateTemplate):
         """This method is called when the button is clicked"""
         anvil.server.call('save_user_notes', self.item['email'], self.user_notes)
 
+    def btn_del_click(self, **event_args):
+        """Delete user record."""
+        self.cp_confirm_del.visible = True
+    
+    def btn_del_confirm_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        self.lbl_confirm_del_err.visible = False
+        if self.item['email'] == self.tb_email_del_confirm.text:
+            anvil.server.call('delete_user', self.item)
+            self.remove_from_parent()
+        else:
+            self.lbl_confirm_del_err.visible = True
 

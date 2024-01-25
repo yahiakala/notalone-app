@@ -14,7 +14,7 @@ class ApplicantsComponent(ApplicantsComponentTemplate):
         self.init_components(**properties)
 
         self.rp_applicants.add_event_handler('x-refresh', self.populate_rp)
-        self.rp_pending.add_event_handler('x-refresh', self.populate_rp)
+        # self.rp_pending.add_event_handler('x-refresh', self.populate_rp)
         self.populate_rp()
 
     def populate_rp(self, **event_args):
@@ -22,7 +22,7 @@ class ApplicantsComponent(ApplicantsComponentTemplate):
             auth_profile=q.not_(True),
             auth_booking=True
         )
-        self.rp_pending.items = Global.applicants.search(
-            auth_profile=True
-        )
+        # self.rp_pending.items = Global.applicants.search(
+        #     auth_profile=True
+        # )
         self.raise_event('x-refresh')
