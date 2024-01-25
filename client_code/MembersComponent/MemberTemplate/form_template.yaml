@@ -189,7 +189,22 @@ components:
         property: visible}
       event_bindings: {click: btn_remind_click}
       name: btn_remind
-  - properties: {role: outlined-card, col_widths: '{"RMJMMR":45,"CNQKFH":15}', visible: false}
+  - name: cp_confirm_del
+    properties: {role: outlined-card, col_widths: '{"RMJMMR":45,"CNQKFH":15}', visible: false}
     type: ColumnPanel
-    layout_properties: {grid_position: 'EGJIMD,LRZIMX'}
-    name: cp_confirm_del
+    layout_properties: {grid_position: 'EFRJQJ,DLDSMG'}
+    components:
+    - name: tb_email_del_confirm
+      properties: {role: outlined, placeholder: Type in the user's email to confirm deletion.}
+      type: TextBox
+      layout_properties: {grid_position: 'TSPIJI,RMJMMR'}
+    - name: btn_del_confirm
+      properties: {text: Confirm Deletion, role: outlined-button}
+      type: Button
+      layout_properties: {grid_position: 'TSPIJI,CNQKFH'}
+      event_bindings: {click: btn_del_confirm_click}
+    - name: lbl_confirm_del_err
+      properties: {text: The email you typed in doesn't match the user's email., visible: false,
+        foreground: 'theme:Error'}
+      type: Label
+      layout_properties: {grid_position: 'NGKWCI,WALDPL'}
