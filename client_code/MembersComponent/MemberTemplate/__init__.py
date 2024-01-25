@@ -33,7 +33,7 @@ class MemberTemplate(MemberTemplateTemplate):
             if i.startswith('auth_'):
                 self.item[i] = False
         self.refresh_data_bindings()
-
+    
     def btn_restore_click(self, **event_args):
         """This method is called when the button is clicked"""
         self.item['auth_profile'] = True
@@ -71,6 +71,19 @@ class MemberTemplate(MemberTemplateTemplate):
     def btn_remind_click(self, **event_args):
         """This method is called when the button is clicked"""
         anvil.server.call('notify_payment', self.item)
+
+    def btn_del_click(self, **event_args):
+        """Delete user record."""
+        self.cp_confirm_del.visible = True
+    
+    def btn_del_confirm_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        self.lbl_confirm_del_err.visible = False
+        if self.item['email'] == self.tb_email_del_confirm.text:
+            anvil.server.call('delete_user', self.item)
+            self.remove_from_parent()
+        else:
+            self.lbl_confirm_del_err.visible = True
 
 
 

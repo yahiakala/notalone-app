@@ -1,185 +1,195 @@
+is_package: true
 container:
   type: ColumnPanel
   properties: {col_widths: '{}'}
 components:
 - type: ColumnPanel
   properties: {role: outlined-card, col_widths: '{"JDJVXJ":64,"LLSLKE":6,"CBWHSH":20,"YBWWSD":40}'}
-  name: cp_membercard
   layout_properties: {grid_position: 'BZLVDI,RTBVMK'}
+  name: cp_membercard
   components:
   - type: Label
     properties: {}
-    name: lbl_name
     layout_properties: {grid_position: 'FRXGOQ,JDJVXJ'}
     data_bindings:
-    - {property: text, code: 'self.item[''first_name''] + '' '' + self.item[''last_name'']
-        + '' ('' + self.item[''email''] + '')'''}
+    - {code: 'self.item[''first_name''] + '' '' + self.item[''last_name''] + '' (''
+        + self.item[''email''] + '')''', property: text}
+    name: lbl_name
   - type: Button
     properties: {role: null, align: center, tooltip: '', border: '', enabled: true,
       foreground: '', visible: true, text: '', font_size: null, font: '', spacing_above: small,
       icon_align: left, spacing_below: small, italic: false, background: '', bold: false,
       underline: false, icon: 'fa:refresh'}
-    name: btn_refresh
     layout_properties: {grid_position: 'FRXGOQ,LLSLKE'}
     event_bindings: {click: btn_refresh_click}
-  - name: lbl_fb_url
-    properties: {}
+    name: btn_refresh
+  - properties: {}
     type: Label
     layout_properties: {grid_position: 'BXBGCU,YALWAF'}
     data_bindings:
-    - {property: text, code: '''Facebook: '' + self.item[''fb_url'']', writeback: false}
-  - name: lbl_discord_user
-    properties: {}
+    - {code: '''Facebook: '' + self.item[''fb_url'']', writeback: false, property: text}
+    name: lbl_fb_url
+  - properties: {}
     type: Label
     layout_properties: {grid_position: 'CVGIDR,QRQZXB'}
     data_bindings:
-    - {property: text, code: '''Discord: '' + self.item[''discord'']', writeback: false}
-  - name: lbl_payment_tier
-    properties: {}
+    - {code: '''Discord: '' + self.item[''discord'']', writeback: false, property: text}
+    name: lbl_discord_user
+  - properties: {}
     type: Label
     layout_properties: {grid_position: 'IDFNJL,XSNPNR'}
     data_bindings:
-    - {property: text, code: '''Payment Tier: '' + str(self.item[''fee''])', writeback: false}
+    - {code: '''Payment Tier: '' + str(self.item[''fee''])', writeback: false, property: text}
+    name: lbl_payment_tier
   - type: Label
     properties: {}
-    name: lbl_payment_status
     layout_properties: {grid_position: 'EHWZRG,QWRLJF'}
-  - name: lbl_signed_up
-    properties: {visible: false}
+    name: lbl_payment_status
+  - properties: {visible: false}
     type: Label
     layout_properties: {grid_position: 'BELIBB,QBYTEL'}
-    data_bindings: []
-  - name: lbl_last_login
-    properties: {visible: false}
+    name: lbl_signed_up
+  - properties: {visible: false}
     type: Label
     layout_properties: {grid_position: 'OJGZLL,OASEOQ'}
-    data_bindings: []
+    name: lbl_last_login
   - type: FlowPanel
     properties: {role: null, spacing: medium, align: left, tooltip: '', border: '',
       foreground: '', visible: true, spacing_above: small, spacing_below: small, background: ''}
-    name: fp_auths
     layout_properties: {grid_position: 'FUQLMH,EZDYNV'}
+    name: fp_auths
     components:
     - type: Label
       properties: {role: null, align: left, tooltip: '', border: '', foreground: '',
         visible: true, text: 'User Permissions:', font_size: null, font: '', spacing_above: small,
         icon_align: left, spacing_below: small, italic: false, background: '', bold: false,
         underline: false, icon: ''}
-      name: lbl_roles
       layout_properties: {}
+      name: lbl_roles
     - type: CheckBox
       properties: {role: null, align: left, tooltip: '', border: '', enabled: true,
         foreground: '', allow_indeterminate: false, visible: true, text: Screenings,
         font_size: null, font: '', spacing_above: small, spacing_below: small, italic: false,
         background: '', bold: false, checked: false, underline: false}
-      name: cb_screenings
       layout_properties: {grid_position: 'KSEVOG,RHOOBH'}
       data_bindings:
-      - {property: checked, code: 'self.item[''auth_screenings'']', writeback: true}
+      - {code: 'self.item[''auth_screenings'']', writeback: true, property: checked}
+      name: cb_screenings
     - type: CheckBox
       properties: {role: null, align: left, tooltip: '', border: '', enabled: true,
         foreground: '', allow_indeterminate: false, visible: true, text: Member List,
         font_size: null, font: '', spacing_above: small, spacing_below: small, italic: false,
         background: '', bold: false, checked: false, underline: false}
-      name: cb_members
       layout_properties: {}
       data_bindings:
-      - {property: checked, code: 'self.item[''auth_members'']', writeback: true}
+      - {code: 'self.item[''auth_members'']', writeback: true, property: checked}
+      name: cb_members
     - type: CheckBox
       properties: {role: null, align: left, tooltip: '', border: '', enabled: true,
         foreground: '', allow_indeterminate: false, visible: true, text: Forum, font_size: null,
         font: '', spacing_above: small, spacing_below: small, italic: false, background: '',
         bold: false, checked: false, underline: false}
-      name: cb_forumchat
       layout_properties: {}
       data_bindings:
-      - {property: checked, code: 'self.item[''auth_forumchat'']', writeback: true}
+      - {code: 'self.item[''auth_forumchat'']', writeback: true, property: checked}
+      name: cb_forumchat
     - type: CheckBox
       properties: {role: null, align: left, tooltip: '', border: '', enabled: true,
         foreground: '', allow_indeterminate: false, visible: true, text: Profile,
         font_size: null, font: '', spacing_above: small, spacing_below: small, italic: false,
         background: '', bold: false, checked: false, underline: false}
-      name: cb_profile
       layout_properties: {}
       data_bindings:
-      - {property: checked, code: 'self.item[''auth_profile'']', writeback: true}
+      - {code: 'self.item[''auth_profile'']', writeback: true, property: checked}
+      name: cb_profile
   - type: ColumnPanel
     properties: {role: outlined-card, tooltip: '', border: '', foreground: '', visible: false,
       wrap_on: mobile, col_spacing: medium, spacing_above: small, col_widths: '{}',
       spacing_below: small, background: ''}
-    name: cp_notes
     layout_properties: {grid_position: 'IPWQBW,BTDFXC'}
+    name: cp_notes
     components:
     - type: TextArea
       properties: {role: outlined, align: left, height: '', tooltip: '', placeholder: User Notes are Empty,
         border: '', enabled: true, foreground: '', visible: true, text: '', font_size: null,
         auto_expand: true, font: '', spacing_above: small, spacing_below: small, italic: false,
         background: '', bold: false, underline: false}
-      name: ta_user_notes
       layout_properties: {grid_position: 'GKVBPX,IFEJQB'}
       data_bindings:
-      - {property: text, code: self.user_notes, writeback: true}
+      - {code: self.user_notes, writeback: true, property: text}
       event_bindings: {lost_focus: ta_user_notes_lost_focus}
+      name: ta_user_notes
     - type: Button
       properties: {role: elevated-button, align: center, tooltip: '', border: '',
         enabled: true, foreground: '', visible: true, text: Save Notes, font_size: null,
         font: '', spacing_above: small, icon_align: left, spacing_below: small, italic: false,
         background: '', bold: false, underline: false, icon: ''}
-      name: btn_save_notes
       layout_properties: {grid_position: 'HUYHUT,THVSUB'}
       event_bindings: {click: btn_save_notes_click}
+      name: btn_save_notes
   - type: Button
     properties: {role: filled-button, align: left, tooltip: '', border: '', enabled: true,
       foreground: '', visible: true, text: Show/Hide Notes, font_size: null, font: '',
       spacing_above: small, icon_align: left, spacing_below: small, italic: false,
       background: 'theme:Tertiary', bold: false, underline: false, icon: ''}
-    name: btn_notes
     layout_properties: {grid_position: 'GBPIEH,CBWHSH'}
     event_bindings: {click: btn_notes_click}
+    name: btn_notes
   - type: FlowPanel
     properties: {role: null, spacing: medium, align: right, tooltip: '', border: '',
       foreground: '', visible: true, spacing_above: small, spacing_below: small, background: ''}
-    name: fp_remres
     layout_properties: {grid_position: 'GBPIEH,YBWWSD'}
+    name: fp_remres
     components:
     - type: Button
       properties: {role: filled-button, align: center, tooltip: '', border: '', enabled: true,
         foreground: '', visible: true, text: Remove, font_size: null, font: '', spacing_above: small,
         icon_align: left, spacing_below: small, italic: false, background: 'theme:Error',
         bold: false, underline: false, icon: ''}
-      name: btn_remove
       layout_properties: {grid_position: 'KHMGAX,IPBJMC'}
       event_bindings: {click: btn_remove_click}
       data_bindings:
-      - {property: visible, code: 'True if self.item[''auth_forumchat''] else False'}
-    - name: btn_remove_copy
-      properties: {role: filled-button, align: center, tooltip: '', border: '', enabled: true,
+      - {code: 'True if self.item[''auth_forumchat''] else False', property: visible}
+      name: btn_remove
+    - properties: {role: filled-button, align: center, tooltip: '', border: '', enabled: true,
+        foreground: '', visible: true, text: Delete, font_size: null, font: '', spacing_above: small,
+        icon_align: left, spacing_below: small, italic: false, background: 'theme:On
+          Tertiary Container', bold: false, underline: false, icon: ''}
+      type: Button
+      layout_properties: {}
+      event_bindings: {click: btn_del_click}
+      name: btn_del
+    - properties: {role: filled-button, align: center, tooltip: '', border: '', enabled: true,
         foreground: '', visible: true, text: Remove, font_size: null, font: '', spacing_above: small,
         icon_align: left, spacing_below: small, italic: false, background: 'theme:Error',
         bold: false, underline: false, icon: ''}
       type: Button
       event_bindings: {click: btn_remove_click}
       data_bindings:
-      - {property: visible, code: 'True if self.item[''auth_forumchat''] else False'}
+      - {code: 'True if self.item[''auth_forumchat''] else False', property: visible}
+      name: btn_remove_copy
     - type: Button
       properties: {role: filled-button, align: center, tooltip: '', border: '', enabled: true,
         foreground: '', visible: true, text: Restore, font_size: null, font: '', spacing_above: small,
         icon_align: left, spacing_below: small, italic: false, background: '', bold: false,
         underline: false, icon: ''}
-      name: btn_restore
       layout_properties: {grid_position: 'KHMGAX,GIVXIL'}
       data_bindings:
-      - {property: visible, code: 'False if self.item[''auth_forumchat''] else True'}
+      - {code: 'False if self.item[''auth_forumchat''] else True', property: visible}
       event_bindings: {click: btn_restore_click}
-    - name: btn_remind
-      properties: {role: filled-button, align: center, tooltip: '', border: '', enabled: true,
+      name: btn_restore
+    - properties: {role: filled-button, align: center, tooltip: '', border: '', enabled: true,
         foreground: '', visible: true, text: Payment Reminder, font_size: null, font: '',
         spacing_above: small, icon_align: left, spacing_below: small, italic: false,
         background: '', bold: false, underline: false, icon: 'fa:mail-forward'}
       type: Button
       layout_properties: {}
       data_bindings:
-      - {property: visible, code: 'False if self.item[''good_standing''] else True',
-        writeback: false}
+      - {code: 'False if self.item[''good_standing''] else True', writeback: false,
+        property: visible}
       event_bindings: {click: btn_remind_click}
-is_package: true
+      name: btn_remind
+  - properties: {role: outlined-card, col_widths: '{"RMJMMR":45,"CNQKFH":15}', visible: false}
+    type: ColumnPanel
+    layout_properties: {grid_position: 'EGJIMD,LRZIMX'}
+    name: cp_confirm_del

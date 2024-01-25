@@ -20,7 +20,7 @@ components:
     layout_properties: {grid_position: 'JIXLKI,ZEIEKY'}
     data_bindings: []
 - type: ColumnPanel
-  properties: {role: outlined-card, col_widths: '{}'}
+  properties: {role: outlined-card, col_widths: '{}', visible: false}
   name: cp_pending
   layout_properties: {grid_position: 'WJHQFF,ZMJLBJ'}
   components:
