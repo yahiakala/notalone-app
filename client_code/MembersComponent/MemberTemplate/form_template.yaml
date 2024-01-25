@@ -152,6 +152,15 @@ components:
       event_bindings: {click: btn_remove_click}
       data_bindings:
       - {property: visible, code: 'True if self.item[''auth_forumchat''] else False'}
+    - name: btn_remove_copy
+      properties: {role: filled-button, align: center, tooltip: '', border: '', enabled: true,
+        foreground: '', visible: true, text: Remove, font_size: null, font: '', spacing_above: small,
+        icon_align: left, spacing_below: small, italic: false, background: 'theme:Error',
+        bold: false, underline: false, icon: ''}
+      type: Button
+      event_bindings: {click: btn_remove_click}
+      data_bindings:
+      - {property: visible, code: 'True if self.item[''auth_forumchat''] else False'}
     - type: Button
       properties: {role: filled-button, align: center, tooltip: '', border: '', enabled: true,
         foreground: '', visible: true, text: Restore, font_size: null, font: '', spacing_above: small,
