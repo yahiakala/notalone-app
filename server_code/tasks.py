@@ -126,6 +126,7 @@ def user_search(search_txt):
 # @permission_required(['auth_members', 'auth_screenings'])
 def get_user_notes(user_row):
     """Get the notes for a particular user."""
+    # TODO: take this back to the user_email usage from client code
     # clean_up_users()
     user = anvil.users.get_user(allow_remembered=True)
     # user_row = app_tables.users.get(email=user_email, tenant=user['tenant'])
