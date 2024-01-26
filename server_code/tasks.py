@@ -110,6 +110,19 @@ def get_users():
     return memberlist
 
 
+def user_search(search_txt):
+    user = anvil.users.get_user(allow_remembered=True)
+    notes = app_tables.notes.search(tenant=user['tenant'], notes=q.ilike('%' + search_txt + '%'))
+    users = app_tables.users.search(
+        q.any_of(
+            first_name=q.ilike(search_txt),
+            last_name=q.ilike(search_txt),
+            email=q.ilike(search_txt)
+        ),
+        tenant=user['tenant']
+    )
+    # TODO: finish this
+
 # @permission_required(['auth_members', 'auth_screenings'])
 def get_user_notes(user_row):
     """Get the notes for a particular user."""
