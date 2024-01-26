@@ -21,6 +21,7 @@ def clean_up_user(user):
     return user
 
 
+@anvil.server.background_task
 def clean_up_users():
     for user in app_tables.users.search(first_name=None):
         user['first_name'] = ''
@@ -81,7 +82,8 @@ def delete_user(user_dict):
 @permission_required('auth_members')
 def get_users():
     """Get a full list of the users."""
-    clean_up_users()
+    # TODO: pagination needs to be figured out
+    # clean_up_users()
     user = anvil.users.get_user(allow_remembered=True)
     memberlist = [
         {
@@ -94,31 +96,32 @@ def get_users():
             'good_standing': member['good_standing'],
             'last_login': member['last_login'],
             'signed_up': member['signed_up'],
+            'paypal_sub_id': member['paypal_sub_id'],
             'auth_screenings': member['auth_screenings'],
             'auth_forumchat': member['auth_forumchat'],
             'auth_profile': member['auth_profile'],
             'auth_booking': member['auth_booking'],
             'auth_members': member['auth_members'],
             'auth_dev': member['auth_dev'],
-            'notes': app_tables.notes.get(user=member, tenant=member['tenant'])
+            'notes': get_user_notes(member)['notes'] or ''
         }
         for member in app_tables.users.search(tenant=user['tenant'])
     ]
     return memberlist
 
 
-@permission_required(['auth_members', 'auth_screenings'])
-def get_user_notes(user_email):
+# @permission_required(['auth_members', 'auth_screenings'])
+def get_user_notes(user_row):
     """Get the notes for a particular user."""
-    clean_up_users()
+    # clean_up_users()
     user = anvil.users.get_user(allow_remembered=True)
-    user_row = app_tables.users.get(email=user_email, tenant=user['tenant'])
+    # user_row = app_tables.users.get(email=user_email, tenant=user['tenant'])
 
     note_row = app_tables.notes.get(user=user_row, tenant=user['tenant'])
     if note_row:
         return note_row
     else:
-        return app_tables.notes.add_row(user=user_row, tenant=user['tenant'])
+        return app_tables.notes.add_row(user=user_row, notes='', tenant=user['tenant'])
 
 
 @permission_required(['auth_members', 'auth_screenings'])

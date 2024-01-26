@@ -5,6 +5,12 @@ scheduled_tasks:
     every: day
     at: {minute: 0, hour: 3}
   job_id: KGSFSYSW
+- task_name: clean_up_users
+  time_spec:
+    n: 1
+    every: day
+    at: {minute: 0, hour: 3}
+  job_id: DYCHHZXR
 dependencies:
 - dep_id: dep_vscdshbjqihr0e
   version: {version_tag: v0.07}

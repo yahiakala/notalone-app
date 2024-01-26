@@ -61,8 +61,7 @@ components:
   properties: {item_template: MembersComponent.MemberTemplate}
   name: rp_members
   layout_properties: {grid_position: 'XTODFR,LDLSAT'}
-  data_bindings:
-  - {property: items, code: 'self.members[:self.mb_count_show]'}
+  data_bindings: []
 - type: Button
   properties: {role: elevated-button, align: center, tooltip: '', border: '', enabled: true,
     foreground: '', visible: true, text: Show More, font_size: null, font: '', spacing_above: small,
