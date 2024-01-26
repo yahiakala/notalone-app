@@ -9,8 +9,10 @@ class MemberTemplate(MemberTemplateTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.
         print("Client: Getting member data binding ", dt.datetime.now().strftime("%H:%M:%S.%f"))
-        self.user_notes = None
+        # self.user_notes = self.item['notes']
+        # self.user_notes = None
         self.init_components(**properties)
+        # self.user_notes = self.item['notes']
         print("Client: Got member data binding ", dt.datetime.now().strftime("%H:%M:%S.%f"))
         self.pmt_success = 'Member is in good standing with payments.'
         self.pmt_noid = 'Member has no linked paypal subscription.'
@@ -56,17 +58,12 @@ class MemberTemplate(MemberTemplateTemplate):
         if self.cp_notes.visible:
             self.cp_notes.visible = False
         else:
-            self.user_notes = anvil.server.call('get_user_notes', self.item['email'])['notes']
-            self.refresh_data_bindings()
             self.cp_notes.visible = True
 
-    def btn_save_notes_click(self, **event_args):
+    def btn_save_click(self, **event_args):
         """This method is called when the button is clicked"""
-        anvil.server.call('save_user_notes', self.item['email'], self.user_notes)
-
-    def ta_user_notes_lost_focus(self, **event_args):
-        """This method is called when the text area loses focus"""
-        anvil.server.call('save_user_notes', self.item['email'], self.user_notes)
+        pass
+        # anvil.server.call('save_user_notes', self.item['email'], self.user_notes)
 
     def btn_remind_click(self, **event_args):
         """This method is called when the button is clicked"""

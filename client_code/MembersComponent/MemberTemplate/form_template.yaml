@@ -117,16 +117,8 @@ components:
       layout_properties: {grid_position: 'GKVBPX,IFEJQB'}
       data_bindings:
       - {code: self.user_notes, writeback: true, property: text}
-      event_bindings: {lost_focus: ta_user_notes_lost_focus}
+      event_bindings: {lost_focus: btn_save_click}
       name: ta_user_notes
-    - type: Button
-      properties: {role: elevated-button, align: center, tooltip: '', border: '',
-        enabled: true, foreground: '', visible: true, text: Save Notes, font_size: null,
-        font: '', spacing_above: small, icon_align: left, spacing_below: small, italic: false,
-        background: '', bold: false, underline: false, icon: ''}
-      layout_properties: {grid_position: 'HUYHUT,THVSUB'}
-      event_bindings: {click: btn_save_notes_click}
-      name: btn_save_notes
   - type: Button
     properties: {role: filled-button, align: left, tooltip: '', border: '', enabled: true,
       foreground: '', visible: true, text: Show/Hide Notes, font_size: null, font: '',
@@ -159,15 +151,6 @@ components:
       layout_properties: {}
       event_bindings: {click: btn_del_click}
       name: btn_del
-    - properties: {role: filled-button, align: center, tooltip: '', border: '', enabled: true,
-        foreground: '', visible: true, text: Remove, font_size: null, font: '', spacing_above: small,
-        icon_align: left, spacing_below: small, italic: false, background: 'theme:Error',
-        bold: false, underline: false, icon: ''}
-      type: Button
-      event_bindings: {click: btn_remove_click}
-      data_bindings:
-      - {code: 'True if self.item[''auth_forumchat''] else False', property: visible}
-      name: btn_remove_copy
     - type: Button
       properties: {role: filled-button, align: center, tooltip: '', border: '', enabled: true,
         foreground: '', visible: true, text: Restore, font_size: null, font: '', spacing_above: small,
@@ -189,6 +172,14 @@ components:
         property: visible}
       event_bindings: {click: btn_remind_click}
       name: btn_remind
+  - type: Button
+    properties: {role: elevated-button, align: center, tooltip: '', border: '', enabled: true,
+      foreground: '', visible: true, text: Save, font_size: null, font: '', spacing_above: small,
+      icon_align: left, spacing_below: small, italic: false, background: '', bold: false,
+      underline: false, icon: ''}
+    layout_properties: {grid_position: 'JHYAZK,PCLVUH'}
+    event_bindings: {click: btn_save_click}
+    name: btn_save_notes
   - name: cp_confirm_del
     properties: {role: outlined-card, col_widths: '{"RMJMMR":45,"CNQKFH":15}', visible: false}
     type: ColumnPanel

@@ -83,7 +83,28 @@ def get_users():
     """Get a full list of the users."""
     clean_up_users()
     user = anvil.users.get_user(allow_remembered=True)
-    return app_tables.users.client_writable(tenant=user['tenant'])
+    memberlist = [
+        {
+            'first_name': member['first_name'],
+            'last_name': member['last_name'],
+            'email': member['email'],
+            'fb_url': member['fb_url'],
+            'discord': member['discord'],
+            'fee': member['fee'],
+            'good_standing': member['good_standing'],
+            'last_login': member['last_login'],
+            'signed_up': member['signed_up'],
+            'auth_screenings': member['auth_screenings'],
+            'auth_forumchat': member['auth_forumchat'],
+            'auth_profile': member['auth_profile'],
+            'auth_booking': member['auth_booking'],
+            'auth_members': member['auth_members'],
+            'auth_dev': member['auth_dev'],
+            'notes': app_tables.notes.get(user=member, tenant=member['tenant'])
+        }
+        for member in app_tables.users.search(tenant=user['tenant'])
+    ]
+    return memberlist
 
 
 @permission_required(['auth_members', 'auth_screenings'])

@@ -20,7 +20,7 @@ class MembersComponent(MembersComponentTemplate):
         # self.rp_members.add_event_handler('x-refresh', self.populate_rp)
 
     def populate_rp(self, **event_args):
-        self.members = Global.users.search()
+        self.members = Global.users
         self.mb_count = len(self.members)
         self.mb_count_show = min(5, self.mb_count)
 
