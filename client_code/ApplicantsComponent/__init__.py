@@ -13,17 +13,15 @@ class ApplicantsComponent(ApplicantsComponentTemplate):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
 
-        self.rp_applicants.add_event_handler('x-refresh', self.populate_rp)
+        self.rp_applicants.add_event_handler('x-refresh', self.refresh_rp)
         # self.rp_pending.add_event_handler('x-refresh', self.populate_rp)
         self.populate_rp()
 
     def populate_rp(self, **event_args):
-        # self.rp_applicants.items = Global.applicants.search(
-        #     auth_profile=q.not_(True),
-        #     auth_booking=True
-        # )
-        # self.rp_pending.items = Global.applicants.search(
-        #     auth_profile=True
-        # )
+        self.rp_applicants.items = Global.applicants
+        self.raise_event('x-refresh')
+
+    def refresh_rp(self, **event_args):
+        Global.applicants = anvil.server.call('get_applicants')
         self.rp_applicants.items = Global.applicants
         self.raise_event('x-refresh')

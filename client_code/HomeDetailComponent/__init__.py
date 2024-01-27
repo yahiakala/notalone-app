@@ -47,7 +47,7 @@ class HomeDetailComponent(HomeDetailComponentTemplate):
     def super_load(self):
         superlog = TimerLogger('super_load')
         superlog.start('super_load start')
-        data = anvil.server.call('super_load')
+        self.data = Global.super_load
         superlog.end('super_load end')
-        Global.users = data['users']
-        Global.applicants = data['applicants']
+        Global.users = self.data['users']
+        Global.applicants = self.data['applicants']

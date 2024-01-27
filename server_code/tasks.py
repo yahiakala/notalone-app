@@ -138,29 +138,29 @@ def user_search(search_txt):
         ),
         tenant=user['tenant']
     )
-    # users_list = [
-    #     {
-    #         'first_name': member['first_name'],
-    #         'last_name': member['last_name'],
-    #         'email': member['email'],
-    #         'fb_url': member['fb_url'],
-    #         'discord': member['discord'],
-    #         'fee': member['fee'],
-    #         'good_standing': member['good_standing'],
-    #         'last_login': member['last_login'],
-    #         'signed_up': member['signed_up'],
-    #         'paypal_sub_id': member['paypal_sub_id'],
-    #         'auth_screenings': member['auth_screenings'],
-    #         'auth_forumchat': member['auth_forumchat'],
-    #         'auth_profile': member['auth_profile'],
-    #         'auth_booking': member['auth_booking'],
-    #         'auth_members': member['auth_members'],
-    #         'auth_dev': member['auth_dev']
-    #     }
-    #     for member in users
-    # ]
+    users_list = [
+        {
+            'first_name': member['first_name'],
+            'last_name': member['last_name'],
+            'email': member['email'],
+            'fb_url': member['fb_url'],
+            'discord': member['discord'],
+            'fee': member['fee'],
+            'good_standing': member['good_standing'],
+            'last_login': member['last_login'],
+            'signed_up': member['signed_up'],
+            'paypal_sub_id': member['paypal_sub_id'],
+            'auth_screenings': member['auth_screenings'],
+            'auth_forumchat': member['auth_forumchat'],
+            'auth_profile': member['auth_profile'],
+            'auth_booking': member['auth_booking'],
+            'auth_members': member['auth_members'],
+            'auth_dev': member['auth_dev']
+        }
+        for member in users
+    ]
     print_timestamp('user_search: ' + search_txt + ' done')
-    return users
+    return users_list
 
 
 @permission_required(['auth_members', 'auth_screenings'])
@@ -383,7 +383,7 @@ def update_role(role_name, new_role_dict):
 
 
 @anvil.server.callable(require_user=True)
-def super_load():
+def get_super_load():
     user = anvil.users.get_user(allow_remembered=True)
     data = {'members': None, 'applicants': None}
     if user['auth_members']:

@@ -20,7 +20,6 @@ class ApplicantTemplate(ApplicantTemplateTemplate):
 
     def btn_reject_click(self, **event_args):
         """Just remove their ability to book another screening."""
-        # TODO: notify them and delete their user account
         _ = anvil.server.call('reassign_roles', self.item, {'auth_booking': False})
         self.parent.raise_event('x-refresh')
 
@@ -42,7 +41,7 @@ class ApplicantTemplate(ApplicantTemplateTemplate):
         self.lbl_confirm_del_err.visible = False
         if self.item['email'] == self.tb_email_del_confirm.text:
             anvil.server.call('delete_user', self.item)
-            self.remove_from_parent()
+            self.parent.raise_event('x-refresh')
         else:
             self.lbl_confirm_del_err.visible = True
 

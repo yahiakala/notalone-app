@@ -13,7 +13,8 @@ global_dict = {
     'finances': None,
     'forumlink': None,
     'roles_to_members': None,
-    'roles': None
+    'roles': None,
+    'super_load': None
 }
 
 attributes_to_clear = list(global_dict.keys())
