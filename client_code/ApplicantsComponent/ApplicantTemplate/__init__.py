@@ -30,7 +30,8 @@ class ApplicantTemplate(ApplicantTemplateTemplate):
 
     def btn_save_notes_click(self, **event_args):
         """This method is called when the button is clicked"""
-        anvil.server.call('save_user_notes', self.item['email'], self.user_notes)
+        if self.user_notes:
+            anvil.server.call('save_user_notes', self.item['email'], self.user_notes)
 
     def btn_del_click(self, **event_args):
         """Delete user record."""
@@ -47,10 +48,10 @@ class ApplicantTemplate(ApplicantTemplateTemplate):
 
     def btn_showhide_click(self, **event_args):
         """This method is called when the button is clicked"""
-        if self.ta_notes.visible:
-            self.ta_notes.visible = False
+        if self.cp_notes.visible:
+            self.cp_notes.visible = False
         else:
             self.user_notes = anvil.server.call('get_user_notes', self.item['email'])['notes']
-            self.refresh_data_bindings()
-            self.ta_notes.visible = True
+            self.refresh_data_bindings() # send the user notes to the ta
+            self.cp_notes.visible = True
 
