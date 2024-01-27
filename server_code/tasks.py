@@ -73,11 +73,21 @@ def update_user(user_dict):
     return user
 
 
-@permission_required('auth_members')
-def update_user_admin(email, col_name, col_value):
+@permission_required(['auth_screenings', 'auth_members'])
+def update_member(email, col_dict):
+    """Reset roles for a member."""
+    print_timestamp('update_member: ' + email + ' col_dict: ' + str(col_dict))
     doer = anvil.users.get_user(allow_remembered=True)
-    user = app_tables.users.get(tenant=doer['tenant'], email=email)
-    user[col_name] = col_value
+    user = app_tables.users.get(email=email, tenant=doer['tenant'])
+    if doer['auth_members']:
+        acceptable_cols = None
+    else:
+        acceptable_cols = ['auth_profile', 'auth_forumchat', 'auth_booking']
+
+    for col_name, val in col_dict.items():
+        if (acceptable_cols != None and col_name in acceptable_cols) or acceptable_cols is None:
+            user[col_name] = val
+    return user
 
 
 @permission_required('auth_members')
@@ -120,6 +130,7 @@ def get_users():
 
 @permission_required('auth_members')
 def user_search(search_txt):
+    """Search for a user by name, email, or notes."""
     print_timestamp('user_search: ' + search_txt)
     user = anvil.users.get_user(allow_remembered=True)
     emails = set()
@@ -186,7 +197,7 @@ def save_user_notes(user_email, new_note):
 
 @permission_required(['auth_screenings', 'auth_members'])
 def get_applicants():
-    """Get restricted, client readable view of applicants."""
+    """Get applicants."""
     print_timestamp('get_applicants')
     user = anvil.users.get_user(allow_remembered=True)
     app_q = app_tables.users.search(
@@ -212,17 +223,6 @@ def get_applicants():
         for i in app_q
     ]
     return app_list
-
-
-@permission_required('auth_screenings')
-def reassign_roles(user_dict, role_dict):
-    """Reset roles for a user. This is for screeners to use."""
-    user = anvil.users.get_user(allow_remembered=True)
-    user_ref = app_tables.users.get(email=user_dict['email'], tenant=user['tenant'])
-    for col_name, val in role_dict.items():
-        if col_name in ['auth_profile', 'auth_forumchat', 'auth_booking']:
-            user_ref[col_name] = val
-    return user_ref
 
 
 @permission_required('auth_booking')
@@ -296,13 +296,14 @@ def notify_accept(email_to):
 
 @permission_required('auth_forumchat')
 def get_roles():
+    """Get volunteer roles."""
     user = anvil.users.get_user(allow_remembered=True)
     return app_tables.roles.search(tenant=user['tenant'])
 
 
 @permission_required('auth_members')
 def get_roles_to_members():
-    """Get a dict that maps roles to users."""
+    """Get a dict that maps volunteer roles to users."""
     user = anvil.users.get_user(allow_remembered=True)
     role_members = []
     users = list(app_tables.users.search(tenant=user['tenant']))
@@ -320,6 +321,7 @@ def get_roles_to_members():
 
 @permission_required('auth_members')
 def add_role_to_member(role_name, member_email):
+    """Add volunteer role to member."""
     user = anvil.users.get_user(allow_remembered=True)
     role = app_tables.roles.get(name=role_name, tenant=user['tenant'])
     role['last_update'] = dt.date.today()
@@ -336,6 +338,7 @@ def add_role_to_member(role_name, member_email):
 
 @permission_required('auth_members')
 def remove_role_from_member(role_name, member_email):
+    """Remove volunteer role from member."""
     user = anvil.users.get_user(allow_remembered=True)
     role = app_tables.roles.get(name=role_name, tenant=user['tenant'])
     role['last_update'] = dt.date.today()
@@ -345,6 +348,7 @@ def remove_role_from_member(role_name, member_email):
 
 @permission_required('auth_members')
 def add_role(role_name, reports_to, role_members):
+    """Add volunteer role definition."""
     user = anvil.users.get_user(allow_remembered=True)
     if not app_tables.roles.get(tenant=user['tenant'], name=role_name):
         app_tables.roles.add_row(name=role_name, reports_to=reports_to, tenant=user['tenant'], last_update=dt.date.today())

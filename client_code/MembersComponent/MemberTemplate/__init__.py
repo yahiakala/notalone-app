@@ -83,23 +83,28 @@ class MemberTemplate(MemberTemplateTemplate):
 
     def cb_members_change(self, **event_args):
         """This method is called when this checkbox is checked or unchecked"""
-        anvil.server.call('update_user_admin', self.item['email'], 'auth_members', self.item['auth_members'])
+        _ = anvil.server.call('update_member', self.item['email'],
+                              {'auth_members': self.item['auth_members']})
 
     def cb_screenings_change(self, **event_args):
         """This method is called when this checkbox is checked or unchecked"""
-        anvil.server.call('update_user_admin', self.item['email'], 'auth_screenings', self.item['auth_screenings'])
+        _ = anvil.server.call('update_member', self.item['email'],
+                              {'auth_screenings': self.item['auth_screenings']})
 
     def cb_forumchat_change(self, **event_args):
         """This method is called when this checkbox is checked or unchecked"""
-        anvil.server.call('update_user_admin', self.item['email'], 'auth_forumchat', self.item['auth_forumchat'])
+        _ = anvil.server.call('update_member', self.item['email'],
+                              {'auth_forumchat': self.item['auth_forumchat']})
 
     def cb_profile_change(self, **event_args):
         """This method is called when this checkbox is checked or unchecked"""
-        anvil.server.call('update_user_admin', self.item['email'], 'auth_profile', self.item['auth_profile'])
+        _ = anvil.server.call('update_member', self.item['email'],
+                              {'auth_profile': self.item['auth_profile']})
 
     def cb_authbooking_change(self, **event_args):
         """This method is called when this checkbox is checked or unchecked"""
-        anvil.server.call('update_user_admin', self.item['email'], 'auth_booking', self.item['auth_booking'])
+        _ = anvil.server.call('update_member', self.item['email'],
+                              {'auth_booking': self.item['auth_booking']})
 
 
 
