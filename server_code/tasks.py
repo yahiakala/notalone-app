@@ -216,8 +216,7 @@ def get_applicants():
 
 @permission_required('auth_screenings')
 def reassign_roles(user_dict, role_dict):
-    """Reset roles for a user."""
-    # TODO: refactor with a client writable view?
+    """Reset roles for a user. This is for screeners to use."""
     user = anvil.users.get_user(allow_remembered=True)
     user_ref = app_tables.users.get(email=user_dict['email'], tenant=user['tenant'])
     for col_name, val in role_dict.items():
