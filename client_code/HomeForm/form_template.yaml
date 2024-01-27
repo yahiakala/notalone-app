@@ -29,7 +29,7 @@ components:
     properties: {role: null, url: '', align: left, tooltip: '', border: '', foreground: '',
       visible: false, text: Forum, font_size: null, wrap_on: mobile, font: '', col_spacing: medium,
       spacing_above: small, icon_align: left, col_widths: '', spacing_below: small,
-      italic: false, background: '', bold: false, underline: false, icon: 'fa:group'}
+      italic: false, background: '', bold: false, underline: false, icon: 'fa:comments'}
     type: Link
     layout_properties: {}
     event_bindings: {click: link_forum_nav_click}
