@@ -12,7 +12,6 @@ class HomeDetailComponent(HomeDetailComponentTemplate):
         self.groups = []
         self.user = Global.user
         self.super_load()
-        # self.tenant_logo = Global.tenant_logo
         self.init_components(**properties)
 
         # Any code you write here will run before the form opens.
