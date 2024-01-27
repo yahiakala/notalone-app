@@ -66,9 +66,14 @@ components:
         foreground: 'theme:Error'}
       type: Label
       layout_properties: {grid_position: 'NGKWCI,WALDPL'}
+  - name: btn_showhide
+    properties: {text: Show/Hide Notes, role: elevated-button}
+    type: Button
+    layout_properties: {grid_position: 'EXIQOG,LURNHT'}
+    event_bindings: {click: btn_showhide_click}
   - type: TextArea
     properties: {role: outlined, align: left, height: '', tooltip: '', placeholder: Write notes here,
-      border: '', enabled: true, foreground: '', visible: true, text: '', font_size: null,
+      border: '', enabled: true, foreground: '', visible: false, text: '', font_size: null,
       auto_expand: true, font: '', spacing_above: small, spacing_below: small, italic: false,
       background: '', bold: false, underline: false}
     name: ta_notes

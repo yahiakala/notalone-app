@@ -9,7 +9,7 @@ class ApplicantTemplate(ApplicantTemplateTemplate):
         self.user_notes = None
         self.user = Global.user
         self.init_components(**properties)
-        self.user_notes = anvil.server.call('get_user_notes', self.item['email'])['notes']
+        # self.user_notes = anvil.server.call('get_user_notes', self.item['email'])['notes']
         self.refresh_data_bindings()
 
     def btn_accept_click(self, **event_args):
@@ -44,4 +44,13 @@ class ApplicantTemplate(ApplicantTemplateTemplate):
             self.remove_from_parent()
         else:
             self.lbl_confirm_del_err.visible = True
+
+    def btn_showhide_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        if self.ta_notes.visible:
+            self.ta_notes.visible = False
+        else:
+            self.user_notes = anvil.server.call('get_user_notes', self.item['email'])['notes']
+            self.refresh_data_bindings()
+            self.ta_notes.visible = True
 

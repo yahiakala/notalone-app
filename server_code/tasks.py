@@ -187,15 +187,31 @@ def save_user_notes(user_email, new_note):
 @permission_required(['auth_screenings', 'auth_members'])
 def get_applicants():
     """Get restricted, client readable view of applicants."""
-    clean_up_users()
+    print_timestamp('get_applicants')
     user = anvil.users.get_user(allow_remembered=True)
-    readable_view = app_tables.users.client_readable(
-        q.only_cols("email", "first_name", "last_name", "auth_profile",
+    app_q = app_tables.users.search(
+        q.fetch_only("email", "first_name", "last_name", "auth_profile",
                     "auth_forumchat", "auth_booking", "good_standing", "signed_up"),
         tenant=user['tenant'],
-        auth_forumchat=q.not_(True)
+        auth_forumchat=q.not_(True),
+        auth_profile=q.not_(True),
+        auth_booking=True
     )
-    return readable_view
+    print_timestamp('get_applicants done query')
+    app_list = [
+        {
+            'email': i['email'],
+            'first_name': i['first_name'],
+            'last_name': i['last_name'],
+            'auth_profile': i['auth_profile'],
+            'auth_forumchat': i['auth_forumchat'],
+            'auth_booking': i['auth_booking'],
+            'good_standing': i['good_standing'],
+            'signed_up': i['signed_up']
+        }
+        for i in app_q
+    ]
+    return app_list
 
 
 @permission_required('auth_screenings')
@@ -365,3 +381,14 @@ def update_role(role_name, new_role_dict):
     role = app_tables.roles.get(name=role_name, tenant=user['tenant'])
     for key, val in new_role_dict.items():
         role[key] = val
+
+
+@anvil.server.callable(require_user=True)
+def super_load():
+    user = anvil.users.get_user(allow_remembered=True)
+    data = {'members': None, 'applicants': None}
+    if user['auth_members']:
+        data['users'] = get_users()
+    if user['auth_screenings'] or user['auth_members']:
+        data['applicants'] = get_applicants()
+    return data

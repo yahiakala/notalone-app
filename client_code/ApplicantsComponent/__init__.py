@@ -18,11 +18,12 @@ class ApplicantsComponent(ApplicantsComponentTemplate):
         self.populate_rp()
 
     def populate_rp(self, **event_args):
-        self.rp_applicants.items = Global.applicants.search(
-            auth_profile=q.not_(True),
-            auth_booking=True
-        )
+        # self.rp_applicants.items = Global.applicants.search(
+        #     auth_profile=q.not_(True),
+        #     auth_booking=True
+        # )
         # self.rp_pending.items = Global.applicants.search(
         #     auth_profile=True
         # )
+        self.rp_applicants.items = Global.applicants
         self.raise_event('x-refresh')

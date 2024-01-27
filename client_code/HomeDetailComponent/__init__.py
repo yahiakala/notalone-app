@@ -1,6 +1,8 @@
 from ._anvil_designer import HomeDetailComponentTemplate
 from anvil import *
 import anvil.tables.query as q
+import anvil.server
+from anvil_extras.logging import TimerLogger
 
 from .. import Global
 
@@ -9,10 +11,7 @@ class HomeDetailComponent(HomeDetailComponentTemplate):
         # Set Form properties and Data Bindings.
         self.groups = []
         self.user = Global.user
-        if self.user['auth_screenings']:
-            _ = Global.applicants
-        if self.user['auth_members']:
-            _ = Global.users
+        self.super_load()
         # self.tenant_logo = Global.tenant_logo
         self.init_components(**properties)
 
@@ -46,3 +45,10 @@ class HomeDetailComponent(HomeDetailComponentTemplate):
         self.tb_search_group.text = None
         self.btn_clear_search.visible = False
 
+    def super_load(self):
+        superlog = TimerLogger('super_load')
+        superlog.start('super_load start')
+        data = anvil.server.call('super_load')
+        superlog.end('super_load end')
+        Global.users = data['users']
+        Global.applicants = data['applicants']
