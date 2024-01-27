@@ -9,6 +9,10 @@ class HomeDetailComponent(HomeDetailComponentTemplate):
         # Set Form properties and Data Bindings.
         self.groups = []
         self.user = Global.user
+        if self.user['auth_screenings']:
+            _ = Global.applicants
+        if self.user['auth_members']:
+            _ = Global.users
         # self.tenant_logo = Global.tenant_logo
         self.init_components(**properties)
 

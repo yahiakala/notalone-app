@@ -4,7 +4,7 @@ from anvil.tables import app_tables
 import anvil.tables.query as q
 import anvil.email
 
-from .helpers import permission_required
+from .helpers import permission_required, print_timestamp
 
 import datetime as dt
 
@@ -74,6 +74,13 @@ def update_user(user_dict):
 
 
 @permission_required('auth_members')
+def update_user_admin(email, col_name, col_value):
+    doer = anvil.users.get_user(allow_remembered=True)
+    user = app_tables.users.get(tenant=doer['tenant'], email=email)
+    user[col_name] = col_value
+
+
+@permission_required('auth_members')
 def delete_user(user_dict):
     user_del = app_tables.users.get(email=user_dict['email'], auth_members=q.not_(True))
     user_del.delete()
@@ -82,8 +89,7 @@ def delete_user(user_dict):
 @permission_required('auth_members')
 def get_users():
     """Get a full list of the users."""
-    # TODO: pagination needs to be figured out
-    # clean_up_users()
+    print_timestamp('get_users')
     user = anvil.users.get_user(allow_remembered=True)
     memberlist = [
         {
@@ -93,6 +99,8 @@ def get_users():
             'fb_url': member['fb_url'],
             'discord': member['discord'],
             'fee': member['fee'],
+            'payment_status': member['payment_status'],
+            'payment_expiry': member['payment_expiry'],
             'good_standing': member['good_standing'],
             'last_login': member['last_login'],
             'signed_up': member['signed_up'],
@@ -102,35 +110,64 @@ def get_users():
             'auth_profile': member['auth_profile'],
             'auth_booking': member['auth_booking'],
             'auth_members': member['auth_members'],
-            'auth_dev': member['auth_dev'],
-            'notes': get_user_notes(member)['notes'] or ''
+            'auth_dev': member['auth_dev']
         }
         for member in app_tables.users.search(tenant=user['tenant'])
     ]
+    print_timestamp('done get_users')
     return memberlist
 
 
+@permission_required('auth_members')
 def user_search(search_txt):
+    print_timestamp('user_search: ' + search_txt)
     user = anvil.users.get_user(allow_remembered=True)
-    notes = app_tables.notes.search(tenant=user['tenant'], notes=q.ilike('%' + search_txt + '%'))
+    emails = set()
+    for note in app_tables.notes.search(tenant=user['tenant'], notes=q.ilike('%' + search_txt + '%')):
+        emails.add(note['user']['email'])
+    emails = list(emails)
+    
     users = app_tables.users.search(
         q.any_of(
             first_name=q.ilike(search_txt),
             last_name=q.ilike(search_txt),
-            email=q.ilike(search_txt)
+            email=q.any_of(
+                q.ilike(search_txt),
+                q.any_of(*emails)
+            )
         ),
         tenant=user['tenant']
     )
-    # TODO: finish this
+    # users_list = [
+    #     {
+    #         'first_name': member['first_name'],
+    #         'last_name': member['last_name'],
+    #         'email': member['email'],
+    #         'fb_url': member['fb_url'],
+    #         'discord': member['discord'],
+    #         'fee': member['fee'],
+    #         'good_standing': member['good_standing'],
+    #         'last_login': member['last_login'],
+    #         'signed_up': member['signed_up'],
+    #         'paypal_sub_id': member['paypal_sub_id'],
+    #         'auth_screenings': member['auth_screenings'],
+    #         'auth_forumchat': member['auth_forumchat'],
+    #         'auth_profile': member['auth_profile'],
+    #         'auth_booking': member['auth_booking'],
+    #         'auth_members': member['auth_members'],
+    #         'auth_dev': member['auth_dev']
+    #     }
+    #     for member in users
+    # ]
+    print_timestamp('user_search: ' + search_txt + ' done')
+    return users
 
-# @permission_required(['auth_members', 'auth_screenings'])
-def get_user_notes(user_row):
+
+@permission_required(['auth_members', 'auth_screenings'])
+def get_user_notes(email):
     """Get the notes for a particular user."""
-    # TODO: take this back to the user_email usage from client code
-    # clean_up_users()
     user = anvil.users.get_user(allow_remembered=True)
-    # user_row = app_tables.users.get(email=user_email, tenant=user['tenant'])
-
+    user_row = app_tables.users.get(email=email, tenant=user['tenant'])
     note_row = app_tables.notes.get(user=user_row, tenant=user['tenant'])
     if note_row:
         return note_row

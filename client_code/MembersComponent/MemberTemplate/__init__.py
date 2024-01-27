@@ -9,10 +9,8 @@ class MemberTemplate(MemberTemplateTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.
         print("Client: Getting member data binding ", dt.datetime.now().strftime("%H:%M:%S.%f"))
-        # self.user_notes = self.item['notes']
-        # self.user_notes = None
+        self.user_notes = ''
         self.init_components(**properties)
-        # self.user_notes = self.item['notes']
         print("Client: Got member data binding ", dt.datetime.now().strftime("%H:%M:%S.%f"))
         self.pmt_success = 'Member is in good standing with payments.'
         self.pmt_noid = 'Member has no linked paypal subscription.'
@@ -39,7 +37,7 @@ class MemberTemplate(MemberTemplateTemplate):
     def btn_restore_click(self, **event_args):
         """This method is called when the button is clicked"""
         self.item['auth_profile'] = True
-        self.item['auth_forumchat'] = True
+        # self.item['auth_forumchat'] = True
         self.refresh_data_bindings()
 
     def btn_refresh_click(self, **event_args):
@@ -58,12 +56,13 @@ class MemberTemplate(MemberTemplateTemplate):
         if self.cp_notes.visible:
             self.cp_notes.visible = False
         else:
+            self.user_notes = anvil.server.call('get_user_notes', self.item['email'])['notes']
             self.cp_notes.visible = True
+        self.refresh_data_bindings()
 
-    def btn_save_click(self, **event_args):
+    def btn_save_notes_click(self, **event_args):
         """This method is called when the button is clicked"""
-        pass
-        # anvil.server.call('save_user_notes', self.item['email'], self.user_notes)
+        anvil.server.call('save_user_notes', self.item['email'], self.user_notes)
 
     def btn_remind_click(self, **event_args):
         """This method is called when the button is clicked"""
@@ -81,6 +80,26 @@ class MemberTemplate(MemberTemplateTemplate):
             self.remove_from_parent()
         else:
             self.lbl_confirm_del_err.visible = True
+
+    def cb_members_change(self, **event_args):
+        """This method is called when this checkbox is checked or unchecked"""
+        anvil.server.call('update_user_admin', self.item['email'], 'auth_members', self.item['auth_members'])
+
+    def cb_screenings_change(self, **event_args):
+        """This method is called when this checkbox is checked or unchecked"""
+        anvil.server.call('update_user_admin', self.item['email'], 'auth_screenings', self.item['auth_screenings'])
+
+    def cb_forumchat_change(self, **event_args):
+        """This method is called when this checkbox is checked or unchecked"""
+        anvil.server.call('update_user_admin', self.item['email'], 'auth_forumchat', self.item['auth_forumchat'])
+
+    def cb_profile_change(self, **event_args):
+        """This method is called when this checkbox is checked or unchecked"""
+        anvil.server.call('update_user_admin', self.item['email'], 'auth_profile', self.item['auth_profile'])
+
+    def cb_authbooking_change(self, **event_args):
+        """This method is called when this checkbox is checked or unchecked"""
+        anvil.server.call('update_user_admin', self.item['email'], 'auth_booking', self.item['auth_booking'])
 
 
 
