@@ -24,6 +24,7 @@ class HomeDetailComponent(HomeDetailComponentTemplate):
             self.tb_search_group_pressed_enter()
 
     def update_stuff(self, **event_args):
+        """Refresh the whole page so the user sees the booking page."""
         self.groups = []
         self.user = Global.user
         self.refresh_data_bindings()

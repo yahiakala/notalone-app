@@ -1,4 +1,4 @@
-from ._anvil_designer import HomeFormTemplate
+from ._anvil_designer import RouterTemplate
 from anvil import *
 import anvil.users
 
@@ -18,9 +18,8 @@ from .. import Global
 
 
 @routing.template(path='', priority=0, condition=None)
-class HomeForm(HomeFormTemplate):
+class Router(RouterTemplate):
     def __init__(self, **properties):
-        # Set Form properties and Data Bindings.
         self.init_components(**properties)
 
         self.link_home.tag.url_hash = ''
@@ -57,23 +56,6 @@ class HomeForm(HomeFormTemplate):
         Global.user = None  # Haven't tested this.
         self.nav_click(self.link_home)
 
-    # def go_home(self,  **event_args):
-    #     """This method is called when the link is clicked"""
-    #     self.set_active_nav('home')
-    #     if Global.user:
-    #         self.set_account_state(Global.user)
-    #         routing.set_url_hash('homedetail')
-    #     else:
-    #         self.load_component('homeanon')
-
-    def require_account(self):
-        user = Global.user
-        if user:
-            return user
-        user = anvil.users.login_with_form(allow_cancel=True, show_signup_option=True)
-        self.set_account_state(user)
-        return user
-
     def set_account_state(self, user):
         self.link_logout.visible = user is not None  # TODO: remove link
         self.link_login.visible = user is None
@@ -87,7 +69,6 @@ class HomeForm(HomeFormTemplate):
         self.link_forum_nav.visible = False
         self.lbl_user.visible = False
         self.link_help.visible = False
-        # self.link_forum.visible = False
 
         if user:
             self.lbl_user.visible = True
@@ -103,9 +84,7 @@ class HomeForm(HomeFormTemplate):
                 user['first_name'] != '' and
                 user['last_name'] != ''
             )
-            # self.link_forum.visible = user['auth_members']  # TODO: Change later.
             self.btn_test.visible = user['auth_dev']
-            # self.tb_impersonate.visible = user['auth_dev']
             
             if user['tenant']:
                 self.lbl_app_title.text = user['tenant']['name']
@@ -119,35 +98,7 @@ class HomeForm(HomeFormTemplate):
     #     cmpt.add_event_handler('x-refresh', self.refresh_everything)
     #     cmpt.add_event_handler('x-go-home', self.go_home)
 
-    # def set_active_nav(self, state):
-    #     self.link_home.role = 'selected' if state == 'home' else None
-    #     self.link_apply.role = 'selected' if state == 'apply' else None
-    #     self.link_profile.role = 'selected' if state == 'profile' else None
-    #     self.link_applicants.role = 'selected' if state == 'applicants' else None
-    #     self.link_members.role = 'selected' if state == 'members' else None
-    #     self.link_fin.role = 'selected' if state == 'financials' else None
-    #     self.link_volunteers.role = 'selected' if state == 'volunteers' else None
-    #     # self.link_forum.role = 'selected' if state == 'forum' else None
 
-    # def go_page(self, page_name, **event_args):
-    #     """Go to a page."""
-    #     self.set_active_nav(page_name)
-    #     user = self.require_account()
-    #     if page_name == 'apply' and user:
-    #         self.load_component(BookingComponent())
-    #     elif page_name == 'profile' and user:
-    #         self.load_component(ProfileComponent())
-    #     elif page_name == 'applicants' and user:
-    #         self.load_component(ApplicantsComponent())
-    #     elif page_name == 'members' and user:
-    #         self.load_component(MembersComponent())
-    #     elif page_name == 'financials' and user:
-    #         self.load_component(FinComponent())
-    #     elif page_name == 'volunteers' and user:
-    #         self.load_component(VolunteerComponent())
-    #     # elif page_name == 'forum' and user:
-    #         # self.load_component(ForumiComponent())
-    #         # self.cmpt.form_show()
     #     elif page_name == 'tests' and user:
     #         self.tb_impersonate.visible = True
     #         from .. import test_forms, test_server, test_tasks
@@ -198,3 +149,7 @@ class HomeForm(HomeFormTemplate):
         for link in self.cp_sidebar.get_components():
             if type(link) == Link:
                 link.role = 'selected' if link.tag.url_hash == url_hash else None
+        
+        if url_hash in ['homeanon', 'homedetail']:
+            self.link_home.role = 'selected'
+                

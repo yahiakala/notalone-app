@@ -212,8 +212,8 @@ def get_applicants():
     app_list = [
         {
             'email': i['email'],
-            'first_name': i['first_name'],
-            'last_name': i['last_name'],
+            'first_name': i['first_name'] or '',
+            'last_name': i['last_name'] or '',
             'auth_profile': i['auth_profile'],
             'auth_forumchat': i['auth_forumchat'],
             'auth_booking': i['auth_booking'],
