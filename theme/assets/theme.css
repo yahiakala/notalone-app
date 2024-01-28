@@ -39,7 +39,6 @@ a>.anvil-component-icon.right_edge-icon,
     padding-top: 8px; padding-right: 8px; padding-bottom: 8px;
 }
 
-/*TODO: see if this spacing stuff needs to be changed*/
 .anvil-spacing-above-none { margin-top: 0px; }
 .anvil-spacing-above-small { margin-top: 4px; }
 .anvil-spacing-above-medium { margin-top: 8px; }

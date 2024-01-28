@@ -20,9 +20,9 @@ class ApplicantsComponent(ApplicantsComponentTemplate):
 
     def populate_rp(self, **event_args):
         self.rp_applicants.items = Global.applicants
-        self.raise_event('x-refresh')
+        self.refresh_data_bindings()
 
     def refresh_rp(self, **event_args):
         Global.applicants = anvil.server.call('get_applicants')
         self.rp_applicants.items = Global.applicants
-        self.raise_event('x-refresh')
+        self.refresh_data_bindings()

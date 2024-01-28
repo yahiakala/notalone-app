@@ -39,16 +39,17 @@ class ProfileComponent(ProfileComponentTemplate):
         if not self.user['fee']:
             fee_send = 10
 
-        self.user, self.payment_url = anvil.server.call(
+        Global.user, self.payment_url = anvil.server.call(
             'create_sub', fee_send
         )
-        self.user = dict(self.user)  # avoid errors with data bindings
+        self.user = dict(Global.user)  # avoid errors with data bindings
         print('fee: ' + str(self.user['fee']))
         self.btn_save_click()
         # window.open(self.payment_url)
         window.location.href = self.payment_url
         self.refresh_data_bindings()
-        self.raise_event('x-go-home')
+        routing.set_url_hash('homedetail', load_from_cache=False)
+        # TODO: might need to refresh nav links too
 
 
 

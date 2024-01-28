@@ -89,15 +89,6 @@ class Router(RouterTemplate):
             if user['tenant']:
                 self.lbl_app_title.text = user['tenant']['name']
                 self.link_help.visible = True
-                
-
-    # def load_component(self, cmpt):
-    #     self.cmpt = cmpt
-    #     self.content_panel.clear()
-    #     self.content_panel.add_component(cmpt)
-    #     cmpt.add_event_handler('x-refresh', self.refresh_everything)
-    #     cmpt.add_event_handler('x-go-home', self.go_home)
-
 
     #     elif page_name == 'tests' and user:
     #         self.tb_impersonate.visible = True
