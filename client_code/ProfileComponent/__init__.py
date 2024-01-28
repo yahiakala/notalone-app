@@ -46,10 +46,9 @@ class ProfileComponent(ProfileComponentTemplate):
         print('fee: ' + str(self.user['fee']))
         self.btn_save_click()
         # window.open(self.payment_url)
-        window.location.href = self.payment_url
+        window.location.href = self.payment_url  # same window
         self.refresh_data_bindings()
         routing.set_url_hash('homedetail', load_from_cache=False)
-        # TODO: might need to refresh nav links too
 
 
 
