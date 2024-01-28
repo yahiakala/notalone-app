@@ -36,7 +36,7 @@ services:
 - source: /runtime/services/anvil/email.yml
   client_config: {}
   server_config: {}
-startup: {type: form, module: HomeForm}
+startup: {type: module, module: startup}
 package_name: notalone_app
 allow_embedding: false
 name: notalone app
