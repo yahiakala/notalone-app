@@ -389,7 +389,7 @@ def update_role(role_name, new_role_dict):
 @anvil.server.callable(require_user=True)
 def get_super_load():
     user = anvil.users.get_user(allow_remembered=True)
-    data = {'members': None, 'applicants': None}
+    data = {'users': [], 'applicants': []}
     if user['auth_members']:
         data['users'] = get_users()
     if user['auth_screenings'] or user['auth_members']:
