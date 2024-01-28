@@ -17,13 +17,13 @@ from anvil_extras import routing
 from .. import Global
 
 
-@routing.template(path="", priority=0, condition=None)
+@routing.template(path='', priority=0, condition=None)
 class HomeForm(HomeFormTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
 
-        self.link_home.tag.url_hash = 'home'
+        self.link_home.tag.url_hash = ''
         self.link_apply.tag.url_hash = 'apply'
         self.link_profile.tag.url_hash = 'profile'
         self.link_applicants.tag.url_hash = 'applicants'
@@ -112,12 +112,12 @@ class HomeForm(HomeFormTemplate):
                 self.link_help.visible = True
                 
 
-    def load_component(self, cmpt):
-        self.cmpt = cmpt
-        self.content_panel.clear()
-        self.content_panel.add_component(cmpt)
-        cmpt.add_event_handler('x-refresh', self.refresh_everything)
-        cmpt.add_event_handler('x-go-home', self.go_home)
+    # def load_component(self, cmpt):
+    #     self.cmpt = cmpt
+    #     self.content_panel.clear()
+    #     self.content_panel.add_component(cmpt)
+    #     cmpt.add_event_handler('x-refresh', self.refresh_everything)
+    #     cmpt.add_event_handler('x-go-home', self.go_home)
 
     # def set_active_nav(self, state):
     #     self.link_home.role = 'selected' if state == 'home' else None
@@ -185,7 +185,7 @@ class HomeForm(HomeFormTemplate):
         self.nav_click(self.link_home)
 
     def nav_click(self, sender, **event_args):
-        if sender.tag.url_hash == 'home':
+        if sender.tag.url_hash == '':
             if Global.user:
                 self.set_account_state(Global.user)
                 routing.set_url_hash('homedetail')
