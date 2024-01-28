@@ -2,8 +2,10 @@ from ._anvil_designer import VolunteerComponentTemplate
 from anvil import *
 import anvil.server
 from .. import Global
+from anvil_extras import routing
 
 
+@routing.route('volunteers')
 class VolunteerComponent(VolunteerComponentTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.

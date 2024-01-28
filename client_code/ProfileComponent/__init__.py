@@ -1,10 +1,11 @@
 from ._anvil_designer import ProfileComponentTemplate
 from anvil import *
 import anvil.server
-
+from anvil_extras import routing
 from .. import Global
 
 
+@routing.route('profile')
 class ProfileComponent(ProfileComponentTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.

@@ -23,7 +23,7 @@ class HomeForm(HomeFormTemplate):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
 
-        self.link_home.tag.url_hash = ''
+        self.link_home.tag.url_hash = 'home'
         self.link_apply.tag.url_hash = 'apply'
         self.link_profile.tag.url_hash = 'profile'
         self.link_applicants.tag.url_hash = 'applicants'
@@ -33,10 +33,9 @@ class HomeForm(HomeFormTemplate):
 
         self.user = Global.user
 
-        self.btn_test.add_event_handler('click', partial(self.go_page, 'tests'))
-
+        # self.btn_test.add_event_handler('click', partial(self.go_page, 'tests'))
         self.set_account_state(self.user)
-        self.go_home()
+        self.nav_click(self.link_home)
 
         from anvil.js.window import navigator
         is_mobile = anvil.js.window.navigator.userAgent.lower().find("mobi") > -1
@@ -49,23 +48,23 @@ class HomeForm(HomeFormTemplate):
         Global.user = anvil.users.login_with_form(allow_cancel=True, show_signup_option=True)
         self.set_account_state(Global.user)
         self.refresh_data_bindings()
-        self.go_home()
+        self.nav_click(self.link_home)
 
     def link_logout_click(self, **event_args):
         """This method is called when the link is clicked"""
         anvil.users.logout()
         self.set_account_state(None)
         Global.user = None  # Haven't tested this.
-        self.go_home()
+        self.nav_click(self.link_home)
 
-    def go_home(self,  **event_args):
-        """This method is called when the link is clicked"""
-        self.set_active_nav('home')
-        if Global.user:
-            self.set_account_state(Global.user)
-            routing.set_url_hash('homedetail')
-        else:
-            self.load_component('homeanon')
+    # def go_home(self,  **event_args):
+    #     """This method is called when the link is clicked"""
+    #     self.set_active_nav('home')
+    #     if Global.user:
+    #         self.set_account_state(Global.user)
+    #         routing.set_url_hash('homedetail')
+    #     else:
+    #         self.load_component('homeanon')
 
     def require_account(self):
         user = Global.user
@@ -120,46 +119,46 @@ class HomeForm(HomeFormTemplate):
         cmpt.add_event_handler('x-refresh', self.refresh_everything)
         cmpt.add_event_handler('x-go-home', self.go_home)
 
-    def set_active_nav(self, state):
-        self.link_home.role = 'selected' if state == 'home' else None
-        self.link_apply.role = 'selected' if state == 'apply' else None
-        self.link_profile.role = 'selected' if state == 'profile' else None
-        self.link_applicants.role = 'selected' if state == 'applicants' else None
-        self.link_members.role = 'selected' if state == 'members' else None
-        self.link_fin.role = 'selected' if state == 'financials' else None
-        self.link_volunteers.role = 'selected' if state == 'volunteers' else None
-        # self.link_forum.role = 'selected' if state == 'forum' else None
+    # def set_active_nav(self, state):
+    #     self.link_home.role = 'selected' if state == 'home' else None
+    #     self.link_apply.role = 'selected' if state == 'apply' else None
+    #     self.link_profile.role = 'selected' if state == 'profile' else None
+    #     self.link_applicants.role = 'selected' if state == 'applicants' else None
+    #     self.link_members.role = 'selected' if state == 'members' else None
+    #     self.link_fin.role = 'selected' if state == 'financials' else None
+    #     self.link_volunteers.role = 'selected' if state == 'volunteers' else None
+    #     # self.link_forum.role = 'selected' if state == 'forum' else None
 
-    def go_page(self, page_name, **event_args):
-        """Go to a page."""
-        self.set_active_nav(page_name)
-        user = self.require_account()
-        if page_name == 'apply' and user:
-            self.load_component(BookingComponent())
-        elif page_name == 'profile' and user:
-            self.load_component(ProfileComponent())
-        elif page_name == 'applicants' and user:
-            self.load_component(ApplicantsComponent())
-        elif page_name == 'members' and user:
-            self.load_component(MembersComponent())
-        elif page_name == 'financials' and user:
-            self.load_component(FinComponent())
-        elif page_name == 'volunteers' and user:
-            self.load_component(VolunteerComponent())
-        # elif page_name == 'forum' and user:
-            # self.load_component(ForumiComponent())
-            # self.cmpt.form_show()
-        elif page_name == 'tests' and user:
-            self.tb_impersonate.visible = True
-            from .. import test_forms, test_server, test_tasks
-            self.load_component(
-                ClientTestComponent(
-                    test_modules=[test_forms, test_server, test_tasks],
-                    card_roles=['tonal-card', 'elevated-card', 'elevated-card'],
-                    icon_size=30,
-                    btn_role='filled-button',
-                )
-            )
+    # def go_page(self, page_name, **event_args):
+    #     """Go to a page."""
+    #     self.set_active_nav(page_name)
+    #     user = self.require_account()
+    #     if page_name == 'apply' and user:
+    #         self.load_component(BookingComponent())
+    #     elif page_name == 'profile' and user:
+    #         self.load_component(ProfileComponent())
+    #     elif page_name == 'applicants' and user:
+    #         self.load_component(ApplicantsComponent())
+    #     elif page_name == 'members' and user:
+    #         self.load_component(MembersComponent())
+    #     elif page_name == 'financials' and user:
+    #         self.load_component(FinComponent())
+    #     elif page_name == 'volunteers' and user:
+    #         self.load_component(VolunteerComponent())
+    #     # elif page_name == 'forum' and user:
+    #         # self.load_component(ForumiComponent())
+    #         # self.cmpt.form_show()
+    #     elif page_name == 'tests' and user:
+    #         self.tb_impersonate.visible = True
+    #         from .. import test_forms, test_server, test_tasks
+    #         self.load_component(
+    #             ClientTestComponent(
+    #                 test_modules=[test_forms, test_server, test_tasks],
+    #                 card_roles=['tonal-card', 'elevated-card', 'elevated-card'],
+    #                 icon_size=30,
+    #                 btn_role='filled-button',
+    #             )
+    #         )
 
     def refresh_everything(self, **event_args):
         """Refresh mainly the menu links."""
@@ -183,7 +182,19 @@ class HomeForm(HomeFormTemplate):
         Global.clear_global_attributes()
         Global.user = self.user
         self.refresh_everything()
-        self.go_home()
+        self.nav_click(self.link_home)
 
     def nav_click(self, sender, **event_args):
-        routing.set_url_hash(sender.tag.url_hash)
+        if sender.tag.url_hash == 'home':
+            if Global.user:
+                self.set_account_state(Global.user)
+                routing.set_url_hash('homedetail')
+            else:
+                routing.set_url_hash('homeanon')
+        else:
+            routing.set_url_hash(sender.tag.url_hash)
+
+    def on_navigation(self, url_hash, url_pattern, url_dict, unload_form):
+        for link in self.cp_sidebar.get_components():
+            if type(link) == Link:
+                link.role = 'selected' if link.tag.url_hash == url_hash else None

@@ -3,9 +3,11 @@ from anvil import *
 import anvil.tables.query as q
 import anvil.server
 from anvil_extras.logging import TimerLogger
-
+from anvil_extras import routing
 from .. import Global
 
+
+@routing.route('homedetail')
 class HomeDetailComponent(HomeDetailComponentTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.
