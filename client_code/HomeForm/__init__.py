@@ -13,23 +13,23 @@ from ..MembersComponent import MembersComponent
 from ..FinComponent import FinComponent
 from ..VolunteerComponent import VolunteerComponent
 from anvil_labs.ClientTestComponent import ClientTestComponent
-
+from anvil_extras import routing
 from .. import Global
 
 
+@routing.template(path="", priority=0, condition=None)
 class HomeForm(HomeFormTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
 
-        self.link_home.add_event_handler('click', self.go_home)
-        self.link_apply.add_event_handler('click', partial(self.go_page, 'apply'))
-        self.link_profile.add_event_handler('click', partial(self.go_page, 'profile'))
-        self.link_applicants.add_event_handler('click', partial(self.go_page, 'applicants'))
-        self.link_members.add_event_handler('click', partial(self.go_page, 'members'))
-        self.link_fin.add_event_handler('click', partial(self.go_page, 'financials'))
-        self.link_volunteers.add_event_handler('click', partial(self.go_page, 'volunteers'))
-        # self.link_forum.add_event_handler('click', partial(self.go_page, 'forum'))
+        self.link_home.tag.url_hash = ''
+        self.link_apply.tag.url_hash = 'apply'
+        self.link_profile.tag.url_hash = 'profile'
+        self.link_applicants.tag.url_hash = 'applicants'
+        self.link_members.tag.url_hash = 'members'
+        self.link_fin.tag.url_hash = 'financials'
+        self.link_volunteers.tag.url_hash = 'volunteers'
 
         self.user = Global.user
 
@@ -63,9 +63,9 @@ class HomeForm(HomeFormTemplate):
         self.set_active_nav('home')
         if Global.user:
             self.set_account_state(Global.user)
-            self.load_component(HomeDetailComponent())
+            routing.set_url_hash('homedetail')
         else:
-            self.load_component(HomeAnonComponent())
+            self.load_component('homeanon')
 
     def require_account(self):
         user = Global.user
@@ -184,3 +184,6 @@ class HomeForm(HomeFormTemplate):
         Global.user = self.user
         self.refresh_everything()
         self.go_home()
+
+    def nav_click(self, sender, **event_args):
+        routing.set_url_hash(sender.tag.url_hash)
