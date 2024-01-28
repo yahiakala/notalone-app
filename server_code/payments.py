@@ -90,6 +90,7 @@ def create_sub(plan_amt):
 
 @anvil.server.http_endpoint('/capture-sub')
 def capture_sub(**params):
+    # TODO: use fake paypal to test this
     row = app_tables.users.get(paypal_sub_id=params['subscription_id'])
     row['good_standing'] = True
     row['auth_forumchat'] = True
