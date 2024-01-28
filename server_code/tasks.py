@@ -54,7 +54,7 @@ def join_tenant(id):
 
 @anvil.server.callable(require_user=True)
 def leave_tenant():
-    # TODO: what is this used for?
+    """Leave a tenant - used for test code."""
     user = anvil.users.get_user(allow_remembered=True)
     for key, val in user.items():
         if 'auth_' in key and 'auth_dev' not in key:

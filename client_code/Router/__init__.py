@@ -57,7 +57,7 @@ class Router(RouterTemplate):
         self.nav_click(self.link_home)
 
     def set_account_state(self, user):
-        self.link_logout.visible = user is not None  # TODO: remove link
+        self.link_logout.visible = user is not None
         self.link_login.visible = user is None
         
         self.link_apply.visible = False
