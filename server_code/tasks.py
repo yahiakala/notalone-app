@@ -260,7 +260,12 @@ def get_screener_link():
 def get_finances():
     """Get financial info."""
     user = anvil.users.get_user(allow_remembered=True)
-    return app_tables.finances.client_writable(tenant=user['tenant']).get()
+    data = app_tables.finances.get(tenant=user['tenant'])
+    return {
+        'rev_12': data['rev_12'] or 0,
+        'budgets': data['budgets'] or {},
+        'rev_12_active': data['rev_12_active'] or 0
+    }
 
 
 @permission_required('auth_forumchat')
