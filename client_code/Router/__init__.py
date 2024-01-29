@@ -2,8 +2,6 @@ from ._anvil_designer import RouterTemplate
 from anvil import *
 import anvil.users
 
-from functools import partial
-
 from ..HomeAnonComponent import HomeAnonComponent
 from ..HomeDetailComponent import HomeDetailComponent
 from ..BookingComponent import BookingComponent
@@ -12,6 +10,7 @@ from ..ApplicantsComponent import ApplicantsComponent
 from ..MembersComponent import MembersComponent
 from ..FinComponent import FinComponent
 from ..VolunteerComponent import VolunteerComponent
+
 from anvil_extras import routing
 from .. import Global
 
@@ -28,10 +27,10 @@ class Router(RouterTemplate):
         self.link_members.tag.url_hash = 'members'
         self.link_fin.tag.url_hash = 'financials'
         self.link_volunteers.tag.url_hash = 'volunteers'
+        self.btn_test.tag.url_hash = 'tests'
 
         self.user = Global.user
 
-        # self.btn_test.add_event_handler('click', partial(self.go_page, 'tests'))
         self.set_account_state(self.user)
         self.nav_click(self.link_home)
 
@@ -53,7 +52,7 @@ class Router(RouterTemplate):
         anvil.users.logout()
         self.set_account_state(None)
         Global.user = None  # Haven't tested this.
-        self.nav_click(self.link_home)
+        routing.set_url_hash('homeanon', load_from_cache=False)
 
     def set_account_state(self, user):
         self.link_logout.visible = user is not None
@@ -68,6 +67,8 @@ class Router(RouterTemplate):
         self.link_forum_nav.visible = False
         self.lbl_user.visible = False
         self.link_help.visible = False
+        self.btn_test.visible = False
+        self.tb_impersonate.visible = False
 
         if user:
             self.lbl_user.visible = True
@@ -83,23 +84,14 @@ class Router(RouterTemplate):
                 user['first_name'] != '' and
                 user['last_name'] != ''
             )
-            self.btn_test.visible = user['auth_dev']
+            if user['auth_dev']:
+                self.btn_test.visible = True
+                self.tb_impersonate.visible = True
+                from ..Tests import Tests
             
             if user['tenant']:
                 self.lbl_app_title.text = user['tenant']['name']
                 self.link_help.visible = True
-
-    #     elif page_name == 'tests' and user:
-    #         self.tb_impersonate.visible = True
-    #         from .. import test_forms, test_server, test_tasks
-    #         self.load_component(
-    #             ClientTestComponent(
-    #                 test_modules=[test_forms, test_server, test_tasks],
-    #                 card_roles=['tonal-card', 'elevated-card', 'elevated-card'],
-    #                 icon_size=30,
-    #                 btn_role='filled-button',
-    #             )
-    #         )
 
     def refresh_everything(self, **event_args):
         """Refresh mainly the menu links."""

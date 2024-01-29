@@ -2,6 +2,6 @@ container: {type: ColumnPanel}
 components:
 - name: ctests
   properties: {}
-  type: form:dep_yfmcrf11pl29j4:ClientTestComponent
-  layout_properties: {grid_position: 'RJODQV,IMHRTJ'}
+  type: form:dep_yfmcrf11pl29j4:ClientTests
+  layout_properties: {grid_position: 'KMYHWX,YHEPET'}
 is_package: true

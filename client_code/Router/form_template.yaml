@@ -20,6 +20,7 @@ components:
       underline: false, icon: ''}
     name: btn_test
     layout_properties: {}
+    event_bindings: {click: nav_click}
   - name: tb_impersonate
     properties: {visible: false, role: outlined}
     type: TextBox

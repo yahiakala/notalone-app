@@ -1,8 +1,9 @@
 from ._anvil_designer import TestsTemplate
 from anvil import *
 from .. import test_forms, test_server, test_tasks
+from anvil_extras import routing
 
-
+@routing.route('tests')
 class Tests(TestsTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.
