@@ -15,4 +15,3 @@ class ServerFuncs(unittest.TestCase):
         anvil.server.call('test_get_subscriptions')
         anvil.server.call('test_check_subs')
         anvil.server.call('test_check_sub')
-    

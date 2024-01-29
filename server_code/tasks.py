@@ -103,11 +103,11 @@ def get_users():
     user = anvil.users.get_user(allow_remembered=True)
     memberlist = [
         {
-            'first_name': member['first_name'],
-            'last_name': member['last_name'],
+            'first_name': member['first_name'] or '',
+            'last_name': member['last_name'] or '',
             'email': member['email'],
-            'fb_url': member['fb_url'],
-            'discord': member['discord'],
+            'fb_url': member['fb_url'] or '',
+            'discord': member['discord'] or '',
             'fee': member['fee'],
             'payment_status': member['payment_status'],
             'payment_expiry': member['payment_expiry'],
