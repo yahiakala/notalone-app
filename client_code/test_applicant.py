@@ -43,22 +43,7 @@ class Applicant0(unittest.TestCase):
         first_thing.btn_join.raise_event('click')
         assert(self.home.link_apply.visible == True)
 
-    def test_profile_visible(self):
-        """Fill out profile after passing screening."""
-        assert(self.home.link_profile.visible == False)
-        tenants = anvil.server.call('get_tenants')
-        search_term = self.home.cmpt.tb_search_group.text = 'e'
-        self.home.cmpt.tb_search_group.raise_event('pressed_enter')
-        first_thing = self.home.cmpt.rp_groups.get_components()[0]
-        first_thing.btn_join.raise_event('click')
 
-        # Now they pass screening
-        Global.user = anvil.server.call('reassign_roles_dev', self.user, {'auth_profile': True})
-        self.user = Global.user
-        
-        self.home.cmpt.raise_event('x-refresh')
-        # Now they should see the profile page
-        assert(self.home.link_profile.visible == True)
 
 
 class Applicant1(unittest.TestCase):
@@ -110,9 +95,27 @@ class Applicant2(unittest.TestCase):
         """Select plan."""
         pass
 
+    def test_profile_visible(self):
+        """Fill out profile after passing screening."""
+        assert(self.home.link_profile.visible == False)
+        tenants = anvil.server.call('get_tenants')
+        search_term = self.home.cmpt.tb_search_group.text = 'e'
+        self.home.cmpt.tb_search_group.raise_event('pressed_enter')
+        first_thing = self.home.cmpt.rp_groups.get_components()[0]
+        first_thing.btn_join.raise_event('click')
+
+        # Now they pass screening
+        Global.user = anvil.server.call('reassign_roles_dev', self.user, {'auth_profile': True})
+        self.user = Global.user
+        
+        self.home.cmpt.raise_event('x-refresh')
+        # Now they should see the profile page
+        assert(self.home.link_profile.visible == True)
+
+
 class Applicant3(unittest.TestCase):
     """Tests for Applicant who can edit their profile and paid."""
-    
+
     def setUp(self):
         self.user = Global.user
         from .HomeForm import HomeForm
