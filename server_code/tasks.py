@@ -318,8 +318,8 @@ def get_roles_to_members():
                 'name': role['name'],
                 'last_update': role['last_update'],
                 'reports_to': role['reports_to'],
-                'member': [i for i in app_tables.users.search(tenant=user['tenant'], roles=[role])],
-                'users': users
+                'member': [i for i in app_tables.users.search(tenant=user['tenant'], roles=[role])]
+                # 'users': users
             }
         )
     return role_members
@@ -362,8 +362,8 @@ def add_role(role_name, reports_to, role_members):
             'name': role_name,
             'last_update': dt.date.today(),
             'reports_to': reports_to,
-            'member': [],
-            'users': role_members[-1]['users']
+            'member': []
+            # 'users': role_members[-1]['users']
         }
     )
     return role_members

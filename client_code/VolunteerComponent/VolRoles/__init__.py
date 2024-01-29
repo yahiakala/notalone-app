@@ -11,6 +11,7 @@ class VolRoles(VolRolesTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.
         self.user = Global.user
+        self.users = Global.users
         self.init_components(**properties)
 
         self.fp_assigned_to.add_event_handler('x-remove', self.remove_assignment)
@@ -20,7 +21,7 @@ class VolRoles(VolRolesTemplate):
 
         self.dd_addmember.items = [
             (i['first_name'] + ' ' + i['last_name'] + ' (' + i['email'] + ')', i['email'])
-            for i in self.item['users']
+            for i in self.users
         ]
         if self.item['last_update']:
             self.lbl_last_update.text = 'Last Update: ' + self.item['last_update'].strftime('%Y-%m-%d')

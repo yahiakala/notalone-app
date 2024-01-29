@@ -11,7 +11,7 @@ class ProfileComponent(ProfileComponentTemplate):
         # Set Form properties and Data Bindings.
         self.user = dict(Global.user)  # Avoid errors with data bindings
         self.init_components(**properties)
-        print('fee: ' + str(self.user['fee']))
+        # print('fee: ' + str(self.user['fee']))
         # Any code you write here will run before the form opens.
 
     def btn_save_click(self, **event_args):
