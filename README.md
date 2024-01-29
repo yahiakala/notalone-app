@@ -11,7 +11,7 @@ Fork this repository to your own GitHub user account. Click on the top right of 
 Follow this tutorial to clone the forked repository into your Anvil account: [https://anvil.works/docs/version-control-new-ide/git](https://anvil.works/docs/version-control-new-ide/git#cloning-a-github-repo-into-a-new-app)
 
 
-## Advanced - Developing Locally
+## Advanced - Develop Locally
 Follow the steps below to get started as a collaborator.
 
 ### Set up SSH on your machine
