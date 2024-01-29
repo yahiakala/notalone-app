@@ -54,7 +54,7 @@ def join_tenant(id):
 
 @anvil.server.callable(require_user=True)
 def leave_tenant():
-    # TODO: what is this used for?
+    """Leave a tenant - used for test code."""
     user = anvil.users.get_user(allow_remembered=True)
     for key, val in user.items():
         if 'auth_' in key and 'auth_dev' not in key:
@@ -212,8 +212,8 @@ def get_applicants():
     app_list = [
         {
             'email': i['email'],
-            'first_name': i['first_name'],
-            'last_name': i['last_name'],
+            'first_name': i['first_name'] or '',
+            'last_name': i['last_name'] or '',
             'auth_profile': i['auth_profile'],
             'auth_forumchat': i['auth_forumchat'],
             'auth_booking': i['auth_booking'],
@@ -389,7 +389,7 @@ def update_role(role_name, new_role_dict):
 @anvil.server.callable(require_user=True)
 def get_super_load():
     user = anvil.users.get_user(allow_remembered=True)
-    data = {'members': None, 'applicants': None}
+    data = {'users': [], 'applicants': []}
     if user['auth_members']:
         data['users'] = get_users()
     if user['auth_screenings'] or user['auth_members']:

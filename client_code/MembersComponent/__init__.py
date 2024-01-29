@@ -4,11 +4,12 @@ import anvil.tables.query as q
 import anvil.server
 
 from .. import Global
-
+from anvil_extras import routing
 import datetime as dt
 from anvil_extras.logging import TimerLogger
 
 
+@routing.route('members')
 class MembersComponent(MembersComponentTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.

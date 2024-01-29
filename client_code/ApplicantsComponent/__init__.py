@@ -2,12 +2,13 @@ from ._anvil_designer import ApplicantsComponentTemplate
 from anvil import *
 import anvil.server
 import anvil.tables.query as q
-
+from anvil_extras import routing
 from .. import Global
 
 import datetime as dt
 
 
+@routing.route('applicants')
 class ApplicantsComponent(ApplicantsComponentTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.
@@ -19,9 +20,9 @@ class ApplicantsComponent(ApplicantsComponentTemplate):
 
     def populate_rp(self, **event_args):
         self.rp_applicants.items = Global.applicants
-        self.raise_event('x-refresh')
+        self.refresh_data_bindings()
 
     def refresh_rp(self, **event_args):
         Global.applicants = anvil.server.call('get_applicants')
         self.rp_applicants.items = Global.applicants
-        self.raise_event('x-refresh')
+        self.refresh_data_bindings()

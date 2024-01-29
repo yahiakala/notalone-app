@@ -3,9 +3,11 @@ from anvil import *
 import anvil.tables.query as q
 import anvil.server
 from anvil_extras.logging import TimerLogger
-
+from anvil_extras import routing
 from .. import Global
 
+
+@routing.route('homedetail')
 class HomeDetailComponent(HomeDetailComponentTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.
@@ -22,10 +24,11 @@ class HomeDetailComponent(HomeDetailComponentTemplate):
             self.tb_search_group_pressed_enter()
 
     def update_stuff(self, **event_args):
+        """Refresh the whole page so the user sees the booking page."""
         self.groups = []
         self.user = Global.user
         self.refresh_data_bindings()
-        self.raise_event('x-refresh')
+        routing.set_url_hash('apply', load_from_cache=False)
 
     def tb_search_group_pressed_enter(self, **event_args):
         """This method is called when the user presses Enter in this text box"""

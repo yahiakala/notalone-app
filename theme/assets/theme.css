@@ -39,7 +39,6 @@ a>.anvil-component-icon.right_edge-icon,
     padding-top: 8px; padding-right: 8px; padding-bottom: 8px;
 }
 
-/*TODO: see if this spacing stuff needs to be changed*/
 .anvil-spacing-above-none { margin-top: 0px; }
 .anvil-spacing-above-small { margin-top: 4px; }
 .anvil-spacing-above-medium { margin-top: 8px; }
@@ -285,7 +284,7 @@ color: %color:On Primary Container%;
   overflow-y: auto;
   position: fixed;
 /*   top: 54px; */
-  height: calc(100% - 54px); /*todo: fix on mobile*/
+  height: calc(100% - 54px);
 }
 
 
@@ -920,7 +919,6 @@ textarea.anvil-component.anvil-role-input-error, input.anvil-component.anvil-rol
   border-color: %color:Error%; 
 }
 
-/*TODO: figure out what this is used for*/
 /* .daterangepicker .btn-success {
   color: %color:Primary 500%;
 } */

@@ -10,10 +10,11 @@ from anvil import *
 # TODO: calc amount lost from expired or non-subs
 
 # TODO: Bar chart of last payments throughout the year
-
+from anvil_extras import routing
 from .. import Global
 
 
+@routing.route('financials')
 class FinComponent(FinComponentTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.

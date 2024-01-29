@@ -90,6 +90,7 @@ def create_sub(plan_amt):
 
 @anvil.server.http_endpoint('/capture-sub')
 def capture_sub(**params):
+    # TODO: use fake paypal to test this
     row = app_tables.users.get(paypal_sub_id=params['subscription_id'])
     row['good_standing'] = True
     row['auth_forumchat'] = True
@@ -98,7 +99,7 @@ def capture_sub(**params):
     for screener in screeners:
         print('Sending email to : ' + screener['email'])
         notify_paid(screener, row)
-    return anvil.server.HttpResponse(302, headers={'Location': anvil.server.get_app_origin()})
+    return anvil.server.HttpResponse(302, headers={'Location': anvil.server.get_app_origin() + '/#profile'})
 
 
 def notify_paid(user_ref, applicant):
@@ -125,7 +126,7 @@ def notify_paid(user_ref, applicant):
 def cancel_sub(**params):
     row = app_tables.users.get(paypal_sub_id=params['subscription_id'])
     row['paypal_sub_id'] = None
-    return anvil.server.HttpResponse(302, headers={'Location': anvil.server.get_app_origin()})
+    return anvil.server.HttpResponse(302, headers={'Location': anvil.server.get_app_origin() + '/#profile'})
 
 
 @permission_required('auth_members')
