@@ -278,23 +278,29 @@ def get_forumlink():
 @permission_required('auth_screenings')
 def notify_accept(email_to):
     """Notify the applicant they've been accepted."""
-    msg_body = """
-    <p>Hi! This is an automated message from the NotAlone community platform.</p>
+    print_timestamp('notify_accept: ' + email_to)
+    user = anvil.users.get_user(allow_remembered=True)
+    msg_body = f"""
+    <p>Hi! This is an automated message from the {user['tenant']['name']} community platform.</p>
     
     <p>You have passed the screening interview!</p>
 
-    <p>Please log into the app for next steps. Fill out your profile, read the community guidelines, and make the membership payment.</p>
+    <p>Please log into the app for next steps (see link below). Fill out your profile, read the community guidelines, and make the membership payment.</p>
 
+    <p>{anvil.server.get_app_origin()}</p>
+    
     <p>Regards,</p>
     <p>NotAlone team.</p>
     """
-    user = anvil.users.get_user(allow_remembered=True)
+    
+    screeners = app_tables.users.search(auth_screenings=True, tenant=user['tenant'])
+    screener_list = [i['email'] for i in screeners]
     anvil.email.send(
         to=email_to,
-        bcc=user['email'],
-        from_address="admin",
-        from_name="NotAlone",
-        subject="Welcome to the NotAlone Community!",
+        bcc=screener_list,
+        from_address="noreply",
+        from_name="noreply",
+        subject=f"Welcome to the {user['tenant']['name']} Community!",
         html=msg_body
     )
 
