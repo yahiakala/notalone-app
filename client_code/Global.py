@@ -14,7 +14,8 @@ global_dict = {
     'forumlink': None,
     'roles_to_members': None,
     'roles': None,
-    'super_load': None
+    'super_load': None,
+    'discordlink': None
 }
 
 attributes_to_clear = list(global_dict.keys())

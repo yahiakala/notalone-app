@@ -136,6 +136,19 @@ components:
     data_bindings:
     - {property: text, code: 'self.user[''discord'']', writeback: true}
     event_bindings: {lost_focus: btn_save_click, pressed_enter: btn_save_click}
+  - name: cp_discord
+    properties: {role: tonal-card}
+    type: ColumnPanel
+    layout_properties: {grid_position: 'BJBJLT,AAFEMU'}
+    components:
+    - name: link_discord
+      properties: {text: Discord Invite, align: center, role: null}
+      type: Link
+      layout_properties: {grid_position: 'GHPFCG,RDSFJW'}
+      data_bindings:
+      - {property: url, code: self.discordlink, writeback: false}
+    data_bindings:
+    - {property: visible, code: 'self.user[''auth_forumchat'']', writeback: false}
 - type: ColumnPanel
   properties: {role: outlined-card, col_widths: '{}'}
   name: cp_module

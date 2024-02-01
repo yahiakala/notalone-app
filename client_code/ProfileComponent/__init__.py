@@ -10,6 +10,7 @@ class ProfileComponent(ProfileComponentTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.
         self.user = dict(Global.user)  # Avoid errors with data bindings
+        self.discordlink = Global.discordlink
         self.init_components(**properties)
         # print('fee: ' + str(self.user['fee']))
         # Any code you write here will run before the form opens.
