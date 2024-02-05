@@ -102,7 +102,7 @@ components:
     layout_properties: {grid_position: 'PHMZNJ,MDIGGU'}
   - type: Label
     properties: {role: null, align: left, tooltip: '', border: '', foreground: '',
-      visible: true, text: Facebook Profile, font_size: null, font: '', spacing_above: small,
+      visible: false, text: Facebook Profile, font_size: null, font: '', spacing_above: small,
       icon_align: left, spacing_below: small, italic: false, background: '', bold: false,
       underline: false, icon: ''}
     name: lbl_fblink
@@ -110,7 +110,7 @@ components:
     data_bindings: []
   - type: TextBox
     properties: {role: outlined, align: left, hide_text: false, tooltip: '', placeholder: Facebook profile URL,
-      border: '', enabled: true, foreground: '', visible: true, text: '', font_size: null,
+      border: '', enabled: true, foreground: '', visible: false, text: '', font_size: null,
       font: '', spacing_above: small, type: text, spacing_below: small, italic: false,
       background: '', bold: false, underline: false}
     name: tb_fblink
@@ -142,7 +142,7 @@ components:
     layout_properties: {grid_position: 'BJBJLT,AAFEMU'}
     components:
     - name: link_discord
-      properties: {text: Discord Invite, align: center, role: null}
+      properties: {text: Gaming Discord Invite, align: center, role: null}
       type: Link
       layout_properties: {grid_position: 'GHPFCG,RDSFJW'}
       data_bindings:
