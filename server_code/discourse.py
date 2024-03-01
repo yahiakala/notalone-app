@@ -86,7 +86,7 @@ def new_member(**data):
 
     DISCOURSE_API_KEY = anvil.secrets.get_secret('discourse_api_key')
     DISCOURSE_API_USERNAME = 'system'
-    DISCOURSE_URL = 'https://your.discourse.forum'
+    DISCOURSE_URL = anvil.server.request.headers.get('X-Discourse-Instance', '')
     new_member_username = data['user']['username']
     print(data)
     # new_member_username = data.get('user', {}).get('username', '')
