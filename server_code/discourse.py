@@ -74,6 +74,14 @@ def login_sso(sso, sig, session_id=None):
 
 @anvil.server.http_endpoint('/new_member', methods=['POST'])
 def new_member(**data):
+    payload = anvil.server.request.body
+    header_signature = anvil.server.request.headers.get('X-Hub-Signature', '')
+
+    # Verify the signature
+    if not verify_signature(payload, header_signature):
+        # If the signature verification fails, return a 403 Forbidden response
+        return anvil.server.HttpResponse(403, "Forbidden: Signature mismatch.")
+
     DISCOURSE_API_KEY = anvil.secrets.get_secret('discourse_api_key')
     DISCOURSE_API_USERNAME = 'system'
     DISCOURSE_URL = 'https://your.discourse.forum'
@@ -106,3 +114,22 @@ def new_member(**data):
     #     # Log or handle error appropriately here
     #     return anvil.server.HttpResponse(500, 'Failed to create welcome post')
     return anvil.server.HttpResponse(200)
+
+
+def verify_signature(payload, header_signature):
+    # Assuming Discourse sends the signature in the format `sha256=signature`
+    algorithm, signature = header_signature.split('=')
+    # Use the corresponding hash function for the algorithm used by Discourse
+    if algorithm == 'sha256':
+        hash_function = hashlib.sha256
+    else:
+        # Handle other algorithms or raise an error
+        raise ValueError("Unsupported algorithm")
+
+    # Create a new HMAC object using the secret and the hash function
+    hmac_object = hmac.new(WEBHOOK_SECRET.encode(), payload, hash_function)
+    # Generate the HMAC signature
+    generated_signature = hmac_object.hexdigest()
+
+    # Securely compare the generated signature with the received signature
+    return hmac.compare_digest(generated_signature, signature)
