@@ -7,6 +7,7 @@ import base64
 import hmac
 import hashlib
 import urllib.parse
+import json
 
 
 @anvil.server.http_endpoint('/login-sso', cross_site_session=True, enable_cors=True)
@@ -75,9 +76,12 @@ def login_sso(sso, sig, session_id=None):
 @anvil.server.http_endpoint('/new_member', methods=['POST'])
 def new_member(**data):
     payload = anvil.server.request.body.get_bytes()
-    print(payload)
+    # print(payload)
     header_signature = anvil.server.request.headers.get('x-discourse-event-signature')
     print(header_signature)
+    print(data)
+    payload_dict = json.loads(payload.decode('utf-8'))
+    print(payload_dict)
 
     # Verify the signature
     if not verify_signature(payload, header_signature):
