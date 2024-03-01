@@ -123,6 +123,24 @@ def new_member(**data):
     return anvil.server.HttpResponse(200)
 
 
+def create_topic(title='Test post', message='Test post', discourse_url=None):
+    # Post the welcome message to Discourse
+    
+    post_url = f"{discourse_url}/posts"
+    headers = {
+        'Api-Key': anvil.secrets.get_secret('discourse_api_key'),
+        'Api-Username': 'system',
+        'Content-Type': 'application/json'
+    }
+    post_data = {
+        'title': title,
+        'raw': message,
+        'category': 4
+    }
+    response = anvil.http.request(post_url, method="POST", data=post_data, headers=headers, json=True)
+    print(response)
+
+
 def verify_signature(payload, header_signature):
     # Assuming Discourse sends the signature in the format `sha256=signature`
     algorithm, signature = header_signature.split('=')
