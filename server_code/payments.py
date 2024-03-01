@@ -152,7 +152,7 @@ def check_sub(user_dict):
         if user_ref['payment_expiry'] >= dt.date.today() or status == 'ACTIVE' or user_ref['fee'] == 0:
             user_ref['good_standing'] = True
             # Allow the user in the forum if they have not been banned/removed.
-            if user_ref['auth_profile']:
+            if user_ref['auth_profile']:  # If banned/removed, they won't have auth_profile
                 user_ref['auth_forumchat'] = True
         else:
             # Disable the user's forum privileges until back in good standing.
