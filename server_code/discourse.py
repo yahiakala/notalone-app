@@ -74,9 +74,9 @@ def login_sso(sso, sig, session_id=None):
 
 @anvil.server.http_endpoint('/new_member', methods=['POST'])
 def new_member(**data):
-    payload = anvil.server.request.body
+    payload = anvil.server.request.body.get_bytes()
     print(payload)
-    header_signature = anvil.server.request.headers.get('X-Discourse-Event-Signature', '')
+    header_signature = anvil.server.request.headers.get('x-discourse-event-signature')
     print(header_signature)
 
     # Verify the signature
