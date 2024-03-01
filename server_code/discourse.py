@@ -124,8 +124,6 @@ def new_member(**data):
 
 
 def create_topic(title='Test post', message='Test post', discourse_url=None):
-    # Post the welcome message to Discourse
-    
     post_url = f"{discourse_url}/posts"
     headers = {
         'Api-Key': anvil.secrets.get_secret('discourse_api_key'),
