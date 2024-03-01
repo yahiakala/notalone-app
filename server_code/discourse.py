@@ -70,3 +70,39 @@ def login_sso(sso, sig, session_id=None):
     # Redirect back to Discourse
     discourse_redirect_url = f"https://{discourse_url}/session/sso_login?sso={url_encoded_payload}&sig={return_sig}"
     return anvil.server.HttpResponse(302, headers={"Location": discourse_redirect_url})
+
+
+@anvil.server.http_endpoint('/new_member', methods=['POST'])
+def new_member(**data):
+    DISCOURSE_API_KEY = anvil.secrets.get_secret('discourse_api_key')
+    DISCOURSE_API_USERNAME = 'system'
+    DISCOURSE_URL = 'https://your.discourse.forum'
+    new_member_username = data['user']['username']
+    print(data)
+    # new_member_username = data.get('user', {}).get('username', '')
+    # if not new_member_username:
+    #     return anvil.server.HttpResponse(400, "Bad Request: Missing new member username.")
+    
+    # # Construct the welcome message
+    # welcome_message = f"Welcome to the forum, @{new_member_username}! We're glad to have you here. Please tell the group a bit about yourself!"
+    
+    # # Post the welcome message to Discourse
+    # post_url = f"{DISCOURSE_URL}/posts"
+    # headers = {
+    #     'Api-Key': DISCOURSE_API_KEY,
+    #     'Api-Username': DISCOURSE_API_USERNAME,
+    #     'Content-Type': 'application/json'
+    # }
+    # post_data = {
+    #     'title': f'[New Member] Welcome {new_member_username}!',
+    #     'raw': welcome_message,
+    #     'category': 4  # Specify the category ID where the post should be created
+    # }
+    # response = anvil.http.request(post_url, method="POST", data=post_data, headers=headers, json=True)
+    
+    # if response.status_code == 200:
+    #     return anvil.server.HttpResponse(200, 'Welcome post created successfully')
+    # else:
+    #     # Log or handle error appropriately here
+    #     return anvil.server.HttpResponse(500, 'Failed to create welcome post')
+    return anvil.server.HttpResponse(200)

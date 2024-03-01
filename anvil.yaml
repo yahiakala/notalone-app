@@ -267,4 +267,7 @@ secrets:
   discourse_secret:
     value: {T4BTSIBAI26CJ3RZ: wHhd9ER+uDUeHtShD4KDi9jCIpIJK6MC19Todz70FxMfiNPWnAz3yuEZoSSdqbEpNBRFJ7GQhlR3/HqlW1DReDHkP5uljmqjkdW1/ems8pad2LARo2ardL7fmPlVFZ1wsI3bNvlh+dpGGIi2zg6ICSZ8gT+BOCS0KAw=}
     type: secret
+  discourse_api_key:
+    value: {T4BTSIBAI26CJ3RZ: KZ0EJQ5Ti+FrwtxVDjUhZ9EqcGHsL2FhV/PBhtbrV5jIMsPqnnlyKgvOY+bctj5aKM6Xz0c4hixdny54vBaFkT1LyA/0L+IBGoIh1T83NNed3qZElVYhp4HS25AocaJV2JfFSS9Tnte7POrLpobkUKXY/myzFr6uG6iphw6wPD7rPAD75VygjhfqfinurWzKZAq6iGm1frBwuznI5GNv}
+    type: secret
 renamed: true
