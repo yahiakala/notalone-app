@@ -121,6 +121,7 @@ def new_member(**data):
 def verify_signature(payload, header_signature):
     # Assuming Discourse sends the signature in the format `sha256=signature`
     algorithm, signature = header_signature.split('=')
+    secret_key = anvil.secrets.get_secret('discourse_secret')
     # Use the corresponding hash function for the algorithm used by Discourse
     if algorithm == 'sha256':
         hash_function = hashlib.sha256
@@ -129,7 +130,7 @@ def verify_signature(payload, header_signature):
         raise ValueError("Unsupported algorithm")
 
     # Create a new HMAC object using the secret and the hash function
-    hmac_object = hmac.new(WEBHOOK_SECRET.encode(), payload, hash_function)
+    hmac_object = hmac.new(secret_key.encode(), payload, hash_function)
     # Generate the HMAC signature
     generated_signature = hmac_object.hexdigest()
 
