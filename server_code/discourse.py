@@ -123,7 +123,7 @@ def new_member(**data):
     return anvil.server.HttpResponse(200)
 
 
-def create_topic(title='Test post', message='Test post', discourse_url=None):
+def create_topic(title='Test post', message='Test post this is a test', discourse_url=None):
     post_url = f"{discourse_url}/posts"
     headers = {
         'Api-Key': anvil.secrets.get_secret('discourse_api_key'),
@@ -135,7 +135,12 @@ def create_topic(title='Test post', message='Test post', discourse_url=None):
         'raw': message,
         'category': 4
     }
-    response = anvil.http.request(post_url, method="POST", data=post_data, headers=headers, json=True)
+    try:
+        response = anvil.http.request(post_url, method="POST", data=post_data, headers=headers, json=True)
+    except anvil.http.HttpError as e:
+        print(e.content)
+        print(f"Error {e.status}")
+    
     print(response)
 
 
