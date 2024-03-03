@@ -78,8 +78,8 @@ def new_member(**data):
     payload = anvil.server.request.body.get_bytes()
     # print(payload)
     header_signature = anvil.server.request.headers.get('x-discourse-event-signature')
-    print(header_signature)
-    print(data)
+    # print(header_signature)
+    # print(data)
     payload_dict = json.loads(payload.decode('utf-8'))
     print(payload_dict)
 
@@ -88,38 +88,12 @@ def new_member(**data):
         # If the signature verification fails, return a 403 Forbidden response
         return anvil.server.HttpResponse(403, "Forbidden: Signature mismatch.")
 
-    DISCOURSE_API_KEY = anvil.secrets.get_secret('discourse_api_key')
-    DISCOURSE_API_USERNAME = 'system'
-    DISCOURSE_URL = anvil.server.request.headers.get('X-Discourse-Instance', '')
-    if data:
-        new_member_username = data['user']['username']
-        print(data)
-    # new_member_username = data.get('user', {}).get('username', '')
-    # if not new_member_username:
-    #     return anvil.server.HttpResponse(400, "Bad Request: Missing new member username.")
-    
-    # # Construct the welcome message
-    # welcome_message = f"Welcome to the forum, @{new_member_username}! We're glad to have you here. Please tell the group a bit about yourself!"
-    
-    # # Post the welcome message to Discourse
-    # post_url = f"{DISCOURSE_URL}/posts"
-    # headers = {
-    #     'Api-Key': DISCOURSE_API_KEY,
-    #     'Api-Username': DISCOURSE_API_USERNAME,
-    #     'Content-Type': 'application/json'
-    # }
-    # post_data = {
-    #     'title': f'[New Member] Welcome {new_member_username}!',
-    #     'raw': welcome_message,
-    #     'category': 4  # Specify the category ID where the post should be created
-    # }
-    # response = anvil.http.request(post_url, method="POST", data=post_data, headers=headers, json=True)
-    
-    # if response.status_code == 200:
-    #     return anvil.server.HttpResponse(200, 'Welcome post created successfully')
-    # else:
-    #     # Log or handle error appropriately here
-    #     return anvil.server.HttpResponse(500, 'Failed to create welcome post')
+    DISCOURSE_URL = anvil.server.request.headers.get('x-discourse-instance')
+    if payload_dict:
+        new_member_username = payload_dict['user']['username']
+        welcome_message = f"Welcome to the forum, @{new_member_username}! We're glad to have you here. Please tell the group a bit about yourself!"
+        title = f'[New Member] Welcome {new_member_username}!'
+        create_topic(title=title, message=welcome_message, discourse_url=DISCOURSE_URL)
     return anvil.server.HttpResponse(200)
 
 
