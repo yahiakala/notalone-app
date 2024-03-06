@@ -274,10 +274,12 @@ def get_forumlink():
     user = anvil.users.get_user(allow_remembered=True)
     return 'https://' + app_tables.forum.get(tenant=user['tenant'])['discourse_url']
 
-@permission_required('auth_forumchat')
+@anvil.server.callable(require_user=True)
 def get_discordlink():
     user = anvil.users.get_user(allow_remembered=True)
-    return app_tables.forum.get(tenant=user['tenant'])['discord_invite']
+    if user['auth_forumchat']:
+        return app_tables.forum.get(tenant=user['tenant'])['discord_invite']
+    return ''
 
 
 @permission_required('auth_screenings')

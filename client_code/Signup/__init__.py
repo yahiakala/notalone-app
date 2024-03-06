@@ -3,7 +3,6 @@ from anvil import *
 import anvil.users
 from anvil_extras import routing
 
-from .. import utils
 from .. import Global
 
 

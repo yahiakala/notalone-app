@@ -5,7 +5,7 @@ from .. import Global
 from anvil_extras import routing
 
 
-@routing.route('volunteers')
+@routing.route('/volunteers', template='Router')
 class VolunteerComponent(VolunteerComponentTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.

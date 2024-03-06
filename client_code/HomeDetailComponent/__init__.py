@@ -7,7 +7,8 @@ from anvil_extras import routing
 from .. import Global
 
 
-@routing.route('homedetail')
+@routing.route('', template='Router')
+@routing.route('/homedetail', template='Router')
 class HomeDetailComponent(HomeDetailComponentTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.
@@ -28,7 +29,7 @@ class HomeDetailComponent(HomeDetailComponentTemplate):
         self.groups = []
         self.user = Global.user
         self.refresh_data_bindings()
-        routing.set_url_hash('apply', load_from_cache=False)
+        routing.set_url_hash('app/apply', load_from_cache=False)
 
     def tb_search_group_pressed_enter(self, **event_args):
         """This method is called when the user presses Enter in this text box"""

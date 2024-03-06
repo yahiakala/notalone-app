@@ -5,7 +5,7 @@ from anvil_extras import routing
 from .. import Global
 
 
-@routing.route('profile')
+@routing.route('/profile', template='Router')
 class ProfileComponent(ProfileComponentTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.

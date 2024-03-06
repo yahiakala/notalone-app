@@ -4,7 +4,7 @@ from anvil_extras import routing
 from .. import Global
 
 
-@routing.route('tests')
+@routing.route('/tests', template='Router')
 class Tests(TestsTemplate):
     def __init__(self, **properties):
         """

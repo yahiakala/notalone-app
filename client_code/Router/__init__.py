@@ -15,19 +15,19 @@ from anvil_extras import routing
 from .. import Global
 
 
-@routing.template(path='', priority=0, condition=None)
+@routing.template(path='app', priority=1, condition=None)
 class Router(RouterTemplate):
     def __init__(self, **properties):
         self.init_components(**properties)
 
         self.link_home.tag.url_hash = ''
-        self.link_apply.tag.url_hash = 'apply'
-        self.link_profile.tag.url_hash = 'profile'
-        self.link_applicants.tag.url_hash = 'applicants'
-        self.link_members.tag.url_hash = 'members'
-        self.link_fin.tag.url_hash = 'financials'
-        self.link_volunteers.tag.url_hash = 'volunteers'
-        self.btn_test.tag.url_hash = 'tests'
+        self.link_apply.tag.url_hash = 'app/apply'
+        self.link_profile.tag.url_hash = 'app/profile'
+        self.link_applicants.tag.url_hash = 'app/applicants'
+        self.link_members.tag.url_hash = 'app/members'
+        self.link_fin.tag.url_hash = 'app/financials'
+        self.link_volunteers.tag.url_hash = 'app/volunteers'
+        self.btn_test.tag.url_hash = 'app/tests'
 
         self.user = Global.user
 
@@ -52,7 +52,7 @@ class Router(RouterTemplate):
         anvil.users.logout()
         self.set_account_state(None)
         Global.user = None  # Haven't tested this.
-        routing.set_url_hash('homeanon', load_from_cache=False)
+        routing.set_url_hash('', load_from_cache=False)
 
     def set_account_state(self, user):
         self.link_logout.visible = user is not None
@@ -121,9 +121,9 @@ class Router(RouterTemplate):
         if sender.tag.url_hash == '':
             if Global.user:
                 self.set_account_state(Global.user)
-                routing.set_url_hash('homedetail')
+                routing.set_url_hash('app')
             else:
-                routing.set_url_hash('homeanon')
+                routing.set_url_hash('')
         else:
             routing.set_url_hash(sender.tag.url_hash)
 
@@ -131,7 +131,7 @@ class Router(RouterTemplate):
         for link in self.cp_sidebar.get_components():
             if type(link) == Link:
                 link.role = 'selected' if link.tag.url_hash == url_hash else None
-        if url_hash in ['homeanon', 'homedetail']:
+        if url_hash in ['homeanon', 'homedetail', 'app']:
             self.link_home.role = 'selected'
             
     def on_form_load(self, url_hash, url_pattern, url_dict, form):

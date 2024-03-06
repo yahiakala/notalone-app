@@ -8,7 +8,7 @@ from .. import Global
 import datetime as dt
 
 
-@routing.route('applicants')
+@routing.route('/applicants', template='Router')
 class ApplicantsComponent(ApplicantsComponentTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.

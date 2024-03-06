@@ -4,7 +4,7 @@ from anvil_extras import routing
 from .. import Global
 
 
-@routing.route('apply')
+@routing.route('/apply', template='Router')
 class BookingComponent(BookingComponentTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.

@@ -16,7 +16,7 @@ components:
     type: ColumnPanel
     components:
     - name: lbl_title
-      properties: {align: center, text: Sign in to App, bold: true, role: title}
+      properties: {align: center, text: Sign in to NotAlone, bold: true, role: title}
       type: Label
       layout_properties: {grid_position: 'QCIIZV,JUYABG'}
     - name: btn_google

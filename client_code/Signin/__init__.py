@@ -4,7 +4,6 @@ import anvil.users
 import time
 from anvil_extras import routing
 
-from .. import utils
 from .. import Global
 
 
@@ -28,9 +27,9 @@ class Signin(SigninTemplate):
 
     def btn_google_click(self, **event_args):
         """This method is called when the button is clicked"""
-        user = anvil.users.login_with_google(remember=True)
-        if user:
-            Global.user = user
+        self.user = anvil.users.login_with_google(remember=True)
+        if self.user:
+            Global.user = self.user
             routing.set_url_hash('app')
 
     def btn_signin_click(self, **event_args):
@@ -40,14 +39,14 @@ class Signin(SigninTemplate):
         email = self.tb_email.text
         password = self.tb_password.text
         if self.user:
-            utils.print_timestamp('User already logged in')
+            print('User already logged in')
             Global.user = self.user
             routing.set_url_hash('app')
         else:
             try:
                 self.user = anvil.users.login_with_email(email, password, remember=True)
                 Global.user = self.user
-                utils.print_timestamp('Login worked without mfa')
+                print('Login worked without mfa')
                 routing.set_url_hash('app')
             except anvil.users.MFARequired as e:
                 r = anvil.users.mfa.mfa_login_with_form(email, password)

@@ -9,7 +9,7 @@ import datetime as dt
 from anvil_extras.logging import TimerLogger
 
 
-@routing.route('members')
+@routing.route('/members', template='Router')
 class MembersComponent(MembersComponentTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.

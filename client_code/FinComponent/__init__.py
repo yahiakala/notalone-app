@@ -14,7 +14,7 @@ from anvil_extras import routing
 from .. import Global
 
 
-@routing.route('financials')
+@routing.route('/financials', template='Router')
 class FinComponent(FinComponentTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.
