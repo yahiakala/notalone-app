@@ -25,6 +25,7 @@ def login_sso(sso, sig, session_id=None):
 
     # Decode the payload
     payload = base64.b64decode(urllib.parse.unquote(sso)).decode()
+    print(payload)
     params = dict(urllib.parse.parse_qsl(payload))
     nonce = params['nonce']
 
@@ -74,7 +75,7 @@ def login_sso(sso, sig, session_id=None):
 
 
 @anvil.server.http_endpoint('/new_member', methods=['POST'])
-def new_member(**data):
+def new_member():
     payload = anvil.server.request.body.get_bytes()
     # print(payload)
     header_signature = anvil.server.request.headers.get('x-discourse-event-signature')
@@ -91,8 +92,9 @@ def new_member(**data):
     DISCOURSE_URL = anvil.server.request.headers.get('x-discourse-instance')
     if payload_dict:
         new_member_username = payload_dict['user']['username']
+        new_member_name = new_member_username.split('_')[0]
         welcome_message = f"Welcome to the forum, @{new_member_username}! We're glad to have you here. Please tell the group a bit about yourself!"
-        title = f'[New Member] Welcome {new_member_username}!'
+        title = f'[New Member] Welcome {new_member_name}!'
         create_topic(title=title, message=welcome_message, discourse_url=DISCOURSE_URL)
     return anvil.server.HttpResponse(200)
 
