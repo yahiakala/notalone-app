@@ -49,6 +49,10 @@ roles:
   components: [TextBox, TextArea, DatePicker, DropDown]
 - name: input-error
   components: [TextBox, TextArea, DatePicker, DropDown]
+- {name: soft-button}
+- {name: google-sign}
+- {name: soft-fp}
+- {name: narrow-col}
 color_scheme:
   preset_groups:
   - name: Colour Scheme

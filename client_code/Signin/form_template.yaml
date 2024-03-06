@@ -1,0 +1,80 @@
+container: {type: ColumnPanel}
+components:
+- name: spacer_1
+  properties: {height: '50'}
+  type: Spacer
+  layout_properties: {grid_position: 'UUEUAQ,BIZINF'}
+- name: fp_outer
+  properties: {align: center, role: null, visible: false}
+  type: FlowPanel
+  layout_properties: {grid_position: 'MMQKIH,AEIXVO', full_width_row: false}
+  components:
+  - name: cp_login
+    properties:
+      role: [elevated-card, narrow-col]
+      visible: true
+    type: ColumnPanel
+    components:
+    - name: lbl_title
+      properties: {align: center, text: Sign in to App, bold: true, role: title}
+      type: Label
+      layout_properties: {grid_position: 'QCIIZV,JUYABG'}
+    - name: btn_google
+      properties:
+        text: Sign in with Google
+        icon: ''
+        role: [google-sign, outlined-button, soft-button]
+        align: center
+      type: Button
+      layout_properties: {grid_position: 'LYBEYH,MAKHJR'}
+      event_bindings: {click: btn_google_click}
+    - name: lbl_or
+      properties: {text: Or, align: center}
+      type: Label
+      layout_properties: {grid_position: 'ZVCADP,WQJQXS'}
+    - name: tb_email
+      properties: {role: outlined, placeholder: Email Address}
+      type: TextBox
+      layout_properties: {grid_position: 'LNZGPA,VMCQXE'}
+    - name: tb_password
+      properties: {role: outlined, placeholder: Password, hide_text: true}
+      type: TextBox
+      layout_properties: {grid_position: 'YSBFLK,JSZBJZ'}
+    - name: btn_signin
+      properties:
+        text: Sign in
+        icon: ''
+        role: [soft-button, filled-button]
+        align: full
+      type: Button
+      layout_properties: {grid_position: 'NVVDWP,PDHNKJ'}
+      event_bindings: {click: btn_signin_click}
+    - name: lbl_error
+      properties: {text: Passwords must match, align: center, foreground: 'theme:Error',
+        visible: false}
+      type: Label
+      layout_properties: {grid_position: 'VWZSDC,NQOWMC'}
+    - name: fp_options
+      properties: {vertical_align: middle, align: center}
+      type: FlowPanel
+      layout_properties: {grid_position: 'VQUKEV,CIUDLM'}
+      components:
+      - name: link_forgot
+        properties: {text: 'Forgot your password?'}
+        type: Link
+        layout_properties: {}
+        components: []
+        event_bindings: {click: link_forgot_click}
+      - name: link_signup
+        properties: {text: Sign up}
+        type: Link
+        layout_properties: {}
+        components: []
+        event_bindings: {click: link_signup_click}
+    - name: img_logo
+      properties: {display_mode: shrink_to_fit, source: _/theme/notalone.png}
+      type: Image
+      layout_properties: {grid_position: 'ZLAQUD,WJJNKY'}
+    layout_properties: {}
+  event_bindings: {show: form_show}
+is_package: true

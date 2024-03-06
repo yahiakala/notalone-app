@@ -1040,3 +1040,44 @@ div.plot-container.plotly svg.main-svg {
   box-shadow: 0px 0px 100px 100px %color:Surface Variant%;
 }
 
+
+/* YK Customizations */
+.anvil-role-soft-fp {
+    border-radius: 5px;
+    padding: 0px 20px;
+    border: solid 1px %color:Outline%;
+}
+.anvil-role-soft-button > .btn {
+    border-radius: 10px;
+}
+
+/* Create a picture inside of the button */
+.anvil-role-google-sign > button::before {
+    content: "";
+    background-image: url("_/theme/search.png");
+    background-repeat: no-repeat;
+    position: absolute;
+    left: 0;
+    top: auto;
+    width: 25px;
+    max-width: 25px;
+    max-height: 40px;
+    height: 40px;
+    margin-left: 20px;
+    background-size: 20px 20px;
+}
+
+/* Move the text to avoid overlap with picture */
+.anvil-role-google-sign .button-text {
+    padding-left: 25px;
+}
+
+/* Set hover effect on the button */
+.anvil-role-google-sign > button:hover {
+    background-color: lightgray;
+}
+
+.anvil-role-narrow-col {
+    max-width: 400px;
+    padding: 35px;
+}
