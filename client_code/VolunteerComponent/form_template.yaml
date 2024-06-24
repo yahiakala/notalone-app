@@ -6,16 +6,14 @@ components:
   layout_properties: {grid_position: 'QNJJZO,IOGRRB'}
   components:
   - name: btn_add
-    properties: {text: Add Volunteer Role, role: outlined-button, icon: 'fa:plus',
-      align: right}
+    properties: {text: Add Volunteer Role, role: outlined-button, icon: 'fa:plus', align: right}
     type: Button
     layout_properties: {grid_position: 'RVRVOY,KSDAAW'}
     event_bindings: {click: btn_add_click}
     data_bindings:
     - {property: visible, code: 'self.user[''auth_members'']', writeback: false}
   - name: cp_addrole
-    properties: {role: outlined-card, col_widths: '{"JGULMP":10,"XFXLWU":50,"FNHBRL":10,"PDNAJB":50}',
-      visible: false}
+    properties: {role: outlined-card, col_widths: '{"JGULMP":10,"XFXLWU":50,"FNHBRL":10,"PDNAJB":50}', visible: false}
     type: ColumnPanel
     layout_properties: {grid_position: 'KCXTCJ,DLWKCG'}
     components:

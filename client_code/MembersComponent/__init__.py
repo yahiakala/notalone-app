@@ -131,6 +131,15 @@ class MembersComponent(MembersComponentTemplate):
         self.refresh_search()
         self.btn_expired.role = 'filled-button'
 
+    def btn_norole_click(self, **event_args):
+        """People on the $10 tier with no role."""
+        self.members = [
+            i for i in Global.users
+            if i['good_standing'] and i['fee'] == 10 and not i['roles']
+        ]
+        self.refresh_search()
+        self.btn_norole.role = 'filled-button'
+
 
 
 

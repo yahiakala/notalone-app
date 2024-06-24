@@ -23,9 +23,7 @@ services:
   client_config: {enable_v2: true}
   server_config: {}
 - source: /runtime/services/anvil/users.yml
-  client_config: {mfa_timeout_days: 7, require_secure_passwords: true, allow_mfa_email_reset: true,
-    use_email: true, allow_remember_me: true, allow_signup: true, enable_automatically: true,
-    confirm_email: true, require_mfa: true, remember_me_days: 7, use_google: true}
+  client_config: {mfa_timeout_days: 7, require_secure_passwords: true, allow_mfa_email_reset: true, use_email: true, allow_remember_me: true, allow_signup: true, enable_automatically: true, confirm_email: true, require_mfa: true, remember_me_days: 7, use_google: true}
   server_config: {user_table: users}
 - source: /runtime/services/google.yml
   client_config: {}

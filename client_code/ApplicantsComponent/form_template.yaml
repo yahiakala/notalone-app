@@ -8,10 +8,7 @@ components:
   layout_properties: {grid_position: 'IMKVUU,UPARAG'}
   components:
   - type: Label
-    properties: {role: title, align: left, tooltip: '', border: '', foreground: '',
-      visible: true, text: Applicants, font_size: null, font: '', spacing_above: small,
-      icon_align: left, spacing_below: small, italic: false, background: '', bold: false,
-      underline: false, icon: ''}
+    properties: {role: title, align: left, tooltip: '', border: '', foreground: '', visible: true, text: Applicants, font_size: null, font: '', spacing_above: small, icon_align: left, spacing_below: small, italic: false, background: '', bold: false, underline: false, icon: ''}
     name: lbl_applicant_title
     layout_properties: {grid_position: 'DPUNMO,FIDOQI'}
   - type: RepeatingPanel
@@ -25,10 +22,7 @@ components:
   layout_properties: {grid_position: 'WJHQFF,ZMJLBJ'}
   components:
   - type: Label
-    properties: {role: title, align: left, tooltip: '', border: '', foreground: '',
-      visible: true, text: Pending Payment, font_size: null, font: '', spacing_above: small,
-      icon_align: left, spacing_below: small, italic: false, background: '', bold: false,
-      underline: false, icon: ''}
+    properties: {role: title, align: left, tooltip: '', border: '', foreground: '', visible: true, text: Pending Payment, font_size: null, font: '', spacing_above: small, icon_align: left, spacing_below: small, italic: false, background: '', bold: false, underline: false, icon: ''}
     name: lbl_title_pending
     layout_properties: {grid_position: 'ONQJZV,SQSOTL'}
   - type: RepeatingPanel

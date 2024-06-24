@@ -50,8 +50,7 @@ components:
       layout_properties: {grid_position: 'NVVDWP,PDHNKJ'}
       event_bindings: {click: btn_signin_click}
     - name: lbl_error
-      properties: {text: Passwords must match, align: center, foreground: 'theme:Error',
-        visible: false}
+      properties: {text: Passwords must match, align: center, foreground: 'theme:Error', visible: false}
       type: Label
       layout_properties: {grid_position: 'VWZSDC,NQOWMC'}
     - name: fp_options

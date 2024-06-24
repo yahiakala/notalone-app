@@ -3,56 +3,42 @@ container:
   properties: {col_widths: '{}'}
 components:
 - type: FlowPanel
-  properties: {role: null, spacing: medium, align: center, tooltip: '', border: '',
-    foreground: '', visible: true, spacing_above: small, spacing_below: small, background: ''}
+  properties: {role: null, align: center, spacing_above: small, background: '', foreground: '', spacing_below: small, visible: true, border: '', tooltip: '', spacing: medium}
   name: fp_quickfilters
   layout_properties: {grid_position: 'GYCPND,DMGFXC'}
   components:
   - type: Button
-    properties: {role: tonal-button, align: center, tooltip: '', border: '', enabled: true,
-      foreground: '', visible: true, text: Missing Subscriptions, font_size: null,
-      font: '', spacing_above: small, icon_align: left, spacing_below: small, italic: false,
-      background: '', bold: false, underline: false, icon: ''}
+    properties: {role: tonal-button, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: Missing Subscriptions}
     name: btn_nosub
     layout_properties: {}
     event_bindings: {click: btn_nosub_click}
   - type: Button
-    properties: {role: tonal-button, align: center, tooltip: '', border: '', enabled: true,
-      foreground: '', visible: true, text: Expiring Soon, font_size: null, font: '',
-      spacing_above: small, icon_align: left, spacing_below: small, italic: false,
-      background: '', bold: false, underline: false, icon: ''}
+    properties: {role: tonal-button, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: Expiring Soon}
     name: btn_expiring_soon
     layout_properties: {}
     event_bindings: {click: btn_expiring_soon_click}
   - type: Button
-    properties: {role: tonal-button, align: center, tooltip: '', border: '', enabled: true,
-      foreground: '', visible: true, text: Expired Subscription, font_size: null,
-      font: '', spacing_above: small, icon_align: left, spacing_below: small, italic: false,
-      background: '', bold: false, underline: false, icon: ''}
+    properties: {role: tonal-button, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: Expired Subscription}
     name: btn_expired
     layout_properties: {}
     event_bindings: {click: btn_expired_click}
+  - name: btn_norole
+    properties: {role: tonal-button, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: Missing Volunteer Role}
+    type: Button
+    layout_properties: {}
+    event_bindings: {click: btn_norole_click}
 - type: TextBox
-  properties: {role: outlined, align: left, hide_text: false, tooltip: '', placeholder: Search for a member,
-    border: '', enabled: true, foreground: '', visible: true, text: '', font_size: null,
-    font: '', spacing_above: small, type: text, spacing_below: small, italic: false,
-    background: '', bold: false, underline: false}
+  properties: {role: outlined, bold: false, align: left, placeholder: Search for a member, spacing_above: small, background: '', type: text, underline: false, font: '', hide_text: false, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: ''}
   name: tb_mb_search
   layout_properties: {grid_position: 'URRSMO,GEHGAQ'}
   event_bindings: {pressed_enter: tb_mb_search_pressed_enter}
 - type: Button
-  properties: {role: elevated-button, align: center, tooltip: '', border: '', enabled: true,
-    foreground: '', visible: false, text: Clear Search, font_size: null, font: '',
-    spacing_above: small, icon_align: left, spacing_below: small, italic: false, background: '',
-    bold: false, underline: false, icon: ''}
+  properties: {role: elevated-button, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: false, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: Clear Search}
   name: btn_clear_search
   layout_properties: {grid_position: 'VZWTYA,ULGKKP'}
   event_bindings: {click: btn_clear_search_click}
 - type: Label
-  properties: {role: body, align: center, tooltip: '', border: '', foreground: '',
-    visible: true, text: '', font_size: null, font: '', spacing_above: small, icon_align: left,
-    spacing_below: small, italic: false, background: '', bold: false, underline: false,
-    icon: ''}
+  properties: {role: body, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, font_size: null, tooltip: '', text: ''}
   name: lbl_num_results
   layout_properties: {grid_position: 'IRMUSM,DCJRKL'}
   data_bindings:
@@ -63,10 +49,7 @@ components:
   layout_properties: {grid_position: 'XTODFR,LDLSAT'}
   data_bindings: []
 - type: Button
-  properties: {role: elevated-button, align: center, tooltip: '', border: '', enabled: true,
-    foreground: '', visible: true, text: Show More, font_size: null, font: '', spacing_above: small,
-    icon_align: left, spacing_below: small, italic: false, background: '', bold: false,
-    underline: false, icon: 'fa:plus'}
+  properties: {role: elevated-button, bold: false, align: center, spacing_above: small, background: '', icon: 'fa:plus', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: Show More}
   name: btn_show_more
   layout_properties: {grid_position: 'SPURVC,IINHIR'}
   event_bindings: {click: btn_show_more_click}

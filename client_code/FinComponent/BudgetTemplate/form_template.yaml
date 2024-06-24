@@ -9,19 +9,13 @@ components:
   data_bindings:
   - {property: text, code: 'self.item[''name'']'}
 - type: Label
-  properties: {role: null, align: right, tooltip: '', border: '', foreground: '',
-    visible: true, text: '', font_size: null, font: '', spacing_above: small, icon_align: left,
-    spacing_below: small, italic: false, background: '', bold: false, underline: false,
-    icon: ''}
+  properties: {role: null, align: right, tooltip: '', border: '', foreground: '', visible: true, text: '', font_size: null, font: '', spacing_above: small, icon_align: left, spacing_below: small, italic: false, background: '', bold: false, underline: false, icon: ''}
   name: lbl_budget_amt
   layout_properties: {grid_position: 'LYIVUM,DMZZRZ'}
   data_bindings:
   - {property: text, code: 'self.item[''amount'']'}
 - type: Button
-  properties: {role: null, align: center, tooltip: '', border: '', enabled: true,
-    foreground: '', visible: true, text: '', font_size: null, font: '', spacing_above: small,
-    icon_align: left, spacing_below: small, italic: false, background: '', bold: false,
-    underline: false, icon: 'fa:trash'}
+  properties: {role: null, align: center, tooltip: '', border: '', enabled: true, foreground: '', visible: true, text: '', font_size: null, font: '', spacing_above: small, icon_align: left, spacing_below: small, italic: false, background: '', bold: false, underline: false, icon: 'fa:trash'}
   name: btn_del_budget
   layout_properties: {grid_position: 'LYIVUM,DVEWZZ'}
   event_bindings: {click: btn_del_budget_click}
