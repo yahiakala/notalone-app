@@ -63,6 +63,7 @@ def get_test_user(user_name):
     return app_tables.users.get(last_name=user_name, auth_dev=True)
 
 
-def create_users():
+def create_test_data():
     # user who is on a volunteer-req payment tier who does not have a role.
+    # Sample tenant
     pass
