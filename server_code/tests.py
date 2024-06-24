@@ -61,3 +61,8 @@ def reassign_roles_dev(user_dict, role_dict):
 def get_test_user(user_name):
     """Get a test user."""
     return app_tables.users.get(last_name=user_name, auth_dev=True)
+
+
+def create_users():
+    # user who is on a volunteer-req payment tier who does not have a role.
+    pass
