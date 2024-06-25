@@ -313,3 +313,10 @@ secrets:
     value: {T4BTSIBAI26CJ3RZ: KZ0EJQ5Ti+FrwtxVDjUhZ9EqcGHsL2FhV/PBhtbrV5jIMsPqnnlyKgvOY+bctj5aKM6Xz0c4hixdny54vBaFkT1LyA/0L+IBGoIh1T83NNed3qZElVYhp4HS25AocaJV2JfFSS9Tnte7POrLpobkUKXY/myzFr6uG6iphw6wPD7rPAD75VygjhfqfinurWzKZAq6iGm1frBwuznI5GNv}
     type: secret
 renamed: true
+native_deps:
+  head_html: |-
+    <meta name="theme-color" content="#FFFBFE">
+
+    <script defer>
+        document.querySelector('meta[name="theme-color"]').setAttribute('content', '#FFFBFE');
+    </script>
