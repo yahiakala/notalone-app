@@ -4,6 +4,7 @@ components:
   properties: {text: Create Group, role: outlined-button, icon: 'fa:plus'}
   type: Button
   layout_properties: {grid_position: 'IDRRWM,CYCGAB'}
+  event_bindings: {click: btn_create_group_click}
 - name: outlined_card_3
   properties: {role: outlined-card}
   type: ColumnPanel

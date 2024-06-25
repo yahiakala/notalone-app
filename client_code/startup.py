@@ -6,6 +6,7 @@ from .Global import Global
 
 
 @routing.redirect(path="app", priority=20, condition=lambda: Global.user is None)
+@routing.redirect(path="launchpad", priority=20, condition=lambda: Global.user is None)
 def redirect_no_user():
     return "sign"
 
