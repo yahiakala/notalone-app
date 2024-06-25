@@ -41,7 +41,7 @@ class Signin(SigninTemplate):
 
     def link_forgot_click(self, **event_args):
         """This method is called when the link is clicked"""
-        utils.reset_password(self.tb_mail, self.lbl_error)
+        utils.reset_password(self.tb_email, self.lbl_error)
 
     def link_signup_click(self, **event_args):
         """This method is called when the link is clicked"""

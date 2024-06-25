@@ -53,6 +53,7 @@ roles:
 - {name: google-sign}
 - {name: soft-fp}
 - {name: narrow-col}
+- {name: verically-centered}
 color_scheme:
   preset_groups:
   - name: Colour Scheme
