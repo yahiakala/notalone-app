@@ -508,6 +508,7 @@ def get_user_data_bk(user, tenant_id):
     data = {'users': [], 'applicants': []}
     data['permissions'] = permissions
     anvil.server.task_state['permissions'] = data['permissions']
+    # Launch a separate bk task for these heavier ones?
     if 'see_members' in permissions:
         data['users'] = _get_users(user)
     anvil.server.task_state['users'] = data['users']
