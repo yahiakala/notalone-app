@@ -10,7 +10,7 @@ components:
   type: ColumnPanel
   components:
   - name: lbl_title
-    properties: {align: center, text: Sign up for App, bold: true, role: title}
+    properties: {align: center, text: Sign up for notalone, bold: true, role: title}
     type: Label
     layout_properties: {grid_position: 'QCIIZV,JUYABG'}
   - name: btn_google
@@ -71,7 +71,7 @@ components:
     type: Label
     layout_properties: {grid_position: 'JQRGMG,UQBUBY'}
   - name: img_logo
-    properties: {display_mode: shrink_to_fit, source: _/theme/notalone.png}
+    properties: {display_mode: shrink_to_fit, source: _/theme/Not Alone 2.png}
     type: Image
     layout_properties: {grid_position: 'XSVFGK,SKPTSE'}
   layout_properties: {grid_position: 'HHTYIQ,IGSYLH'}

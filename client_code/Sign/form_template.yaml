@@ -20,7 +20,7 @@ components:
     type: ColumnPanel
     components:
     - name: lbl_title
-      properties: {align: center, text: Welcome to App, bold: true, role: title}
+      properties: {align: center, text: Welcome to notalone, bold: true, role: title}
       type: Label
       layout_properties: {grid_position: 'QCIIZV,JUYABG'}
     - name: btn_signin
@@ -42,7 +42,7 @@ components:
       layout_properties: {grid_position: 'RYXCZI,GBTWMP'}
       event_bindings: {click: btn_signup_click}
     - name: img_logo
-      properties: {display_mode: shrink_to_fit, source: _/theme/notalone.png}
+      properties: {display_mode: shrink_to_fit, source: _/theme/Not Alone 2.png}
       type: Image
       layout_properties: {grid_position: 'ZLAQUD,WJJNKY'}
   event_bindings: {show: form_show}
