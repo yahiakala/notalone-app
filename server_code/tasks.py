@@ -71,6 +71,7 @@ def verify_tenant(user, tenant_id, usermap=None):
     # TODO: might cause an error if none or just 1 tenant
     if tenant_row not in usermap['tenant']:
         raise Exception('User does not belong to this tenant.')
+    return tenant_row
 
 
 @anvil.server.callable(require_user=True)
@@ -134,47 +135,42 @@ def get_users(tenant_id):
     print_timestamp('get_users')
     user = anvil.users.get_user(allow_remembered=True)
     usermap = _get_usermap(user)
-    permissions = _get_permissions(user, usermap)
-    verify_tenant(user, tenant_id, usermap)
+    permissions = _get_permissions(user, tenant_id, usermap)
+    tenant = verify_tenant(user, tenant_id, usermap)
     if 'see_members' in permissions:
-        user = anvil.users.get_user(allow_remembered=True)
-        return _get_users(user)
+        return _get_users(user, tenant)
     else:
         return []
 
 
-def _get_users(user):
+def _get_users(user, tenant):
+    print_timestamp('_get_users: start')
+    member_rows = app_tables.usermap.search(tenant=tenant)
     memberlist = [
         {
-            'first_name': member['first_name'] or '',
-            'last_name': member['last_name'] or '',
-            'email': member['email'],
-            'fb_url': member['fb_url'] or '',
-            'discord': member['discord'] or '',
-            'fee': member['fee'],
-            'payment_status': member['payment_status'],
-            'payment_expiry': member['payment_expiry'],
-            'good_standing': member['good_standing'],
-            'last_login': member['last_login'],
-            'signed_up': member['signed_up'],
-            'paypal_sub_id': member['paypal_sub_id'],
-            'auth_screenings': member['auth_screenings'],
-            'auth_forumchat': member['auth_forumchat'],
-            'auth_profile': member['auth_profile'],
-            'auth_booking': member['auth_booking'],
-            'auth_members': member['auth_members'],
-            'auth_dev': member['auth_dev']
+            'first_name': member['user']['first_name'] or '',
+            'last_name': member['user']['last_name'] or '',
+            'email': member['user']['email'],
+            'fb_url': member['user']['fb_url'] or '',
+            'discord': member['user']['discord'] or '',
+            'fee': member['user']['fee'],
+            'payment_status': member['user']['payment_status'],
+            'payment_expiry': member['user']['payment_expiry'],
+            'good_standing': member['user']['good_standing'],
+            'last_login': member['user']['last_login'],
+            'signed_up': member['user']['signed_up'],
+            'paypal_sub_id': member['user']['paypal_sub_id'],
+            'permissions': _get_permissions(member['user'], tenant.get_id())
         }
-        for member in app_tables.users.search(tenant=user['tenant'])
+        for member in member_rows
     ]
-    print_timestamp('done get_users')
+    print_timestamp('_get_users: end')
     return memberlist
 
 
-@anvil.server.callable(require_user=True)
-@authorisation_required('see_members')
 def user_search(search_txt, tenant_id):
     """Search for a user by name, email, or notes."""
+    # TODO: deprecate this, move to client side logic.
     print_timestamp('user_search: ' + search_txt)
     user = anvil.users.get_user(allow_remembered=True)
     usermap = _get_usermap(user)
