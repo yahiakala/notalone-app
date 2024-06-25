@@ -217,41 +217,54 @@ def user_search(search_txt, tenant_id):
     return users_list
 
 
-@permission_required(['auth_members', 'auth_screenings'])
-def get_user_notes(email):
+@anvil.server.callable(require_user=True)
+def get_user_notes(email, tenant_id):
     """Get the notes for a particular user."""
     user = anvil.users.get_user(allow_remembered=True)
-    user_row = app_tables.users.get(email=email, tenant=user['tenant'])
-    note_row = app_tables.notes.get(user=user_row, tenant=user['tenant'])
-    if note_row:
-        return note_row
-    else:
-        return app_tables.notes.add_row(user=user_row, notes='', tenant=user['tenant'])
+    usermap = _get_usermap(user)
+    permissions = _get_permissions(user, tenant_id, usermap)
+    _ = verify_tenant(user, tenant_id, usermap)
+    if 'see_members' in permissions or 'see_applicants' in permissions:
+        user_row = app_tables.users.get(email=email, tenant=user['tenant'])
+        note_row = app_tables.notes.get(user=user_row, tenant=user['tenant'])
+        if note_row:
+            return note_row
+        else:
+            return app_tables.notes.add_row(user=user_row, notes='', tenant=user['tenant'])
 
 
-@permission_required(['auth_members', 'auth_screenings'])
-def save_user_notes(user_email, new_note):
+@anvil.server.callable(require_user=True)
+def save_user_notes(tenant_id, user_email, new_note):
     """Save user notes."""
     user = anvil.users.get_user(allow_remembered=True)
-    user_row = app_tables.users.get(email=user_email, tenant=user['tenant'])
-    note_row = app_tables.notes.get(user=user_row, tenant=user['tenant'])
-    note_row['notes'] = new_note
+    usermap = _get_usermap(user)
+    permissions = _get_permissions(user, tenant_id, usermap)
+    _ = verify_tenant(user, tenant_id, usermap)
+    if 'see_applicants' in permissions:
+        user_row = app_tables.users.get(email=user_email, tenant=user['tenant'])
+        note_row = app_tables.notes.get(user=user_row, tenant=user['tenant'])
+        note_row['notes'] = new_note
 
 
-@permission_required(['auth_screenings', 'auth_members'])
-def get_applicants():
+@anvil.server.callable(require_user=True)
+def get_applicants(tenant_id):
     """Get applicants."""
     # TODO: break this up into two funcs
     print_timestamp('get_applicants')
     user = anvil.users.get_user(allow_remembered=True)
-    return _get_applicants(user)
+    usermap = _get_usermap(user)
+    permissions = _get_permissions(user, tenant_id, usermap)
+    tenant = verify_tenant(user, tenant_id, usermap)
+    if 'see_applicants' in permissions:
+        return _get_applicants(user, tenant)
 
 
-def _get_applicants(user):
+def _get_applicants(user, tenant, users=None):
+    # TODO: change up query to not use auth flags
     app_q = app_tables.users.search(
         q.fetch_only("email", "first_name", "last_name", "auth_profile",
                     "auth_forumchat", "auth_booking", "good_standing", "signed_up"),
-        tenant=user['tenant'],
+        tenant=tenant,
         auth_forumchat=q.not_(True),
         auth_profile=q.not_(True),
         auth_booking=True
@@ -274,41 +287,45 @@ def _get_applicants(user):
 
 
 @permission_required('auth_booking')
-def get_screener_link():
+def get_screener_link(tenant_id):
     """Get random screener."""
-    import random
     user = anvil.users.get_user(allow_remembered=True)
-    # return random.choice(
-    #     [
-    #         {
-    #             'first_name': r['first_name'],
-    #             'booking_link': r['booking_link'],
-    #         }
-    #         for r in app_tables.users.search(booking_link=q.not_(None),
-    #                                          tenant=user['tenant'],
-    #                                          auth_screenings=True)
-    #     ]
-    # )
-    # Trying a better method to be random
+    usermap = _get_usermap(user)
+    permissions = _get_permissions(user, tenant_id, usermap)
+    tenant = verify_tenant(user, tenant_id, usermap)
+    if 'book_interview' in permissions:
+        return _get_screener_link(user, tenant)
+
+
+def _get_screener_link(user, tenant):
+    import random
     records = [
         {
             'first_name': r['first_name'],
             'booking_link': r['booking_link'],
         }
         for r in app_tables.users.search(booking_link=q.not_(None),
-                                         tenant=user['tenant'],
-                                         auth_screenings=True)
+                                        tenant=tenant,
+                                        auth_screenings=True)
     ]
     # Shuffle the records list
     random.shuffle(records)
     return random.choice(records)
 
 
-@permission_required('auth_members')
-def get_finances():
+@anvil.server.callable(require_user=True)
+def get_finances(tenant_id):
     """Get financial info."""
     user = anvil.users.get_user(allow_remembered=True)
-    data = app_tables.finances.get(tenant=user['tenant'])
+    usermap = _get_usermap(user)
+    permissions = _get_permissions(user, tenant_id, usermap)
+    tenant = verify_tenant(user, tenant_id, usermap)
+    if 'see_finances' in permissions:
+        return _get_finances(tenant)
+
+
+def _get_finances(tenant):
+    data = app_tables.finances.get(tenant=tenant)
     return {
         'rev_12': data['rev_12'] or 0,
         'budgets': data['budgets'] or {},
@@ -317,10 +334,21 @@ def get_finances():
 
 
 @permission_required('auth_forumchat')
-def get_forumlink():
+def get_forumlink(tenant_id):
     """Get financial info."""
     user = anvil.users.get_user(allow_remembered=True)
-    return 'https://' + app_tables.forum.get(tenant=user['tenant'])['discourse_url']
+    usermap = _get_usermap(user)
+    permissions = _get_permissions(user, tenant_id, usermap)
+    tenant = verify_tenant(user, tenant_id, usermap)
+    if 'see_forum' in permissions:
+        return _get_forumlink(tenant, permissions)
+
+
+def _get_forumlink(tenant, permissions):
+    if 'see_forum' in permissions:
+        return 'https://' + app_tables.forum.get(tenant=tenant)['discourse_url']
+    else:
+        return ''
 
 
 @anvil.server.callable(require_user=True)
@@ -469,20 +497,23 @@ def get_user_data(tenant_id):
     print_timestamp('get_user_data')
     user = anvil.users.get_user(allow_remembered=True)
     # TODO: first check if this same background task is running, by checking the users table.
-    return anvil.server.launch_background_task('get_user_data_bk', user)
+    return anvil.server.launch_background_task('get_user_data_bk', user, tenant_id)
 
 
 @anvil.server.background_task
-def get_user_data_bk(user):
+def get_user_data_bk(user, tenant_id):
     print_timestamp('get_user_data_bk: start')
     usermap = _get_usermap(user)
-    permissions = _get_permissions(user, usermap)
+    permissions = _get_permissions(user, tenant_id, usermap)
     data = {'users': [], 'applicants': []}
     data['permissions'] = permissions
+    anvil.server.task_state['permissions'] = data['permissions']
     if 'see_members' in permissions:
         data['users'] = _get_users(user)
+    anvil.server.task_state['users'] = data['users']
     if 'see_applicants' in permissions:
         data['applicants'] = _get_applicants(user)
+    anvil.server.task_state['applicants'] = data['applicants']
     print_timestamp('get_user_data_bk: end')
     return data
 
@@ -533,6 +564,7 @@ def populate_permissions():
         'see_profile',
         'see_forum',
         'book_interview',
+        'see_finances',
         'dev'
     ]
     if len(app_tables.permissions.search()) == 0:

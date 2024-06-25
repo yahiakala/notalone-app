@@ -153,4 +153,11 @@ class Router(RouterTemplate):
                 for key, val in user_data.items():
                     if Global.get_no_call(key) is None:
                         setattr(Global, key, val)
+            else:
+                # Populate some globals based on task state.
+                states = self.task.get_state()
+                for key, val in states.items():
+                    if Global.get_no_call(key) is None:
+                        setattr(Global, key, val)
+                    
                 
