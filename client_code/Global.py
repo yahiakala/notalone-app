@@ -3,6 +3,9 @@ from anvil_squared.utils import GlobalCache
 
 _global_dict = {
     'user': None,
+    'is_mobile': None,
+    'usermap': None,
+    'permissions': None,
     'users': None,
     'tenants': None,
     'applied': None,
