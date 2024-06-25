@@ -1,7 +1,7 @@
 from ._anvil_designer import SigninTemplate
 from anvil import *
 import anvil.users
-import time
+# import time
 from anvil_extras import routing
 from anvil_squared import utils
 

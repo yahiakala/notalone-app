@@ -20,9 +20,13 @@ components:
     type: ColumnPanel
     components:
     - name: lbl_title
-      properties: {align: center, text: Welcome to notalone, bold: true, role: title}
+      properties: {align: center, text: Welcome to notalone, bold: true, role: title, visible: false}
       type: Label
       layout_properties: {grid_position: 'QCIIZV,JUYABG'}
+    - name: img_logo
+      properties: {display_mode: shrink_to_fit, source: _/theme/Not Alone_thin.png, height: ''}
+      type: Image
+      layout_properties: {grid_position: 'GETEEV,FJKRXP'}
     - name: btn_signin
       properties:
         text: Sign in
@@ -41,9 +45,5 @@ components:
       type: Button
       layout_properties: {grid_position: 'RYXCZI,GBTWMP'}
       event_bindings: {click: btn_signup_click}
-    - name: img_logo
-      properties: {display_mode: shrink_to_fit, source: _/theme/Not Alone 2.png}
-      type: Image
-      layout_properties: {grid_position: 'ZLAQUD,WJJNKY'}
   event_bindings: {show: form_show}
 is_package: true

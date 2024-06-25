@@ -11,9 +11,13 @@ components:
   type: ColumnPanel
   components:
   - name: lbl_title
-    properties: {align: center, text: Sign in to notalone, bold: true, role: title}
+    properties: {align: center, text: Sign in to notalone, bold: true, role: title, visible: false}
     type: Label
     layout_properties: {grid_position: 'QCIIZV,JUYABG'}
+  - name: img_logo
+    properties: {display_mode: shrink_to_fit, source: _/theme/Not Alone_thin.png, height: ''}
+    type: Image
+    layout_properties: {grid_position: 'NGTDNA,MYPWAV'}
   - name: btn_google
     properties:
       text: Sign in with Google
@@ -70,10 +74,6 @@ components:
     properties: {text: Passwords must match, align: center, foreground: 'theme:Error', visible: false}
     type: Label
     layout_properties: {grid_position: 'ZQOVVT,UVFEEF'}
-  - name: img_logo
-    properties: {display_mode: shrink_to_fit, source: _/theme/Not Alone 2.png}
-    type: Image
-    layout_properties: {grid_position: 'ZLAQUD,WJJNKY'}
   layout_properties: {grid_position: 'EKDXTW,FHANPL'}
 - name: fp_outer
   properties: {align: center, role: null, visible: false, vertical_align: middle}

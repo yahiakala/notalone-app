@@ -1,6 +1,6 @@
 from anvil_extras import routing
 from .Router import Router
-from .BlankTemplate import BlankTemplate
+# from .BlankTemplate import BlankTemplate
 from .Static import Static
 from .Global import Global
 
