@@ -413,3 +413,16 @@ def get_super_load():
     if user['auth_screenings'] or user['auth_members']:
         data['applicants'] = get_applicants()
     return data
+
+
+@anvil.server.callable(require_user=True)
+def get_usermap():
+    user = anvil.users.get_user(allow_remembered=True)
+    if not user:
+        raise ValueError('User is not logged in.')
+    if not app_tables.usermap.get(user=user):
+        # TODO: add some defaults
+        usermap = app_tables.usermap.add_row(user=user)
+    else:
+        usermap = app_tables.usermap.get(user=user)
+    return usermap
