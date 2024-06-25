@@ -42,6 +42,154 @@ runtime_options: {version: 2, client_version: '3', server_version: python3-full,
 metadata: {logo_img: 'asset:notalone.png'}
 startup_form: null
 db_schema:
+  usermap:
+    title: Usermap
+    client: none
+    server: full
+    columns:
+    - name: user
+      admin_ui: {width: 200}
+      type: link_single
+      target: users
+    - name: tenant
+      admin_ui: {width: 200}
+      type: link_multiple
+      target: tenants
+    - name: roles
+      admin_ui: {width: 200}
+      type: link_multiple
+      target: roles
+  permissions:
+    title: Permissions
+    client: none
+    server: full
+    columns:
+    - name: name
+      admin_ui: {width: 200}
+      type: string
+  forum:
+    title: Forum
+    client: none
+    server: full
+    columns:
+    - name: discourse_secret
+      admin_ui: {width: 200}
+      type: string
+    - name: discourse_url
+      admin_ui: {width: 200}
+      type: string
+    - name: tenant
+      admin_ui: {width: 200}
+      type: link_single
+      target: tenants
+    - name: discord_invite
+      admin_ui: {width: 200}
+      type: string
+  roles:
+    client: none
+    server: full
+    columns:
+    - name: name
+      type: string
+      admin_ui: {width: 200, order: 0}
+    - name: reports_to
+      type: string
+      admin_ui: {width: 200, order: 1}
+    - name: tenant
+      admin_ui: {width: 200, order: 2}
+      type: link_single
+      target: tenants
+    - name: guide
+      admin_ui: {width: 200, order: 3}
+      type: media
+    - name: last_update
+      admin_ui: {width: 200, order: 4}
+      type: date
+    - name: permissions
+      admin_ui: {width: 200}
+      type: link_multiple
+      target: permissions
+    title: Roles
+  notes:
+    client: none
+    server: full
+    columns:
+    - name: notes
+      admin_ui: {width: 200}
+      type: string
+    - name: user
+      admin_ui: {width: 200}
+      type: link_single
+      target: users
+    - name: tenant
+      admin_ui: {width: 200}
+      type: link_single
+      target: tenants
+    title: Notes
+  files:
+    client: none
+    server: full
+    columns:
+    - name: path
+      admin_ui: {order: 0, width: 200}
+      type: string
+    - name: file
+      admin_ui: {order: 1, width: 200}
+      type: media
+    - name: file_version
+      admin_ui: {order: 2, width: 200}
+      type: string
+    title: Files
+  finances:
+    client: none
+    server: full
+    columns:
+    - name: rev_12
+      type: number
+      admin_ui: {width: 200, order: 0}
+    - name: budgets
+      type: simpleObject
+      admin_ui: {width: 200, order: 1}
+    - name: tenant
+      admin_ui: {order: -1, width: 200}
+      type: link_single
+      target: tenants
+    - name: rev_12_active
+      admin_ui: {width: 200, order: 3}
+      type: number
+    title: Finances
+  tenants:
+    client: none
+    server: full
+    columns:
+    - name: email
+      type: string
+      admin_ui: {width: 200, order: 0}
+    - name: name
+      admin_ui: {order: 1, width: 348}
+      type: string
+    - name: waiver
+      admin_ui: {width: 200}
+      type: string
+    - name: logo
+      admin_ui: {width: 200, order: 3}
+      type: media
+    - name: discourse_api_key
+      admin_ui: {width: 200}
+      type: string
+    - name: discourse_secret
+      admin_ui: {width: 200}
+      type: string
+    - name: paypal_client_id
+      admin_ui: {width: 200}
+      type: string
+    - name: paypal_plans
+      admin_ui: {width: 200}
+      type: simpleObject
+    - name: paypal_secret
+      admin_ui: {width: 200}
+      type: string
+    title: Tenants
   users:
     client: none
     server: full
@@ -145,110 +293,6 @@ db_schema:
       admin_ui: {width: 200, order: 31}
       type: string
     title: Users
-  tenants:
-    client: none
-    server: full
-    columns:
-    - name: email
-      type: string
-      admin_ui: {width: 200, order: 0}
-    - name: name
-      admin_ui: {order: 1, width: 348}
-      type: string
-    - name: waiver
-      admin_ui: {width: 200}
-      type: string
-    - name: logo
-      admin_ui: {width: 200, order: 3}
-      type: media
-    title: Tenants
-  notes:
-    client: none
-    server: full
-    columns:
-    - name: notes
-      admin_ui: {width: 200}
-      type: string
-    - name: user
-      admin_ui: {width: 200}
-      type: link_single
-      target: users
-    - name: tenant
-      admin_ui: {width: 200}
-      type: link_single
-      target: tenants
-    title: Notes
-  roles:
-    client: none
-    server: full
-    columns:
-    - name: name
-      type: string
-      admin_ui: {width: 200, order: 0}
-    - name: reports_to
-      type: string
-      admin_ui: {width: 200, order: 1}
-    - name: tenant
-      admin_ui: {width: 200, order: 2}
-      type: link_single
-      target: tenants
-    - name: guide
-      admin_ui: {width: 200, order: 3}
-      type: media
-    - name: last_update
-      admin_ui: {width: 200, order: 4}
-      type: date
-    title: Roles
-  finances:
-    client: none
-    server: full
-    columns:
-    - name: rev_12
-      type: number
-      admin_ui: {width: 200, order: 0}
-    - name: budgets
-      type: simpleObject
-      admin_ui: {width: 200, order: 1}
-    - name: tenant
-      admin_ui: {order: -1, width: 200}
-      type: link_single
-      target: tenants
-    - name: rev_12_active
-      admin_ui: {width: 200, order: 3}
-      type: number
-    title: Finances
-  forum:
-    title: Forum
-    client: none
-    server: full
-    columns:
-    - name: discourse_secret
-      admin_ui: {width: 200}
-      type: string
-    - name: discourse_url
-      admin_ui: {width: 200}
-      type: string
-    - name: tenant
-      admin_ui: {width: 200}
-      type: link_single
-      target: tenants
-    - name: discord_invite
-      admin_ui: {width: 200}
-      type: string
-  files:
-    client: none
-    server: full
-    columns:
-    - name: path
-      admin_ui: {order: 0, width: 200}
-      type: string
-    - name: file
-      admin_ui: {order: 1, width: 200}
-      type: media
-    - name: file_version
-      admin_ui: {order: 2, width: 200}
-      type: string
-    title: Files
 secrets:
   paypal_client_id:
     value: {T4BTSIBAI26CJ3RZ: z0JaieiqHt5mAySpe0CyP8l7CcI6X05wn+0dEesu3NMFYZv4QVFre0uh4aUkFfh/QNnAjL09sVz/1NUf+FNrpBfMtwb6SqP/FAOfTFnmyixrFOPTTqt26tXSbaaOPG7yn46l+vfy9Aso/0ZwOjTJcdPTR/YgLycournbmrgS6EHxE3ri8ayI5JDFT0cX8BLpatnKPBCUxmh23yShonuHlLTu+1p1Hy4Lw9bR0oAnPg==}

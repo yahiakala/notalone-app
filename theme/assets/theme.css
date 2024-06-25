@@ -1078,6 +1078,9 @@ div.plot-container.plotly svg.main-svg {
 }
 
 .anvil-role-narrow-col {
-    max-width: 400px;
+    overflow: hidden;
     padding: 35px;
+}
+.anvil-role-narrow-col-mobile {
+    padding-bottom: 0px;
 }
