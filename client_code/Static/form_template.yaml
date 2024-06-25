@@ -1,0 +1,32 @@
+container:
+  type: HtmlTemplate
+  properties:
+    html: |-
+      <!-- Static with no Bounce Scroll -->
+      <div class="structure">
+        <div class="nav-holder">
+          <div class="content">
+            <div anvil-slot-repeat="default" class="anvil-measure-this"></div>
+            <div class="placeholder drop-here" anvil-if-slot-empty="default" anvil-drop-slot="default">Drop a ColumnPanel here.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- <div anvil-slot="default"></div> -->
+
+      <style>
+          html,
+          body {
+              overscroll-behavior: none;
+              -webkit-overflow-scrolling: auto;
+          }
+          .anvil-panel-section-container {
+              max-width:400px;
+          }
+      </style>
+components:
+- name: content_panel
+  properties: {}
+  type: ColumnPanel
+  layout_properties: {slot: default}
+is_package: true
