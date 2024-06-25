@@ -426,3 +426,18 @@ def get_usermap():
     else:
         usermap = app_tables.usermap.get(user=user)
     return usermap
+
+
+def populate_permissions():
+    """Populate the permissions table."""
+    permissions = [
+        'see_applicants',
+        'see_members',
+        'see_profile',
+        'see_forum',
+        'book_interview',
+        'dev'
+    ]
+    if len(app_tables.permissions.search()) == 0:
+        for perm in permissions:
+            app_tables.permissions.add_row(name=perm)
