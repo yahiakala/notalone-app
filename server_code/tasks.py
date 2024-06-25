@@ -76,6 +76,7 @@ def verify_tenant(user, tenant_id, usermap=None):
 @anvil.server.callable(require_user=True)
 def update_user(user_dict, tenant_id):
     user = anvil.users.get_user(allow_remembered=True)
+    verify_tenant(user, tenant_id)
     for key in ['first_name', 'last_name', 'fb_url', 'fee', 'consent_check', 'paypal_sub_id', 'phone', 'discord']:
         if user[key] != user_dict[key]:
             user[key] = user_dict[key]
@@ -83,35 +84,63 @@ def update_user(user_dict, tenant_id):
     return user
 
 
-@permission_required(['auth_screenings', 'auth_members'])
-def update_member(email, col_dict):
+@anvil.server.callable(require_user=True)
+def update_member(email, col_dict, tenant_id):
     """Reset roles for a member."""
     print_timestamp('update_member: ' + email + ' col_dict: ' + str(col_dict))
-    doer = anvil.users.get_user(allow_remembered=True)
-    user = app_tables.users.get(email=email, tenant=doer['tenant'])
-    if doer['auth_members']:
+    user = anvil.users.get_user(allow_remembered=True)
+    usermap = _get_usermap(user)
+    permissions = _get_permissions(user, tenant_id, usermap)
+    verify_tenant(user, tenant_id, usermap)
+    
+    member = app_tables.users.get(email=email, tenant=user['tenant'])
+    if 'see_members' in permissions:
         acceptable_cols = None
-    else:
+    elif 'see_applicants' in permissions:
         acceptable_cols = ['auth_profile', 'auth_forumchat', 'auth_booking']
+    else:
+        raise Exception('Authorisation required.')
 
     for col_name, val in col_dict.items():
-        if (acceptable_cols != None and col_name in acceptable_cols) or acceptable_cols is None:
-            user[col_name] = val
-    return user
+        if (acceptable_cols is not None and col_name in acceptable_cols) or acceptable_cols is None:
+            member[col_name] = val
+    return member
 
 
-@permission_required('auth_members')
-def delete_user(user_dict):
-    user_del = app_tables.users.get(email=user_dict['email'], auth_members=q.not_(True))
-    user_del.delete()
+@anvil.server.callable(require_user=True)
+def delete_user(user_dict, tenant_id):
+    print_timestamp('delete_user')
+    user = anvil.users.get_user(allow_remembered=True)
+    usermap = _get_usermap(user)
+    permissions = _get_permissions(user, tenant_id, usermap)
+    verify_tenant(user, tenant_id, usermap)
+    if 'delete_members' in permissions:
+        user_del = app_tables.users.get(email=user_dict['email'])
+        user_del_usermap = _get_usermap(user_del)
+        user_del_permissions = _get_permissions(user_del, tenant_id, user_del_usermap)
+        verify_tenant(user_del, tenant_id, user_del_usermap)
+        if 'delete_members' in user_del_permissions and 'delete_admin' not in permissions:
+            raise Exception("Only users with the delete_admin permission can delete this user.")
+        if len(user_del_usermap['tenant']) > 1:
+            # If user is on multiple tenants, just remove them from this tenant.
+            user_del_usermap['tenant'] = [i for i in user_del_usermap['tenant'] if i.get_id() != tenant_id]
+        else:
+            user_del.delete()
 
 
-@permission_required('auth_members')
-def get_users():
+@anvil.server.callable(require_user=True)
+def get_users(tenant_id):
     """Get a full list of the users."""
     print_timestamp('get_users')
     user = anvil.users.get_user(allow_remembered=True)
-    return _get_users(user)
+    usermap = _get_usermap(user)
+    permissions = _get_permissions(user, usermap)
+    verify_tenant(user, tenant_id, usermap)
+    if 'see_members' in permissions:
+        user = anvil.users.get_user(allow_remembered=True)
+        return _get_users(user)
+    else:
+        return []
 
 
 def _get_users(user):
@@ -142,11 +171,15 @@ def _get_users(user):
     return memberlist
 
 
-@permission_required('auth_members')
-def user_search(search_txt):
+@anvil.server.callable(require_user=True)
+@authorisation_required('see_members')
+def user_search(search_txt, tenant_id):
     """Search for a user by name, email, or notes."""
     print_timestamp('user_search: ' + search_txt)
     user = anvil.users.get_user(allow_remembered=True)
+    usermap = _get_usermap(user)
+    permissions = _get_permissions(user, usermap)
+    verify_tenant(user, tenant_id, usermap)
     emails = set()
     for note in app_tables.notes.search(tenant=user['tenant'], notes=q.ilike('%' + search_txt + '%')):
         emails.add(note['user']['email'])
@@ -475,18 +508,21 @@ def _get_usermap(user):
 
 
 @anvil.server.callable(require_user=True)
-def get_permissions():
+def get_permissions(tenant_id):
+    """Get the permissions of a user in a particular tenant."""
     user = anvil.users.get_user(allow_remembered=True)
-    return _get_permissions(user)
+    return _get_permissions(user, tenant_id)
 
 
-def _get_permissions(user, usermap=None):
+def _get_permissions(user, tenant_id, usermap=None):
+    """Get the permissions of a user in a particular tenant."""
     usermap = usermap or app_tables.usermap.get(user=user)
     try:
         user_permissions = set(
             permission["name"]
             for role in usermap["roles"]
             for permission in role["permissions"]
+            if role['tenant'].get_id() == tenant_id
         )
         return list(user_permissions)
     except TypeError:
