@@ -15,7 +15,7 @@ from anvil_extras import routing
 from .. import Global
 
 
-@routing.template(path='app', priority=1, condition=None)
+@routing.template(path='app', priority=1, condition=None, url_keys=['tenant_id'])
 class Router(RouterTemplate):
     def __init__(self, **properties):
         self.init_components(**properties)
@@ -34,11 +34,16 @@ class Router(RouterTemplate):
         self.set_account_state(self.user)
         self.nav_click(self.link_home)
 
-        from anvil.js.window import navigator
-        is_mobile = anvil.js.window.navigator.userAgent.lower().find("mobi") > -1
-        if is_mobile:
+        if Global.is_mobile:
             self.lbl_app_title.visible = False
             self.link_forum_nav.text = ''
+
+        Global.tenant_id = self.url_dict['tenant_id']
+
+        if Global.get_no_call('user_data') is None:
+            self.timer_user_data.interval = 2
+            self.task = anvil.server.call('get_user_data', Global.tenant_id)
+
 
     def link_login_click(self, **event_args):
         """This method is called when the link is clicked"""
@@ -80,7 +85,7 @@ class Router(RouterTemplate):
             self.link_fin.visible = user['auth_members']
             self.link_volunteers.visible = user['auth_members']
             self.link_forum_nav.visible = (
-                user['auth_forumchat'] == True and
+                user['auth_forumchat'] and
                 user['first_name'] != '' and
                 user['last_name'] != ''
             )
@@ -137,4 +142,15 @@ class Router(RouterTemplate):
     def on_form_load(self, url_hash, url_pattern, url_dict, form):
         """Any time a form is loaded."""
         self.set_account_state(Global.user)
+
+    def timer_user_data_tick(self, **event_args):
+        """Use a timer to load all the globals."""
+        with anvil.server.no_loading_indicator:
+            if self.task.is_completed():
+                user_data = self.task.get_return_value()
+                Global.user_data = user_data
+                self.timer_user_data.interval = 0
+                for key, val in user_data.items():
+                    if Global.get_no_call(key) is None:
+                        setattr(Global, key, val)
                 

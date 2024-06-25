@@ -5,6 +5,8 @@ _global_dict = {
     'user': None,
     'is_mobile': None,
     'usermap': None,
+    'user_data': None,
+    'tenant_id': None,
     'permissions': None,
     'users': None,
     'tenants': None,

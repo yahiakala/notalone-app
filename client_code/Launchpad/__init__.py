@@ -11,8 +11,9 @@ class Launchpad(LaunchpadTemplate):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
         self.user = Global.user
+        self.user_data = Global.user_data
 
-        if 'create_group' in Global.permissions:
+        if 'create_group' in self.user_data['permissions']:
             self.btn_create_group.visible = True
 
     def btn_create_group_click(self, **event_args):

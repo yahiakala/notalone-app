@@ -13,8 +13,13 @@ components:
   name: navbar_links
   layout_properties: {slot: nav-right}
   components:
+  - name: timer_user_data
+    properties: {interval: 0}
+    type: Timer
+    layout_properties: {}
+    event_bindings: {tick: timer_user_data_tick}
   - type: Button
-    properties: {role: filled-button, align: center, tooltip: '', border: '', enabled: true, foreground: '', visible: false, text: DEV, font_size: null, font: '', spacing_above: small, icon_align: left, spacing_below: small, italic: false, background: '', bold: false, underline: false, icon: ''}
+    properties: {role: filled-button, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: false, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: DEV}
     name: btn_test
     layout_properties: {}
     event_bindings: {click: nav_click}
@@ -24,7 +29,7 @@ components:
     layout_properties: {}
     event_bindings: {pressed_enter: tb_impersonate_pressed_enter}
   - name: link_forum_nav
-    properties: {role: null, url: '', align: left, tooltip: '', border: '', foreground: '', visible: false, text: Forum, font_size: null, wrap_on: mobile, font: '', col_spacing: medium, spacing_above: small, icon_align: left, col_widths: '', spacing_below: small, italic: false, background: '', bold: false, underline: false, icon: 'fa:comments'}
+    properties: {role: null, bold: false, align: left, col_widths: '', spacing_above: small, background: '', icon: 'fa:comments', wrap_on: mobile, underline: false, font: '', col_spacing: medium, icon_align: left, foreground: '', url: '', spacing_below: small, visible: false, border: '', italic: false, font_size: null, tooltip: '', text: Forum}
     type: Link
     layout_properties: {}
     event_bindings: {click: link_forum_nav_click}
@@ -34,12 +39,12 @@ components:
     layout_properties: {}
     event_bindings: {click: link_help_click}
   - type: Link
-    properties: {role: null, url: '', align: left, tooltip: '', border: '', foreground: '', visible: true, text: Login / Signup, font_size: null, wrap_on: mobile, font: '', col_spacing: medium, spacing_above: small, icon_align: left, col_widths: '', spacing_below: small, italic: false, background: '', bold: false, underline: false, icon: ''}
+    properties: {role: null, bold: false, align: left, col_widths: '', spacing_above: small, background: '', icon: '', wrap_on: mobile, underline: false, font: '', col_spacing: medium, icon_align: left, foreground: '', url: '', spacing_below: small, visible: true, border: '', italic: false, font_size: null, tooltip: '', text: Login / Signup}
     name: link_login
     layout_properties: {}
     event_bindings: {click: link_login_click}
   - type: Link
-    properties: {role: null, url: '', align: left, tooltip: '', border: '', foreground: '', visible: false, text: '', font_size: null, wrap_on: mobile, font: '', col_spacing: medium, spacing_above: small, icon_align: left, col_widths: '', spacing_below: small, italic: false, background: '', bold: false, underline: false, icon: 'fa:sign-out'}
+    properties: {role: null, bold: false, align: left, col_widths: '', spacing_above: small, background: '', icon: 'fa:sign-out', wrap_on: mobile, underline: false, font: '', col_spacing: medium, icon_align: left, foreground: '', url: '', spacing_below: small, visible: false, border: '', italic: false, font_size: null, tooltip: '', text: ''}
     name: link_logout
     layout_properties: {}
     event_bindings: {click: link_logout_click}
@@ -59,42 +64,42 @@ components:
       type: Label
       layout_properties: {grid_position: 'VLGIZW,DYMEDT'}
   - type: Link
-    properties: {role: null, url: '', align: left, tooltip: '', border: '', foreground: '', visible: true, text: Home, font_size: null, wrap_on: mobile, font: '', col_spacing: medium, spacing_above: small, icon_align: left, col_widths: '', spacing_below: small, italic: false, background: '', bold: false, underline: false, icon: ''}
+    properties: {role: null, bold: false, align: left, col_widths: '', spacing_above: small, background: '', icon: '', wrap_on: mobile, underline: false, font: '', col_spacing: medium, icon_align: left, foreground: '', url: '', spacing_below: small, visible: true, border: '', italic: false, font_size: null, tooltip: '', text: Home}
     name: link_home
     layout_properties: {grid_position: 'VGTJDT,PXJVDH'}
     event_bindings: {click: nav_click}
   - type: Link
-    properties: {role: null, url: '', align: left, tooltip: '', border: '', foreground: '', visible: true, text: Apply Now, font_size: null, wrap_on: mobile, font: '', col_spacing: medium, spacing_above: small, icon_align: left, col_widths: '', spacing_below: small, italic: false, background: '', bold: false, underline: false, icon: ''}
+    properties: {role: null, bold: false, align: left, col_widths: '', spacing_above: small, background: '', icon: '', wrap_on: mobile, underline: false, font: '', col_spacing: medium, icon_align: left, foreground: '', url: '', spacing_below: small, visible: true, border: '', italic: false, font_size: null, tooltip: '', text: Apply Now}
     name: link_apply
     layout_properties: {grid_position: 'OCDXSZ,QLXCGE'}
     event_bindings: {click: nav_click}
   - type: Link
-    properties: {role: null, url: '', align: left, tooltip: '', border: '', foreground: '', visible: true, text: Profile, font_size: null, wrap_on: mobile, font: '', col_spacing: medium, spacing_above: small, icon_align: left, col_widths: '', spacing_below: small, italic: false, background: '', bold: false, underline: false, icon: ''}
+    properties: {role: null, bold: false, align: left, col_widths: '', spacing_above: small, background: '', icon: '', wrap_on: mobile, underline: false, font: '', col_spacing: medium, icon_align: left, foreground: '', url: '', spacing_below: small, visible: true, border: '', italic: false, font_size: null, tooltip: '', text: Profile}
     name: link_profile
     layout_properties: {grid_position: 'PVDRMI,XPFOZY'}
     event_bindings: {click: nav_click}
   - type: Link
-    properties: {role: null, url: '', align: left, tooltip: '', border: '', foreground: '', visible: true, text: Applicants, font_size: null, wrap_on: mobile, font: '', col_spacing: medium, spacing_above: small, icon_align: left, col_widths: '', spacing_below: small, italic: false, background: '', bold: false, underline: false, icon: ''}
+    properties: {role: null, bold: false, align: left, col_widths: '', spacing_above: small, background: '', icon: '', wrap_on: mobile, underline: false, font: '', col_spacing: medium, icon_align: left, foreground: '', url: '', spacing_below: small, visible: true, border: '', italic: false, font_size: null, tooltip: '', text: Applicants}
     name: link_applicants
     layout_properties: {grid_position: 'RBGAMI,GNCZVJ'}
     event_bindings: {click: nav_click}
   - type: Link
-    properties: {role: null, url: '', align: left, tooltip: '', border: '', foreground: '', visible: true, text: Members, font_size: null, wrap_on: mobile, font: '', col_spacing: medium, spacing_above: small, icon_align: left, col_widths: '', spacing_below: small, italic: false, background: '', bold: false, underline: false, icon: ''}
+    properties: {role: null, bold: false, align: left, col_widths: '', spacing_above: small, background: '', icon: '', wrap_on: mobile, underline: false, font: '', col_spacing: medium, icon_align: left, foreground: '', url: '', spacing_below: small, visible: true, border: '', italic: false, font_size: null, tooltip: '', text: Members}
     name: link_members
     layout_properties: {grid_position: 'VAEWZT,CGKTBU'}
     event_bindings: {click: nav_click}
   - type: Link
-    properties: {role: null, url: '', align: left, tooltip: '', border: '', foreground: '', visible: true, text: Financials, font_size: null, wrap_on: mobile, font: '', col_spacing: medium, spacing_above: small, icon_align: left, col_widths: '', spacing_below: small, italic: false, background: '', bold: false, underline: false, icon: ''}
+    properties: {role: null, bold: false, align: left, col_widths: '', spacing_above: small, background: '', icon: '', wrap_on: mobile, underline: false, font: '', col_spacing: medium, icon_align: left, foreground: '', url: '', spacing_below: small, visible: true, border: '', italic: false, font_size: null, tooltip: '', text: Financials}
     name: link_fin
     layout_properties: {grid_position: 'FXEWLL,PYXVXJ'}
     components: []
     event_bindings: {click: nav_click}
   - name: link_volunteers
-    properties: {role: null, url: '', align: left, tooltip: '', border: '', foreground: '', visible: true, text: Volunteers, font_size: null, wrap_on: mobile, font: '', col_spacing: medium, spacing_above: small, icon_align: left, col_widths: '', spacing_below: small, italic: false, background: '', bold: false, underline: false, icon: ''}
+    properties: {role: null, bold: false, align: left, col_widths: '', spacing_above: small, background: '', icon: '', wrap_on: mobile, underline: false, font: '', col_spacing: medium, icon_align: left, foreground: '', url: '', spacing_below: small, visible: true, border: '', italic: false, font_size: null, tooltip: '', text: Volunteers}
     type: Link
     layout_properties: {grid_position: 'PFCERG,VDMIUR'}
     event_bindings: {click: nav_click}
 - type: Label
-  properties: {role: null, align: left, tooltip: '', border: '', foreground: '', visible: true, text: Not Alone, font_size: null, font: '', spacing_above: small, icon_align: left, spacing_below: small, italic: false, background: '', bold: false, underline: false, icon: ''}
+  properties: {role: null, bold: false, align: left, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, font_size: null, tooltip: '', text: Not Alone}
   name: lbl_app_title
   layout_properties: {slot: title}
