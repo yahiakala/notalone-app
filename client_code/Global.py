@@ -1,5 +1,6 @@
 from anvil_squared.utils import GlobalCache
 
+
 _global_dict = {
     'user': None,
     'users': None,
