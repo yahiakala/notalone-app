@@ -54,7 +54,7 @@ def check_user_auth(user, permissions):
 
 
 
-def verify_tenant(user, tenant_id, usermap=None):
+def verify_tenant(tenant_id, user, usermap=None):
     """Verify a user is in this tenant."""
     tenant_row = app_tables.tenants.get_by_id(tenant_id)
     usermap = usermap or app_tables.usermap.get(user=user)
@@ -62,6 +62,35 @@ def verify_tenant(user, tenant_id, usermap=None):
     if tenant_row not in usermap['tenant']:
         raise Exception('User does not belong to this tenant.')
     return tenant_row
+
+def get_usermap(user):
+    if not app_tables.usermap.get(user=user):
+        # TODO: add some defaults
+        usermap = app_tables.usermap.add_row(user=user)
+    else:
+        usermap = app_tables.usermap.get(user=user)
+    return usermap
+
+def get_permissions(tenant_id, user, usermap=None):
+    """Get the permissions of a user in a particular tenant."""
+    usermap = usermap or app_tables.usermap.get(user=user)
+    try:
+        user_permissions = set(
+            permission["name"]
+            for role in usermap["roles"]
+            for permission in role["permissions"]
+            if role['tenant'].get_id() == tenant_id
+        )
+        return list(user_permissions)
+    except TypeError:
+        return []
+
+
+def validate_user(tenant_id, user, usermap=None, permissions=None, tenant=None):
+    usermap = usermap if usermap is not None else get_usermap(user)
+    permissions = permissions if permissions is not None else get_permissions(tenant_id, user, usermap)
+    tenant = tenant if tenant is not None else verify_tenant(tenant_id, user, usermap)
+    return usermap, permissions, tenant
 
 
 def populate_permissions():

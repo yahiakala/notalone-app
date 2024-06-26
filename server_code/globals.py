@@ -3,34 +3,61 @@ from anvil.tables import app_tables
 import anvil.tables.query as q
 
 from anvil_squared.helpers import print_timestamp
-from .helpers import verify_tenant
+from .helpers import validate_user, get_usermap
+
+# from anvil_extras import authorisation
+# from anvil_extras.authorisation import authorisation_required
+
+# authorisation.set_config({'get_roles': 'usermap'})
 
 
+# --------------------
+# Non tenanted globals
+# --------------------
 @anvil.server.callable(require_user=True)
 def get_tenants():
     """Get a list of tenants for joining purposes."""
+    # This being slow is okay.
     user = anvil.users.get_user(allow_remembered=True)
-    if user['tenant'] is None:
+    usermap = get_usermap(user)
+    if usermap['tenant'] is None:
         return app_tables.tenants.client_readable(q.only_cols('name'))
     else:
         return []
 
-@anvil.server.callable(require_user=True)
-def get_users(tenant_id):
-    """Get a full list of the users."""
-    print_timestamp('get_users')
-    user = anvil.users.get_user(allow_remembered=True)
-    usermap = _get_usermap(user)
-    permissions = _get_permissions(user, tenant_id, usermap)
-    tenant = verify_tenant(user, tenant_id, usermap)
-    if 'see_members' in permissions:
-        return _get_users(user, tenant)
-    else:
-        return []
+
+# ----------------
+# Tenanted globals
+# ----------------
+# @anvil.server.callable(require_user=True)
+# def get_tenanted_data(tenant_id, key):
+#     # TODO: deprecate as only want to get tenanted globals from a bk task.
+#     print_timestamp(f'get_tenanted_data: {key}')
+#     user = anvil.users.get_user(allow_remembered=True)
+    
+#     if key == 'users':
+#         return get_users(tenant_id, user)
+#     elif key == 'applicants':
+#         return get_applicants(tenant_id, user)
+#     elif key == 'screenerlink':
+#         return get_screenerlink(tenant_id, user)
+#     elif key == 'forumlink':
+#         return get_discordlink(tenant_id, user)
+#     elif key == 'discordlink':
+#         return get_forumlink(tenant_id, user)
+#     elif key == 'roles':
+#         return get_roles(tenant_id, user)
+#     elif key == 'roles_to_members':
+#         return get_roles_to_members(tenant_id, user)
 
 
-def _get_users(tenant, user, permissions):
+def get_users(tenant_id, user, usermap=None, permissions=None, tenant=None):
     print_timestamp('_get_users: start')
+    usermap, permissions, tenant = validate_user(tenant_id, user, usermap, permissions, tenant)
+    
+    if 'see_members' not in permissions:
+        return []
+    
     member_rows = app_tables.usermap.search(tenant=tenant)
     memberlist = [
         {
@@ -54,21 +81,14 @@ def _get_users(tenant, user, permissions):
     return memberlist
 
 
-@anvil.server.callable(require_user=True)
-def get_applicants(tenant_id):
-    """Get applicants."""
-    # TODO: break this up into two funcs
-    print_timestamp('get_applicants')
-    user = anvil.users.get_user(allow_remembered=True)
-    usermap = _get_usermap(user)
-    permissions = _get_permissions(user, tenant_id, usermap)
-    tenant = verify_tenant(user, tenant_id, usermap)
-    if 'see_applicants' in permissions:
-        return _get_applicants(user, tenant)
-
-
-def _get_applicants(user, tenant, users=None):
+def get_applicants(tenant_id, user, usermap=None, permissions=None, tenant=None, users=None):
     # TODO: change up query to not use auth flags
+    # TODO: use users if defined
+    usermap, permissions, tenant = validate_user(tenant_id, user, usermap, permissions, tenant)
+    
+    if 'see_applicants' not in permissions:
+        return []
+    
     app_q = app_tables.users.search(
         q.fetch_only("email", "first_name", "last_name", "auth_profile",
                     "auth_forumchat", "auth_booking", "good_standing", "signed_up"),
@@ -94,20 +114,14 @@ def _get_applicants(user, tenant, users=None):
     return app_list
 
 
-
-@anvil.server.callable(require_user=True)
-def get_screener_link(tenant_id):
-    """Get random screener."""
-    user = anvil.users.get_user(allow_remembered=True)
-    usermap = _get_usermap(user)
-    permissions = _get_permissions(user, tenant_id, usermap)
-    tenant = verify_tenant(user, tenant_id, usermap)
-    if 'book_interview' in permissions:
-        return _get_screener_link(user, tenant)
-
-
-def _get_screener_link(user, tenant):
+def get_screenerlink(tenant_id, user, usermap=None, permissions=None, tenant=None):
     import random
+
+    usermap, permissions, tenant = validate_user(tenant_id, user, usermap, permissions, tenant)
+
+    if 'book_interview' not in permissions:
+        return ''
+
     records = [
         {
             'first_name': r['first_name'],
@@ -122,18 +136,12 @@ def _get_screener_link(user, tenant):
     return random.choice(records)
 
 
-@anvil.server.callable(require_user=True)
-def get_finances(tenant_id):
-    """Get financial info."""
-    user = anvil.users.get_user(allow_remembered=True)
-    usermap = _get_usermap(user)
-    permissions = _get_permissions(user, tenant_id, usermap)
-    tenant = verify_tenant(user, tenant_id, usermap)
-    if 'see_finances' in permissions:
-        return _get_finances(tenant)
+def get_finances(tenant_id, user, usermap=None, permissions=None, tenant=None):
+    usermap, permissions, tenant = validate_user(tenant_id, user, usermap, permissions, tenant)
 
-
-def _get_finances(tenant):
+    if 'see_finances' not in permissions:
+        return {}
+    
     data = app_tables.finances.get(tenant=tenant)
     return {
         'rev_12': data['rev_12'] or 0,
@@ -142,65 +150,30 @@ def _get_finances(tenant):
     }
 
 
-@anvil.server.callable(require_user=True)
-def get_forumlink(tenant_id):
-    """Get financial info."""
-    user = anvil.users.get_user(allow_remembered=True)
-    usermap = _get_usermap(user)
-    permissions = _get_permissions(user, tenant_id, usermap)
-    tenant = verify_tenant(user, tenant_id, usermap)
-    return _get_forumlink(tenant, permissions)
-
-
-def _get_forumlink(tenant, permissions):
+def get_forumlink(tenant_id, user, usermap=None, permissions=None, tenant=None):
+    usermap, permissions, tenant = validate_user(tenant_id, user, usermap, permissions, tenant)
     if 'see_forum' in permissions:
         return 'https://' + app_tables.forum.get(tenant=tenant)['discourse_url']
     else:
         return ''
 
 
-@anvil.server.callable(require_user=True)
-def get_discordlink(tenant_id):
-    user = anvil.users.get_user(allow_remembered=True)
-    usermap = _get_usermap(user)
-    permissions = _get_permissions(user, tenant_id, usermap)
-    tenant = verify_tenant(user, tenant_id, usermap)
-    return _get_discordlink(tenant, permissions)
-
-
-def _get_discordlink(tenant, permissions):
+def get_discordlink(tenant_id, user, usermap=None, permissions=None, tenant=None):
+    usermap, permissions, tenant = validate_user(tenant_id, user, usermap, permissions, tenant)
     if 'see_forum' in permissions:
         return app_tables.forum.get(tenant=tenant)['discord_invite']
     return ''
 
 
-@anvil.server.callable(require_user=True)
-def get_roles(tenant_id):
-    """Get volunteer roles."""
-    user = anvil.users.get_user(allow_remembered=True)
-    usermap = _get_usermap(user)
-    permissions = _get_permissions(user, tenant_id, usermap)
-    tenant = verify_tenant(user, tenant_id, usermap)
-    return _get_roles(tenant, permissions)
-
-
-def _get_roles(tenant, permissions):
+def get_roles(tenant_id, user, usermap=None, permissions=None, tenant=None):
+    usermap, permissions, tenant = validate_user(tenant_id, user, usermap, permissions, tenant)
     if 'see_forum' in permissions:
         return app_tables.roles.search(tenant=tenant)
     return []
 
 
-@anvil.server.callable(require_user=True)
-def get_roles_to_members(tenant_id):
-    """Get a dict that maps volunteer roles to users."""
-    user = anvil.users.get_user(allow_remembered=True)
-    usermap = _get_usermap(user)
-    permissions = _get_permissions(user, tenant_id, usermap)
-    tenant = verify_tenant(user, tenant_id, usermap)
-    return _get_roles_to_members(tenant, permissions)
-
-
-def _get_roles_to_members(tenant, permissions):
+def get_roles_to_members(tenant_id, user, usermap=None, permissions=None, tenant=None):
+    usermap, permissions, tenant = validate_user(tenant_id, user, usermap, permissions, tenant)
     if 'see_members' in permissions:
         role_members = []
         # users = list(app_tables.users.search(tenant=tenant))
@@ -218,77 +191,47 @@ def _get_roles_to_members(tenant, permissions):
     return []
 
 
-# @anvil.server.callable(require_user=True)
-# def get_super_load():
-#     user = anvil.users.get_user(allow_remembered=True)
-#     data = {'users': [], 'applicants': []}
-#     if user['auth_members']:
-#         data['users'] = get_users()
-#     if user['auth_screenings'] or user['auth_members']:
-#         data['applicants'] = get_applicants()
-#     return data
-
-
+# ------------------------------------------------------
+# Getting all the tenanted globals in a background task.
+# ------------------------------------------------------
 @anvil.server.callable(require_user=True)
 def get_user_data(tenant_id):
     print_timestamp('get_user_data')
     user = anvil.users.get_user(allow_remembered=True)
     # Not gonna run the usermap, permissions, verify_tenant here due to speed
-    return anvil.server.launch_background_task('get_user_data_bk', user, tenant_id)
+    return anvil.server.launch_background_task('get_user_data_bk', tenant_id, user)
 
 
 @anvil.server.background_task
-def get_user_data_bk(user, tenant_id):
+def get_user_data_bk(tenant_id, user, usermap=None, permissions=None, tenant=None):
     print_timestamp('get_user_data_bk: start')
-    usermap = _get_usermap(user)
-    permissions = _get_permissions(user, tenant_id, usermap)
-    data = {'users': [], 'applicants': []}
+    usermap, permissions, tenant = validate_user(tenant_id, user, usermap, permissions, tenant)
+    # In future, might launch separate bk tasks for each thing.
+    
+    data = {}
     data['permissions'] = permissions
     anvil.server.task_state['permissions'] = data['permissions']
-    # Launch a separate bk task for these heavier ones?
-    if 'see_members' in permissions:
-        data['users'] = _get_users(user)
-    anvil.server.task_state['users'] = data['users']
-    if 'see_applicants' in permissions:
-        data['applicants'] = _get_applicants(user)
+
+    data['forumlink'] = get_forumlink(tenant_id, user, usermap, permissions, tenant)
+    anvil.server.task_state['forumlink'] = data['forumlink']
+    
+    data['screenerlink'] = get_screenerlink(tenant_id, user, usermap, permissions, tenant)
+    anvil.server.task_state['screenerlink'] = data['screenerlink']
+
+    data['applicants'] = get_applicants(tenant_id, user, usermap, permissions, tenant)
     anvil.server.task_state['applicants'] = data['applicants']
+
+    data['users'] = get_users(tenant_id, user, usermap, permissions, tenant)
+    anvil.server.task_state['users'] = data['users']
+
+    data['discordlink'] = get_discordlink(tenant_id, user, usermap, permissions, tenant)
+    anvil.server.task_state['discordlink'] = data['discordlink']
+
+    data['roles'] = get_roles(tenant_id, user, usermap, permissions, tenant)
+    anvil.server.task_state['roles'] = data['roles']
+    
+    data['roles_to_members'] = get_roles_to_members(tenant_id, user, usermap, permissions, tenant)
+    anvil.server.task_state['roles_to_members'] = data['roles_to_members']
+        
     print_timestamp('get_user_data_bk: end')
     return data
-
-
-# def get_usermap():
-#     user = anvil.users.get_user(allow_remembered=True)
-#     if not user:
-#         raise ValueError('User is not logged in.')
-#     return _get_usermap(user)
-
-
-def _get_usermap(user):
-    if not app_tables.usermap.get(user=user):
-        # TODO: add some defaults
-        usermap = app_tables.usermap.add_row(user=user)
-    else:
-        usermap = app_tables.usermap.get(user=user)
-    return usermap
-
-
-@anvil.server.callable(require_user=True)
-def get_permissions(tenant_id):
-    """Get the permissions of a user in a particular tenant."""
-    user = anvil.users.get_user(allow_remembered=True)
-    return _get_permissions(user, tenant_id)
-
-
-def _get_permissions(user, tenant_id, usermap=None):
-    """Get the permissions of a user in a particular tenant."""
-    usermap = usermap or app_tables.usermap.get(user=user)
-    try:
-        user_permissions = set(
-            permission["name"]
-            for role in usermap["roles"]
-            for permission in role["permissions"]
-            if role['tenant'].get_id() == tenant_id
-        )
-        return list(user_permissions)
-    except TypeError:
-        return []
