@@ -585,7 +585,7 @@ button.close > span, button.close {
 /* Component: Button */
 
 .btn, .btn-default, .file-loader>label {
-  border-radius: 100px;
+  border-radius: 12px; /* YK from 100px */
   font-size: 14px;
   font-weight: 500;
   padding: 10px 24px;
@@ -1096,15 +1096,20 @@ div.plot-container.plotly svg.main-svg {
 
 .anvil-role-table-row:hover {
   /* background: linear-gradient(0deg, %color:Dark Overlay 1%, %color:Dark Overlay 1%), linear-gradient(0deg, %color:Primary Overlay 1%, %color:Primary Overlay 1%), %color:Background%; */
-    background: hsl(315, 100%, 97.22%);
+    background: hsl(315, 100%, 98.22%);
     opacity: 100%;
 }
 
 .anvil-role-table-row {
     /* border-bottom: 1px solid #E1E0E7; */
-    border-bottom: none;
+    /* border-bottom: none; */
+    border: solid 1px %color:Outline%;
+    border-radius: 12px;
     display: flex;
     align-items: center;
+    padding: 15px;
+    margin-top: 10px;
+    margin-bottom: 10px;
     /* border-top: 1px solid #E1E0E7; */
 }
 .anvil-role-table-row .data-row-col {
