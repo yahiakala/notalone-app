@@ -37,13 +37,15 @@ def clean_up_users():
 
 
 @anvil.server.callable(require_user=True)
-def join_tenant(id):
+def join_tenant(tenant_id):
     """Join a tenant by its database row id."""
     user = anvil.users.get_user(allow_remembered=True)
-    if user['tenant'] is None:
-        user['tenant'] = app_tables.tenants.get_by_id(id)
+    usermap = get_usermap(user)
+    if usermap['tenant'] is None:
+        usermap['tenant'] = app_tables.tenants.get_by_id(tenant_id)
         # Now let the user book an interview
-        user['auth_booking'] = True
+        usermap['roles'] = [app_tables.roles.get(tenant=usermap['tenant'], name='Applicant')]
+    # TODO: elif for adding a user to another tenant
     return user
 
 
@@ -306,7 +308,7 @@ def add_role_bk(tenant_id, user, role_name, reports_to, role_members):
         return None
 
     if not app_tables.roles.get(tenant=tenant, name=role_name):
-        app_tables.roles.add_row(name=role_name, reports_to=reports_to, tenant=tenant, last_update=dt.date.today())
+        app_tables.roles.add_row(name=role_name, reports_to=reports_to, tenant=tenant, last_update=dt.date.today(), can_edit=True)
 
 
 @anvil.server.callable(require_user=True)
@@ -324,7 +326,8 @@ def upload_role_guide_bk(tenant_id, user, role_name, file):
     
     role = app_tables.roles.get(name=role_name, tenant=tenant)
     # TODO: allow multiple files
-    role['guide'] = file
+    if role['can_edit']:
+        role['guide'] = file
 
 
 # @anvil.server.callable(require_user=True)
@@ -348,5 +351,6 @@ def update_role_bk(tenant_id, user, role_name, new_role_dict):
     if 'edit_roles' not in permissions:
         return None
     role = app_tables.roles.get(name=role_name, tenant=tenant)
-    for key, val in new_role_dict.items():
-        role[key] = val
+    if role['can_edit']:
+        for key, val in new_role_dict.items():
+            role[key] = val

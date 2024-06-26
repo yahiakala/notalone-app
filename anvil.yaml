@@ -112,6 +112,9 @@ db_schema:
       admin_ui: {width: 200}
       type: link_multiple
       target: permissions
+    - name: can_edit
+      admin_ui: {width: 200}
+      type: bool
     title: Roles
   notes:
     client: none

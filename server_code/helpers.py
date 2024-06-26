@@ -1,4 +1,5 @@
 from anvil.tables import app_tables
+import anvil.tables.query as q
 
 
 def print_timestamp(input_str):
@@ -70,6 +71,17 @@ def populate_permissions():
         for perm in permissions:
             app_tables.permissions.add_row(name=perm)
 
-def populate_roles():
+def populate_roles(tenant):
     """Some basic roles."""
-    pass
+    role_dict = {
+        'Applicant': ['book_interview'],
+        'Approved': ['see_profile'],
+        'Member': ['see_profile', 'see_forum'],
+        'Interviewer': ['see_profile', 'see_forum', 'see_applicants', 'see_members'],
+        'Admin': ['see_profile', 'see_forum', 'see_applicants', 'see_members', 'edit_members', 'delete_members', 'delete_admin', 'edit_roles']
+    }
+    for key, val in role_dict.items():
+        perm_rows = app_tables.permissions.search(name=q.any(*val))
+        is_it_there = app_tables.roles.get(name=key, tenant=tenant)
+        if not is_it_there:
+            app_tables.roles.add_row(name=key, tenant=tenant, permissions=perm_rows, can_edit=False)
