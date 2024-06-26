@@ -6,7 +6,10 @@ import anvil.tables.query as q
 import anvil.users
 
 # https://developer.paypal.com/docs/api/subscriptions/v1/#subscriptions_create
-from .helpers import permission_required
+from anvil_extras import authorisation
+from anvil_extras.authorisation import authorisation_required
+
+authorisation.set_config({'get_roles': 'usermap'})
 
 
 def get_paypal_auth():
@@ -44,7 +47,7 @@ def get_subscriptions(subscription_id, verbose=False):
             subscription_detail_response.json()['billing_info']['last_payment']['time'].replace("Z", "+00:00")
         ).date()
         payment_amt = float(subscription_detail_response.json()['billing_info']['last_payment']['amount']['value'])
-    except KeyError as e:
+    except KeyError:
         status = None
         last_payment = None
         payment_amt = None
@@ -122,6 +125,7 @@ def notify_paid(user_ref, applicant):
         html=msg_body
     )
 
+
 @anvil.server.http_endpoint('/cancel-sub')
 def cancel_sub(**params):
     row = app_tables.users.get(paypal_sub_id=params['subscription_id'])
@@ -129,7 +133,8 @@ def cancel_sub(**params):
     return anvil.server.HttpResponse(302, headers={'Location': anvil.server.get_app_origin() + '/#profile'})
 
 
-@permission_required('auth_members')
+@anvil.server.callable(require_user=True)
+@authorisation_required('see_members')
 def check_sub(user_dict):
     from dateutil.relativedelta import relativedelta
     import datetime as dt
@@ -189,7 +194,8 @@ def calc_rev12():
         tenantfin['rev_12_active'] = total_rev
 
 
-@permission_required('auth_members')
+@anvil.server.callable(require_user=True)
+@authorisation_required('edit_members')
 def notify_payment(user_ref, tenant=None):
     """Notify the member they need to make a payment."""
     print('Sending email.')
@@ -225,7 +231,8 @@ def notify_payment(user_ref, tenant=None):
     )
 
 
-@permission_required('auth_members')
+@anvil.server.callable(require_user=True)
+@authorisation_required('edit_members')
 def notify_all_payments():
     anvil.server.launch_background_task('check_expired_payments')
 
