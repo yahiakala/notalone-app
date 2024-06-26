@@ -2,8 +2,8 @@ from ._anvil_designer import RouterTemplate
 from anvil import *
 import anvil.users
 
-from ..HomeAnonComponent import HomeAnonComponent
-from ..HomeDetailComponent import HomeDetailComponent
+# from ..HomeAnonComponent import HomeAnonComponent
+from ..Home import Home
 from ..BookingComponent import BookingComponent
 from ..ProfileComponent import ProfileComponent
 from ..ApplicantsComponent import ApplicantsComponent
@@ -12,15 +12,15 @@ from ..FinComponent import FinComponent
 from ..VolunteerComponent import VolunteerComponent
 
 from anvil_extras import routing
-from .. import Global
+from ..Global import Global
 
 
-@routing.template(path='app', priority=1, condition=None, url_keys=['tenant_id'])
+@routing.template(path='app', priority=1, condition=Global.tenant_id is not None)
 class Router(RouterTemplate):
     def __init__(self, **properties):
         self.init_components(**properties)
 
-        self.link_home.tag.url_hash = ''
+        self.link_home.tag.url_hash = 'app/home'
         self.link_apply.tag.url_hash = 'app/apply'
         self.link_profile.tag.url_hash = 'app/profile'
         self.link_applicants.tag.url_hash = 'app/applicants'

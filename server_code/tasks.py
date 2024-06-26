@@ -61,9 +61,9 @@ def join_tenant(tenant_id):
 
 
 @anvil.server.callable(require_user=True)
-def update_user(user_dict, tenant_id):
+def update_user(tenant_id, user_dict):
     user = anvil.users.get_user(allow_remembered=True)
-    verify_tenant(user, tenant_id)
+    verify_tenant(tenant_id, user)
     for key in ['first_name', 'last_name', 'fb_url', 'fee', 'consent_check', 'paypal_sub_id', 'phone', 'discord']:
         if user[key] != user_dict[key]:
             user[key] = user_dict[key]
@@ -71,35 +71,42 @@ def update_user(user_dict, tenant_id):
     return user
 
 
-@anvil.server.callable(require_user=True)
-def update_member(email, col_dict, tenant_id):
-    """Reset roles for a member."""
-    print_timestamp('update_member: ' + email + ' col_dict: ' + str(col_dict))
-    user = anvil.users.get_user(allow_remembered=True)
-    usermap, permissions, tenant = validate_user(tenant_id, user)
+# @anvil.server.callable(require_user=True)
+# def update_member(tenant_id, email, col_dict):
+#     """Update roles for a member."""
+#     print_timestamp('update_member: ' + email + ' col_dict: ' + str(col_dict))
+#     user = anvil.users.get_user(allow_remembered=True)
+#     usermap, permissions, tenant = validate_user(tenant_id, user)
     
-    member = app_tables.users.get(email=email, tenant=user['tenant'])
-    if 'see_members' in permissions:
-        acceptable_cols = None
-    elif 'see_applicants' in permissions:
-        acceptable_cols = ['auth_profile', 'auth_forumchat', 'auth_booking']
-    else:
-        raise Exception('Authorisation required.')
+#     member = app_tables.users.get(email=email, tenant=user['tenant'])
+#     if 'see_members' in permissions:
+#         acceptable_cols = None
+#     elif 'see_applicants' in permissions:
+#         acceptable_cols = ['auth_profile', 'auth_forumchat', 'auth_booking']
+#     else:
+#         raise Exception('Authorisation required.')
 
-    for col_name, val in col_dict.items():
-        if (acceptable_cols is not None and col_name in acceptable_cols) or acceptable_cols is None:
-            member[col_name] = val
-    return member
+#     for col_name, val in col_dict.items():
+#         if (acceptable_cols is not None and col_name in acceptable_cols) or acceptable_cols is None:
+#             member[col_name] = val
+#     return member
 
 
 @anvil.server.callable(require_user=True)
 @authorisation_required('delete_members')
-def delete_user(user_dict, tenant_id):
+def delete_user(tenant_id, user_email):
     print_timestamp('delete_user')
     user = anvil.users.get_user(allow_remembered=True)
+    anvil.server.launch_background_task('delete_user_bk', tenant_id, user, user_email)
+
+
+@anvil.server.background_task
+def delete_user_bk(tenant_id, user, user_email):
     usermap, permissions, tenant = validate_user(tenant_id, user)
+    if 'delete_members' not in permissions:
+        return None
     
-    user_del = app_tables.users.get(email=user_dict['email'])
+    user_del = app_tables.users.get(email=user_email)
     user_del_usermap, user_del_permissions, user_del_tenant = validate_user(tenant_id, user_del)
     
     if 'delete_members' in user_del_permissions and 'delete_admin' not in permissions:

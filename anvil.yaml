@@ -13,7 +13,7 @@ scheduled_tasks:
   job_id: DYCHHZXR
 dependencies:
 - dep_id: dep_dmhomulhrajp9w
-  version: {version_tag: v01}
+  version: {dev: false}
   resolution_hints: {app_id: CVAFGUBPSRFZNPZD, name: anvil_extras, package_name: anvil_extras}
 - dep_id: dep_yfmcrf11pl29j4
   version: {dev: true}

@@ -1,4 +1,4 @@
-from ._anvil_designer import HomeDetailComponentTemplate
+from ._anvil_designer import HomeTemplate
 from anvil import *
 import anvil.tables.query as q
 import anvil.server
@@ -8,8 +8,8 @@ from .. import Global
 
 
 @routing.route('', template='Router')
-@routing.route('/homedetail', template='Router')
-class HomeDetailComponent(HomeDetailComponentTemplate):
+@routing.route('/home', template='Router')
+class Home(HomeTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.
         self.groups = []
@@ -47,11 +47,3 @@ class HomeDetailComponent(HomeDetailComponentTemplate):
         self.refresh_data_bindings()
         self.tb_search_group.text = None
         self.btn_clear_search.visible = False
-
-    def super_load(self):
-        superlog = TimerLogger('super_load')
-        superlog.start('super_load start')
-        self.data = Global.super_load
-        superlog.end('super_load end')
-        Global.users = self.data['users']
-        Global.applicants = self.data['applicants']
