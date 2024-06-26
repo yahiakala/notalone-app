@@ -3,7 +3,7 @@ from anvil.tables import app_tables
 import anvil.tables.query as q
 
 from anvil_squared.helpers import print_timestamp
-from .helpers import validate_user, get_usermap
+from .helpers import validate_user, get_usermap, get_permissions
 
 # from anvil_extras import authorisation
 # from anvil_extras.authorisation import authorisation_required
@@ -57,79 +57,82 @@ def get_users(tenant_id, user, usermap=None, permissions=None, tenant=None):
     
     if 'see_members' not in permissions:
         return []
-    
+
     member_rows = app_tables.usermap.search(tenant=tenant)
-    memberlist = [
-        {
-            'first_name': member['user']['first_name'] or '',
-            'last_name': member['user']['last_name'] or '',
-            'email': member['user']['email'],
-            'fb_url': member['user']['fb_url'] or '',
-            'discord': member['user']['discord'] or '',
-            'fee': member['user']['fee'],
-            'payment_status': member['user']['payment_status'],
-            'payment_expiry': member['user']['payment_expiry'],
-            'good_standing': member['user']['good_standing'],
-            'last_login': member['user']['last_login'],
-            'signed_up': member['user']['signed_up'],
-            'paypal_sub_id': member['user']['paypal_sub_id'],
-            'permissions': _get_permissions(member['user'], tenant.get_id())
-        }
-        for member in member_rows
-    ]
+    memberlist = [usermap_row_to_dict(tenant, member) for member in member_rows]
     print_timestamp('_get_users: end')
     return memberlist
 
 
+def usermap_row_to_dict(tenant, row):
+    row_dict = {
+        'first_name': row['user']['first_name'] or '',
+        'last_name': row['user']['last_name'] or '',
+        'email': row['user']['email'],
+        'fb_url': row['user']['fb_url'] or '',
+        'discord': row['user']['discord'] or '',
+        'fee': row['user']['fee'],
+        'payment_status': row['user']['payment_status'],
+        'payment_expiry': row['user']['payment_expiry'],
+        'good_standing': row['user']['good_standing'],
+        'last_login': row['user']['last_login'],
+        'signed_up': row['user']['signed_up'],
+        'paypal_sub_id': row['user']['paypal_sub_id'],
+        'permissions': get_permissions(None, row['user'], row, tenant),
+        'roles': [role['name'] for role in row['roles']],
+        'notes': row['notes']
+    }
+    return row_dict
+
+
 def get_applicants(tenant_id, user, usermap=None, permissions=None, tenant=None, users=None):
-    # TODO: change up query to not use auth flags
-    # TODO: use users if defined
     usermap, permissions, tenant = validate_user(tenant_id, user, usermap, permissions, tenant)
+    if len(users) > 0:
+        # Just pull the applicants out of the users.
+        app_list = [i for i in users if 'book_interview' in i['permissions']]
+        return app_list
     
     if 'see_applicants' not in permissions:
         return []
-    
-    app_q = app_tables.users.search(
-        q.fetch_only("email", "first_name", "last_name", "auth_profile",
-                    "auth_forumchat", "auth_booking", "good_standing", "signed_up"),
+
+    # TODO: test this thoroughly, as it is advanced.
+    perm_row = app_tables.permissions.get(name='book_interview')
+    role_rows = app_tables.roles.search(
+        q.fetch_only('name', 'tenant', 'permissions'),
+        permissions=perm_row,
         tenant=tenant,
-        auth_forumchat=q.not_(True),
-        auth_profile=q.not_(True),
-        auth_booking=True
     )
+    applicant_rows = app_tables.usermap.search(
+        q.fetch_only('user'),
+        roles=q.any_of(role_rows),
+        tenant=tenant
+    )
+    
+    app_list = [usermap_row_to_dict(tenant, row) for row in applicant_rows]
     print_timestamp('get_applicants done query')
-    app_list = [
-        {
-            'email': i['email'],
-            'first_name': i['first_name'] or '',
-            'last_name': i['last_name'] or '',
-            'auth_profile': i['auth_profile'],
-            'auth_forumchat': i['auth_forumchat'],
-            'auth_booking': i['auth_booking'],
-            'good_standing': i['good_standing'],
-            'signed_up': i['signed_up']
-        }
-        for i in app_q
-    ]
     return app_list
 
 
 def get_screenerlink(tenant_id, user, usermap=None, permissions=None, tenant=None):
+    """Get a random interviewer name and link."""
     import random
 
     usermap, permissions, tenant = validate_user(tenant_id, user, usermap, permissions, tenant)
-
     if 'book_interview' not in permissions:
         return ''
 
+    # TODO: in future, make sure they have an interviewer role
+    screeners = app_tables.users.search(
+        booking_link=q.not_(None),
+        tenant=tenant
+    )
+    
     records = [
         {
             'first_name': r['first_name'],
             'booking_link': r['booking_link'],
         }
-        for r in app_tables.users.search(booking_link=q.not_(None),
-                                        tenant=tenant,
-                                        auth_screenings=True)
+        for r in screeners
     ]
     # Shuffle the records list
     random.shuffle(records)
@@ -137,6 +140,7 @@ def get_screenerlink(tenant_id, user, usermap=None, permissions=None, tenant=Non
 
 
 def get_finances(tenant_id, user, usermap=None, permissions=None, tenant=None):
+    """Get financial data from the tenant table."""
     usermap, permissions, tenant = validate_user(tenant_id, user, usermap, permissions, tenant)
 
     if 'see_finances' not in permissions:
@@ -151,44 +155,54 @@ def get_finances(tenant_id, user, usermap=None, permissions=None, tenant=None):
 
 
 def get_forumlink(tenant_id, user, usermap=None, permissions=None, tenant=None):
+    """Get link to forum."""
     usermap, permissions, tenant = validate_user(tenant_id, user, usermap, permissions, tenant)
-    if 'see_forum' in permissions:
-        return 'https://' + app_tables.forum.get(tenant=tenant)['discourse_url']
-    else:
-        return ''
+    return tenant['discourse_url']
 
 
 def get_discordlink(tenant_id, user, usermap=None, permissions=None, tenant=None):
     usermap, permissions, tenant = validate_user(tenant_id, user, usermap, permissions, tenant)
     if 'see_forum' in permissions:
-        return app_tables.forum.get(tenant=tenant)['discord_invite']
+        return tenant['discord_invite']
     return ''
 
 
 def get_roles(tenant_id, user, usermap=None, permissions=None, tenant=None):
     usermap, permissions, tenant = validate_user(tenant_id, user, usermap, permissions, tenant)
     if 'see_forum' in permissions:
-        return app_tables.roles.search(tenant=tenant)
+        role_list = [
+            {
+                'name': i['name'],
+                'reports_to': i['reports_to'],
+                'last_update': i['last_update'],
+                'guide': i['guide'],
+                'permissions': [j['name'] for j in i['permissions']]
+            }
+            for i in app_tables.roles.search(tenant=tenant)
+        ]
+        return role_list
     return []
 
 
-def get_roles_to_members(tenant_id, user, usermap=None, permissions=None, tenant=None):
-    usermap, permissions, tenant = validate_user(tenant_id, user, usermap, permissions, tenant)
-    if 'see_members' in permissions:
-        role_members = []
-        # users = list(app_tables.users.search(tenant=tenant))
-        for role in app_tables.roles.search(tenant=tenant):
-            role_members.append(
-                {
-                    'name': role['name'],
-                    'last_update': role['last_update'],
-                    'reports_to': role['reports_to'],
-                    'member': [i for i in app_tables.users.search(tenant=tenant, roles=[role])]
-                    # 'users': users
-                }
-            )
-        return role_members
-    return []
+# def get_roles_to_members(tenant_id, user, usermap=None, permissions=None, tenant=None):
+#     """Get a dict mapping roles to users."""
+#     # TODO: create this dict in the front end. This can be done with the users object.
+#     usermap, permissions, tenant = validate_user(tenant_id, user, usermap, permissions, tenant)
+#     if 'see_members' in permissions:
+#         role_members = []
+#         # users = list(app_tables.users.search(tenant=tenant))
+#         for role in app_tables.roles.search(tenant=tenant):
+#             role_members.append(
+#                 {
+#                     'name': role['name'],
+#                     'last_update': role['last_update'],
+#                     'reports_to': role['reports_to'],
+#                     'member': [i for i in app_tables.users.search(tenant=tenant, roles=[role])]
+#                     # 'users': users
+#                 }
+#             )
+#         return role_members
+#     return []
 
 
 # ------------------------------------------------------
@@ -218,11 +232,11 @@ def get_user_data_bk(tenant_id, user, usermap=None, permissions=None, tenant=Non
     data['screenerlink'] = get_screenerlink(tenant_id, user, usermap, permissions, tenant)
     anvil.server.task_state['screenerlink'] = data['screenerlink']
 
-    data['applicants'] = get_applicants(tenant_id, user, usermap, permissions, tenant)
-    anvil.server.task_state['applicants'] = data['applicants']
-
     data['users'] = get_users(tenant_id, user, usermap, permissions, tenant)
     anvil.server.task_state['users'] = data['users']
+
+    data['applicants'] = get_applicants(tenant_id, user, usermap, permissions, tenant, data['users'])
+    anvil.server.task_state['applicants'] = data['applicants']
 
     data['discordlink'] = get_discordlink(tenant_id, user, usermap, permissions, tenant)
     anvil.server.task_state['discordlink'] = data['discordlink']
@@ -230,8 +244,8 @@ def get_user_data_bk(tenant_id, user, usermap=None, permissions=None, tenant=Non
     data['roles'] = get_roles(tenant_id, user, usermap, permissions, tenant)
     anvil.server.task_state['roles'] = data['roles']
     
-    data['roles_to_members'] = get_roles_to_members(tenant_id, user, usermap, permissions, tenant)
-    anvil.server.task_state['roles_to_members'] = data['roles_to_members']
+    # data['roles_to_members'] = get_roles_to_members(tenant_id, user, usermap, permissions, tenant)
+    # anvil.server.task_state['roles_to_members'] = data['roles_to_members']
         
     print_timestamp('get_user_data_bk: end')
     return data

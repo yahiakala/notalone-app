@@ -63,6 +63,7 @@ def verify_tenant(tenant_id, user, usermap=None):
         raise Exception('User does not belong to this tenant.')
     return tenant_row
 
+
 def get_usermap(user):
     if not app_tables.usermap.get(user=user):
         # TODO: add some defaults
@@ -71,15 +72,17 @@ def get_usermap(user):
         usermap = app_tables.usermap.get(user=user)
     return usermap
 
-def get_permissions(tenant_id, user, usermap=None):
+
+def get_permissions(tenant_id, user, usermap=None, tenant=None):
     """Get the permissions of a user in a particular tenant."""
-    usermap = usermap or app_tables.usermap.get(user=user)
+    usermap = usermap if usermap is not None else app_tables.usermap.get(user=user)
+    tenant = tenant if tenant is not None else verify_tenant(tenant_id, user, usermap)
     try:
         user_permissions = set(
             permission["name"]
             for role in usermap["roles"]
             for permission in role["permissions"]
-            if role['tenant'].get_id() == tenant_id
+            if role['tenant'] == tenant
         )
         return list(user_permissions)
     except TypeError:
@@ -88,8 +91,8 @@ def get_permissions(tenant_id, user, usermap=None):
 
 def validate_user(tenant_id, user, usermap=None, permissions=None, tenant=None):
     usermap = usermap if usermap is not None else get_usermap(user)
-    permissions = permissions if permissions is not None else get_permissions(tenant_id, user, usermap)
     tenant = tenant if tenant is not None else verify_tenant(tenant_id, user, usermap)
+    permissions = permissions if permissions is not None else get_permissions(tenant_id, user, usermap, tenant)
     return usermap, permissions, tenant
 
 
@@ -110,3 +113,7 @@ def populate_permissions():
     if len(app_tables.permissions.search()) == 0:
         for perm in permissions:
             app_tables.permissions.add_row(name=perm)
+
+def populate_roles():
+    """Some basic roles."""
+    pass

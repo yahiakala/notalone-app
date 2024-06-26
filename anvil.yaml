@@ -59,6 +59,9 @@ db_schema:
       admin_ui: {width: 200}
       type: link_multiple
       target: roles
+    - name: notes
+      admin_ui: {width: 200}
+      type: string
   permissions:
     title: Permissions
     client: none
