@@ -38,7 +38,6 @@ class Router(RouterTemplate):
             self.lbl_app_title.visible = False
             self.link_forum_nav.text = ''
 
-        Global.tenant_id = self.url_dict['tenant_id']
 
         if Global.get_no_call('user_data') is None:
             self.timer_user_data.interval = 2

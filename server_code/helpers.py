@@ -1,5 +1,6 @@
 from anvil.tables import app_tables
 import anvil.tables.query as q
+# from anvil_squared.helpers import print_timestamp
 
 
 def print_timestamp(input_str):
@@ -53,20 +54,31 @@ def validate_user(tenant_id, user, usermap=None, permissions=None, tenant=None):
     return usermap, permissions, tenant
 
 
+permissions = [
+    'see_applicants',
+    'see_members',
+    'edit_members',
+    'delete_members',
+    'see_profile',
+    'see_forum',
+    'book_interview',
+    'see_finances',
+    'dev',
+    'edit_roles'
+]
+
+role_dict = {
+        'Applicant': ['book_interview'],
+        'Approved': ['see_profile'],
+        'Member': ['see_profile', 'see_forum'],
+        'Interviewer': ['see_profile', 'see_forum', 'see_applicants', 'see_members'],
+        'Admin': ['see_profile', 'see_forum', 'see_applicants', 'see_members', 'edit_members', 'delete_members', 'delete_admin', 'edit_roles']
+    }
+
+
 def populate_permissions():
     """Populate the permissions table."""
-    permissions = [
-        'see_applicants',
-        'see_members',
-        'edit_members',
-        'delete_members',
-        'see_profile',
-        'see_forum',
-        'book_interview',
-        'see_finances',
-        'dev',
-        'edit_roles'
-    ]
+    print_timestamp('populate_permissions')
     if len(app_tables.permissions.search()) == 0:
         for perm in permissions:
             app_tables.permissions.add_row(name=perm)
@@ -74,15 +86,14 @@ def populate_permissions():
 
 def populate_roles(tenant):
     """Some basic roles."""
-    role_dict = {
-        'Applicant': ['book_interview'],
-        'Approved': ['see_profile'],
-        'Member': ['see_profile', 'see_forum'],
-        'Interviewer': ['see_profile', 'see_forum', 'see_applicants', 'see_members'],
-        'Admin': ['see_profile', 'see_forum', 'see_applicants', 'see_members', 'edit_members', 'delete_members', 'delete_admin', 'edit_roles']
-    }
+    print_timestamp('populate_roles')
+    
     for key, val in role_dict.items():
-        perm_rows = app_tables.permissions.search(name=q.any(*val))
+        perm_rows = app_tables.permissions.search(name=q.any_of(*val))
+        if len(perm_rows) == 0:
+            populate_permissions()
+            perm_rows = app_tables.permissions.search(name=q.any_of(*val))
+            
         is_it_there = app_tables.roles.get(name=key, tenant=tenant)
         if not is_it_there:
-            app_tables.roles.add_row(name=key, tenant=tenant, permissions=perm_rows, can_edit=False)
+            app_tables.roles.add_row(name=key, tenant=tenant, permissions=list(perm_rows), can_edit=False)
