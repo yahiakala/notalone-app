@@ -1,5 +1,5 @@
 import anvil.server
-
+from anvil.tables import app_tables
 from functools import wraps, partial
 
 
@@ -51,3 +51,14 @@ def check_user_auth(user, permissions):
         return False
         
     return True
+
+
+
+def verify_tenant(user, tenant_id, usermap=None):
+    """Verify a user is in this tenant."""
+    tenant_row = app_tables.tenants.get_by_id(tenant_id)
+    usermap = usermap or app_tables.usermap.get(user=user)
+    # TODO: might cause an error if none or just 1 tenant
+    if tenant_row not in usermap['tenant']:
+        raise Exception('User does not belong to this tenant.')
+    return tenant_row
