@@ -62,3 +62,22 @@ def verify_tenant(user, tenant_id, usermap=None):
     if tenant_row not in usermap['tenant']:
         raise Exception('User does not belong to this tenant.')
     return tenant_row
+
+
+def populate_permissions():
+    """Populate the permissions table."""
+    permissions = [
+        'see_applicants',
+        'see_members',
+        'edit_members',
+        'delete_members',
+        'see_profile',
+        'see_forum',
+        'book_interview',
+        'see_finances',
+        'dev',
+        'edit_roles'
+    ]
+    if len(app_tables.permissions.search()) == 0:
+        for perm in permissions:
+            app_tables.permissions.add_row(name=perm)

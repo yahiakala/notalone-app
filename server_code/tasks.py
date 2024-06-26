@@ -7,6 +7,10 @@ import anvil.email
 from .helpers import permission_required, print_timestamp, verify_tenant
 from .gets import _get_usermap, _get_permissions
 import datetime as dt
+from anvil_extras import authorisation
+from anvil_extras.authorisation import authorisation_required
+
+authorisation.set_config({'get_roles': 'usermap'})
 
 
 def clean_up_user(user):
@@ -90,24 +94,27 @@ def update_member(email, col_dict, tenant_id):
 
 
 @anvil.server.callable(require_user=True)
+@authorisation_required('delete_members')
 def delete_user(user_dict, tenant_id):
     print_timestamp('delete_user')
     user = anvil.users.get_user(allow_remembered=True)
     usermap = _get_usermap(user)
     permissions = _get_permissions(user, tenant_id, usermap)
     verify_tenant(user, tenant_id, usermap)
-    if 'delete_members' in permissions:
-        user_del = app_tables.users.get(email=user_dict['email'])
-        user_del_usermap = _get_usermap(user_del)
-        user_del_permissions = _get_permissions(user_del, tenant_id, user_del_usermap)
-        verify_tenant(user_del, tenant_id, user_del_usermap)
-        if 'delete_members' in user_del_permissions and 'delete_admin' not in permissions:
-            raise Exception("Only users with the delete_admin permission can delete this user.")
-        if len(user_del_usermap['tenant']) > 1:
-            # If user is on multiple tenants, just remove them from this tenant.
-            user_del_usermap['tenant'] = [i for i in user_del_usermap['tenant'] if i.get_id() != tenant_id]
-        else:
-            user_del.delete()
+    
+    user_del = app_tables.users.get(email=user_dict['email'])
+    user_del_usermap = _get_usermap(user_del)
+    user_del_permissions = _get_permissions(user_del, tenant_id, user_del_usermap)
+    verify_tenant(user_del, tenant_id, user_del_usermap)
+    
+    if 'delete_members' in user_del_permissions and 'delete_admin' not in permissions:
+        raise Exception("Only users with the delete_admin permission can delete this user.")
+    
+    if len(user_del_usermap['tenant']) > 1:
+        # If user is on multiple tenants, just remove them from this tenant.
+        user_del_usermap['tenant'] = [i for i in user_del_usermap['tenant'] if i.get_id() != tenant_id]
+    else:
+        user_del.delete()
 
 
 def user_search(search_txt, tenant_id):
@@ -160,20 +167,24 @@ def user_search(search_txt, tenant_id):
 
 
 @anvil.server.callable(require_user=True)
-def get_user_notes(email, tenant_id):
+@authorisation_required('see_applicants')
+def get_user_notes(tenant_id, email):
     """Get the notes for a particular user."""
     # TODO: incorporate into the main get_user_data
     user = anvil.users.get_user(allow_remembered=True)
     usermap = _get_usermap(user)
-    permissions = _get_permissions(user, tenant_id, usermap)
-    _ = verify_tenant(user, tenant_id, usermap)
-    if 'see_members' in permissions or 'see_applicants' in permissions:
-        user_row = app_tables.users.get(email=email, tenant=user['tenant'])
-        note_row = app_tables.notes.get(user=user_row, tenant=user['tenant'])
-        if note_row:
-            return note_row
-        else:
-            return app_tables.notes.add_row(user=user_row, notes='', tenant=user['tenant'])
+    # permissions = _get_permissions(user, tenant_id, usermap)
+    tenant = verify_tenant(user, tenant_id, usermap)
+    return _get_user_notes(tenant, email)
+
+
+def _get_user_notes(tenant, email):
+    user_row = app_tables.users.get(email=email, tenant=tenant)
+    note_row = app_tables.notes.get(user=user_row, tenant=tenant)
+    if note_row:
+        return note_row
+    else:
+        return app_tables.notes.add_row(user=user_row, notes='', tenant=tenant)
 
 
 @anvil.server.callable(require_user=True)
@@ -232,39 +243,81 @@ def notify_accept_bk(tenant_id, user, email_to):
     )
 
 
-@permission_required('auth_members')
-def add_role_to_member(role_name, member_email):
+@anvil.server.callable(require_user=True)
+def add_role_to_member(tenant_id, role_name, member_email):
     """Add volunteer role to member."""
     user = anvil.users.get_user(allow_remembered=True)
-    role = app_tables.roles.get(name=role_name, tenant=user['tenant'])
+    anvil.server.launch_background_task('add_role_to_member_bk', tenant_id, user, role_name, member_email)
+
+
+@anvil.server.background_task
+def add_role_to_member_bk(tenant_id, user, role_name, member_email):
+    # TODO: change up for new roles
+    usermap = _get_usermap(user)
+    permissions = _get_permissions(user, tenant_id, usermap)
+    tenant = verify_tenant(user, tenant_id, usermap)
+
+    if 'edit_members' not in permissions:
+        return None
+
+    role = app_tables.roles.get(name=role_name, tenant=tenant)
     role['last_update'] = dt.date.today()
-    member = app_tables.users.get(tenant=user['tenant'], email=member_email)
+    member = app_tables.users.get(tenant=tenant, email=member_email)
+    member_usermap = _get_usermap(member)
     # member['roles'] += [role]
-    if member['roles']:
-        if [role] not in member['roles']:
+    if member_usermap['roles']:
+        if [role] not in member_usermap['roles']:
             print('adding additional role')
-            member['roles'] += [role]
+            member_usermap['roles'] += [role]
     else:
-        member['roles'] = [role]
-    return member
+        member_usermap['roles'] = [role]
+    return member_usermap
 
 
-@permission_required('auth_members')
-def remove_role_from_member(role_name, member_email):
+@anvil.server.callable(require_user=True)
+def remove_role_from_member(tenant_id, role_name, member_email):
     """Remove volunteer role from member."""
     user = anvil.users.get_user(allow_remembered=True)
-    role = app_tables.roles.get(name=role_name, tenant=user['tenant'])
+    anvil.server.launch_background_task('remove_role_from_member_bk', tenant_id, user, role_name, member_email)
+
+
+@anvil.server.background_task
+def remove_role_from_member_bk(tenant_id, user, role_name, member_email):
+    usermap = _get_usermap(user)
+    permissions = _get_permissions(user, tenant_id, usermap)
+    tenant = verify_tenant(user, tenant_id, usermap)
+
+    if 'edit_members' not in permissions:
+        return None
+    
+    role = app_tables.roles.get(name=role_name, tenant=tenant)
     role['last_update'] = dt.date.today()
-    member = app_tables.users.get(tenant=user['tenant'], email=member_email)
-    member['roles'] = [i for i in member['roles'] if i != role]
+    member = app_tables.users.get(tenant=tenant, email=member_email)
+    member_usermap = _get_usermap(member)
+    member_usermap['roles'] = [i for i in member_usermap['roles'] if i != role]
+    return member_usermap
 
 
-@permission_required('auth_members')
-def add_role(role_name, reports_to, role_members):
+@anvil.server.callable(require_user=True)
+def add_role(tenant_id, role_name, reports_to, role_members):
     """Add volunteer role definition."""
     user = anvil.users.get_user(allow_remembered=True)
-    if not app_tables.roles.get(tenant=user['tenant'], name=role_name):
-        app_tables.roles.add_row(name=role_name, reports_to=reports_to, tenant=user['tenant'], last_update=dt.date.today())
+    anvil.server.launch_background_task('add_role_bk', tenant_id, user, role_name, reports_to, role_members)
+
+
+@anvil.server.background_task
+def add_role_bk(tenant_id, user, role_name, reports_to, role_members):
+    usermap = _get_usermap(user)
+    permissions = _get_permissions(user, tenant_id, usermap)
+    tenant = verify_tenant(user, tenant_id, usermap)
+
+    if 'edit_roles' not in permissions:
+        return None
+        
+    if not app_tables.roles.get(tenant=tenant, name=role_name):
+        app_tables.roles.add_row(name=role_name, reports_to=reports_to, tenant=tenant, last_update=dt.date.today())
+
+    # TODO: what is this?
     role_members.append(
         {
             'name': role_name,
@@ -277,17 +330,35 @@ def add_role(role_name, reports_to, role_members):
     return role_members
 
 
-@permission_required('auth_members')
-def upload_role_guide(role_name, file):
+@anvil.server.callable(require_user=True)
+def upload_role_guide(tenant_id, role_name, file):
     user = anvil.users.get_user(allow_remembered=True)
-    role = app_tables.roles.get(name=role_name, tenant=user['tenant'])
+    anvil.server.launch_background_task('upload_role_guide_bk', tenant_id, user, role_name, file)
+
+
+@anvil.server.background_task
+def upload_role_guide_bk(tenant_id, user, role_name, file):
+    usermap = _get_usermap(user)
+    permissions = _get_permissions(user, tenant_id, usermap)
+    tenant = verify_tenant(user, tenant_id, usermap)
+    if 'edit_roles' not in permissions:
+        return None
+    
+    role = app_tables.roles.get(name=role_name, tenant=tenant)
+    # TODO: allow multiple files
     role['guide'] = file
 
 
-@permission_required('auth_forumchat')
-def download_role_guide(role_name):
+@anvil.server.callable(require_user=True)
+def download_role_guide(tenant_id, role_name):
     user = anvil.users.get_user(allow_remembered=True)
-    role = app_tables.roles.get(name=role_name, tenant=user['tenant'])
+    usermap = _get_usermap(user)
+    permissions = _get_permissions(user, tenant_id, usermap)
+    if 'see_forum' not in permissions:
+        return None
+    
+    tenant = verify_tenant(user, tenant_id, usermap)
+    role = app_tables.roles.get(name=role_name, tenant=tenant)
     return role['guide']
 
 
@@ -297,19 +368,3 @@ def update_role(role_name, new_role_dict):
     role = app_tables.roles.get(name=role_name, tenant=user['tenant'])
     for key, val in new_role_dict.items():
         role[key] = val
-
-
-def populate_permissions():
-    """Populate the permissions table."""
-    permissions = [
-        'see_applicants',
-        'see_members',
-        'see_profile',
-        'see_forum',
-        'book_interview',
-        'see_finances',
-        'dev'
-    ]
-    if len(app_tables.permissions.search()) == 0:
-        for perm in permissions:
-            app_tables.permissions.add_row(name=perm)

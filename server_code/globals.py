@@ -29,7 +29,7 @@ def get_users(tenant_id):
         return []
 
 
-def _get_users(user, tenant):
+def _get_users(tenant, user, permissions):
     print_timestamp('_get_users: start')
     member_rows = app_tables.usermap.search(tenant=tenant)
     memberlist = [
@@ -234,7 +234,6 @@ def get_user_data(tenant_id):
     print_timestamp('get_user_data')
     user = anvil.users.get_user(allow_remembered=True)
     # Not gonna run the usermap, permissions, verify_tenant here due to speed
-    # TODO: first check if this same background task is running, by checking the users table.
     return anvil.server.launch_background_task('get_user_data_bk', user, tenant_id)
 
 
