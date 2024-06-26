@@ -10,6 +10,7 @@ _global_dict = {
     'permissions': None,
     'users': None,
     'tenants': None,
+    'my_tenants': None,
     'applied': None,
     'applicants': None,
     'pending': None,

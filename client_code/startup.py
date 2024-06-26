@@ -10,6 +10,10 @@ from .Global import Global
 def redirect_no_user():
     return "sign"
 
+@routing.redirect(path="app", priority=20, condition=lambda: Global.get_no_call('tenant_id') is None)
+def redirect_no_tenant():
+    return "launchpad"
+
 
 hash, pattern, dict = routing.get_url_components()
 

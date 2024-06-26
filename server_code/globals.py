@@ -18,13 +18,26 @@ from .helpers import validate_user, get_usermap, get_permissions
 def get_tenants():
     """Get a list of tenants for joining purposes."""
     # This being slow is okay.
+    # user = anvil.users.get_user(allow_remembered=True)
+    return app_tables.tenants.client_readable(q.only_cols('name'))
+
+
+@anvil.server.callable(require_user=True)
+def get_my_tenants():
+    """Get a list of tenants for joining purposes."""
+    # This being slow is okay.
     user = anvil.users.get_user(allow_remembered=True)
     usermap = get_usermap(user)
-    if usermap['tenant'] is None:
-        return app_tables.tenants.client_readable(q.only_cols('name'))
-    else:
+    if not usermap['tenant']:
         return []
-
+    tenant_list = [
+        {
+            'tenant_id': i.get_id(),
+            'name': i['name']
+        }
+        for i in usermap['tenant']
+    ]
+    return tenant_list
 
 # ----------------
 # Tenanted globals

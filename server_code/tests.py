@@ -9,7 +9,7 @@ from . import tasks
 from anvil_extras import authorisation
 from anvil_extras.authorisation import authorisation_required
 
-authorisation.set_config({'get_roles': 'usermap'})
+authorisation.set_config(get_roles='usermap')
 
 
 @anvil.server.callable(require_user=True)

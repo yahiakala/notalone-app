@@ -14,8 +14,8 @@ from ..VolunteerComponent import VolunteerComponent
 from anvil_extras import routing
 from ..Global import Global
 
-
-@routing.template(path='app', priority=1, condition=Global.tenant_id is not None)
+# lambda: Global.get_no_call('tenant_id') is not None
+@routing.template(path='app', priority=1, condition=lambda: Global.get_no_call('tenant_id') is not None)
 class Router(RouterTemplate):
     def __init__(self, **properties):
         self.init_components(**properties)

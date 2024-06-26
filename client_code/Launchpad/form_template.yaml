@@ -1,7 +1,7 @@
 container: {type: ColumnPanel}
 components:
 - name: btn_create_group
-  properties: {text: Create Group, role: outlined-button, icon: 'fa:plus'}
+  properties: {text: Create Group, role: outlined-button, icon: 'fa:plus', visible: false}
   type: Button
   layout_properties: {grid_position: 'IDRRWM,CYCGAB'}
   event_bindings: {click: btn_create_group_click}
@@ -14,10 +14,20 @@ components:
     properties: {text: My Groups, align: center}
     type: Label
     layout_properties: {grid_position: 'XHAGTX,VXEVHD'}
-  - name: rp_my_groups
-    properties: {item_template: Launchpad.ItemTemplate2}
-    type: RepeatingPanel
-    layout_properties: {grid_position: 'OECCZN,AIWYKD'}
+  - name: dg_my_groups
+    properties:
+      columns:
+      - {id: JKSDUP, title: name, data_key: name, expand: true}
+      - {id: VJQQOR, title: action, data_key: action}
+      show_page_controls: false
+      rows_per_page: null
+      auto_header: false
+    type: DataGrid
+    components:
+    - name: rp_my_groups
+      properties: {item_template: Launchpad.MyGroupRow}
+      type: RepeatingPanel
+    layout_properties: {grid_position: 'DFNXVW,IMDYIW'}
 - name: outlined_card_2
   properties: {role: outlined-card}
   type: ColumnPanel
@@ -31,8 +41,7 @@ components:
     properties: {role: outlined-card, col_widths: '{}'}
     type: ColumnPanel
     layout_properties: {grid_position: 'AWVWKT,GKGWFC'}
-    data_bindings:
-    - {property: visible, code: 'self.user[''tenant''] is None'}
+    data_bindings: []
     components:
     - name: tb_search_group
       properties: {role: outlined, bold: false, align: left, placeholder: Search for your group name here..., spacing_above: small, background: '', type: text, underline: false, font: '', hide_text: false, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: ''}
@@ -40,7 +49,7 @@ components:
       layout_properties: {grid_position: 'WCCHJO,HMKIPM'}
       event_bindings: {pressed_enter: tb_search_group_pressed_enter}
     - name: btn_clear_search
-      properties: {role: elevated-button, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: Clear Search}
+      properties: {role: elevated-button, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: false, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: Clear Search}
       type: Button
       layout_properties: {grid_position: 'SPFIBP,QBDKMY'}
       event_bindings: {click: btn_clear_search_click}
@@ -48,6 +57,5 @@ components:
       properties: {item_template: Home.GroupSearchTemplate}
       type: RepeatingPanel
       layout_properties: {grid_position: 'DZPYNZ,LWKAIP'}
-      data_bindings:
-      - {property: items, code: self.groups}
+      data_bindings: []
 is_package: true

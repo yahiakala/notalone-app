@@ -4,12 +4,12 @@ from anvil.tables import app_tables
 import anvil.tables.query as q
 import anvil.email
 
-from .helpers import print_timestamp, verify_tenant, validate_user, get_usermap
+from .helpers import print_timestamp, verify_tenant, validate_user, get_usermap, populate_roles
 import datetime as dt
 from anvil_extras import authorisation
 from anvil_extras.authorisation import authorisation_required
 
-authorisation.set_config({'get_roles': 'usermap'})
+authorisation.set_config(get_roles='usermap')
 
 
 def clean_up_user(user):
@@ -41,10 +41,14 @@ def join_tenant(tenant_id):
     """Join a tenant by its database row id."""
     user = anvil.users.get_user(allow_remembered=True)
     usermap = get_usermap(user)
+    tenant = app_tables.tenants.get_by_id(tenant_id)
     if usermap['tenant'] is None:
-        usermap['tenant'] = app_tables.tenants.get_by_id(tenant_id)
+        usermap['tenant'] = [tenant]
         # Now let the user book an interview
-        usermap['roles'] = [app_tables.roles.get(tenant=usermap['tenant'], name='Applicant')]
+        new_role = app_tables.roles.get(tenant=tenant, name='Applicant')
+        if not new_role:
+            populate_roles(tenant)
+        usermap['roles'] = [app_tables.roles.get(tenant=tenant, name='Applicant')]
     # TODO: elif for adding a user to another tenant
     return user
 

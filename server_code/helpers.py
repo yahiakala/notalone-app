@@ -71,6 +71,7 @@ def populate_permissions():
         for perm in permissions:
             app_tables.permissions.add_row(name=perm)
 
+
 def populate_roles(tenant):
     """Some basic roles."""
     role_dict = {
