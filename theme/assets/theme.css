@@ -1093,3 +1093,21 @@ div.plot-container.plotly svg.main-svg {
 /*justify-content will be applied vertically because the flex direction is column*/
   justify-content: center;
 }
+
+.anvil-role-table-row:hover {
+  /* background: linear-gradient(0deg, %color:Dark Overlay 1%, %color:Dark Overlay 1%), linear-gradient(0deg, %color:Primary Overlay 1%, %color:Primary Overlay 1%), %color:Background%; */
+    background: hsl(315, 100%, 97.22%);
+    opacity: 100%;
+}
+
+.anvil-role-table-row {
+    /* border-bottom: 1px solid #E1E0E7; */
+    border-bottom: none;
+    display: flex;
+    align-items: center;
+    /* border-top: 1px solid #E1E0E7; */
+}
+.anvil-role-table-row .data-row-col {
+    /* word-break: break-all; */
+    overflow-wrap: anywhere;
+}

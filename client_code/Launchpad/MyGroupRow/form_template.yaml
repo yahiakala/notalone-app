@@ -1,11 +1,17 @@
 is_package: true
-container: {type: DataRowPanel}
+container:
+  type: DataRowPanel
+  properties: {role: table-row}
 components:
 - name: fp_actions
   properties: {align: right}
   type: FlowPanel
   layout_properties: {column: VJQQOR}
   components:
+  - name: btn_enter_group
+    properties: {text: Enter, role: filled-button}
+    type: Button
+    layout_properties: {}
   - name: btn_leave_tenant
     properties: {text: Leave Group, role: outlined-button, align: center}
     type: Button
@@ -15,3 +21,5 @@ components:
   type: Link
   layout_properties: {column: JKSDUP}
   event_bindings: {click: link_name_click}
+  data_bindings:
+  - {property: text, code: 'self.item[''name'']', writeback: false}

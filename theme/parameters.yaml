@@ -54,6 +54,7 @@ roles:
 - {name: soft-fp}
 - {name: narrow-col}
 - {name: verically-centered}
+- {name: table-row}
 color_scheme:
   preset_groups:
   - name: Colour Scheme
