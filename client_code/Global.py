@@ -1,16 +1,18 @@
-from anvil_squared.utils import GlobalCache
+from anvil_squared.globals import GlobalCache
 
 
 _global_dict = {
     'user': None,
     'is_mobile': None,
     'usermap': None,
-    'user_data': None,
     'tenant_id': None,
+    'tenants': None,
+    'my_tenants': None
+}
+_tenanted_dict = {
+    'user_data': None,
     'permissions': None,
     'users': None,
-    'tenants': None,
-    'my_tenants': None,
     'applied': None,
     'applicants': None,
     'pending': None,
@@ -22,4 +24,4 @@ _global_dict = {
     'discordlink': None
 }
 
-Global = GlobalCache(_global_dict)
+Global = GlobalCache(_global_dict, _tenanted_dict)

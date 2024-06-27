@@ -34,13 +34,13 @@ class Router(RouterTemplate):
         self.btn_test.tag.url_hash = 'app/tests'
 
         self.user = Global.user
+        self.set_account_state(self.user)
         
         if Global.get_no_call('user_data') is None:
             print_timestamp('Starting timer')
             self.task = anvil.server.call('get_user_data', Global.tenant_id)
             self.timer_user_data.interval = 2
 
-        self.set_account_state(self.user)
         # self.nav_click(self.link_home)
 
         if Global.is_mobile:
@@ -100,7 +100,8 @@ class Router(RouterTemplate):
                 self.tb_impersonate.visible = True
                 from ..Tests import Tests
 
-            self.lbl_app_title.text = [i for i in Global.my_tenants if i['tenant_id'] == Global.tenant_id]['name']
+            print(Global.my_tenants)
+            self.lbl_app_title.text = [i for i in Global.my_tenants if i['tenant_id'] == Global.tenant_id][0]['name']
             self.link_help.visible = True
 
     def refresh_everything(self, **event_args):
@@ -146,8 +147,7 @@ class Router(RouterTemplate):
             
     def on_form_load(self, url_hash, url_pattern, url_dict, form):
         """Any time a form is loaded."""
-        # self.set_account_state(Global.user)
-        pass
+        self.on_navigation(url_hash, url_pattern, url_dict, form)
 
     def timer_user_data_tick(self, **event_args):
         """Use a timer to load all the globals."""

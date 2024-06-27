@@ -42,26 +42,26 @@ def get_my_tenants():
 # ----------------
 # Tenanted globals
 # ----------------
-# @anvil.server.callable(require_user=True)
-# def get_tenanted_data(tenant_id, key):
-#     # TODO: deprecate as only want to get tenanted globals from a bk task.
-#     print_timestamp(f'get_tenanted_data: {key}')
-#     user = anvil.users.get_user(allow_remembered=True)
+@anvil.server.callable(require_user=True)
+def get_tenanted_data(tenant_id, key):
+    # TODO: deprecate as only want to get tenanted globals from a bk task.
+    print_timestamp(f'get_tenanted_data: {key}')
+    user = anvil.users.get_user(allow_remembered=True)
     
-#     if key == 'users':
-#         return get_users(tenant_id, user)
-#     elif key == 'applicants':
-#         return get_applicants(tenant_id, user)
-#     elif key == 'screenerlink':
-#         return get_screenerlink(tenant_id, user)
-#     elif key == 'forumlink':
-#         return get_discordlink(tenant_id, user)
-#     elif key == 'discordlink':
-#         return get_forumlink(tenant_id, user)
-#     elif key == 'roles':
-#         return get_roles(tenant_id, user)
-#     elif key == 'roles_to_members':
-#         return get_roles_to_members(tenant_id, user)
+    if key == 'users':
+        return get_users(tenant_id, user)
+    elif key == 'permissions':
+        return get_permissions(tenant_id, user)
+    elif key == 'applicants':
+        return get_applicants(tenant_id, user)
+    elif key == 'screenerlink':
+        return get_screenerlink(tenant_id, user)
+    elif key == 'forumlink':
+        return get_discordlink(tenant_id, user)
+    elif key == 'discordlink':
+        return get_forumlink(tenant_id, user)
+    elif key == 'roles':
+        return get_roles(tenant_id, user)
 
 
 def get_users(tenant_id, user, usermap=None, permissions=None, tenant=None):
