@@ -1,4 +1,6 @@
-container: {type: ColumnPanel}
+container:
+  type: ColumnPanel
+  properties: {role: null}
 components:
 - name: spacer_1
   properties: {height: '50', visible: false}
@@ -45,5 +47,6 @@ components:
       type: Button
       layout_properties: {grid_position: 'RYXCZI,GBTWMP'}
       event_bindings: {click: btn_signup_click}
+    layout_properties: {}
   event_bindings: {show: form_show}
 is_package: true

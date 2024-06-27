@@ -6,8 +6,7 @@ from ..Global import Global
 import anvil.tables.query as q
 
 
-
-@routing.route('launchpad', template='Static')
+@routing.route('', template='StaticLaunch')
 class Launchpad(LaunchpadTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.

@@ -1,15 +1,12 @@
-from ._anvil_designer import StaticTemplate
+from ._anvil_designer import StaticLaunchTemplate
 from anvil import *
 from anvil_extras import routing
 
-from ..Signin import Signin
-from ..Signup import Signup
-from ..Sign import Sign
-# from ..Launchpad import Launchpad
+from ..Launchpad import Launchpad
 
 
-@routing.template(path='', priority=0, condition=None)
-class Static(StaticTemplate):
+@routing.template(path="launch", priority=2, condition=None)
+class StaticLaunch(StaticLaunchTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)

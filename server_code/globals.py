@@ -93,7 +93,7 @@ def usermap_row_to_dict(tenant, row):
         'paypal_sub_id': row['user']['paypal_sub_id'],
         'permissions': get_permissions(None, row['user'], row, tenant),
         'roles': [role['name'] for role in row['roles']],
-        'notes': row['notes']
+        'notes': app_tables.notes.get(user=row['user'], tenant=tenant)
     }
     return row_dict
 

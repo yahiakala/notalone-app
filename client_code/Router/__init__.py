@@ -100,7 +100,6 @@ class Router(RouterTemplate):
                 self.tb_impersonate.visible = True
                 from ..Tests import Tests
 
-            print(Global.my_tenants)
             self.lbl_app_title.text = [i for i in Global.my_tenants if i['tenant_id'] == Global.tenant_id][0]['name']
             self.link_help.visible = True
 

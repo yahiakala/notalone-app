@@ -20,9 +20,9 @@ container:
               overscroll-behavior: none;
               -webkit-overflow-scrolling: auto;
           }
-          .anvil-panel-section-container {
+          /* .anvil-panel-section-container {
               max-width:400px;
-          }
+          } */
       </style>
 components:
 - name: content_panel

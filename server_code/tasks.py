@@ -365,3 +365,17 @@ def update_role_bk(tenant_id, user, role_name, new_role_dict):
     if role['can_edit']:
         for key, val in new_role_dict.items():
             role[key] = val
+
+
+# -------------------------
+# Temp stuff for migration
+# -------------------------
+def migrate_tables():
+    users = app_tables.users.search(tenant=q.not_(None))
+    for user in users:
+        usermap = app_tables.usermap.get(user=user)
+        if not usermap:
+            usermap = app_tables.usermap.add_row(user=user)
+        if user['tenant'] and not usermap['tenant']:
+            usermap['tenant'] = [user['tenant']]
+        usermap['roles'] = user['roles']
