@@ -9,13 +9,6 @@ class MyGroupRow(MyGroupRowTemplate):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
 
-        # Any code you write here will run before the form opens.
-
-    def link_name_click(self, **event_args):
-        """This method is called when the link is clicked"""
-        Global.tenant_id = self.item['tenant_id']
-        routing.set_url_hash('app')
-
     def btn_enter_group_click(self, **event_args):
         """This method is called when the button is clicked"""
         Global.tenant_id = self.item['tenant_id']

@@ -1,0 +1,21 @@
+is_package: true
+container:
+  type: DataRowPanel
+  properties: {role: table-row}
+components:
+- name: fp_actions
+  properties: {align: justify, vertical_align: middle}
+  type: FlowPanel
+  layout_properties: {column: JKSDUP}
+  components:
+  - name: lbl_name
+    properties: {}
+    type: Label
+    data_bindings:
+    - {property: text, code: 'self.item[''name'']', writeback: false}
+    layout_properties: {expand: true}
+  - name: btn_join_group
+    properties: {text: Join, role: filled-button}
+    type: Button
+    layout_properties: {}
+    event_bindings: {click: btn_join_group_click}
