@@ -4,7 +4,7 @@ import anvil.tables.query as q
 import anvil.server
 from anvil_extras.logging import TimerLogger
 from anvil_extras import routing
-from .. import Global
+from ..Global import Global
 
 
 @routing.route('', template='Router')
@@ -14,15 +14,14 @@ class Home(HomeTemplate):
         # Set Form properties and Data Bindings.
         self.groups = []
         self.user = Global.user
-        self.super_load()
+        # self.super_load()
         self.init_components(**properties)
 
-        # Any code you write here will run before the form opens.
-        self.rp_groups.add_event_handler('x-refresh', self.update_stuff)
-        if self.user['tenant']:
-            self.img_tenant.source = self.user['tenant']['logo']
-        if not self.user['tenant']:
-            self.tb_search_group_pressed_enter()
+        # self.rp_groups.add_event_handler('x-refresh', self.update_stuff)
+        # if self.user['tenant']:
+        #     self.img_tenant.source = self.user['tenant']['logo']
+        # if not self.user['tenant']:
+        #     self.tb_search_group_pressed_enter()
 
     def update_stuff(self, **event_args):
         """Refresh the whole page so the user sees the booking page."""

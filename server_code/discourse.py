@@ -39,6 +39,8 @@ def login_sso(sso, sig, session_id=None):
     if not user or not user['auth_forumchat']:
         return anvil.server.HttpResponse(302, headers={"Location": anvil.server.get_app_origin()})
 
+    # TODO: get from tenants instead
+    # TODO: search for the tenant based on the origin payload
     discourse_url = app_tables.forum.get(tenant=user['tenant'])['discourse_url']
     # print(discourse_url)
     

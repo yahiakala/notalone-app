@@ -195,6 +195,12 @@ db_schema:
     - name: paypal_secret
       admin_ui: {width: 200}
       type: string
+    - name: discourse_url
+      admin_ui: {width: 200, order: 9}
+      type: string
+    - name: discord_invite
+      admin_ui: {width: 200, order: 10}
+      type: string
     title: Tenants
   users:
     client: none

@@ -14,12 +14,11 @@ _global_dict = {
     'applied': None,
     'applicants': None,
     'pending': None,
-    'screener_link': None,
+    'screenerlink': None,
     'finances': None,
     'forumlink': None,
     'roles_to_members': None,
     'roles': None,
-    'super_load': None,
     'discordlink': None
 }
 

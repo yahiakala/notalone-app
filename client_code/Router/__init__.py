@@ -13,6 +13,9 @@ from ..VolunteerComponent import VolunteerComponent
 
 from anvil_extras import routing
 from ..Global import Global
+from anvil_squared.utils import print_timestamp
+import time
+
 
 # lambda: Global.get_no_call('tenant_id') is not None
 @routing.template(path='app', priority=1, condition=lambda: Global.get_no_call('tenant_id') is not None)
@@ -21,6 +24,7 @@ class Router(RouterTemplate):
         self.init_components(**properties)
 
         self.link_home.tag.url_hash = 'app/home'
+        self.link_home.tag.globals = ['user']
         self.link_apply.tag.url_hash = 'app/apply'
         self.link_profile.tag.url_hash = 'app/profile'
         self.link_applicants.tag.url_hash = 'app/applicants'
@@ -30,18 +34,18 @@ class Router(RouterTemplate):
         self.btn_test.tag.url_hash = 'app/tests'
 
         self.user = Global.user
+        
+        if Global.get_no_call('user_data') is None:
+            print_timestamp('Starting timer')
+            self.task = anvil.server.call('get_user_data', Global.tenant_id)
+            self.timer_user_data.interval = 2
 
         self.set_account_state(self.user)
-        self.nav_click(self.link_home)
+        # self.nav_click(self.link_home)
 
         if Global.is_mobile:
             self.lbl_app_title.visible = False
             self.link_forum_nav.text = ''
-
-
-        if Global.get_no_call('user_data') is None:
-            self.timer_user_data.interval = 2
-            self.task = anvil.server.call('get_user_data', Global.tenant_id)
 
 
     def link_login_click(self, **event_args):
@@ -59,6 +63,7 @@ class Router(RouterTemplate):
         routing.set_url_hash('', load_from_cache=False)
 
     def set_account_state(self, user):
+        print_timestamp('set_account_state')
         self.link_logout.visible = user is not None
         self.link_login.visible = user is None
         
@@ -74,28 +79,29 @@ class Router(RouterTemplate):
         self.btn_test.visible = False
         self.tb_impersonate.visible = False
 
+        self.permissions = Global.permissions
+        
         if user:
             self.lbl_user.visible = True
-            self.lbl_user.text = 'Account:\n' + user['email']
-            self.link_apply.visible = user['auth_booking']
-            self.link_profile.visible = user['auth_profile']
-            self.link_applicants.visible = user['auth_screenings']
-            self.link_members.visible = user['auth_members']
-            self.link_fin.visible = user['auth_members']
-            self.link_volunteers.visible = user['auth_members']
+            self.lbl_user.text = user['email']
+            self.link_apply.visible = 'book_interview' in self.permissions
+            self.link_profile.visible = 'see_profile' in self.permissions
+            self.link_applicants.visible = 'see_applicants' in self.permissions
+            self.link_members.visible = 'see_members' in self.permissions
+            self.link_fin.visible = 'see_financials' in self.permissions
+            self.link_volunteers.visible = 'see_members' in self.permissions  # TODO
             self.link_forum_nav.visible = (
-                user['auth_forumchat'] and
+                'see_forum' in self.permissions and
                 user['first_name'] != '' and
                 user['last_name'] != ''
             )
-            if user['auth_dev']:
+            if 'dev' in self.permissions:
                 self.btn_test.visible = True
                 self.tb_impersonate.visible = True
                 from ..Tests import Tests
-            
-            if user['tenant']:
-                self.lbl_app_title.text = user['tenant']['name']
-                self.link_help.visible = True
+
+            self.lbl_app_title.text = [i for i in Global.my_tenants if i['tenant_id'] == Global.tenant_id]['name']
+            self.link_help.visible = True
 
     def refresh_everything(self, **event_args):
         """Refresh mainly the menu links."""
@@ -140,23 +146,30 @@ class Router(RouterTemplate):
             
     def on_form_load(self, url_hash, url_pattern, url_dict, form):
         """Any time a form is loaded."""
-        self.set_account_state(Global.user)
+        # self.set_account_state(Global.user)
+        pass
 
     def timer_user_data_tick(self, **event_args):
         """Use a timer to load all the globals."""
+        print_timestamp('timer_user_data_tick')
         with anvil.server.no_loading_indicator:
             if self.task.is_completed():
+                print_timestamp('task_done')
                 user_data = self.task.get_return_value()
                 Global.user_data = user_data
                 self.timer_user_data.interval = 0
                 for key, val in user_data.items():
                     if Global.get_no_call(key) is None:
+                        print_timestamp(f"task_done: setting value for {key}")
                         setattr(Global, key, val)
             else:
                 # Populate some globals based on task state.
                 states = self.task.get_state()
+                print_timestamp('Checking states')
+                print(states)
                 for key, val in states.items():
                     if Global.get_no_call(key) is None:
+                        print_timestamp(f"task_state: setting value for {key}")
                         setattr(Global, key, val)
                     
                 
