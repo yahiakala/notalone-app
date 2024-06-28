@@ -9,7 +9,7 @@ class ApplicantTemplate(ApplicantTemplateTemplate):
         self.user_notes = None
         self.user = Global.user
         self.init_components(**properties)
-        # self.user_notes = anvil.server.call('get_user_notes', self.item['email'])['notes']
+        self.user_notes = self.item['notes']
         self.refresh_data_bindings()
 
     def btn_accept_click(self, **event_args):
@@ -50,7 +50,5 @@ class ApplicantTemplate(ApplicantTemplateTemplate):
         if self.cp_notes.visible:
             self.cp_notes.visible = False
         else:
-            self.user_notes = anvil.server.call('get_user_notes', self.item['email'])['notes']
-            self.refresh_data_bindings() # send the user notes to the ta
             self.cp_notes.visible = True
 

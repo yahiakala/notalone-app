@@ -11,13 +11,12 @@ from ..MembersComponent import MembersComponent
 from ..FinComponent import FinComponent
 from ..VolunteerComponent import VolunteerComponent
 
+from anvil_extras.logging import TimerLogger
 from anvil_extras import routing
 from ..Global import Global
 from anvil_squared.utils import print_timestamp
-import time
 
 
-# lambda: Global.get_no_call('tenant_id') is not None
 @routing.template(path='app', priority=1, condition=lambda: Global.get_no_call('tenant_id') is not None)
 class Router(RouterTemplate):
     def __init__(self, **properties):
@@ -38,6 +37,8 @@ class Router(RouterTemplate):
         
         if Global.get_no_call('user_data') is None:
             print_timestamp('Starting timer')
+            self.t_globals = TimerLogger('get_users timing')
+            self.t_globals.start('starting get_users')
             self.task = anvil.server.call('get_user_data', Global.tenant_id)
             self.timer_user_data.interval = 2
 
@@ -80,6 +81,7 @@ class Router(RouterTemplate):
         self.tb_impersonate.visible = False
 
         self.permissions = Global.permissions
+        print(self.permissions)
         
         if user:
             self.lbl_user.visible = True
@@ -115,8 +117,7 @@ class Router(RouterTemplate):
 
     def link_help_click(self, **event_args):
         """This method is called when the link is clicked"""
-        if self.user and self.user['tenant']:
-            alert('For help, contact ' + self.user['tenant']['email'])
+        alert('For help, contact ' + Global.tenant_info['email'])
 
     def tb_impersonate_pressed_enter(self, **event_args):
         """This method is called when the user presses Enter in this text box"""
@@ -154,6 +155,7 @@ class Router(RouterTemplate):
         with anvil.server.no_loading_indicator:
             if self.task.is_completed():
                 print_timestamp('task_done')
+                self.t_globals.end('populated repeating panel')
                 user_data = self.task.get_return_value()
                 Global.user_data = user_data
                 self.timer_user_data.interval = 0

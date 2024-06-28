@@ -3,7 +3,7 @@ from anvil.tables import app_tables
 import anvil.tables.query as q
 
 from anvil_squared.helpers import print_timestamp
-from .helpers import validate_user, get_usermap, get_permissions
+from .helpers import validate_user, get_usermap, get_permissions, get_user_roles, get_user_notes
 
 # from anvil_extras import authorisation
 # from anvil_extras.authorisation import authorisation_required
@@ -28,14 +28,14 @@ def get_my_tenants():
     # This being slow is okay.
     user = anvil.users.get_user(allow_remembered=True)
     usermap = get_usermap(user)
-    if not usermap['tenant']:
+    if not usermap['tenants']:
         return []
     tenant_list = [
         {
             'tenant_id': i.get_id(),
             'name': i['name']
         }
-        for i in usermap['tenant']
+        for i in usermap['tenants']
     ]
     return tenant_list
 
@@ -71,7 +71,7 @@ def get_users(tenant_id, user, usermap=None, permissions=None, tenant=None):
     if 'see_members' not in permissions:
         return []
 
-    member_rows = app_tables.usermap.search(tenant=tenant)
+    member_rows = app_tables.usermap.search(tenants=[tenant])
     memberlist = [usermap_row_to_dict(tenant, member) for member in member_rows]
     print_timestamp('_get_users: end')
     return memberlist
@@ -92,8 +92,8 @@ def usermap_row_to_dict(tenant, row):
         'signed_up': row['user']['signed_up'],
         'paypal_sub_id': row['user']['paypal_sub_id'],
         'permissions': get_permissions(None, row['user'], row, tenant),
-        'roles': [role['name'] for role in row['roles']],
-        'notes': app_tables.notes.get(user=row['user'], tenant=tenant)
+        'roles': get_user_roles(None, None, row, tenant),
+        'notes': get_user_notes(None, None, row, tenant)
     }
     return row_dict
 
@@ -118,7 +118,7 @@ def get_applicants(tenant_id, user, usermap=None, permissions=None, tenant=None,
     applicant_rows = app_tables.usermap.search(
         q.fetch_only('user'),
         roles=q.any_of(role_rows),
-        tenant=tenant
+        tenants=[tenant]
     )
     
     app_list = [usermap_row_to_dict(tenant, row) for row in applicant_rows]
@@ -183,16 +183,21 @@ def get_discordlink(tenant_id, user, usermap=None, permissions=None, tenant=None
 def get_roles(tenant_id, user, usermap=None, permissions=None, tenant=None):
     usermap, permissions, tenant = validate_user(tenant_id, user, usermap, permissions, tenant)
     if 'see_forum' in permissions:
-        role_list = [
-            {
-                'name': i['name'],
-                'reports_to': i['reports_to'],
-                'last_update': i['last_update'],
-                'guide': i['guide'],
-                'permissions': [j['name'] for j in i['permissions']]
-            }
-            for i in app_tables.roles.search(tenant=tenant)
-        ]
+        role_list = []
+        for role in app_tables.roles.search(tenant=tenant):
+            if role['permissions']:
+                role_perm = [j['name'] for j in role['permissions']]
+            else:
+                role_perm = []
+            role_list.append(
+                {
+                    'name': role['name'],
+                    'reports_to': role['reports_to'],
+                    'last_update': role['last_update'],
+                    'guide': role['guide'],
+                    'permissions': role_perm
+                }
+            )
         return role_list
     return []
 

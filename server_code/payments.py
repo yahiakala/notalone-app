@@ -94,6 +94,7 @@ def create_sub(plan_amt):
 @anvil.server.http_endpoint('/capture-sub')
 def capture_sub(**params):
     # TODO: use fake paypal to test this
+    # TODO: overhaul with new data model
     row = app_tables.users.get(paypal_sub_id=params['subscription_id'])
     row['good_standing'] = True
     row['auth_forumchat'] = True
@@ -136,6 +137,7 @@ def cancel_sub(**params):
 @anvil.server.callable(require_user=True)
 @authorisation_required('see_members')
 def check_sub(user_dict):
+    # TODO: overhaul with new data model
     from dateutil.relativedelta import relativedelta
     import datetime as dt
     
@@ -198,6 +200,7 @@ def calc_rev12():
 @authorisation_required('edit_members')
 def notify_payment(user_ref, tenant=None):
     """Notify the member they need to make a payment."""
+    # TODO: overhaul with new data model
     print('Sending email.')
     if not tenant:
         user = anvil.users.get_user(allow_remembered=True)
@@ -239,5 +242,6 @@ def notify_all_payments():
 
 @anvil.server.background_task
 def check_expired_payments():
+    # TODO: overhaul with new data model
     for user in app_tables.users.search(good_standing=False, auth_profile=True):
         notify_payment(user, user['tenant'])

@@ -55,12 +55,12 @@ components:
   layout_properties: {slot: left-nav}
   components:
   - name: cp_loggedinuser
-    properties: {role: null, col_spacing: none, spacing_above: small, border: solid 1px grey, spacing_below: large}
+    properties: {role: null, col_spacing: none, spacing_above: small, border: '', spacing_below: large}
     type: ColumnPanel
     layout_properties: {grid_position: 'IRMNHS,KTPMTP'}
     components:
     - name: lbl_user
-      properties: {visible: false, underline: false}
+      properties: {visible: false, underline: false, icon: 'fa:user-circle'}
       type: Label
       layout_properties: {grid_position: 'VLGIZW,DYMEDT'}
   - type: Link

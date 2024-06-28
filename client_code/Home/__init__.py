@@ -14,14 +14,10 @@ class Home(HomeTemplate):
         # Set Form properties and Data Bindings.
         self.groups = []
         self.user = Global.user
-        # self.super_load()
         self.init_components(**properties)
 
         # self.rp_groups.add_event_handler('x-refresh', self.update_stuff)
-        # if self.user['tenant']:
-        #     self.img_tenant.source = self.user['tenant']['logo']
-        # if not self.user['tenant']:
-        #     self.tb_search_group_pressed_enter()
+        # self.img_tenant.source = Global.tenant_info['logo']
 
     def update_stuff(self, **event_args):
         """Refresh the whole page so the user sees the booking page."""

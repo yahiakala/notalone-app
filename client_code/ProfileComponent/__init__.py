@@ -2,7 +2,7 @@ from ._anvil_designer import ProfileComponentTemplate
 from anvil import *
 import anvil.server
 from anvil_extras import routing
-from .. import Global
+from ..Global import Global
 
 
 @routing.route('/profile', template='Router')
@@ -22,7 +22,7 @@ class ProfileComponent(ProfileComponentTemplate):
         else:
             self.lbl_namealert.visible = False
         print('fee: ' + str(self.user['fee']))
-        Global.user = anvil.server.call('update_user', self.user)
+        Global.user = anvil.server.call('update_user', Global.tenant_id, self.user)
         self.user = dict(Global.user)
 
     def tb_donation_change(self, **event_args):

@@ -1,7 +1,7 @@
 from ._anvil_designer import TestsTemplate
 from anvil import *
 from anvil_extras import routing
-from .. import Global
+from ..Global import Global
 
 
 @routing.route('/tests', template='Router')

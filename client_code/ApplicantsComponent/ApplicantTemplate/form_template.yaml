@@ -20,17 +20,17 @@ components:
     data_bindings:
     - {property: text, code: '''Signed up on '' + self.item[''signed_up''].strftime(''%Y-%m-%d'')', writeback: false}
   - type: Button
-    properties: {role: filled-button, align: center, tooltip: '', border: '', enabled: true, foreground: '', visible: true, text: Accept, font_size: null, font: '', spacing_above: small, icon_align: left, spacing_below: small, italic: false, background: '', bold: false, underline: false, icon: ''}
+    properties: {role: filled-button, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: Accept}
     name: btn_accept
     layout_properties: {grid_position: 'ZCTPLG,WPJYWE'}
     event_bindings: {click: btn_accept_click}
   - type: Button
-    properties: {role: filled-button, align: center, tooltip: Reject applicant but keep their record on file, border: '', enabled: true, foreground: '', visible: true, text: Reject, font_size: null, font: '', spacing_above: small, icon_align: left, spacing_below: small, italic: false, background: '', bold: false, underline: false, icon: ''}
+    properties: {role: filled-button, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: Reject applicant but keep their record on file, text: Reject}
     name: btn_reject
     layout_properties: {grid_position: 'ZCTPLG,VNYJID'}
     event_bindings: {click: btn_reject_click}
   - name: btn_del
-    properties: {role: filled-button, align: center, tooltip: Reject and delete user record from file, border: '', enabled: true, foreground: '', visible: true, text: Delete, font_size: null, font: '', spacing_above: small, icon_align: left, spacing_below: small, italic: false, background: 'theme:On Tertiary Container', bold: false, underline: false, icon: ''}
+    properties: {role: filled-button, bold: false, align: center, spacing_above: small, background: 'theme:On Tertiary Container', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: Reject and delete user record from file, text: Delete}
     type: Button
     layout_properties: {grid_position: 'ZCTPLG,QGXYHW'}
     event_bindings: {click: btn_del_click}
@@ -65,14 +65,14 @@ components:
     layout_properties: {grid_position: 'FCKOFL,RSKUYP'}
     components:
     - type: TextArea
-      properties: {role: outlined, align: left, height: '', tooltip: '', placeholder: Write notes here, border: '', enabled: true, foreground: '', visible: true, text: '', font_size: null, auto_expand: true, font: '', spacing_above: small, spacing_below: small, italic: false, background: '', bold: false, underline: false}
+      properties: {role: outlined, bold: false, align: left, placeholder: Write notes here, spacing_above: small, background: '', underline: false, font: '', foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, auto_expand: true, font_size: null, tooltip: '', height: '', text: ''}
       name: ta_notes
       layout_properties: {grid_position: 'OJFLMR,LYNGRV'}
       event_bindings: {lost_focus: ta_notes_lost_focus}
       data_bindings:
       - {property: text, code: self.user_notes, writeback: true}
     - type: Button
-      properties: {role: elevated-button, align: center, tooltip: '', border: '', enabled: true, foreground: '', visible: true, text: Save Notes, font_size: null, font: '', spacing_above: small, icon_align: left, spacing_below: small, italic: false, background: '', bold: false, underline: false, icon: ''}
+      properties: {role: elevated-button, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: Save Notes}
       name: btn_save_notes
       layout_properties: {grid_position: 'VEIGCG,KLSVON'}
       event_bindings: {click: btn_save_notes_click}

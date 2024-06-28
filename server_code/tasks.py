@@ -42,8 +42,8 @@ def join_tenant(tenant_id):
     user = anvil.users.get_user(allow_remembered=True)
     usermap = get_usermap(user)
     tenant = app_tables.tenants.get_by_id(tenant_id)
-    if usermap['tenant'] is None:
-        usermap['tenant'] = [tenant]
+    if usermap['tenants'] is None:
+        usermap['tenants'] = [tenant]
         # Now let the user book an interview
         new_role = app_tables.roles.get(tenant=tenant, name='Applicant')
         if not new_role:
@@ -116,9 +116,9 @@ def delete_user_bk(tenant_id, user, user_email):
     if 'delete_members' in user_del_permissions and 'delete_admin' not in permissions:
         raise Exception("Only users with the delete_admin permission can delete this user.")
     
-    if len(user_del_usermap['tenant']) > 1:
+    if len(user_del_usermap['tenants']) > 1:
         # If user is on multiple tenants, just remove them from this tenant.
-        user_del_usermap['tenant'] = [i for i in user_del_usermap['tenant'] if i.get_id() != tenant_id]
+        user_del_usermap['tenants'] = [i for i in user_del_usermap['tenants'] if i.get_id() != tenant_id]
     else:
         user_del.delete()
 
@@ -203,9 +203,9 @@ def save_user_notes(tenant_id, user_email, new_note):
 def save_user_notes_bk(tenant_id, user, user_email, new_note):
     usermap, permissions, tenant = validate_user(tenant_id, user)
     if 'see_applicants' in permissions:
-        user_row = app_tables.users.get(email=user_email, tenant=tenant)
-        usermap_row = app_tables.usermap.get(user=user_row)
-        usermap_row['notes'] = new_note
+        user_row = app_tables.users.get(email=user_email)
+        note_row = app_tables.notes.get(user=user_row, tenant=tenant)
+        note_row['notes'] = new_note
 
 
 @anvil.server.callable(require_user=True)
@@ -376,6 +376,6 @@ def migrate_tables():
         usermap = app_tables.usermap.get(user=user)
         if not usermap:
             usermap = app_tables.usermap.add_row(user=user)
-        if user['tenant'] and not usermap['tenant']:
-            usermap['tenant'] = [user['tenant']]
+        if user['tenant'] and not usermap['tenants']:
+            usermap['tenants'] = [user['tenant']]
         usermap['roles'] = user['roles']

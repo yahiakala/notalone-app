@@ -11,7 +11,7 @@ from anvil import *
 
 # TODO: Bar chart of last payments throughout the year
 from anvil_extras import routing
-from .. import Global
+from ..Global import Global
 
 
 @routing.route('/financials', template='Router')

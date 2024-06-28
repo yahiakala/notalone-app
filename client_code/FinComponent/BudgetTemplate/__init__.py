@@ -1,7 +1,7 @@
 from ._anvil_designer import BudgetTemplateTemplate
 from anvil import *
 
-from .. import Global
+from ..Global import Global
 
 
 class BudgetTemplate(BudgetTemplateTemplate):

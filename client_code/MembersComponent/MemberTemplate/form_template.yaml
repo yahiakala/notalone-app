@@ -15,7 +15,7 @@ components:
     - {code: 'self.item[''first_name''] + '' '' + self.item[''last_name''] + '' ('' + self.item[''email''] + '')''', property: text}
     name: lbl_name
   - type: Button
-    properties: {role: null, align: center, tooltip: '', border: '', enabled: true, foreground: '', visible: true, text: '', font_size: null, font: '', spacing_above: small, icon_align: left, spacing_below: small, italic: false, background: '', bold: false, underline: false, icon: 'fa:refresh'}
+    properties: {role: null, bold: false, align: center, spacing_above: small, background: '', icon: 'fa:refresh', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: ''}
     layout_properties: {grid_position: 'FRXGOQ,LLSLKE'}
     event_bindings: {click: btn_refresh_click}
     name: btn_refresh
@@ -50,95 +50,94 @@ components:
     layout_properties: {grid_position: 'OJGZLL,OASEOQ'}
     name: lbl_last_login
   - type: FlowPanel
-    properties: {role: null, spacing: medium, align: left, tooltip: '', border: '', foreground: '', visible: true, spacing_above: small, spacing_below: small, background: ''}
+    properties: {role: null, align: left, spacing_above: small, background: '', foreground: '', spacing_below: small, visible: true, border: '', tooltip: '', spacing: medium}
     layout_properties: {grid_position: 'FUQLMH,EZDYNV'}
     name: fp_auths
     components:
     - type: Label
-      properties: {role: null, align: left, tooltip: '', border: '', foreground: '', visible: true, text: 'User Permissions:', font_size: null, font: '', spacing_above: small, icon_align: left, spacing_below: small, italic: false, background: '', bold: false, underline: false, icon: ''}
+      properties: {role: null, bold: false, align: left, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, font_size: null, tooltip: '', text: 'User Permissions:'}
       layout_properties: {}
       name: lbl_roles
     - type: CheckBox
-      properties: {role: null, align: left, tooltip: '', border: '', enabled: true, foreground: '', allow_indeterminate: false, visible: true, text: Member List, font_size: null, font: '', spacing_above: small, spacing_below: small, italic: false, background: '', bold: false, checked: false, underline: false}
+      properties: {role: null, bold: false, align: left, spacing_above: small, background: '', allow_indeterminate: false, underline: false, font: '', foreground: '', checked: false, spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: Member List}
       data_bindings:
       - {code: 'self.item[''auth_members'']', writeback: true, property: checked}
       name: cb_members
       event_bindings: {change: cb_members_change}
     - type: CheckBox
-      properties: {role: null, align: left, tooltip: '', border: '', enabled: true, foreground: '', allow_indeterminate: false, visible: true, text: Screenings, font_size: null, font: '', spacing_above: small, spacing_below: small, italic: false, background: '', bold: false, checked: false, underline: false}
+      properties: {role: null, bold: false, align: left, spacing_above: small, background: '', allow_indeterminate: false, underline: false, font: '', foreground: '', checked: false, spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: Screenings}
       layout_properties: {grid_position: 'KSEVOG,RHOOBH'}
       data_bindings:
       - {code: 'self.item[''auth_screenings'']', writeback: true, property: checked}
       name: cb_screenings
       event_bindings: {change: cb_screenings_change}
     - type: CheckBox
-      properties: {role: null, align: left, tooltip: '', border: '', enabled: true, foreground: '', allow_indeterminate: false, visible: true, text: Forum, font_size: null, font: '', spacing_above: small, spacing_below: small, italic: false, background: '', bold: false, checked: false, underline: false}
+      properties: {role: null, bold: false, align: left, spacing_above: small, background: '', allow_indeterminate: false, underline: false, font: '', foreground: '', checked: false, spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: Forum}
       layout_properties: {}
       data_bindings:
       - {code: 'self.item[''auth_forumchat'']', writeback: true, property: checked}
       name: cb_forumchat
       event_bindings: {change: cb_forumchat_change}
     - type: CheckBox
-      properties: {role: null, align: left, tooltip: '', border: '', enabled: true, foreground: '', allow_indeterminate: false, visible: true, text: Profile, font_size: null, font: '', spacing_above: small, spacing_below: small, italic: false, background: '', bold: false, checked: false, underline: false}
+      properties: {role: null, bold: false, align: left, spacing_above: small, background: '', allow_indeterminate: false, underline: false, font: '', foreground: '', checked: false, spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: Profile}
       layout_properties: {}
       data_bindings:
       - {code: 'self.item[''auth_profile'']', writeback: true, property: checked}
       name: cb_profile
       event_bindings: {change: cb_profile_change}
     - name: cb_authbooking
-      properties: {role: null, align: left, tooltip: '', border: '', enabled: true, foreground: '', allow_indeterminate: false, visible: true, text: Book Screening, font_size: null, font: '', spacing_above: small, spacing_below: small, italic: false, background: '', bold: false, checked: false, underline: false}
+      properties: {role: null, bold: false, align: left, spacing_above: small, background: '', allow_indeterminate: false, underline: false, font: '', foreground: '', checked: false, spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: Book Screening}
       type: CheckBox
       layout_properties: {}
       data_bindings:
       - {property: checked, code: 'self.item[''auth_booking'']', writeback: true}
       event_bindings: {change: cb_authbooking_change}
   - type: ColumnPanel
-    properties: {role: outlined-card, tooltip: '', border: '', foreground: '', visible: false, wrap_on: mobile, col_spacing: medium, spacing_above: small, col_widths: '{}', spacing_below: small, background: ''}
+    properties: {role: outlined-card, col_widths: '{}', spacing_above: small, background: '', wrap_on: mobile, col_spacing: medium, foreground: '', spacing_below: small, visible: false, border: '', tooltip: ''}
     layout_properties: {grid_position: 'IPWQBW,BTDFXC'}
     name: cp_notes
     components:
     - type: TextArea
-      properties: {role: outlined, align: left, height: '', tooltip: '', placeholder: User Notes are Empty, border: '', enabled: true, foreground: '', visible: true, text: '', font_size: null, auto_expand: true, font: '', spacing_above: small, spacing_below: small, italic: false, background: '', bold: false, underline: false}
+      properties: {role: outlined, bold: false, align: left, placeholder: User Notes are Empty, spacing_above: small, background: '', underline: false, font: '', foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, auto_expand: true, font_size: null, tooltip: '', height: '', text: ''}
       layout_properties: {grid_position: 'GKVBPX,IFEJQB'}
-      data_bindings:
-      - {property: text, code: self.user_notes, writeback: true}
+      data_bindings: []
       event_bindings: {lost_focus: btn_save_click}
       name: ta_user_notes
     - type: Button
-      properties: {role: elevated-button, align: center, tooltip: '', border: '', enabled: true, foreground: '', visible: true, text: Save Notes, font_size: null, font: '', spacing_above: small, icon_align: left, spacing_below: small, italic: false, background: '', bold: false, underline: false, icon: ''}
+      properties: {role: elevated-button, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: Save Notes}
       layout_properties: {grid_position: 'AMAJJD,HCVULW'}
       event_bindings: {click: btn_save_notes_click}
       name: btn_save_notes
   - type: Button
-    properties: {role: filled-button, align: left, tooltip: '', border: '', enabled: true, foreground: '', visible: true, text: Show/Hide Notes, font_size: null, font: '', spacing_above: small, icon_align: left, spacing_below: small, italic: false, background: 'theme:Tertiary', bold: false, underline: false, icon: ''}
+    properties: {role: filled-button, bold: false, align: left, spacing_above: small, background: 'theme:Tertiary', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: Show/Hide Notes}
     layout_properties: {grid_position: 'GBPIEH,CBWHSH'}
     event_bindings: {click: btn_notes_click}
     name: btn_notes
   - type: FlowPanel
-    properties: {role: null, spacing: medium, align: right, tooltip: '', border: '', foreground: '', visible: true, spacing_above: small, spacing_below: small, background: ''}
+    properties: {role: null, align: right, spacing_above: small, background: '', foreground: '', spacing_below: small, visible: true, border: '', tooltip: '', spacing: medium}
     layout_properties: {grid_position: 'GBPIEH,YBWWSD'}
     name: fp_remres
     components:
     - type: Button
-      properties: {role: filled-button, align: center, tooltip: '', border: '', enabled: true, foreground: '', visible: true, text: Remove, font_size: null, font: '', spacing_above: small, icon_align: left, spacing_below: small, italic: false, background: 'theme:Error', bold: false, underline: false, icon: ''}
+      properties: {role: filled-button, bold: false, align: center, spacing_above: small, background: 'theme:Error', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: Remove}
       layout_properties: {grid_position: 'KHMGAX,IPBJMC'}
       event_bindings: {click: btn_remove_click}
       data_bindings:
       - {code: 'True if self.item[''auth_forumchat''] else False', property: visible}
       name: btn_remove
-    - properties: {role: filled-button, align: center, tooltip: '', border: '', enabled: true, foreground: '', visible: true, text: Delete, font_size: null, font: '', spacing_above: small, icon_align: left, spacing_below: small, italic: false, background: 'theme:On Tertiary Container', bold: false, underline: false, icon: ''}
+    - properties: {role: filled-button, bold: false, align: center, spacing_above: small, background: 'theme:On Tertiary Container', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: Delete}
       type: Button
       layout_properties: {}
       event_bindings: {click: btn_del_click}
       name: btn_del
     - type: Button
-      properties: {role: filled-button, align: center, tooltip: '', border: '', enabled: true, foreground: '', visible: true, text: Restore, font_size: null, font: '', spacing_above: small, icon_align: left, spacing_below: small, italic: false, background: '', bold: false, underline: false, icon: ''}
+      properties: {role: filled-button, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: Restore}
       layout_properties: {grid_position: 'KHMGAX,GIVXIL'}
       data_bindings:
       - {code: 'False if self.item[''auth_forumchat''] else True', property: visible}
       event_bindings: {click: btn_restore_click}
       name: btn_restore
-    - properties: {role: filled-button, align: center, tooltip: '', border: '', enabled: true, foreground: '', visible: true, text: Payment Reminder, font_size: null, font: '', spacing_above: small, icon_align: left, spacing_below: small, italic: false, background: '', bold: false, underline: false, icon: 'fa:mail-forward'}
+    - properties: {role: filled-button, bold: false, align: center, spacing_above: small, background: '', icon: 'fa:mail-forward', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: Payment Reminder}
       type: Button
       layout_properties: {}
       data_bindings:

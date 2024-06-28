@@ -3,7 +3,7 @@ from anvil import *
 import anvil.tables.query as q
 import anvil.server
 
-from .. import Global
+from ..Global import Global
 from anvil_extras import routing
 import datetime as dt
 from anvil_extras.logging import TimerLogger
@@ -58,18 +58,10 @@ class MembersComponent(MembersComponentTemplate):
         # search_txt = '%' + self.tb_mb_search.text + '%'
         srch = self.tb_mb_search.text
         print(srch)
-        self.members = anvil.server.call('user_search', self.tb_mb_search.text)
-        # self.members = [
-        #     i for i in Global.users
-        #     if srch in i['first_name'].lower() or srch in i['last_name'].lower() or srch in i['email'].lower() or srch in i['notes'].lower()
-        # ]
-        # self.members = Global.users.search(
-        #     q.any_of(
-        #         first_name=q.ilike(search_txt),
-        #         last_name=q.ilike(search_txt),
-        #         email=q.ilike(search_txt)
-        #     )
-        # )
+        self.members = [
+            i for i in Global.users
+            if srch in i['first_name'].lower() or srch in i['last_name'].lower() or srch in i['email'].lower() or srch in i['notes'].lower()
+        ]
         self.refresh_search()
 
     def btn_clear_search_click(self, **event_args):

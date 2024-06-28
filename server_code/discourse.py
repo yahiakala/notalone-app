@@ -41,7 +41,7 @@ def login_sso(sso, sig, session_id=None):
 
     # TODO: get from tenants instead
     # TODO: search for the tenant based on the origin payload
-    discourse_url = user['tenant']['discourse_url']
+    discourse_url = user['tenants']['discourse_url']
     # print(discourse_url)
     
     # Prepare the return payload with user info

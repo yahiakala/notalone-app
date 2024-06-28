@@ -17,7 +17,7 @@ def verify_tenant(tenant_id, user, usermap=None):
     tenant_row = app_tables.tenants.get_by_id(tenant_id)
     usermap = usermap or app_tables.usermap.get(user=user)
     # TODO: might cause an error if none or just 1 tenant
-    if tenant_row not in usermap['tenant']:
+    if tenant_row not in usermap['tenants']:
         raise Exception('User does not belong to this tenant.')
     return tenant_row
 
@@ -31,20 +31,42 @@ def get_usermap(user):
     return usermap
 
 
+def get_user_roles(tenant_id, user, usermap=None, tenant=None):
+    """Get names of roles for a user in a tenant."""
+    usermap = usermap if usermap is not None else app_tables.usermap.get(user=user)
+    tenant = tenant if tenant is not None else verify_tenant(tenant_id, user, usermap)
+
+    roles = []
+    if usermap['roles']:
+        for role in usermap['roles']:
+            roles.append(role['name'])
+    return list(set(roles))
+
+
+def get_user_notes(tenant_id, user, usermap=None, tenant=None):
+    usermap = usermap if usermap is not None else app_tables.usermap.get(user=user)
+    tenant = tenant if tenant is not None else verify_tenant(tenant_id, user, usermap)
+    note_row = app_tables.notes.get(user=usermap['user'], tenant=tenant)
+    if note_row:
+        return note_row['notes'] or ''
+    else:
+        return app_tables.notes.add_row(user=user, notes='', tenant=tenant)['notes']
+
+
 def get_permissions(tenant_id, user, usermap=None, tenant=None):
     """Get the permissions of a user in a particular tenant."""
     usermap = usermap if usermap is not None else app_tables.usermap.get(user=user)
     tenant = tenant if tenant is not None else verify_tenant(tenant_id, user, usermap)
-    try:
-        user_permissions = set(
-            permission["name"]
-            for role in usermap["roles"]
-            for permission in role["permissions"]
-            if role['tenant'] == tenant
-        )
-        return list(user_permissions)
-    except TypeError:
-        return []
+    # print(tenant['name'])
+    
+    user_permissions = []
+    if usermap['roles']:
+        for role in usermap['roles']:
+            if role['permissions']:
+                for permission in role['permissions']:
+                    user_permissions.append(permission['name'])
+
+    return list(set(user_permissions))
 
 
 def validate_user(tenant_id, user, usermap=None, permissions=None, tenant=None):

@@ -3,7 +3,7 @@ from anvil import *
 import anvil.server
 import anvil.tables.query as q
 from anvil_extras import routing
-from .. import Global
+from ..Global import Global
 
 import datetime as dt
 

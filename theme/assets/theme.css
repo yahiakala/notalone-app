@@ -352,7 +352,8 @@ color: %color:On Primary Container%;
   color: %color:On Surface Variant%;
   margin: 0 -8px;
   padding: 4px 16px;
-  border-radius: 100px;
+  /* border-radius: 100px; */
+  border-radius: 12px;
 }
 
 .left-nav .anvil-component.left_edge-icon {

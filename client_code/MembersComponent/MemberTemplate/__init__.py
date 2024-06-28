@@ -3,6 +3,7 @@ from anvil import *
 import anvil.server
 
 import datetime as dt
+from ...Global import Global
 
 
 class MemberTemplate(MemberTemplateTemplate):
@@ -26,6 +27,8 @@ class MemberTemplate(MemberTemplateTemplate):
         if self.item['signed_up']:
             self.lbl_signed_up.text = 'Signed up: ' + self.item['signed_up'].strftime('%Y-%m-%d')
             self.lbl_signed_up.visible = True
+        self.user_notes = self.item['notes']
+        self.ta_user_notes.text = self.item['notes']
 
     def btn_remove_click(self, **event_args):
         """This method is called when the button is clicked"""
@@ -56,13 +59,13 @@ class MemberTemplate(MemberTemplateTemplate):
         if self.cp_notes.visible:
             self.cp_notes.visible = False
         else:
-            self.user_notes = anvil.server.call('get_user_notes', self.item['email'])['notes']
             self.cp_notes.visible = True
         self.refresh_data_bindings()
+        print(self.item['notes'])
 
     def btn_save_notes_click(self, **event_args):
         """This method is called when the button is clicked"""
-        anvil.server.call('save_user_notes', self.item['email'], self.user_notes)
+        anvil.server.call('save_user_notes', Global.tenant_id, self.item['email'], self.ta_user_notes.text)
 
     def btn_remind_click(self, **event_args):
         """This method is called when the button is clicked"""

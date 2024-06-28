@@ -1,7 +1,7 @@
 from ._anvil_designer import BookingComponentTemplate
 from anvil import *
 from anvil_extras import routing
-from .. import Global
+from ..Global import Global
 
 
 @routing.route('/apply', template='Router')

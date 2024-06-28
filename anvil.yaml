@@ -51,8 +51,8 @@ db_schema:
       admin_ui: {width: 200}
       type: link_single
       target: users
-    - name: tenant
-      admin_ui: {width: 200}
+    - name: tenants
+      admin_ui: {order: 1, width: 200}
       type: link_multiple
       target: tenants
     - name: roles

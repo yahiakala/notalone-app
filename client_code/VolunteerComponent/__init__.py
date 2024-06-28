@@ -1,7 +1,7 @@
 from ._anvil_designer import VolunteerComponentTemplate
 from anvil import *
 import anvil.server
-from .. import Global
+from ..Global import Global
 from anvil_extras import routing
 
 
