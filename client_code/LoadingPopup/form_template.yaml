@@ -1,0 +1,16 @@
+container: {type: ColumnPanel}
+components:
+- name: label_1
+  properties: {align: center, text: Loading..., italic: true}
+  type: Label
+  layout_properties: {grid_position: 'BCNBXS,KZYQTL'}
+- name: image_1
+  properties: {source: _/theme/Infinity-1s-200px.gif}
+  type: Image
+  layout_properties: {grid_position: 'EUGKGI,UXCWYV'}
+- name: ti_load
+  properties: {interval: 1}
+  type: Timer
+  layout_properties: {grid_position: 'ZHNJFC,CAUXOP'}
+  event_bindings: {tick: ti_load_tick}
+is_package: true

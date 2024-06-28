@@ -10,6 +10,7 @@ from ..ApplicantsComponent import ApplicantsComponent
 from ..MembersComponent import MembersComponent
 from ..FinComponent import FinComponent
 from ..VolunteerComponent import VolunteerComponent
+from ..LoadingPopup import LoadingPopup
 
 from anvil_extras.logging import TimerLogger
 from anvil_extras import routing
@@ -24,12 +25,25 @@ class Router(RouterTemplate):
 
         self.link_home.tag.url_hash = 'app/home'
         self.link_home.tag.globals = ['user']
+        
         self.link_apply.tag.url_hash = 'app/apply'
+        self.link_apply.tag.globals = ['user']
+        
         self.link_profile.tag.url_hash = 'app/profile'
+        self.link_profile.tag.globals = ['user']
+        
         self.link_applicants.tag.url_hash = 'app/applicants'
+        self.link_applicants.tag.globals = ['applicants']
+        
         self.link_members.tag.url_hash = 'app/members'
+        self.link_members.tag.globals = ['users']
+        
         self.link_fin.tag.url_hash = 'app/financials'
+        self.link_fin.tag.globals = ['finances']
+        
         self.link_volunteers.tag.url_hash = 'app/volunteers'
+        self.link_volunteers.tag.globals = ['volunteers']
+        
         self.btn_test.tag.url_hash = 'app/tests'
 
         self.user = Global.user
@@ -128,15 +142,26 @@ class Router(RouterTemplate):
         self.refresh_everything()
         self.nav_click(self.link_home)
 
+    def check_if_loaded(self, keys):
+        for key in keys:
+            if Global.get_no_call(key) is None:
+                return False
+        return True
+    
     def nav_click(self, sender, **event_args):
-        if sender.tag.url_hash == '':
-            if Global.user:
-                self.set_account_state(Global.user)
-                routing.set_url_hash('app')
+        proceed = True
+        if not self.check_if_loaded(sender.tag.globals):
+            proceed = routing.alert(LoadingPopup(item=sender.tag.globals), dismissible=True, buttons=None)
+
+        if proceed:
+            if sender.tag.url_hash == '':
+                if Global.user:
+                    self.set_account_state(Global.user)
+                    routing.set_url_hash('app')
+                else:
+                    routing.set_url_hash('')
             else:
-                routing.set_url_hash('')
-        else:
-            routing.set_url_hash(sender.tag.url_hash)
+                routing.set_url_hash(sender.tag.url_hash)
 
     def on_navigation(self, url_hash, url_pattern, url_dict, unload_form):
         for link in self.cp_sidebar.get_components():

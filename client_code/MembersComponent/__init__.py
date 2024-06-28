@@ -25,7 +25,10 @@ class MembersComponent(MembersComponentTemplate):
     def populate_rp(self, **event_args):
         t_get_users = TimerLogger('get_users timing')
         t_get_users.start('starting get_users')
-        self.members = Global.users
+        # self.members = Global.users
+        self.members = Global.get_no_call('users')
+        if not self.members:
+            raise ValueError('Didnt load users properly')
         t_get_users.check('got users')
         self.mb_count = len(self.members)
         self.mb_count_show = min(10, self.mb_count)
