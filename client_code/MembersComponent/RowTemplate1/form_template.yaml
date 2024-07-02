@@ -1,0 +1,23 @@
+is_package: true
+container: {type: DataRowPanel}
+components:
+- name: link_email
+  properties: {text: ''}
+  type: Link
+  layout_properties: {column: JKSDUP}
+  event_bindings: {click: link_email_click}
+- name: link_name
+  properties: {}
+  type: Link
+  layout_properties: {column: VJQQOR}
+  event_bindings: {click: link_email_click}
+- name: link_signed_up
+  properties: {}
+  type: Link
+  layout_properties: {column: OJLQEN}
+  event_bindings: {click: link_email_click}
+- name: link_last_login
+  properties: {}
+  type: Link
+  layout_properties: {column: QNHOIB}
+  event_bindings: {click: link_email_click}

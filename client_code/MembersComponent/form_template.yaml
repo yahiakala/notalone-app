@@ -46,15 +46,24 @@ components:
   name: btn_clear_search
   layout_properties: {grid_position: 'VZWTYA,ULGKKP'}
   event_bindings: {click: btn_clear_search_click}
+- name: dg_members
+  properties:
+    columns:
+    - {id: JKSDUP, title: Email, data_key: email}
+    - {id: VJQQOR, title: Name, data_key: name}
+    - {id: OJLQEN, title: Signed Up, data_key: signed_up}
+    - {id: QNHOIB, data_key: last_login, title: Last Login}
+    rows_per_page: 10
+  type: DataGrid
+  components:
+  - name: repeating_panel_1
+    properties: {item_template: MembersComponent.RowTemplate1}
+    type: RepeatingPanel
+  layout_properties: {grid_position: 'FLMNIV,XJAVVP'}
 - type: Label
   properties: {role: body, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, font_size: null, tooltip: '', text: ''}
   name: lbl_num_results
   layout_properties: {grid_position: 'IRMUSM,DCJRKL'}
-  data_bindings: []
-- type: RepeatingPanel
-  properties: {item_template: MembersComponent.MemberTemplate}
-  name: rp_members
-  layout_properties: {grid_position: 'XTODFR,LDLSAT'}
   data_bindings: []
 - type: Button
   properties: {role: elevated-button, bold: false, align: center, spacing_above: small, background: '', icon: 'fa:plus', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: Show More}
