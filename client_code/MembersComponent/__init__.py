@@ -21,22 +21,12 @@ class MembersComponent(MembersComponentTemplate):
         self.populate_rp()
         # self.payment_exempt = [['screener', 'leader']]
 
-        # self.rp_members.add_event_handler('x-refresh', self.populate_rp)
-
     def populate_rp(self, **event_args):
         self.mb_count = len(self.members)
-        self.lbl_num_results.text = str(self.mb_count) + ' result(s)'
+        # self.lbl_num_results.text = str(self.mb_count) + ' result(s)'
         self.mb_count_show = min(10, self.mb_count)
-        self.rp_members.items = self.members[:self.mb_count_show]
-
-    def btn_show_more_click(self, **event_args):
-        """This method is called when the button is clicked"""
-        curr_pos = self.mb_count_show
-        self.mb_count_show = min(self.mb_count_show + 10, self.mb_count)
-        self.rp_members.items = self.members[:self.mb_count_show]
-        curr_item = self.rp_members.get_components()[curr_pos-1]
-        curr_item.scroll_into_view(smooth=False)
-        self.refresh_data_bindings()
+        # self.rp_members.items = self.members[:self.mb_count_show]
+        self.rp_members.items = self.members
 
     def refresh_search(self):
         """Refresh the button roles and pagination"""
@@ -47,7 +37,7 @@ class MembersComponent(MembersComponentTemplate):
         self.mb_count = len(self.members)
         self.mb_count_show = min(10, self.mb_count)
         self.btn_clear_search.visible = True
-        self.rp_members.items = self.members[:self.mb_count_show]
+        self.rp_members.items = self.members
         self.refresh_data_bindings()  # for num results label
 
     def tb_mb_search_pressed_enter(self, **event_args):

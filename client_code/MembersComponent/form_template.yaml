@@ -56,19 +56,8 @@ components:
     rows_per_page: 10
   type: DataGrid
   components:
-  - name: repeating_panel_1
-    properties: {item_template: MembersComponent.RowTemplate1}
+  - name: rp_members
+    properties: {item_template: MembersComponent.MemberRow}
     type: RepeatingPanel
   layout_properties: {grid_position: 'FLMNIV,XJAVVP'}
-- type: Label
-  properties: {role: body, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, font_size: null, tooltip: '', text: ''}
-  name: lbl_num_results
-  layout_properties: {grid_position: 'IRMUSM,DCJRKL'}
-  data_bindings: []
-- type: Button
-  properties: {role: elevated-button, bold: false, align: center, spacing_above: small, background: '', icon: 'fa:plus', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: Show More}
-  name: btn_show_more
-  layout_properties: {grid_position: 'SPURVC,IINHIR'}
-  event_bindings: {click: btn_show_more_click}
-  data_bindings: []
 is_package: true
