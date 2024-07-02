@@ -96,6 +96,6 @@ components:
     layout_properties: {grid_position: 'PFCERG,VDMIUR'}
     event_bindings: {click: nav_click}
 - type: Label
-  properties: {role: null, bold: false, align: left, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, font_size: null, tooltip: '', text: Not Alone}
+  properties: {role: null, bold: false, align: left, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, font_size: null, tooltip: '', text: ''}
   name: lbl_app_title
   layout_properties: {slot: title}
