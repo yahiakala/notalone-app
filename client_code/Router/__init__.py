@@ -30,8 +30,16 @@ class Router(RouterTemplate):
         self.link_members.tag.url_hash = 'app/members'
         self.link_fin.tag.url_hash = 'app/financials'
         self.link_volunteers.tag.url_hash = 'app/volunteers'
+
+        self.link_home.tag.globals = []
+        self.link_apply.tag.globals = []
+        self.link_profile.tag.globals = []
+        self.link_members.tag.globals = ['users']
+        self.link_fin.tag.globals = []
+        self.link_volunteers.tag.globals = []
         
         self.btn_test.tag.url_hash = 'app/tests'
+        self.load_globals = []
 
     def populate_globals(self):
         with anvil.server.no_loading_indicator:
@@ -42,14 +50,6 @@ class Router(RouterTemplate):
             if Global.is_mobile:
                 self.lbl_app_title.visible = False
                 self.link_forum_nav.text = ''
-
-            # self.link_home.text = 'Home'
-            # self.link_apply.text = 'Apply Now'
-            # self.link_profile.text = 'Profile'
-            # self.link_applicants.text = 'Applicants'
-            # self.link_members.text = 'Members'
-            # self.link_financials.text = 'Financials'
-            # self.link_volunteers.text = 'Volunteers'
         
         print_timestamp('Populated globals on Router')
 
@@ -64,17 +64,6 @@ class Router(RouterTemplate):
     def set_account_state(self, user):
         print_timestamp('set_account_state')
         self.link_logout.visible = user is not None
-        
-        # self.link_apply.visible = False
-        # self.link_profile.visible = False
-        # self.link_applicants.visible = False
-        # self.link_members.visible = False
-        # self.link_fin.visible = False
-        # self.link_volunteers.visible = False
-        # self.link_forum_nav.visible = False
-        # self.link_help.visible = False
-        # self.btn_test.visible = False
-        # self.tb_impersonate.visible = False
 
         self.permissions = Global.permissions
         print(self.permissions)
@@ -131,19 +120,19 @@ class Router(RouterTemplate):
         return True
     
     def nav_click(self, sender, **event_args):
-        proceed = True
-        # if not self.check_if_loaded(sender.tag.globals):
-        #     proceed = routing.alert(LoadingPopup(item=sender.tag.globals), dismissible=True, buttons=None)
+        if not self.check_if_loaded(sender.tag.globals):
+            self.img_loading.visible = True
+            self.load_globals = sender.tag.globals
+            self.ti_globals.interval = 1
 
-        if proceed:
-            if sender.tag.url_hash == '':
-                if Global.user:
-                    self.set_account_state(Global.user)
-                    routing.set_url_hash('app')
-                else:
-                    routing.set_url_hash('')
+        if sender.tag.url_hash == '':
+            if Global.user:
+                self.set_account_state(Global.user)
+                routing.set_url_hash('app')
             else:
-                routing.set_url_hash(sender.tag.url_hash)
+                routing.set_url_hash('')
+        else:
+            routing.set_url_hash(sender.tag.url_hash)
 
     def on_navigation(self, url_hash, url_pattern, url_dict, unload_form):
         for link in self.cp_sidebar.get_components():
@@ -156,32 +145,13 @@ class Router(RouterTemplate):
         """Any time a form is loaded."""
         self.on_navigation(url_hash, url_pattern, url_dict, form)
 
-    def timer_user_data_tick(self, **event_args):
-        """Use a timer to load all the globals."""
-        # TODO: deprecate
-        print_timestamp('timer_user_data_tick')
-        with anvil.server.no_loading_indicator:
-            if self.task.is_completed():
-                print_timestamp('task_done')
-                self.t_globals.end('populated repeating panel')
-                user_data = self.task.get_return_value()
-                Global.user_data = user_data
-                self.timer_user_data.interval = 0
-                for key, val in user_data.items():
-                    if Global.get_s(key) is None:
-                        print_timestamp(f"task_done: setting value for {key}")
-                        setattr(Global, key, val)
-            else:
-                # Populate some globals based on task state.
-                states = self.task.get_state()
-                print_timestamp('Checking states')
-                print(states)
-                for key, val in states.items():
-                    if Global.get_s(key) is None:
-                        print_timestamp(f"task_state: setting value for {key}")
-                        setattr(Global, key, val)
-
     def ti_load_tick(self, **event_args):
         """This method is called Every [interval] seconds. Does not trigger if [interval] is 0."""
         self.ti_load.interval = 0
         self.populate_globals()
+
+    def ti_globals_tick(self, **event_args):
+        """This method is called Every [interval] seconds. Does not trigger if [interval] is 0."""
+        if self.check_if_loaded(self.load_globals):
+            self.ti_globals.interval = 0
+            self.img_loading.visible = False

@@ -19,6 +19,7 @@ class MembersComponent(MembersComponentTemplate):
         self.init_components(**properties)
         self.members = [None]
         self.populate_rp()
+        _ = Global.get_bk('users')
         # self.payment_exempt = [['screener', 'leader']]
 
     def populate_rp(self, **event_args):
@@ -121,15 +122,17 @@ class MembersComponent(MembersComponentTemplate):
 
     def ti_load_tick(self, **event_args):
         """This method is called Every [interval] seconds. Does not trigger if [interval] is 0."""
-        self.members = Global.get_bk('users')
         # self.members = Global.get_s('users')
+        self.members = Global.get_bk('users')
         
         if Global.get_s('users') is None:
             # Still loading full dataset
-            self.ind_load.visible = True
+            # self.ind_load.visible = True
+            pass
         else:
-            self.ind_load.visible = False
+            # self.ind_load.visible = False
             self.ti_load.interval = 0
+            self.members = Global.get_s('users')
 
         if self.members is not None:
             self.populate_rp()

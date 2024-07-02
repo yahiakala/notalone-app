@@ -2,10 +2,6 @@ container:
   type: ColumnPanel
   properties: {col_widths: '{}'}
 components:
-- name: ind_load
-  properties: {indicator_colour: '#000000', track_colour: '#ffffff'}
-  type: form:dep_dmhomulhrajp9w:ProgressBar.Indeterminate
-  layout_properties: {grid_position: 'SBHGNQ,EEHTWF'}
 - type: FlowPanel
   properties: {role: null, align: center, spacing_above: small, background: '', foreground: '', spacing_below: small, visible: true, border: '', tooltip: '', spacing: medium}
   name: fp_quickfilters
