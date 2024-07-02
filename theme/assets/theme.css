@@ -1119,36 +1119,36 @@ div.plot-container.plotly svg.main-svg {
     overflow-wrap: anywhere;
 }
 
-
-/* Custom Spinner */
-/* @-webkit-keyframes pulse {
+@-webkit-keyframes pulse {
     0% {
-        -webkit-transform: scaleX(1);
-        transform: scaleX(1);
+        -webkit-transform: translateX(-50%) scaleX(1);
+        transform: translateX(-50%) scaleX(1);
     }
     50% {
-        -webkit-transform: scale3d(1.05, 1.05, 1.05);
-        transform: scale3d(1.05, 1.05, 1.05);
+        -webkit-transform: translateX(-50%) scale3d(1.05, 1.05, 1.05);
+        transform: translateX(-50%) scale3d(1.05, 1.05, 1.05);
     }
     to {
-        -webkit-transform: scaleX(1);
-        transform: scaleX(1);
+        -webkit-transform: translateX(-50%) scaleX(1);
+        transform: translateX(-50%) scaleX(1);
     }
 }
 @keyframes pulse {
     0% {
-        -webkit-transform: scaleX(1);
-        transform: scaleX(1);
+        -webkit-transform: translateX(-50%) scaleX(1);
+        transform: translateX(-50%) scaleX(1);
     }
     50% {
-        -webkit-transform: scale3d(1.05, 1.05, 1.05);
-        transform: scale3d(1.05, 1.05, 1.05);
+        -webkit-transform: translateX(-50%) scale3d(1.05, 1.05, 1.05);
+        transform: translateX(-50%) scale3d(1.05, 1.05, 1.05);
     }
     to {
-        -webkit-transform: scaleX(1);
-        transform: scaleX(1);
+        -webkit-transform: translateX(-50%) scaleX(1);
+        transform: translateX(-50%) scaleX(1);
     }
-} */
+}
+
+/* Custom Spinner */
 #loadingSpinner {
     -webkit-animation: pulse;
     -moz-animation: pulse;
@@ -1163,8 +1163,6 @@ div.plot-container.plotly svg.main-svg {
     width: 600px;
     height:500px;
 
-    /* transform: translateX(-50%) !important; */
-    transform: translateX(-50%) !important;
     max-width: 100vw;
     
     box-sizing: border-box;
