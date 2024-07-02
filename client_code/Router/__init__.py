@@ -18,63 +18,38 @@ from ..Global import Global
 from anvil_squared.utils import print_timestamp
 
 
-@routing.template(path='app', priority=1, condition=lambda: Global.get_no_call('tenant_id') is not None)
+@routing.template(path='app', priority=1, condition=lambda: Global.get_s('tenant_id') is not None)
 class Router(RouterTemplate):
     def __init__(self, **properties):
         self.init_components(**properties)
 
-        self.link_home.tag.url_hash = 'app/home'
-        self.link_home.tag.globals = ['user']
-        
-        self.link_apply.tag.url_hash = 'app/apply'
-        self.link_apply.tag.globals = ['user']
-        
-        self.link_profile.tag.url_hash = 'app/profile'
-        self.link_profile.tag.globals = ['user']
-        
-        self.link_applicants.tag.url_hash = 'app/applicants'
-        self.link_applicants.tag.globals = ['applicants']
-        
-        self.link_members.tag.url_hash = 'app/members'
-        self.link_members.tag.globals = ['users']
-        
-        self.link_fin.tag.url_hash = 'app/financials'
-        self.link_fin.tag.globals = ['finances']
-        
+        self.link_home.tag.url_hash = 'app/home'        
+        self.link_apply.tag.url_hash = 'app/apply'        
+        self.link_profile.tag.url_hash = 'app/profile'        
+        self.link_applicants.tag.url_hash = 'app/applicants'        
+        self.link_members.tag.url_hash = 'app/members'        
+        self.link_fin.tag.url_hash = 'app/financials'        
         self.link_volunteers.tag.url_hash = 'app/volunteers'
-        self.link_volunteers.tag.globals = ['volunteers']
         
         self.btn_test.tag.url_hash = 'app/tests'
 
-        self.user = Global.user
-        self.set_account_state(self.user)
-        Global.task_tenanted = anvil.server.call('get_tenanted_data_call_bk', Global.tenant_id)
-        
-        # if Global.get_no_call('user_data') is None:
-        #     print_timestamp('Starting timer')
-        #     self.t_globals = TimerLogger('get_users timing')
-        #     self.t_globals.start('starting get_users')
-        #     self.task = anvil.server.call('get_tenanted_data_call_bk', Global.tenant_id)
-        #     self.timer_user_data.interval = 2
-
-        # self.nav_click(self.link_home)
-
-        if Global.is_mobile:
-            self.lbl_app_title.visible = False
-            self.link_forum_nav.text = ''
-
-
-    def link_login_click(self, **event_args):
-        """This method is called when the link is clicked"""
-        Global.user = anvil.users.login_with_form(allow_cancel=True, show_signup_option=True)
-        self.set_account_state(Global.user)
-        self.refresh_data_bindings()
-        self.nav_click(self.link_home)
+    def populate_globals(self):
+        with anvil.server.no_loading_indicator:
+            self.user = Global.user
+            self.set_account_state(self.user)
+            Global.task_tenanted = anvil.server.call('get_tenanted_data_call_bk', Global.tenant_id)
+    
+            if Global.is_mobile:
+                self.lbl_app_title.visible = False
+                self.link_forum_nav.text = ''
+        print_timestamp('Populated globals on Router')
+        self.ind_load.visible = False
 
     def link_logout_click(self, **event_args):
         """This method is called when the link is clicked"""
         anvil.users.logout()
         self.set_account_state(None)
+        routing.clear_cache()
         Global.user = None  # Haven't tested this.
         routing.set_url_hash('', load_from_cache=False)
 
@@ -145,14 +120,14 @@ class Router(RouterTemplate):
 
     def check_if_loaded(self, keys):
         for key in keys:
-            if Global.get_no_call(key) is None:
+            if Global.get_s(key) is None:
                 return False
         return True
     
     def nav_click(self, sender, **event_args):
         proceed = True
-        if not self.check_if_loaded(sender.tag.globals):
-            proceed = routing.alert(LoadingPopup(item=sender.tag.globals), dismissible=True, buttons=None)
+        # if not self.check_if_loaded(sender.tag.globals):
+        #     proceed = routing.alert(LoadingPopup(item=sender.tag.globals), dismissible=True, buttons=None)
 
         if proceed:
             if sender.tag.url_hash == '':
@@ -187,7 +162,7 @@ class Router(RouterTemplate):
                 Global.user_data = user_data
                 self.timer_user_data.interval = 0
                 for key, val in user_data.items():
-                    if Global.get_no_call(key) is None:
+                    if Global.get_s(key) is None:
                         print_timestamp(f"task_done: setting value for {key}")
                         setattr(Global, key, val)
             else:
@@ -196,8 +171,12 @@ class Router(RouterTemplate):
                 print_timestamp('Checking states')
                 print(states)
                 for key, val in states.items():
-                    if Global.get_no_call(key) is None:
+                    if Global.get_s(key) is None:
                         print_timestamp(f"task_state: setting value for {key}")
                         setattr(Global, key, val)
-                    
-                
+
+    def ti_load_tick(self, **event_args):
+        """This method is called Every [interval] seconds. Does not trigger if [interval] is 0."""
+        self.populate_globals()
+        print_timestamp('Tick')
+        self.ti_load.interval = 0

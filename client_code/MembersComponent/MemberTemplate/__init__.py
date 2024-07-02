@@ -10,25 +10,34 @@ class MemberTemplate(MemberTemplateTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.
         print("Client: Getting member data binding ", dt.datetime.now().strftime("%H:%M:%S.%f"))
-        self.user_notes = ''
         self.init_components(**properties)
-        print("Client: Got member data binding ", dt.datetime.now().strftime("%H:%M:%S.%f"))
-        self.pmt_success = 'Member is in good standing with payments.'
-        self.pmt_noid = 'Member has no linked paypal subscription.'
-        self.pmt_inactive = "Member's paypal subscription is expired."
-        self.lbl_payment_status.text = (
-            self.pmt_success if self.item['good_standing'] else
-            self.pmt_inactive if self.item['paypal_sub_id'] is not None else
-            self.pmt_noid
-        )
-        if self.item['last_login']:
-            self.lbl_last_login.text = 'Last login: ' + self.item['last_login'].strftime('%Y-%m-%d')
-            self.lbl_last_login.visible = True
-        if self.item['signed_up']:
-            self.lbl_signed_up.text = 'Signed up: ' + self.item['signed_up'].strftime('%Y-%m-%d')
-            self.lbl_signed_up.visible = True
-        self.user_notes = self.item['notes']
-        self.ta_user_notes.text = self.item['notes']
+        if self.item:
+            self.lbl_name.text = self.item['first_name'] + ' ' + self.item['last_name'] + ' (' + self.item['email'] + ')'
+            self.lbl_fb_url.text = 'Facebook: ' + self.item['fb_url']
+            self.lbl_discord_user.text = 'Discord: ' + self.item['discord']
+            self.lbl_payment_tier.text = 'Payment Tier: ' + str(self.item['fee'])
+            self.pmt_success = 'Member is in good standing with payments.'
+            self.pmt_noid = 'Member has no linked paypal subscription.'
+            self.pmt_inactive = "Member's paypal subscription is expired."
+            self.lbl_payment_status.text = (
+                self.pmt_success if self.item['good_standing'] else
+                self.pmt_inactive if self.item['paypal_sub_id'] is not None else
+                self.pmt_noid
+            )
+            if self.item['last_login']:
+                self.lbl_last_login.text = 'Last login: ' + self.item['last_login'].strftime('%Y-%m-%d')
+                self.lbl_last_login.visible = True
+            if self.item['signed_up']:
+                self.lbl_signed_up.text = 'Signed up: ' + self.item['signed_up'].strftime('%Y-%m-%d')
+                self.lbl_signed_up.visible = True
+            self.ta_user_notes.text = self.item['notes']
+
+            self.btn_remove.visible = True if 'see_forum' in self.item['permissions'] else False
+            self.btn_restore.visible = False if 'see_forum' in self.item['permissions'] else True
+            self.btn_remind.visible = False if 'see_forum' in self.item['permissions'] else True
+
+        else:
+            self.img_load.visible = True
 
     def btn_remove_click(self, **event_args):
         """This method is called when the button is clicked"""

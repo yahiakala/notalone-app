@@ -16,24 +16,18 @@ class MembersComponent(MembersComponentTemplate):
         # print("Client: Getting members ", dt.datetime.now().strftime("%H:%M:%S.%f"))
         # self.members = Global.users.search(auth_profile=True)
         # print("Client: Got members ", dt.datetime.now().strftime("%H:%M:%S.%f"))
-        self.populate_rp()
         self.init_components(**properties)
+        self.members = [None]
+        self.populate_rp()
         # self.payment_exempt = [['screener', 'leader']]
 
         # self.rp_members.add_event_handler('x-refresh', self.populate_rp)
 
     def populate_rp(self, **event_args):
-        t_get_users = TimerLogger('get_users timing')
-        t_get_users.start('starting get_users')
-        # self.members = Global.users
-        self.members = Global.get_no_call('users')
-        if not self.members:
-            raise ValueError('Didnt load users properly')
-        t_get_users.check('got users')
         self.mb_count = len(self.members)
+        self.lbl_num_results.text = str(self.mb_count) + ' result(s)'
         self.mb_count_show = min(10, self.mb_count)
         self.rp_members.items = self.members[:self.mb_count_show]
-        t_get_users.end('populated repeating panel')
 
     def btn_show_more_click(self, **event_args):
         """This method is called when the button is clicked"""
@@ -134,6 +128,20 @@ class MembersComponent(MembersComponentTemplate):
         ]
         self.refresh_search()
         self.btn_norole.role = 'filled-button'
+
+    def ti_load_tick(self, **event_args):
+        """This method is called Every [interval] seconds. Does not trigger if [interval] is 0."""
+        self.members = Global.get_bk('users')
+        
+        if Global.get_s('users') is None:
+            # Still loading full dataset
+            self.ind_load.visible = True
+        else:
+            self.ind_load.visible = False
+            self.ti_load.interval = 0
+
+        if self.members is not None:
+            self.populate_rp()
 
 
 

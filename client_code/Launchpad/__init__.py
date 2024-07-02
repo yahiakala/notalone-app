@@ -14,7 +14,7 @@ class Launchpad(LaunchpadTemplate):
         self.user = Global.user
         self.my_tenants = Global.my_tenants
 
-        if Global.get_no_call('permissions') and 'create_tenant' in Global.get_no_call('permissions'):
+        if Global.get_s('permissions') and 'create_tenant' in Global.get_s('permissions'):
             self.btn_create_group.visible = True
 
         self.rp_my_groups.items = self.my_tenants

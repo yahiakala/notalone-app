@@ -81,12 +81,19 @@ def get_users(tenant_id, user, usermap=None, permissions=None, tenant=None):
     member_rows = app_tables.usermap.search(tenants=[tenant])
     if anvil.server.context.background_task_id:
         anvil.server.task_state['users_len'] = len(member_rows)
-        memberlist = []
-        for member in member_rows:
-            memberlist += usermap_row_to_dict(tenant, member)
+
+    memberlist = []
+    for member in member_rows:
+        try:
+            memberlist.append(usermap_row_to_dict(tenant, member))
+        except anvil.tables.RowDeleted:
+            member.delete()
+            if anvil.server.context.background_task_id:
+                anvil.server.task_state['users_len'] = anvil.server.task_state['users_len'] - 1
+
+        if anvil.server.context.background_task_id:
             anvil.server.task_state['users'] = memberlist
-    else:
-        memberlist = [usermap_row_to_dict(tenant, member) for member in member_rows]
+
     print_timestamp('_get_users: end')
     return memberlist
 

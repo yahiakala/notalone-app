@@ -11,7 +11,7 @@ class LoadingPopup(LoadingPopupTemplate):
 
     def check_if_loaded(self):
         for key in self.item:
-            if Global.get_no_call(key) is None:
+            if Global.get_s(key) is None:
                 return False
         return True
 
