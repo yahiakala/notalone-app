@@ -7,12 +7,7 @@ components:
   properties: {col_widths: '{}'}
   name: content_panel
   layout_properties: {slot: default}
-  components:
-  - name: ti_load
-    properties: {interval: 0.5}
-    type: Timer
-    layout_properties: {grid_position: 'SXZJQF,TYXWUR'}
-    event_bindings: {tick: ti_load_tick}
+  components: []
 - type: FlowPanel
   properties: {}
   name: navbar_links
@@ -39,11 +34,6 @@ components:
     layout_properties: {}
     event_bindings: {click: link_help_click}
   - type: Link
-    properties: {role: null, bold: false, align: left, col_widths: '', spacing_above: small, background: '', icon: '', wrap_on: mobile, underline: false, font: '', col_spacing: medium, icon_align: left, foreground: '', url: '', spacing_below: small, visible: true, border: '', italic: false, font_size: null, tooltip: '', text: Login / Signup}
-    name: link_login
-    layout_properties: {}
-    event_bindings: {click: link_login_click}
-  - type: Link
     properties: {role: null, bold: false, align: left, col_widths: '', spacing_above: small, background: '', icon: 'fa:sign-out', wrap_on: mobile, underline: false, font: '', col_spacing: medium, icon_align: left, foreground: '', url: '', spacing_below: small, visible: false, border: '', italic: false, font_size: null, tooltip: '', text: ''}
     name: link_logout
     layout_properties: {}
@@ -67,6 +57,11 @@ components:
       properties: {visible: false, underline: false, icon: 'fa:user-circle'}
       type: Label
       layout_properties: {grid_position: 'VLGIZW,DYMEDT'}
+  - name: ti_load
+    properties: {}
+    type: Timer
+    layout_properties: {grid_position: 'QKVNBD,VTJPVM'}
+    event_bindings: {tick: ti_load_tick}
   - type: Link
     properties: {role: selected, bold: false, align: left, col_widths: '', spacing_above: small, background: '', icon: '', wrap_on: mobile, underline: false, font: '', col_spacing: medium, icon_align: left, foreground: '', url: '', spacing_below: small, visible: true, border: '', italic: false, font_size: null, tooltip: '', text: Home}
     name: link_home

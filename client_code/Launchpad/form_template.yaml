@@ -1,5 +1,10 @@
 container: {type: ColumnPanel}
 components:
+- name: ti_load
+  properties: {}
+  type: Timer
+  layout_properties: {grid_position: 'EWPVEP,XNZOAY'}
+  event_bindings: {tick: ti_load_tick}
 - name: btn_create_group
   properties: {text: Create Group, role: outlined-button, icon: 'fa:plus', visible: false}
   type: Button

@@ -11,11 +11,14 @@ components:
   - name: lbl_name
     properties: {}
     type: Label
-    data_bindings:
-    - {property: text, code: 'self.item[''name'']', writeback: false}
+    data_bindings: []
     layout_properties: {expand: true}
   - name: btn_join_group
     properties: {text: Join, role: filled-button}
     type: Button
     layout_properties: {}
     event_bindings: {click: btn_join_group_click}
+- name: ind_load
+  properties: {}
+  type: form:dep_dmhomulhrajp9w:ProgressBar.Indeterminate
+  layout_properties: {column: JKSDUP}

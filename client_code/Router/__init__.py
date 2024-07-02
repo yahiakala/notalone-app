@@ -56,7 +56,6 @@ class Router(RouterTemplate):
     def set_account_state(self, user):
         print_timestamp('set_account_state')
         self.link_logout.visible = user is not None
-        self.link_login.visible = user is None
         
         self.link_apply.visible = False
         self.link_profile.visible = False
@@ -177,6 +176,5 @@ class Router(RouterTemplate):
 
     def ti_load_tick(self, **event_args):
         """This method is called Every [interval] seconds. Does not trigger if [interval] is 0."""
-        self.populate_globals()
-        print_timestamp('Tick')
         self.ti_load.interval = 0
+        self.populate_globals()

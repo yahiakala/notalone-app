@@ -9,9 +9,14 @@ class GroupRow(GroupRowTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
-        self.my_tenants = Global.my_tenants
-        if self.my_tenants and self.item.get_id() in [i['tenant_id'] for i in self.my_tenants]:
-            self.btn_join_group.visible = False
+        if self.item:
+            self.ind_load.visible = False
+            self.my_tenants = Global.my_tenants
+            if self.my_tenants and self.item.get_id() in [i['tenant_id'] for i in self.my_tenants]:
+                self.btn_join_group.visible = False
+            self.lbl_name.text = self.item['name']
+        else:
+            self.fp_actions.visible = False
 
     def btn_join_group_click(self, **event_args):
         """This method is called when the button is clicked"""
