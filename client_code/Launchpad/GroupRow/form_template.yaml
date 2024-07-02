@@ -18,7 +18,3 @@ components:
     type: Button
     layout_properties: {}
     event_bindings: {click: btn_join_group_click}
-- name: ind_load
-  properties: {}
-  type: form:dep_dmhomulhrajp9w:ProgressBar.Indeterminate
-  layout_properties: {column: JKSDUP}

@@ -22,7 +22,3 @@ components:
     properties: {text: Leave Group, role: outlined-button, align: center}
     type: Button
     layout_properties: {}
-- name: ind_load
-  properties: {}
-  type: form:dep_dmhomulhrajp9w:ProgressBar.Indeterminate
-  layout_properties: {column: JKSDUP}

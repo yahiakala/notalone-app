@@ -9,10 +9,10 @@ class MyGroupRow(MyGroupRowTemplate):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
         if self.item:
-            self.ind_load.visible = False
             self.lbl_name.text = self.item['name']
         else:
-            self.fp_actions.visible = False
+            self.lbl_name.text = ' ' * 500
+            self.lbl_name.role = 'skeleton'
 
     def btn_enter_group_click(self, **event_args):
         """This method is called when the button is clicked"""
