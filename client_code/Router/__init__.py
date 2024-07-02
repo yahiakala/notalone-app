@@ -42,8 +42,16 @@ class Router(RouterTemplate):
             if Global.is_mobile:
                 self.lbl_app_title.visible = False
                 self.link_forum_nav.text = ''
+
+            # self.link_home.text = 'Home'
+            # self.link_apply.text = 'Apply Now'
+            # self.link_profile.text = 'Profile'
+            # self.link_applicants.text = 'Applicants'
+            # self.link_members.text = 'Members'
+            # self.link_financials.text = 'Financials'
+            # self.link_volunteers.text = 'Volunteers'
+        
         print_timestamp('Populated globals on Router')
-        self.ind_load.visible = False
 
     def link_logout_click(self, **event_args):
         """This method is called when the link is clicked"""
@@ -57,24 +65,23 @@ class Router(RouterTemplate):
         print_timestamp('set_account_state')
         self.link_logout.visible = user is not None
         
-        self.link_apply.visible = False
-        self.link_profile.visible = False
-        self.link_applicants.visible = False
-        self.link_members.visible = False
-        self.link_fin.visible = False
-        self.link_volunteers.visible = False
-        self.link_forum_nav.visible = False
-        self.lbl_user.visible = False
-        self.link_help.visible = False
-        self.btn_test.visible = False
-        self.tb_impersonate.visible = False
+        # self.link_apply.visible = False
+        # self.link_profile.visible = False
+        # self.link_applicants.visible = False
+        # self.link_members.visible = False
+        # self.link_fin.visible = False
+        # self.link_volunteers.visible = False
+        # self.link_forum_nav.visible = False
+        # self.link_help.visible = False
+        # self.btn_test.visible = False
+        # self.tb_impersonate.visible = False
 
         self.permissions = Global.permissions
         print(self.permissions)
         
         if user:
-            self.lbl_user.visible = True
             self.lbl_user.text = user['email']
+            self.lbl_user.role = None
             self.link_apply.visible = 'book_interview' in self.permissions
             self.link_profile.visible = 'see_profile' in self.permissions
             self.link_applicants.visible = 'see_applicants' in self.permissions

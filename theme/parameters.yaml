@@ -55,6 +55,7 @@ roles:
 - {name: narrow-col}
 - {name: verically-centered}
 - {name: table-row}
+- {name: skeleton}
 color_scheme:
   preset_groups:
   - name: Colour Scheme
