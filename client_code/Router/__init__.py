@@ -53,7 +53,7 @@ class Router(RouterTemplate):
             print_timestamp('Starting timer')
             self.t_globals = TimerLogger('get_users timing')
             self.t_globals.start('starting get_users')
-            self.task = anvil.server.call('get_user_data', Global.tenant_id)
+            self.task = anvil.server.call('get_tenanted_data_call_bk', Global.tenant_id)
             self.timer_user_data.interval = 2
 
         # self.nav_click(self.link_home)

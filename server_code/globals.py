@@ -227,15 +227,15 @@ def get_roles(tenant_id, user, usermap=None, permissions=None, tenant=None):
 # Getting all the tenanted globals in a background task.
 # ------------------------------------------------------
 @anvil.server.callable(require_user=True)
-def get_user_data(tenant_id):
+def get_tenanted_data_call_bk(tenant_id):
     print_timestamp('get_user_data')
     user = anvil.users.get_user(allow_remembered=True)
     # Not gonna run the usermap, permissions, verify_tenant here due to speed
-    return anvil.server.launch_background_task('get_user_data_bk', tenant_id, user)
+    return anvil.server.launch_background_task('get_tenanted_data_bk', tenant_id, user)
 
 
 @anvil.server.background_task
-def get_user_data_bk(tenant_id, user, usermap=None, permissions=None, tenant=None):
+def get_tenanted_data_bk(tenant_id, user, usermap=None, permissions=None, tenant=None):
     print_timestamp('get_user_data_bk: start')
     usermap, permissions, tenant = validate_user(tenant_id, user, usermap, permissions, tenant)
     # In future, might launch separate bk tasks for each thing.
