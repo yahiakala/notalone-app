@@ -132,6 +132,7 @@ class MembersComponent(MembersComponentTemplate):
     def ti_load_tick(self, **event_args):
         """This method is called Every [interval] seconds. Does not trigger if [interval] is 0."""
         self.members = Global.get_bk('users')
+        # self.members = Global.get_s('users')
         
         if Global.get_s('users') is None:
             # Still loading full dataset
@@ -142,8 +143,3 @@ class MembersComponent(MembersComponentTemplate):
 
         if self.members is not None:
             self.populate_rp()
-
-
-
-
-

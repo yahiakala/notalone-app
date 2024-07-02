@@ -37,7 +37,14 @@ class MemberTemplate(MemberTemplateTemplate):
             self.btn_remind.visible = False if 'see_forum' in self.item['permissions'] else True
 
         else:
-            self.img_load.visible = True
+            self.lbl_name.role = 'skeleton'
+            self.lbl_fb_url.role = 'skeleton'
+            self.lbl_discord_user.role = 'skeleton'
+            self.lbl_payment_tier.visible = False
+            self.lbl_payment_status.visible = False
+            self.fp_remres.visible = False
+            self.btn_notes.visible = False
+            self.fp_auths.visible = False
 
     def btn_remove_click(self, **event_args):
         """This method is called when the button is clicked"""

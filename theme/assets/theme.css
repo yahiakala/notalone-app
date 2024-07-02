@@ -1172,3 +1172,21 @@ div.plot-container.plotly svg.main-svg {
     background-color: transparent;
     background-image: url("_/theme/Not%20Alone_thin.png") !important;
 }
+
+/* Loading Skeletons */
+.anvil-role-skeleton {
+  animation: skeleton-loading 1s linear infinite alternate;
+  height:30px;
+  border-radius: 12px;
+}
+@keyframes skeleton-loading {
+  0% {
+    background-color: hsl(200, 20%, 80%);
+  }
+  100% {
+    background-color: hsl(200, 20%, 95%);
+  }
+}
+.anvil-role-skeleton >button{
+  width:10px
+}

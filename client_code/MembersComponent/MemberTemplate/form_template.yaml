@@ -8,10 +8,6 @@ components:
   layout_properties: {grid_position: 'BZLVDI,RTBVMK'}
   name: cp_membercard
   components:
-  - name: img_load
-    properties: {visible: false, source: _/theme/Infinity-1s-200px.gif}
-    type: Image
-    layout_properties: {grid_position: 'XVNNOU,MJOBID'}
   - type: Label
     properties: {}
     layout_properties: {grid_position: 'FRXGOQ,JDJVXJ'}
