@@ -48,13 +48,14 @@ class Router(RouterTemplate):
 
         self.user = Global.user
         self.set_account_state(self.user)
+        Global.task_tenanted = anvil.server.call('get_tenanted_data_call_bk', Global.tenant_id)
         
-        if Global.get_no_call('user_data') is None:
-            print_timestamp('Starting timer')
-            self.t_globals = TimerLogger('get_users timing')
-            self.t_globals.start('starting get_users')
-            self.task = anvil.server.call('get_tenanted_data_call_bk', Global.tenant_id)
-            self.timer_user_data.interval = 2
+        # if Global.get_no_call('user_data') is None:
+        #     print_timestamp('Starting timer')
+        #     self.t_globals = TimerLogger('get_users timing')
+        #     self.t_globals.start('starting get_users')
+        #     self.task = anvil.server.call('get_tenanted_data_call_bk', Global.tenant_id)
+        #     self.timer_user_data.interval = 2
 
         # self.nav_click(self.link_home)
 
@@ -176,6 +177,7 @@ class Router(RouterTemplate):
 
     def timer_user_data_tick(self, **event_args):
         """Use a timer to load all the globals."""
+        # TODO: deprecate
         print_timestamp('timer_user_data_tick')
         with anvil.server.no_loading_indicator:
             if self.task.is_completed():

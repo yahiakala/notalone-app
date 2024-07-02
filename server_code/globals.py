@@ -15,18 +15,24 @@ from .helpers import validate_user, get_usermap, get_permissions, get_user_roles
 # Non tenanted globals
 # --------------------
 @anvil.server.callable(require_user=True)
-def get_tenants():
+def get_data(name):
+    user = anvil.users.get_user(allow_remembered=True)
+    if name == 'tenants':
+        return get_tenants(user)
+    elif name == 'my_tenants':
+        return get_my_tenants(user)
+
+
+def get_tenants(user):
     """Get a list of tenants for joining purposes."""
     # This being slow is okay.
     # user = anvil.users.get_user(allow_remembered=True)
     return app_tables.tenants.client_readable(q.only_cols('name'))
 
 
-@anvil.server.callable(require_user=True)
-def get_my_tenants():
+def get_my_tenants(user):
     """Get a list of tenants for joining purposes."""
     # This being slow is okay.
-    user = anvil.users.get_user(allow_remembered=True)
     usermap = get_usermap(user)
     if not usermap['tenants']:
         return []
@@ -38,6 +44,7 @@ def get_my_tenants():
         for i in usermap['tenants']
     ]
     return tenant_list
+
 
 # ----------------
 # Tenanted globals
@@ -72,7 +79,14 @@ def get_users(tenant_id, user, usermap=None, permissions=None, tenant=None):
         return []
 
     member_rows = app_tables.usermap.search(tenants=[tenant])
-    memberlist = [usermap_row_to_dict(tenant, member) for member in member_rows]
+    if anvil.server.context.background_task_id:
+        anvil.server.task_state['users_len'] = len(member_rows)
+        memberlist = []
+        for member in member_rows:
+            memberlist += usermap_row_to_dict(tenant, member)
+            anvil.server.task_state['users'] = memberlist
+    else:
+        memberlist = [usermap_row_to_dict(tenant, member) for member in member_rows]
     print_timestamp('_get_users: end')
     return memberlist
 
@@ -98,32 +112,35 @@ def usermap_row_to_dict(tenant, row):
     return row_dict
 
 
-def get_applicants(tenant_id, user, usermap=None, permissions=None, tenant=None, users=None):
-    usermap, permissions, tenant = validate_user(tenant_id, user, usermap, permissions, tenant)
-    if len(users) > 0:
-        # Just pull the applicants out of the users.
-        app_list = [i for i in users if 'book_interview' in i['permissions']]
-        return app_list
+# def get_applicants(tenant_id, user, usermap=None, permissions=None, tenant=None, users=None):
+#     usermap, permissions, tenant = validate_user(tenant_id, user, usermap, permissions, tenant)
+#     if len(users) > 0:
+#         # Just pull the applicants out of the users.
+#         app_list = [i for i in users if 'book_interview' in i['permissions']]
+#         return app_list
     
-    if 'see_applicants' not in permissions:
-        return []
+#     if 'see_applicants' not in permissions:
+#         return []
 
-    # TODO: test this thoroughly, as it is advanced.
-    perm_row = app_tables.permissions.get(name='book_interview')
-    role_rows = app_tables.roles.search(
-        q.fetch_only('name', 'tenant', 'permissions'),
-        permissions=perm_row,
-        tenant=tenant,
-    )
-    applicant_rows = app_tables.usermap.search(
-        q.fetch_only('user'),
-        roles=q.any_of(role_rows),
-        tenants=[tenant]
-    )
+#     # TODO: test this thoroughly, as it is advanced.
+#     perm_row = app_tables.permissions.get(name='book_interview')
+#     role_rows = app_tables.roles.search(
+#         q.fetch_only('name', 'tenant', 'permissions'),
+#         permissions=perm_row,
+#         tenant=tenant,
+#     )
+#     applicant_rows = app_tables.usermap.search(
+#         q.fetch_only('user'),
+#         roles=q.any_of(role_rows),
+#         tenants=[tenant]
+#     )
+#     if anvil.server.context.background_task_id:
+#         anvil.server.task_state['applicants_len']
+
     
-    app_list = [usermap_row_to_dict(tenant, row) for row in applicant_rows]
-    print_timestamp('get_applicants done query')
-    return app_list
+#     app_list = [usermap_row_to_dict(tenant, row) for row in applicant_rows]
+#     print_timestamp('get_applicants done query')
+#     return app_list
 
 
 def get_screenerlink(tenant_id, user, usermap=None, permissions=None, tenant=None):
@@ -184,7 +201,10 @@ def get_roles(tenant_id, user, usermap=None, permissions=None, tenant=None):
     usermap, permissions, tenant = validate_user(tenant_id, user, usermap, permissions, tenant)
     if 'see_forum' in permissions:
         role_list = []
-        for role in app_tables.roles.search(tenant=tenant):
+        role_search = app_tables.roles.search(tenant=tenant)
+        if anvil.server.context.background_task_id:
+            anvil.server.task_state['roles_len'] = len(role_search)
+        for role in role_search:
             if role['permissions']:
                 role_perm = [j['name'] for j in role['permissions']]
             else:
@@ -198,6 +218,8 @@ def get_roles(tenant_id, user, usermap=None, permissions=None, tenant=None):
                     'permissions': role_perm
                 }
             )
+            if anvil.server.context.background_task_id:
+                anvil.server.task_state['roles'] = role_list
         return role_list
     return []
 
@@ -253,8 +275,8 @@ def get_tenanted_data_bk(tenant_id, user, usermap=None, permissions=None, tenant
     data['users'] = get_users(tenant_id, user, usermap, permissions, tenant)
     anvil.server.task_state['users'] = data['users']
 
-    data['applicants'] = get_applicants(tenant_id, user, usermap, permissions, tenant, data['users'])
-    anvil.server.task_state['applicants'] = data['applicants']
+    # data['applicants'] = get_applicants(tenant_id, user, usermap, permissions, tenant, data['users'])
+    # anvil.server.task_state['applicants'] = data['applicants']
 
     data['discordlink'] = get_discordlink(tenant_id, user, usermap, permissions, tenant)
     anvil.server.task_state['discordlink'] = data['discordlink']
