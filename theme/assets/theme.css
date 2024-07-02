@@ -1118,3 +1118,59 @@ div.plot-container.plotly svg.main-svg {
     /* word-break: break-all; */
     overflow-wrap: anywhere;
 }
+
+
+/* Custom Spinner */
+/* @-webkit-keyframes pulse {
+    0% {
+        -webkit-transform: scaleX(1);
+        transform: scaleX(1);
+    }
+    50% {
+        -webkit-transform: scale3d(1.05, 1.05, 1.05);
+        transform: scale3d(1.05, 1.05, 1.05);
+    }
+    to {
+        -webkit-transform: scaleX(1);
+        transform: scaleX(1);
+    }
+}
+@keyframes pulse {
+    0% {
+        -webkit-transform: scaleX(1);
+        transform: scaleX(1);
+    }
+    50% {
+        -webkit-transform: scale3d(1.05, 1.05, 1.05);
+        transform: scale3d(1.05, 1.05, 1.05);
+    }
+    to {
+        -webkit-transform: scaleX(1);
+        transform: scaleX(1);
+    }
+} */
+#loadingSpinner {
+    -webkit-animation: pulse;
+    -moz-animation: pulse;
+    animation: pulse;
+  	animation-duration: 1s;
+    animation-iteration-count: infinite;
+
+    position: fixed;
+    top: 0%;
+    left: 50%;
+    
+    width: 600px;
+    height:500px;
+
+    /* transform: translateX(-50%) !important; */
+    transform: translateX(-50%) !important;
+    max-width: 100vw;
+    
+    box-sizing: border-box;
+    
+    border-radius: 0;
+    box-shadow: none;/*0px 0px 10px 10px #fcfcfc;*/
+    background-color: transparent;
+    background-image: url("_/theme/Not%20Alone_thin.png") !important;
+}

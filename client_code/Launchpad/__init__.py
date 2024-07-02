@@ -14,7 +14,7 @@ class Launchpad(LaunchpadTemplate):
         self.init_components(**properties)
         self.rp_my_groups.items = [None]
         self.rp_groups.items = [None]
-        print_timestamp('loaded lau')
+        print_timestamp('loaded launcher')
 
     def btn_create_group_click(self, **event_args):
         """This method is called when the button is clicked"""
