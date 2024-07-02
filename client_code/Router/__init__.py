@@ -23,12 +23,12 @@ class Router(RouterTemplate):
     def __init__(self, **properties):
         self.init_components(**properties)
 
-        self.link_home.tag.url_hash = 'app/home'        
-        self.link_apply.tag.url_hash = 'app/apply'        
-        self.link_profile.tag.url_hash = 'app/profile'        
-        self.link_applicants.tag.url_hash = 'app/applicants'        
-        self.link_members.tag.url_hash = 'app/members'        
-        self.link_fin.tag.url_hash = 'app/financials'        
+        self.link_home.tag.url_hash = 'app/home'
+        self.link_apply.tag.url_hash = 'app/apply'
+        self.link_profile.tag.url_hash = 'app/profile'
+        self.link_applicants.tag.url_hash = 'app/applicants'
+        self.link_members.tag.url_hash = 'app/members'
+        self.link_fin.tag.url_hash = 'app/financials'
         self.link_volunteers.tag.url_hash = 'app/volunteers'
         
         self.btn_test.tag.url_hash = 'app/tests'
