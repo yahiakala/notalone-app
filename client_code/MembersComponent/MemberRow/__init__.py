@@ -1,5 +1,6 @@
 from ._anvil_designer import MemberRowTemplate
 from anvil import *
+from anvil_extras import routing
 
 
 class MemberRow(MemberRowTemplate):
@@ -26,4 +27,7 @@ class MemberRow(MemberRowTemplate):
 
     def link_email_click(self, **event_args):
         """This method is called when the link is clicked"""
-        pass
+        routing.set_url_hash(
+            url_pattern='app/memberdetail',
+            url_dict={'user_email': self.item['email']}
+        )

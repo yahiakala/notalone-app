@@ -19,11 +19,12 @@ class MemberDetail(MemberDetailTemplate):
             self.cp_booking_link.visible = True
         else:
             self.user = [i for i in Global.users if i['email'] == self.url_dict['user_email']][0]
-            self.discordlink = self.user['discordlink']
+            # self.discordlink = self.tenant['discordlink']
             self.tb_email.enabled = True
             self.cp_admin.visible = True
-            self.ta_user_notes.text = self.item['notes']
+            self.ta_user_notes.text = self.user['notes']
             self.permissions = self.user['permissions']
+            self.btn_back.visible = True
 
         if 'see_forum' not in self.permissions:
             self.btn_pay_new.enabled = True
@@ -92,3 +93,7 @@ class MemberDetail(MemberDetailTemplate):
         window.location.href = self.payment_url  # same window
         self.refresh_data_bindings()
         routing.set_url_hash("homedetail", load_from_cache=False)
+
+    def btn_back_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        routing.go_back()

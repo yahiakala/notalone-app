@@ -2,6 +2,11 @@ container:
   type: ColumnPanel
   properties: {col_widths: '{}'}
 components:
+- name: btn_back
+  properties: {text: Back, align: left, icon: 'fa:angle-left', role: outlined-button, visible: false}
+  type: Button
+  layout_properties: {grid_position: 'WWMKQH,HNXRQT'}
+  event_bindings: {click: btn_back_click}
 - type: ColumnPanel
   properties: {role: outlined-card, col_widths: '{"CPUQXK":10,"QWXXQK":50,"ZLOKBT":10,"GVMFKW":50,"BSAFMB":10,"RLHKRF":50,"DDZPCS":10,"OGGOPT":50}'}
   name: cp_basic
