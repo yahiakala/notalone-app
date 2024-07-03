@@ -1,0 +1,266 @@
+container:
+  type: ColumnPanel
+  properties: {col_widths: '{}'}
+components:
+- type: ColumnPanel
+  properties: {role: outlined-card, col_widths: '{"CPUQXK":10,"QWXXQK":50,"ZLOKBT":10,"GVMFKW":50,"BSAFMB":10,"RLHKRF":50,"DDZPCS":10,"OGGOPT":50}'}
+  name: cp_basic
+  layout_properties: {grid_position: 'BNBKTE,UTASBW'}
+  components:
+  - type: Label
+    properties: {role: title, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, font_size: null, tooltip: '', text: Contact Information}
+    name: lbl_contact
+    layout_properties: {grid_position: 'PIFERG,ATJFYT'}
+  - type: Label
+    properties: {role: null, bold: false, align: left, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, font_size: null, tooltip: '', text: Email}
+    name: lbl_email
+    layout_properties: {grid_position: 'HKINEJ,DDZPCS'}
+  - type: TextBox
+    properties: {role: outlined, bold: false, align: left, placeholder: Enter email, spacing_above: small, background: '', type: text, underline: false, font: '', hide_text: false, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: false, font_size: null, tooltip: '', text: ''}
+    name: tb_email
+    layout_properties: {grid_position: 'HKINEJ,OGGOPT'}
+    data_bindings:
+    - {property: text, code: 'self.user[''email'']', writeback: true}
+  - type: Label
+    properties: {role: null, bold: false, align: left, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, font_size: null, tooltip: '', text: First Name}
+    name: lbl_firstname
+    layout_properties: {grid_position: 'ZAJLOH,CPUQXK'}
+  - type: TextBox
+    properties: {role: outlined, bold: false, align: left, placeholder: Enter first name, spacing_above: small, background: '', type: text, underline: false, font: '', hide_text: false, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: ''}
+    name: tb_firstname
+    layout_properties: {grid_position: 'ZAJLOH,QWXXQK'}
+    data_bindings:
+    - {property: text, code: 'self.user[''first_name'']', writeback: true}
+    event_bindings: {lost_focus: btn_save_click, pressed_enter: btn_save_click}
+  - type: Label
+    properties: {role: null, bold: false, align: left, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, font_size: null, tooltip: '', text: Last Name}
+    name: lbl_lastname
+    layout_properties: {grid_position: 'XDASUB,ZLOKBT'}
+  - type: TextBox
+    properties: {role: outlined, bold: false, align: left, placeholder: Enter last name, spacing_above: small, background: '', type: text, underline: false, font: '', hide_text: false, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: ''}
+    name: tb_lastname
+    layout_properties: {grid_position: 'XDASUB,GVMFKW'}
+    data_bindings:
+    - {property: text, code: 'self.user[''last_name'']', writeback: true}
+    event_bindings: {lost_focus: btn_save_click, pressed_enter: btn_save_click}
+  - name: lbl_phone
+    properties: {role: null, bold: false, align: left, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, font_size: null, tooltip: '', text: Phone Number}
+    type: Label
+    layout_properties: {grid_position: 'ILIWTK,BSAFMB'}
+  - name: tb_phone
+    properties: {role: outlined, bold: false, align: left, placeholder: Enter phone number, spacing_above: small, background: '', type: text, underline: false, font: '', hide_text: false, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: ''}
+    type: TextBox
+    layout_properties: {grid_position: 'ILIWTK,RLHKRF'}
+    data_bindings:
+    - {property: text, code: 'self.user[''phone'']', writeback: true}
+    event_bindings: {lost_focus: btn_save_click, pressed_enter: btn_save_click}
+  - name: lbl_namealert
+    properties: {align: center, text: 'Please fill in first and last name. We prefer real names to foster community, but pseudonyms are OK as long as they are consistent.', visible: false, role: null, foreground: 'theme:Error', icon: 'fa:exclamation-circle'}
+    type: Label
+    layout_properties: {grid_position: 'HKWSTY,NAVZYQ'}
+- name: cp_notes
+  properties: {role: outlined-card, col_widths: '{}', spacing_above: small, background: '', wrap_on: mobile, col_spacing: medium, foreground: '', spacing_below: small, visible: false, border: '', tooltip: ''}
+  type: ColumnPanel
+  layout_properties: {grid_position: 'CYMYEF,QSIMZQ'}
+  components:
+  - name: lbl_screening_title_copy
+    properties: {role: title, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, font_size: null, tooltip: '', text: Admin}
+    type: Label
+    layout_properties: {grid_position: 'ZDFNLF,HIEVSD'}
+  - name: ta_user_notes
+    properties: {role: outlined, bold: false, align: left, placeholder: User Notes are Empty, spacing_above: small, background: '', underline: false, font: '', foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, auto_expand: true, font_size: null, tooltip: '', height: '', text: ''}
+    type: TextArea
+    layout_properties: {grid_position: 'GKVBPX,IFEJQB'}
+    data_bindings: []
+    event_bindings: {lost_focus: btn_save_click}
+  - name: btn_save_notes
+    properties: {role: elevated-button, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: Save Notes}
+    type: Button
+    layout_properties: {grid_position: 'AMAJJD,HCVULW'}
+    event_bindings: {click: btn_save_notes_click}
+  - name: fp_remres
+    properties: {role: null, align: center, spacing_above: small, background: '', foreground: '', spacing_below: small, visible: false, border: '', tooltip: '', spacing: medium}
+    type: FlowPanel
+    layout_properties: {grid_position: 'EADRFA,MUNGZC'}
+    components:
+    - name: btn_del
+      properties: {role: filled-button, bold: false, align: center, spacing_above: small, background: 'theme:Error', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: Delete User}
+      type: Button
+      layout_properties: {}
+      event_bindings: {click: btn_del_click}
+    - name: btn_restore
+      properties: {role: filled-button, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: Edit Roles}
+      type: Button
+      layout_properties: {grid_position: 'KHMGAX,GIVXIL'}
+      data_bindings: []
+      event_bindings: {click: btn_restore_click}
+- type: ColumnPanel
+  properties: {role: outlined-card, col_widths: '{"WZCJJP":50,"FSIGED":10,"GDPJAW":50}'}
+  name: cp_social
+  layout_properties: {grid_position: 'WQFGLG,FLTJBP'}
+  components:
+  - type: Label
+    properties: {role: title, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, font_size: null, tooltip: '', text: Social Media}
+    name: lbl_social
+    layout_properties: {grid_position: 'PHMZNJ,MDIGGU'}
+  - name: lbl_discord_user
+    properties: {role: null, bold: false, align: left, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, font_size: null, tooltip: '', text: Discord Username}
+    type: Label
+    layout_properties: {grid_position: 'OKHKDC,FSIGED'}
+    data_bindings: []
+  - name: tb_discord_user
+    properties: {role: outlined, bold: false, align: left, placeholder: Discord Username, spacing_above: small, background: '', type: text, underline: false, font: '', hide_text: false, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: ''}
+    type: TextBox
+    layout_properties: {grid_position: 'OKHKDC,GDPJAW'}
+    data_bindings:
+    - {property: text, code: 'self.user[''discord'']', writeback: true}
+    event_bindings: {lost_focus: btn_save_click, pressed_enter: btn_save_click}
+  - name: cp_discord
+    properties: {role: tonal-card}
+    type: ColumnPanel
+    layout_properties: {grid_position: 'BJBJLT,AAFEMU'}
+    components:
+    - name: link_discord
+      properties: {text: Gaming Discord Invite, align: center, role: null}
+      type: Link
+      layout_properties: {grid_position: 'GHPFCG,RDSFJW'}
+      data_bindings:
+      - {property: url, code: self.discordlink, writeback: false}
+    data_bindings:
+    - {property: visible, code: 'self.user[''auth_forumchat'']', writeback: false}
+- type: ColumnPanel
+  properties: {role: outlined-card, col_widths: '{}'}
+  name: cp_module
+  layout_properties: {grid_position: 'MKBHRK,OUNEGY'}
+  components:
+  - type: Link
+    properties: {role: title, bold: false, align: left, col_widths: '{}', spacing_above: small, background: '', icon: '', wrap_on: mobile, underline: true, font: '', col_spacing: medium, icon_align: left, foreground: '', url: '', spacing_below: small, visible: true, border: '', italic: false, font_size: null, tooltip: '', text: Code of Conduct and Liability Waiver}
+    name: link_codeofconduct
+    layout_properties: {grid_position: 'NHYINA,CLXDOQ'}
+    components: []
+    data_bindings:
+    - {property: url, code: 'self.user[''tenant''][''waiver'']'}
+  - type: CheckBox
+    properties: {role: null, bold: false, align: left, spacing_above: small, background: '', allow_indeterminate: false, underline: false, font: '', foreground: '', checked: false, spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: I confirm I have read and agree to the Code of Conduct and Liability Waiver}
+    name: cb_signoff
+    layout_properties: {grid_position: 'VIIDLQ,DYBKHN'}
+    data_bindings:
+    - {property: checked, code: 'self.user[''consent_check'']', writeback: true}
+    event_bindings: {change: btn_save_click}
+- type: ColumnPanel
+  properties: {role: outlined-card, col_widths: '{}'}
+  name: cp_membership_payments
+  layout_properties: {grid_position: 'MBRPGF,TZPVGS'}
+  components:
+  - type: Label
+    properties: {role: title, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, font_size: null, tooltip: '', text: Membership Payments}
+    name: lbl_plan_title
+    layout_properties: {grid_position: 'ELJPLP,GBZPUL'}
+  - type: RichText
+    properties:
+      role: null
+      format: markdown
+      align: left
+      spacing_above: small
+      content: |-
+        Our fee schedule is as follows. Please select your preferred contribution for the year. All of our members are volunteers - all fees go towards operational costs.
+
+        $10 / year and 10 volunteer hours
+        $50 / year and 0 volunteer hours
+      background: ''
+      font: ''
+      foreground: ''
+      spacing_below: small
+      visible: true
+      border: ''
+      enable_slots: true
+      font_size: null
+      tooltip: ''
+      data: null
+    name: rt_fee
+    layout_properties: {grid_position: 'XPBDSR,AJQRIN'}
+  - type: Label
+    properties: {role: null, bold: false, align: right, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, font_size: null, tooltip: '', text: Enter Fee (Minimum $10/yr)}
+    name: lbl_fee
+    layout_properties: {grid_position: 'REFMJL,RJFOTL'}
+  - type: DropDown
+    properties:
+      role: outlined
+      include_placeholder: true
+      bold: false
+      align: full
+      placeholder: None
+      spacing_above: small
+      background: ''
+      underline: false
+      font: ''
+      foreground: ''
+      items: ['']
+      spacing_below: small
+      visible: true
+      border: ''
+      italic: false
+      enabled: true
+      font_size: null
+      tooltip: ''
+    name: dd_membertier
+    layout_properties: {grid_position: 'REFMJL,HMCTMQ'}
+    data_bindings:
+    - {property: selected_value, code: 'self.user[''fee'']', writeback: true}
+    - {property: items, code: '[("10", 10), ("50", 50)]'}
+    event_bindings: {show: btn_save_click, change: btn_save_click}
+  - type: Button
+    properties: {role: elevated-button, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: Pay via PayPal}
+    name: btn_pay_new
+    layout_properties: {grid_position: 'CDIKXF,XLWVDB'}
+    event_bindings: {click: btn_pay_new_click}
+    data_bindings: []
+  - name: lbl_plan_title_copy
+    properties: {role: title, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, font_size: null, tooltip: '', text: Payment Status}
+    type: Label
+    layout_properties: {grid_position: 'GVMXVD,QJMODS'}
+  - name: lbl_fee_paid_copy
+    properties: {role: null, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, font_size: null, tooltip: '', text: Membership is in good standing.}
+    type: Label
+    layout_properties: {grid_position: 'FFYLBT,IUCULA'}
+  - name: lbl_fee_paid
+    properties: {role: null, bold: false, align: right, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, font_size: null, tooltip: '', text: 'Annual fee of subscription:'}
+    type: Label
+    layout_properties: {grid_position: 'GKJKQY,JKUPPB'}
+  - name: lbl_fee_paid_amt
+    properties: {role: null, bold: false, align: left, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, font_size: null, tooltip: '', text: ''}
+    type: Label
+    layout_properties: {grid_position: 'GKJKQY,AWORYN'}
+    data_bindings:
+    - {property: text, code: 'self.user[''fee'']', writeback: false}
+  data_bindings:
+  - {property: visible, code: 'self.user[''good_standing''] != True'}
+- name: cp_booking_link
+  properties: {role: outlined-card, col_widths: '{"NAEOZB":10,"FJNBOS":50}', visible: false}
+  type: ColumnPanel
+  layout_properties: {grid_position: 'ALALGY,HZOREC'}
+  components:
+  - name: lbl_screening_title
+    properties: {role: title, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, font_size: null, tooltip: '', text: Interviewer Settings}
+    type: Label
+    layout_properties: {grid_position: 'XBRXAD,XNAGJH'}
+  - name: lbl_booking_link
+    properties: {role: null, bold: false, align: left, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, font_size: null, tooltip: '', text: Booking Link}
+    type: Label
+    layout_properties: {grid_position: 'KBYNLO,NAEOZB'}
+    data_bindings: []
+  - name: tb_booking_link
+    properties: {role: outlined, bold: false, align: left, placeholder: Booking Link, spacing_above: small, background: '', type: text, underline: false, font: '', hide_text: false, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: Booking Link}
+    type: TextBox
+    layout_properties: {grid_position: 'KBYNLO,FJNBOS'}
+    data_bindings:
+    - {property: text, code: 'self.user[''booking_link'']', writeback: true}
+    event_bindings: {lost_focus: btn_save_click, pressed_enter: btn_save_click}
+  data_bindings:
+  - {property: visible, code: 'self.user[''auth_screenings'']', writeback: false}
+- type: Button
+  properties: {role: filled-button, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: Save Changes}
+  name: btn_save
+  layout_properties: {grid_position: 'ORHDJB,EEVRVB'}
+  event_bindings: {click: btn_save_click}
+is_package: true

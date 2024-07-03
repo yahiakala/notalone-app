@@ -257,7 +257,7 @@ def get_roles(tenant_id, user, usermap=None, permissions=None, tenant=None):
 # ------------------------------------------------------
 @anvil.server.callable(require_user=True)
 def get_tenanted_data_call_bk(tenant_id):
-    print_timestamp('get_user_data')
+    print_timestamp('get_tenanted_data_call_bk')
     user = anvil.users.get_user(allow_remembered=True)
     # Not gonna run the usermap, permissions, verify_tenant here due to speed
     return anvil.server.launch_background_task('get_tenanted_data_bk', tenant_id, user)
@@ -265,7 +265,7 @@ def get_tenanted_data_call_bk(tenant_id):
 
 @anvil.server.background_task
 def get_tenanted_data_bk(tenant_id, user, usermap=None, permissions=None, tenant=None):
-    print_timestamp('get_user_data_bk: start')
+    print_timestamp('get_tenanted_data_bk: start')
     usermap, permissions, tenant = validate_user(tenant_id, user, usermap, permissions, tenant)
     # In future, might launch separate bk tasks for each thing.
     
@@ -294,5 +294,5 @@ def get_tenanted_data_bk(tenant_id, user, usermap=None, permissions=None, tenant
     # data['roles_to_members'] = get_roles_to_members(tenant_id, user, usermap, permissions, tenant)
     # anvil.server.task_state['roles_to_members'] = data['roles_to_members']
         
-    print_timestamp('get_user_data_bk: end')
+    print_timestamp('get_tenanted_data_bk: end')
     return data

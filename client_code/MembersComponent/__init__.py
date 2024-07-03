@@ -12,10 +12,6 @@ from anvil_extras.logging import TimerLogger
 @routing.route('/members', template='Router')
 class MembersComponent(MembersComponentTemplate):
     def __init__(self, **properties):
-        # Set Form properties and Data Bindings.
-        # print("Client: Getting members ", dt.datetime.now().strftime("%H:%M:%S.%f"))
-        # self.members = Global.users.search(auth_profile=True)
-        # print("Client: Got members ", dt.datetime.now().strftime("%H:%M:%S.%f"))
         self.init_components(**properties)
         self.members = [None]
         self.populate_rp()

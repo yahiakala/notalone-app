@@ -5,7 +5,8 @@ import anvil.users
 # from ..HomeAnonComponent import HomeAnonComponent
 from ..Home import Home
 from ..BookingComponent import BookingComponent
-from ..ProfileComponent import ProfileComponent
+# from ..ProfileComponent import ProfileComponent
+from ..MemberDetail import MemberDetail
 from ..ApplicantsComponent import ApplicantsComponent
 from ..MembersComponent import MembersComponent
 from ..FinComponent import FinComponent

@@ -12,7 +12,7 @@ class VolunteerComponent(VolunteerComponentTemplate):
         self.user = Global.user
         self.init_components(**properties)
 
-        if self.user['auth_members']:
+        if 'see_members' in Global.permissions:
             self.rp_vol_roles.items = Global.roles_to_members
         else:
             self.rp_vol_roles.items = Global.roles

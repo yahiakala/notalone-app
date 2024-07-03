@@ -10,10 +10,10 @@ class Tests(TestsTemplate):
         """
         Selectively load test modules depending on who is logged in.
         There should be users in the users table with the following last names:
-        Applicant 0: An applicant to the community without 'auth_profile'
-        Member: A member in the community with 'auth_profile'
-        Screener: A screener/interviewer with privilege 'auth_screenings'
-        Admin: An administrator with the privilege 'auth_members'
+        Applicant 0: An applicant to the community without 'see_profile'
+        Member: A member in the community with 'see_profile'
+        Screener: A screener/interviewer with privilege 'see_applicants'
+        Admin: An administrator with the privilege 'see_members'
         """
         # Set Form properties and Data Bindings.
         self.user = Global.user
