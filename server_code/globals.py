@@ -39,7 +39,10 @@ def get_my_tenants(user):
     tenant_list = [
         {
             'tenant_id': i.get_id(),
-            'name': i['name']
+            'name': i['name'],
+            'discordlink': i['discord_invite'],
+            'discourselink': i['discourse_url'],
+            'waiver': i['waiver']
         }
         for i in usermap['tenants']
     ]
