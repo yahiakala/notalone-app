@@ -34,7 +34,7 @@ class Router(RouterTemplate):
 
         self.link_home.tag.globals = []
         self.link_apply.tag.globals = []
-        self.link_profile.tag.globals = []
+        self.link_profile.tag.globals = ['permissions']
         self.link_members.tag.globals = ['users']
         self.link_fin.tag.globals = []
         self.link_volunteers.tag.globals = []
