@@ -81,9 +81,7 @@ class Router(RouterTemplate):
                 user['last_name'] != ''
             )
             if 'dev' in self.permissions:
-                self.btn_test.visible = True
                 self.tb_impersonate.visible = True
-                from ..Tests import Tests
 
             self.lbl_app_title.text = [i for i in Global.my_tenants if i['tenant_id'] == Global.tenant_id][0]['name']
             self.link_help.visible = True

@@ -59,6 +59,40 @@ db_schema:
       admin_ui: {width: 200}
       type: link_multiple
       target: roles
+    - name: tenant
+      admin_ui: {width: 200, order: 3}
+      type: link_single
+      target: tenants
+    - name: notes
+      admin_ui: {width: 200, order: 4}
+      type: string
+    - name: fee
+      admin_ui: {width: 200, order: 5}
+      type: number
+    - name: paypal_sub_id
+      admin_ui: {width: 200, order: 6}
+      type: string
+    - name: consent_check
+      admin_ui: {width: 200, order: 7}
+      type: bool
+    - name: booking_link
+      admin_ui: {width: 200, order: 8}
+      type: string
+    - name: payment_expiry
+      admin_ui: {width: 200, order: 9}
+      type: date
+    - name: payment_status
+      admin_ui: {width: 200, order: 10}
+      type: string
+    - name: discord
+      admin_ui: {width: 200, order: 11}
+      type: string
+    - name: phone
+      admin_ui: {width: 200, order: 12}
+      type: string
+    - name: screening_slots
+      admin_ui: {width: 200, order: 13}
+      type: simpleObject
   permissions:
     title: Permissions
     client: none

@@ -63,8 +63,6 @@ def get_tenanted_data(tenant_id, key):
         return get_users(tenant_id, user)
     elif key == 'permissions':
         return get_permissions(tenant_id, user)
-    elif key == 'applicants':
-        return get_applicants(tenant_id, user)
     elif key == 'screenerlink':
         return get_screenerlink(tenant_id, user)
     elif key == 'forumlink':

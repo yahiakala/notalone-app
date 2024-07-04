@@ -5,11 +5,14 @@ from anvil.tables import app_tables
 import anvil.tables.query as q
 import anvil.users
 
-# https://developer.paypal.com/docs/api/subscriptions/v1/#subscriptions_create
-from anvil_extras import authorisation
-from anvil_extras.authorisation import authorisation_required
+from .helpers import get_users_with_permission
 
-authorisation.set_config(get_roles='usermap')
+# https://developer.paypal.com/docs/api/subscriptions/v1/#subscriptions_create
+from . import authorisation
+from .authorisation import authorisation_required
+
+authorisation.set_config(get_roles='usermap', tenanted=True)
+
 
 
 def get_paypal_auth():
@@ -95,18 +98,21 @@ def create_sub(plan_amt):
 @anvil.server.http_endpoint('/capture-sub')
 def capture_sub(**params):
     # TODO: use fake paypal to test this
-    # TODO: overhaul with new data model
     # TODO: secure this
     # TODO: use anvil.server.session.get('tenant_id', None)
     verify_paypal_webhook(anvil.server.request.headers, anvil.server.request.body_json)
-    row = app_tables.users.get(paypal_sub_id=params['subscription_id'])
-    row['good_standing'] = True
-    row['auth_forumchat'] = True
-    print(row['email'] + ' has just paid. Sending email to screeners.')
-    screeners = app_tables.users.search(auth_screenings=True, tenant=row['tenant'])
+    usermap = app_tables.usermap.get(paypal_sub_id=params['subscription_id'])
+    usermap['roles'] = [i for i in usermap['roles'] if i['name'] != 'Applicant']
+    member_role = app_tables.roles.get(tenant=usermap['tenant'], name='Member')
+    if member_role not in usermap['roles']:
+        usermap['roles'] = usermap['roles'] + member_role
+    
+    print(usermap['user']['email'] + ' has just paid. Sending email to screeners.')
+    
+    screeners = get_users_with_permission(None, 'see_members', usermap['tenant'])
     for screener in screeners:
-        print('Sending email to : ' + screener['email'])
-        notify_paid(screener, row)
+        print('Sending email to : ' + screener['user']['email'])
+        notify_paid(screener['user'], usermap['user'])
     return anvil.server.HttpResponse(302, headers={'Location': anvil.server.get_app_origin() + '/#profile'})
 
 

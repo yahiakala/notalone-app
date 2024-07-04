@@ -76,6 +76,14 @@ def validate_user(tenant_id, user, usermap=None, permissions=None, tenant=None):
     return usermap, permissions, tenant
 
 
+def get_users_with_permission(tenant_id, permission, tenant=None):
+    tenant = tenant or app_tables.tenants.get_by_id(tenant_id)
+    perm_row = app_tables.permissions.get(name=permission)
+    role_rows = app_tables.roles.search(permissions=perm_row, tenant=tenant)
+    users = app_tables.usermap.search(roles=q.any_of(list(role_rows)))
+    return users
+
+
 permissions = [
     'see_applicants',
     'see_members',
