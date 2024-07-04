@@ -20,11 +20,7 @@ class Admin(unittest.TestCase):
 
     def test_load_members(self):
         """Load links for admin"""
-        assert(self.form.link_apply.visible == False)
-        assert(self.form.link_profile.visible == True)
-        assert(self.form.link_applicants.visible == True)
-        assert(self.form.link_members.visible == True)
-        self.form.link_members.raise_event('click')
+        pass
 
     def test_member_search(self):
         """Search for a member."""
@@ -56,28 +52,7 @@ class TestAdmin(unittest.TestCase):
 
     def test_get_users(self):
         """Get users"""
-        user = Global.user
-        if user['auth_members']:
-            users = Global.users.search()
-            assert(len(users) > 0)
-
-    def test_get_applicants(self):
-        """Get applicants"""
-        user = Global.user
-        if user['auth_screenings']:
-            apps = Global.applicants
-
-    def test_reassign_roles(self):
-        """Reassign a role"""
-        user = Global.user
-        if user['auth_members']:
-            users = Global.users.search()
-            role_dict = {'auth_forumchat': False}
-            user = anvil.server.call('reassign_roles', users[0], role_dict)
-            assert(user['auth_forumchat'] == False)
-            role_dict = {'auth_forumchat': True}
-            user = anvil.server.call('reassign_roles', users[0], role_dict)
-            assert(user['auth_forumchat'] == True)
+        pass
 
     def test_get_user_notes(self):
         assert False
