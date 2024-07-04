@@ -1,4 +1,4 @@
-from ._anvil_designer import MembersComponentTemplate
+from ._anvil_designer import MembersTemplate
 from anvil import *
 import anvil.tables.query as q
 import anvil.server
@@ -10,7 +10,7 @@ from anvil_extras.logging import TimerLogger
 
 
 @routing.route('/members', template='Router')
-class MembersComponent(MembersComponentTemplate):
+class Members(MembersTemplate):
     def __init__(self, **properties):
         self.init_components(**properties)
         self.members = [None]
@@ -107,7 +107,7 @@ class MembersComponent(MembersComponentTemplate):
         self.refresh_search()
         self.btn_expired.role = 'filled-button'
 
-    def btn_norole_click(self, **event_args):
+    def btn_qf_admins_click(self, **event_args):
         """People on the $10 tier with no role."""
         self.members = [
             i for i in Global.users
@@ -132,3 +132,12 @@ class MembersComponent(MembersComponentTemplate):
 
         if self.members is not None:
             self.populate_rp()
+
+    def btn_qf_applicants_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        # TODO: apply filters
+        self.rp_members.items = [
+            i for i in self.members
+            if 'book_interview' in i['permissions']
+        ]
+        self.btn_clear_search.visible = True

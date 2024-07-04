@@ -7,7 +7,6 @@ from ..Home import Home
 from ..BookingComponent import BookingComponent
 # from ..ProfileComponent import ProfileComponent
 from ..MemberDetail import MemberDetail
-from ..ApplicantsComponent import ApplicantsComponent
 from ..MembersComponent import MembersComponent
 from ..FinComponent import FinComponent
 from ..VolunteerComponent import VolunteerComponent
@@ -27,7 +26,6 @@ class Router(RouterTemplate):
         self.link_home.tag.url_hash = 'app/home'
         self.link_apply.tag.url_hash = 'app/apply'
         self.link_profile.tag.url_hash = 'app/profile'
-        self.link_applicants.tag.url_hash = 'app/applicants'
         self.link_members.tag.url_hash = 'app/members'
         self.link_fin.tag.url_hash = 'app/financials'
         self.link_volunteers.tag.url_hash = 'app/volunteers'
@@ -74,7 +72,6 @@ class Router(RouterTemplate):
             self.lbl_user.role = None
             self.link_apply.visible = 'book_interview' in self.permissions
             self.link_profile.visible = 'see_profile' in self.permissions
-            self.link_applicants.visible = 'see_applicants' in self.permissions
             self.link_members.visible = 'see_members' in self.permissions
             self.link_fin.visible = 'see_financials' in self.permissions
             self.link_volunteers.visible = 'see_members' in self.permissions  # TODO

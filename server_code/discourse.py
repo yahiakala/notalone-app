@@ -27,6 +27,7 @@ def login_sso(sso, sig, session_id=None):
     payload = base64.b64decode(urllib.parse.unquote(sso)).decode()
     print(payload)
     params = dict(urllib.parse.parse_qsl(payload))
+    print(params)
     nonce = params['nonce']
 
     user = None
@@ -34,8 +35,7 @@ def login_sso(sso, sig, session_id=None):
     #     user = get_user_by_session_id(session_id)
     if not user:
         user = anvil.users.get_user(allow_remembered=True)
-    print('user')
-    print(user)
+    # TODO: get the tenant from the forum URL
     if not user or not user['auth_forumchat']:
         return anvil.server.HttpResponse(302, headers={"Location": anvil.server.get_app_origin()})
 

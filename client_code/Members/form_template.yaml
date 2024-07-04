@@ -7,26 +7,31 @@ components:
   name: fp_quickfilters
   layout_properties: {grid_position: 'GYCPND,DMGFXC'}
   components:
-  - type: Button
-    properties: {role: tonal-button, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: Missing Subscriptions}
-    name: btn_nosub
-    layout_properties: {}
-    event_bindings: {click: btn_nosub_click}
-  - type: Button
-    properties: {role: tonal-button, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: Expiring Soon}
-    name: btn_expiring_soon
-    layout_properties: {}
-    event_bindings: {click: btn_expiring_soon_click}
-  - type: Button
-    properties: {role: tonal-button, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: Expired Subscription}
-    name: btn_expired
-    layout_properties: {}
-    event_bindings: {click: btn_expired_click}
-  - name: btn_norole
-    properties: {role: tonal-button, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: Missing Volunteer Role}
+  - name: btn_qf_applicants
+    properties: {role: tonal-button, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: Applicants}
     type: Button
     layout_properties: {}
-    event_bindings: {click: btn_norole_click}
+    event_bindings: {click: btn_qf_applicants_click}
+  - name: btn_qf_regular
+    properties: {role: tonal-button, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: Regular Members}
+    type: Button
+    layout_properties: {}
+    event_bindings: {}
+  - name: btn_qf_admins
+    properties: {role: tonal-button, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: Admins}
+    type: Button
+    layout_properties: {}
+    event_bindings: {}
+  - name: btn_qf_disabled
+    properties: {role: tonal-button, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: Disabled Members}
+    type: Button
+    layout_properties: {}
+    event_bindings: {}
+  - name: btn_qf_inactive
+    properties: {role: tonal-button, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: Inactive}
+    type: Button
+    layout_properties: {}
+    event_bindings: {}
 - type: TextBox
   properties: {role: outlined, bold: false, align: left, placeholder: Search for a member, spacing_above: small, background: '', type: text, underline: false, font: '', hide_text: false, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: ''}
   name: tb_mb_search
@@ -53,7 +58,7 @@ components:
   type: DataGrid
   components:
   - name: rp_members
-    properties: {item_template: MembersComponent.MemberRow}
+    properties: {item_template: Members.MemberRow}
     type: RepeatingPanel
   layout_properties: {grid_position: 'FLMNIV,XJAVVP'}
 is_package: true
