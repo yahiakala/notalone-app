@@ -249,9 +249,9 @@ color: %color:On Primary Container%;
     max-width: 360px;
     z-index: 3;
     border-right: none;
+    border: solid 1px %color:Outline% !important;
     border-radius: 0 20px 20px 0;
-  /* 16dp */ box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
-
+    /* box-shadow: 0 16px 24px 2px rgba(0, 0, 0, 0.14), 0 6px 30px 5px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2); */
     display: none;
     transition: right 0.5s;
     height: 100%;
@@ -275,8 +275,8 @@ color: %color:On Primary Container%;
 .nav-holder .left-nav, .left-nav-placeholder {
   display: flex;
   flex-direction: column;
-  background: linear-gradient(0deg, %color:Primary Overlay 1%, %color:Primary Overlay 1%), %color:Background%;
-/*   border-right: 1px solid #e0e0e0; */
+  /* background: linear-gradient(0deg, %color:Primary Overlay 1%, %color:Primary Overlay 1%), %color:Background%; */
+  border-right: 1px solid %color:Outline%; /* YK */
   font-size: 14px;
   font-weight: 500;
   color: %color:On Surface Variant%;
@@ -407,6 +407,7 @@ color: %color:On Primary Container%;
   font-size: 20px;
 
   background-color: %color:Surface%;
+  border-bottom: 1px solid %color:Outline%; /* YKS */
   transition: background-color 250ms;
   -webkit-transition: background-color 250ms;
   -moz-transition: background-color 250ms;

@@ -14,7 +14,7 @@ components:
   layout_properties: {slot: nav-right}
   components:
   - name: img_loading
-    properties: {height: '30', source: _/theme/loading6.gif, visible: false}
+    properties: {height: '30', source: _/theme/loading6.gif, visible: true}
     type: Image
     layout_properties: {}
   - type: Button

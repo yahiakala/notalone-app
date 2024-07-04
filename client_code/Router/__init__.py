@@ -147,6 +147,7 @@ class Router(RouterTemplate):
         """This method is called Every [interval] seconds. Does not trigger if [interval] is 0."""
         self.ti_load.interval = 0
         self.populate_globals()
+        self.img_loading.visible = False
         self.ti_globals.interval = 1
 
     def ti_global_page_tick(self, **event_args):

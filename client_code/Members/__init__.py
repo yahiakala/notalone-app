@@ -127,12 +127,17 @@ class Members(MembersTemplate):
         
         if Global.get_s('users') is None:
             # Still loading full dataset
-            # self.ind_load.visible = True
             pass
         else:
             # self.ind_load.visible = False
             self.ti_load.interval = 0
             self.members = Global.get_s('users')
+            self.btn_qf_applicants.enabled = True
+            self.btn_qf_regular.enabled = True
+            self.btn_qf_admins.enabled = True
+            self.btn_qf_disabled.enabled = True
+            self.btn_qf_inactive.enabled = True
+            self.tb_mb_search.enabled = True
 
         if self.members is not None:
             self.populate_rp()
