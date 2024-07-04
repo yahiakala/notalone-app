@@ -8,20 +8,11 @@ import hmac
 import hashlib
 import urllib.parse
 import json
+from .helpers import validate_user
 
 
 @anvil.server.http_endpoint('/login-sso', cross_site_session=True, enable_cors=True)
 def login_sso(sso, sig, session_id=None):
-    # params['key']
-    # print(sso)
-    # print(sig)
-
-    secret_key = anvil.secrets.get_secret('discourse_secret')
-
-    # Verify the signature
-    expected_sig = hmac.new(secret_key.encode(), msg=sso.encode(), digestmod=hashlib.sha256).hexdigest()
-    if not hmac.compare_digest(expected_sig, sig):
-        raise anvil.server.HttpError(403, "Signature mismatch")
 
     # Decode the payload
     payload = base64.b64decode(urllib.parse.unquote(sso)).decode()
@@ -30,20 +21,23 @@ def login_sso(sso, sig, session_id=None):
     print(params)
     nonce = params['nonce']
 
-    user = None
-    # if session_id:
-    #     user = get_user_by_session_id(session_id)
+    user = anvil.users.get_user(allow_remembered=True)
     if not user:
-        user = anvil.users.get_user(allow_remembered=True)
-    # TODO: get the tenant from the forum URL
-    if not user or not user['auth_forumchat']:
         return anvil.server.HttpResponse(302, headers={"Location": anvil.server.get_app_origin()})
 
-    # TODO: get from tenants instead
-    # TODO: search for the tenant based on the origin payload
-    discourse_url = user['tenants']['discourse_url']
-    # print(discourse_url)
+    discourse_url = params.get('discourse_domain')
+    tenant = app_tables.tenants.get(discourse_url=discourse_url)
+    usermap, permissions, _ = validate_user(None, user, tenant=tenant)
     
+    if 'see_forum' not in permissions:
+        return anvil.server.HttpResponse(302, headers={"Location": anvil.server.get_app_origin()})
+
+    secret_key = tenant['discourse_secret']
+
+    expected_sig = hmac.new(secret_key.encode(), msg=sso.encode(), digestmod=hashlib.sha256).hexdigest()
+    if not hmac.compare_digest(expected_sig, sig):
+        raise anvil.server.HttpError(403, "Signature mismatch")
+
     # Prepare the return payload with user info
     user_info = {
         'nonce': nonce,
@@ -53,10 +47,7 @@ def login_sso(sso, sig, session_id=None):
         'name': user['first_name'] + ' ' + user['last_name']
     }
     print(user_info)
-    # unsigned payload generated
-    # return_payload = '&'.join([f"{key}={urllib.parse.quote_plus(str(value))}" for key, value in user_info.items()])
     return_payload = '&'.join([f"{key}={value}" for key, value in user_info.items()])
-    # print(return_payload)
 
     # Base64-encode and URL-encode the return payload
     b64_return_payload = base64.b64encode(return_payload.encode()).decode()

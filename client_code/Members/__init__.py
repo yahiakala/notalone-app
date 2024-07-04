@@ -141,3 +141,16 @@ class Members(MembersTemplate):
             if 'book_interview' in i['permissions']
         ]
         self.btn_clear_search.visible = True
+
+    def btn_qf_inactive_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        self.rp_members.items = [
+            i for i in self.members
+            if 'see_profile' not in i['permissions']
+            and 'book_interview' not in i['permissions']
+        ]
+        self.btn_clear_search.visible = True
+
+    def apply_filters(self, **event_args):
+        pass
+        # enable to check if ONLY one role or ONLY certain permissions

@@ -79,6 +79,7 @@ def create_sub(plan_amt):
             data={
                 'plan_id': plan_id,
                 'application_context': {
+                    # TODO: these should be app pages. Webhooks are set up separately.
                     'return_url': anvil.server.get_api_origin() + '/capture-sub',
                     'cancel_url': anvil.server.get_api_origin() + '/cancel-sub'
                 }
@@ -95,6 +96,9 @@ def create_sub(plan_amt):
 def capture_sub(**params):
     # TODO: use fake paypal to test this
     # TODO: overhaul with new data model
+    # TODO: secure this
+    # TODO: use anvil.server.session.get('tenant_id', None)
+    verify_paypal_webhook(anvil.server.request.headers, anvil.server.request.body_json)
     row = app_tables.users.get(paypal_sub_id=params['subscription_id'])
     row['good_standing'] = True
     row['auth_forumchat'] = True
@@ -104,6 +108,32 @@ def capture_sub(**params):
         print('Sending email to : ' + screener['email'])
         notify_paid(screener, row)
     return anvil.server.HttpResponse(302, headers={'Location': anvil.server.get_app_origin() + '/#profile'})
+
+
+def verify_paypal_webhook(request_headers, request_json):
+    from paypalcheckoutsdk.core import PayPalHttpClient, SandboxEnvironment
+    from paypalcheckoutsdk.notifications import WebhookEvent
+
+    environment = SandboxEnvironment(client_id='YOUR_PAYPAL_CLIENT_ID', client_secret='YOUR_PAYPAL_CLIENT_SECRET')
+    client = PayPalHttpClient(environment)
+
+    paypal_transmission_id = request_headers['Paypal-Transmission-Id']
+    paypal_transmission_time = request_headers['Paypal-Transmission-Time']
+    paypal_transmission_sig = request_headers['Paypal-Transmission-Sig']
+    cert_url = request_headers['Paypal-Cert-Url']
+    auth_algo = request_headers['Paypal-Auth-Algo']
+
+    verification_status = WebhookEvent.verify(
+        transmission_id=paypal_transmission_id,
+        timestamp=paypal_transmission_time,
+        webhook_id='YOUR_WEBHOOK_ID',  # Replace with your webhook ID
+        event_body=request_json,
+        cert_url=cert_url,
+        actual_sig=paypal_transmission_sig,
+        auth_algo=auth_algo,
+        client=client
+        )
+    return verification_status
 
 
 def notify_paid(user_ref, applicant):
@@ -172,7 +202,7 @@ def check_sub(user_dict):
         user_ref['good_standing'] = False
         user_ref['auth_forumchat'] = False
     return user_ref
-      
+
 
 #%% Scheduled Task -------------------------------
 @anvil.server.background_task
@@ -232,16 +262,3 @@ def notify_payment(user_ref, tenant=None):
         subject="Membership Payment",
         html=msg_body
     )
-
-
-@anvil.server.callable(require_user=True)
-@authorisation_required('edit_members')
-def notify_all_payments():
-    anvil.server.launch_background_task('check_expired_payments')
-
-
-@anvil.server.background_task
-def check_expired_payments():
-    # TODO: overhaul with new data model
-    for user in app_tables.users.search(good_standing=False, auth_profile=True):
-        notify_payment(user, user['tenant'])

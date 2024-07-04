@@ -57,6 +57,7 @@ def get_tenanted_data(tenant_id, key):
     # TODO: deprecate as only want to get tenanted globals from a bk task.
     print_timestamp(f'get_tenanted_data: {key}')
     user = anvil.users.get_user(allow_remembered=True)
+    anvil.server.session['tenant_id'] = tenant_id
     
     if key == 'users':
         return get_users(tenant_id, user)
@@ -265,6 +266,7 @@ def get_roles(tenant_id, user, usermap=None, permissions=None, tenant=None):
 def get_tenanted_data_call_bk(tenant_id):
     print_timestamp('get_tenanted_data_call_bk')
     user = anvil.users.get_user(allow_remembered=True)
+    anvil.server.session['tenant_id'] = tenant_id
     # Not gonna run the usermap, permissions, verify_tenant here due to speed
     return anvil.server.launch_background_task('get_tenanted_data_bk', tenant_id, user)
 
