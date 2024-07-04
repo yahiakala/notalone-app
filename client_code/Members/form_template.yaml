@@ -33,12 +33,12 @@ components:
     layout_properties: {}
     event_bindings: {click: btn_qf_inactive_click}
 - type: TextBox
-  properties: {role: outlined, bold: false, align: left, placeholder: Search for a member, spacing_above: small, background: '', type: text, underline: false, font: '', hide_text: false, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: ''}
+  properties: {role: outlined, bold: false, align: left, placeholder: 'Search for a member by name, email, notes, etc.', spacing_above: small, background: '', type: text, underline: false, font: '', hide_text: false, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: ''}
   name: tb_mb_search
   layout_properties: {grid_position: 'URRSMO,GEHGAQ'}
   event_bindings: {pressed_enter: tb_mb_search_pressed_enter}
 - name: ti_load
-  properties: {interval: 1}
+  properties: {interval: 0}
   type: Timer
   layout_properties: {grid_position: 'VZWTYA,XOXWTW'}
   event_bindings: {tick: ti_load_tick}

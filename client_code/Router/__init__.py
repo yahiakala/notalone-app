@@ -7,7 +7,7 @@ from ..Home import Home
 from ..BookingComponent import BookingComponent
 # from ..ProfileComponent import ProfileComponent
 from ..MemberDetail import MemberDetail
-from ..MembersComponent import MembersComponent
+from ..Members import Members
 from ..FinComponent import FinComponent
 from ..VolunteerComponent import VolunteerComponent
 from ..LoadingPopup import LoadingPopup
@@ -44,7 +44,7 @@ class Router(RouterTemplate):
         with anvil.server.no_loading_indicator:
             self.user = Global.user
             self.set_account_state(self.user)
-            Global.task_tenanted = anvil.server.call('get_tenanted_data_call_bk', Global.tenant_id)
+            Global.launch_bk_tenanted()
     
             if Global.is_mobile:
                 self.lbl_app_title.visible = False
@@ -121,7 +121,7 @@ class Router(RouterTemplate):
         if not self.check_if_loaded(sender.tag.globals):
             self.img_loading.visible = True
             self.load_globals = sender.tag.globals
-            self.ti_globals.interval = 1
+            self.ti_global_page.interval = 1
 
         if sender.tag.url_hash == '':
             if Global.user:
@@ -147,9 +147,17 @@ class Router(RouterTemplate):
         """This method is called Every [interval] seconds. Does not trigger if [interval] is 0."""
         self.ti_load.interval = 0
         self.populate_globals()
+        self.ti_globals.interval = 1
 
-    def ti_globals_tick(self, **event_args):
+    def ti_global_page_tick(self, **event_args):
         """This method is called Every [interval] seconds. Does not trigger if [interval] is 0."""
         if self.check_if_loaded(self.load_globals):
             self.ti_globals.interval = 0
             self.img_loading.visible = False
+
+    def ti_globals_tick(self, **event_args):
+        """This method is called Every [interval] seconds. Does not trigger if [interval] is 0."""
+        with anvil.server.no_loading_indicator:
+            if Global.update_bk_tenanted():
+                self.ti_globals.interval = 0
+                print_timestamp('Fully loaded tenanted globals')

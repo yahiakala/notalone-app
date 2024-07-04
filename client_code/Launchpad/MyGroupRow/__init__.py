@@ -18,5 +18,3 @@ class MyGroupRow(MyGroupRowTemplate):
         """This method is called when the button is clicked"""
         Global.tenant_id = self.item['tenant_id']
         routing.set_url_hash('app')
-        
-        

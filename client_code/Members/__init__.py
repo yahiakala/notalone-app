@@ -7,6 +7,7 @@ from ..Global import Global
 from anvil_extras import routing
 import datetime as dt
 from anvil_extras.logging import TimerLogger
+from anvil_squared.utils import print_timestamp
 
 
 @routing.route('/members', template='Router')
@@ -15,8 +16,11 @@ class Members(MembersTemplate):
         self.init_components(**properties)
         self.members = [None]
         self.populate_rp()
-        _ = Global.get_bk('users')
-        # self.payment_exempt = [['screener', 'leader']]
+        if Global.get_s('users'):
+            self.ti_load_tick()
+        else:
+            print_timestamp('Members: Starting timer')
+            self.ti_load.interval = 1
 
     def populate_rp(self, **event_args):
         self.mb_count = len(self.members)

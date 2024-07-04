@@ -48,10 +48,15 @@ components:
   name: cp_sidebar
   layout_properties: {slot: left-nav}
   components:
-  - name: ti_globals
+  - name: ti_global_page
     properties: {interval: 0}
     type: Timer
     layout_properties: {grid_position: 'DVGDWR,YDEZRM'}
+    event_bindings: {tick: ti_global_page_tick}
+  - name: ti_globals
+    properties: {interval: 0}
+    type: Timer
+    layout_properties: {grid_position: 'LJRQLJ,TLTSAS'}
     event_bindings: {tick: ti_globals_tick}
   - name: lbl_user
     properties: {visible: true, underline: false, icon: 'fa:user-circle', role: skeleton}
@@ -64,7 +69,7 @@ components:
     layout_properties: {grid_position: 'IRMNHS,KTPMTP'}
     components: []
   - name: ti_load
-    properties: {}
+    properties: {interval: 0.1}
     type: Timer
     layout_properties: {grid_position: 'QKVNBD,VTJPVM'}
     event_bindings: {tick: ti_load_tick}
