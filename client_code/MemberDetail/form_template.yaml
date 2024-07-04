@@ -95,6 +95,18 @@ components:
       layout_properties: {grid_position: 'KHMGAX,GIVXIL'}
       data_bindings: []
       event_bindings: {click: btn_restore_click}
+    - name: btn_accept_applicant
+      properties: {role: filled-button, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: Accept Applicant}
+      type: Button
+      layout_properties: {}
+      data_bindings: []
+      event_bindings: {click: btn_accept_applicant_click}
+    - name: btn_reject_applicant
+      properties: {role: filled-button, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: Reject Applicant}
+      type: Button
+      layout_properties: {}
+      data_bindings: []
+      event_bindings: {click: btn_reject_applicant_click}
 - type: ColumnPanel
   properties: {role: outlined-card, col_widths: '{"WZCJJP":50,"FSIGED":10,"GDPJAW":50}'}
   name: cp_social

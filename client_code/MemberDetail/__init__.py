@@ -97,3 +97,15 @@ class MemberDetail(MemberDetailTemplate):
     def btn_back_click(self, **event_args):
         """This method is called when the button is clicked"""
         routing.go_back()
+
+    def btn_reject_applicant_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        _ = anvil.server.call('reject_applicant', self.item)
+        self.item['permissions'] = [i for i in self.item['permissions'] if i != 'book_interview']
+        self.parent.raise_event('x-update-user', item=self.item)
+
+    def btn_accept_applicant_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        _ = anvil.server.call('accept_applicant', self.item)
+        self.item['permissions'] = self.item['permissions'] + ['see_profile']
+        self.parent.raise_event('x-update-user', item=self.item)
