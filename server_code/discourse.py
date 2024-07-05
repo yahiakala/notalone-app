@@ -69,6 +69,7 @@ def login_sso(sso, sig, session_id=None):
 
 @anvil.server.http_endpoint('/new_member', methods=['POST'])
 def new_member():
+    """API endpoint for new member webhook."""
     payload = anvil.server.request.body.get_bytes()
     # print(payload)
     header_signature = anvil.server.request.headers.get('x-discourse-event-signature')
@@ -77,12 +78,14 @@ def new_member():
     payload_dict = json.loads(payload.decode('utf-8'))
     print(payload_dict)
 
+    DISCOURSE_URL = anvil.server.request.headers.get('x-discourse-instance')
+    
     # Verify the signature
-    if not verify_signature(payload, header_signature):
+    if not verify_signature(payload, header_signature, DISCOURSE_URL):
         # If the signature verification fails, return a 403 Forbidden response
         return anvil.server.HttpResponse(403, "Forbidden: Signature mismatch.")
 
-    DISCOURSE_URL = anvil.server.request.headers.get('x-discourse-instance')
+    
     if payload_dict:
         new_member_username = payload_dict['user']['username']
         new_member_name = new_member_username.split('_')[0]
@@ -94,8 +97,9 @@ def new_member():
 
 def create_topic(title='Test post', message='Test post this is a test', discourse_url=None):
     post_url = f"{discourse_url}/posts"
+    api_key = app_tables.tenants.get_by_id(anvil.server.session.get('tenant_id', None))
     headers = {
-        'Api-Key': anvil.secrets.get_secret('discourse_api_key'),
+        'Api-Key': api_key,
         'Api-Username': 'system',
         'Content-Type': 'application/json'
     }
@@ -113,10 +117,10 @@ def create_topic(title='Test post', message='Test post this is a test', discours
     print(response)
 
 
-def verify_signature(payload, header_signature):
+def verify_signature(payload, header_signature, discourse_url):
     # Assuming Discourse sends the signature in the format `sha256=signature`
     algorithm, signature = header_signature.split('=')
-    secret_key = anvil.secrets.get_secret('discourse_secret')
+    secret_key = app_tables.tenants.get(discourse_url=discourse_url)['discourse_secret']
     # Use the corresponding hash function for the algorithm used by Discourse
     if algorithm == 'sha256':
         hash_function = hashlib.sha256

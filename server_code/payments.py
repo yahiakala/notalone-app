@@ -5,7 +5,7 @@ from anvil.tables import app_tables
 import anvil.tables.query as q
 import anvil.users
 
-from .helpers import get_users_with_permission
+from .helpers import get_users_with_permission, validate_user
 
 # https://developer.paypal.com/docs/api/subscriptions/v1/#subscriptions_create
 from . import authorisation
@@ -15,10 +15,10 @@ authorisation.set_config(get_roles='usermap', tenanted=True)
 
 
 
-def get_paypal_auth():
+def get_paypal_auth(tenant):
     import requests
-    client_id = anvil.secrets.get_secret('paypal_client_id')
-    client_secret = anvil.secrets.get_secret('paypal_secret')
+    client_id = tenant['paypal_client_id']
+    client_secret = tenant['paypal_secret']
     
     auth_response = requests.post('https://api.paypal.com/v1/oauth2/token', 
                                 auth=(client_id, client_secret), 
@@ -30,13 +30,14 @@ def get_paypal_auth():
     return access_token
 
 
-def get_subscriptions(subscription_id, verbose=False):
+def get_subscriptions(tenant, subscription_id, access_token=None, verbose=False):
+    """Get all info for a subscription id."""
     import datetime as dt
     
     if not subscription_id:
         return None, None, None
     import requests
-    access_token = get_paypal_auth()
+    access_token = access_token or get_paypal_auth(tenant)
     headers = {
         'Authorization': f'Bearer {access_token}',
         'Content-Type': 'application/json',
@@ -58,9 +59,12 @@ def get_subscriptions(subscription_id, verbose=False):
 
 
 @anvil.server.callable(require_user=True)
-def create_sub(plan_amt):
+def create_sub(tenant_id, plan_id):
     # import requests
-    access_token = get_paypal_auth()
+    user = anvil.users.get_user(allow_remembered=True)
+    tenant, usermap, permissions = validate_user(tenant_id, user)
+    
+    access_token = get_paypal_auth(tenant)
     print(anvil.server.get_app_origin())
     user = anvil.users.get_user(allow_remembered=True)
 
@@ -183,7 +187,7 @@ def check_sub(tenant_id, user_row):
     if not usermap:
         return None
 
-    status, last_payment, payment_amt = get_subscriptions(usermap['paypal_sub_id'])
+    status, last_payment, payment_amt = get_subscriptions(tenant, usermap['paypal_sub_id'])
     usermap['payment_status'] = status
     usermap['fee'] = payment_amt
 
