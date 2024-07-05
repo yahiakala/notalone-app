@@ -6,10 +6,11 @@ import anvil.email
 
 from .helpers import print_timestamp, verify_tenant, validate_user, get_usermap, populate_roles, get_users_with_permission
 import datetime as dt
-from anvil_extras import authorisation
-from anvil_extras.authorisation import authorisation_required
 
-authorisation.set_config(get_roles='usermap')
+from . import authorisation
+from .authorisation import authorisation_required
+
+authorisation.set_config(get_roles='usermap', tenanted=True)
 
 
 def clean_up_user(user):

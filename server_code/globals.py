@@ -5,11 +5,6 @@ import anvil.tables.query as q
 from anvil_squared.helpers import print_timestamp
 from .helpers import validate_user, get_usermap, get_permissions, get_user_roles, get_user_notes
 
-# from anvil_extras import authorisation
-# from anvil_extras.authorisation import authorisation_required
-
-# authorisation.set_config({'get_roles': 'usermap'})
-
 
 # --------------------
 # Non tenanted globals
