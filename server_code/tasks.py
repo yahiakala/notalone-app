@@ -4,7 +4,7 @@ from anvil.tables import app_tables
 import anvil.tables.query as q
 import anvil.email
 
-from .helpers import print_timestamp, verify_tenant, validate_user, get_usermap, populate_roles, get_users_with_permission
+from .helpers import print_timestamp, verify_tenant, validate_user, get_usermap, get_users_with_permission
 import datetime as dt
 
 from . import authorisation
@@ -43,15 +43,9 @@ def join_tenant(tenant_id):
     user = anvil.users.get_user(allow_remembered=True)
     usermap = get_usermap(user)
     tenant = app_tables.tenants.get_by_id(tenant_id)
-    if usermap['tenants'] is None:
-        usermap['tenants'] = [tenant]
-        # Now let the user book an interview
-        new_role = app_tables.roles.get(tenant=tenant, name='Applicant')
-        if not new_role:
-            populate_roles(tenant)
-        usermap['roles'] = [app_tables.roles.get(tenant=tenant, name='Applicant')]
-    # TODO: elif for adding a user to another tenant
-    return user
+    usermap = get_usermap(tenant_id, user, tenant)
+    # TODO: figure out something to return if necessary.
+    return usermap
 
 
 @anvil.server.callable(require_user=True)
@@ -76,7 +70,7 @@ def update_member(tenant_id, email, col_dict):
     """Update roles for a member."""
     print_timestamp('update_member: ' + email + ' col_dict: ' + str(col_dict))
     user = anvil.users.get_user(allow_remembered=True)
-    usermap, permissions, tenant = validate_user(tenant_id, user)
+    tenant, usermap, permissions = validate_user(tenant_id, user)
 
     member_user = app_tables.users.get(email=email)
     member_usermap = app_tables.users.get(user=member_user, tenant=tenant)
@@ -101,21 +95,18 @@ def delete_user(tenant_id, user_email):
 
 @anvil.server.background_task
 def delete_user_bk(tenant_id, user, user_email):
-    usermap, permissions, tenant = validate_user(tenant_id, user)
+    tenant, usermap, permissions = validate_user(tenant_id, user)
     if 'delete_members' not in permissions:
         return None
     
     user_del = app_tables.users.get(email=user_email)
-    user_del_usermap, user_del_permissions, user_del_tenant = validate_user(tenant_id, user_del)
+    user_del_tenant, user_del_usermap, user_del_permissions = validate_user(tenant_id, user_del)
     
     if 'delete_members' in user_del_permissions and 'delete_admin' not in permissions:
         raise Exception("Only users with the delete_admin permission can delete this user.")
-    
-    if len(user_del_usermap['tenants']) > 1:
-        # If user is on multiple tenants, just remove them from this tenant.
-        user_del_usermap['tenants'] = [i for i in user_del_usermap['tenants'] if i.get_id() != tenant_id]
-    else:
-        user_del.delete()
+
+    # Only have the power to delete a user from your group, not from the app entirely.
+    user_del_usermap.delete()
 
 
 @anvil.server.callable(require_user=True)
@@ -128,11 +119,11 @@ def save_user_notes(tenant_id, user_email, new_note):
 
 @anvil.server.background_task
 def save_user_notes_bk(tenant_id, user, user_email, new_note):
-    usermap, permissions, tenant = validate_user(tenant_id, user)
+    tenant, usermap, permissions = validate_user(tenant_id, user)
     if 'see_applicants' in permissions:
-        user_row = app_tables.users.get(email=user_email)
-        note_row = app_tables.notes.get(user=user_row, tenant=tenant)
-        note_row['notes'] = new_note
+        member_user = app_tables.users.get(email=user_email)
+        member_usermap = app_tables.usermap.get(user=member_user, tenant=tenant)
+        member_usermap['notes'] = new_note
 
 
 @anvil.server.callable(require_user=True)
@@ -148,7 +139,7 @@ def notify_accept(tenant_id, email_to):
 @anvil.server.background_task
 def notify_accept_bk(tenant_id, user, email_to):
     """Send an email to an applicant upon acceptance."""
-    usermap, permissions, tenant = validate_user(tenant_id, user)
+    tenant, usermap, permissions = validate_user(tenant_id, user)
 
     if 'see_applicants' not in permissions:
         return None
@@ -188,7 +179,7 @@ def add_role_to_member(tenant_id, role_name, member_email):
 
 @anvil.server.background_task
 def add_role_to_member_bk(tenant_id, user, role_name, member_email):
-    usermap, permissions, tenant = validate_user(tenant_id, user)
+    tenant, usermap, permissions = validate_user(tenant_id, user)
 
     if 'edit_members' not in permissions:
         return None
@@ -217,7 +208,7 @@ def remove_role_from_member(tenant_id, role_name, member_email):
 
 @anvil.server.background_task
 def remove_role_from_member_bk(tenant_id, user, role_name, member_email):
-    usermap, permissions, tenant = validate_user(tenant_id, user)
+    tenant, usermap, permissions = validate_user(tenant_id, user)
 
     if 'edit_members' not in permissions:
         return None
@@ -240,7 +231,7 @@ def add_role(tenant_id, role_name, reports_to, role_members):
 
 @anvil.server.background_task
 def add_role_bk(tenant_id, user, role_name, reports_to, role_members):
-    usermap, permissions, tenant = validate_user(tenant_id, user)
+    tenant, usermap, permissions = validate_user(tenant_id, user)
 
     if 'edit_roles' not in permissions:
         return None
@@ -258,7 +249,7 @@ def upload_role_guide(tenant_id, role_name, file):
 
 @anvil.server.background_task
 def upload_role_guide_bk(tenant_id, user, role_name, file):
-    usermap, permissions, tenant = validate_user(tenant_id, user)
+    tenant, usermap, permissions = validate_user(tenant_id, user)
     if 'edit_roles' not in permissions:
         return None
     
@@ -266,15 +257,6 @@ def upload_role_guide_bk(tenant_id, user, role_name, file):
     # TODO: allow multiple files
     if role['can_edit']:
         role['guide'] = file
-
-
-# @anvil.server.callable(require_user=True)
-# @authorisation_required('see_forum')
-# def download_role_guide(tenant_id, role_name):
-#     user = anvil.users.get_user(allow_remembered=True)
-#     usermap, permissions, tenant = validate_user(tenant_id, user)
-#     role = app_tables.roles.get(name=role_name, tenant=tenant)
-#     return role['guide']
 
 
 @anvil.server.callable(require_user=True)
@@ -285,24 +267,10 @@ def update_role(tenant_id, role_name, new_role_dict):
 
 @anvil.server.background_task
 def update_role_bk(tenant_id, user, role_name, new_role_dict):
-    usermap, permissions, tenant = validate_user(tenant_id, user)
+    tenant, usermap, permissions = validate_user(tenant_id, user)
     if 'edit_roles' not in permissions:
         return None
     role = app_tables.roles.get(name=role_name, tenant=tenant)
     if role['can_edit']:
         for key, val in new_role_dict.items():
             role[key] = val
-
-
-# -------------------------
-# Temp stuff for migration
-# -------------------------
-def migrate_tables():
-    users = app_tables.users.search(tenant=q.not_(None))
-    for user in users:
-        usermap = app_tables.usermap.get(user=user)
-        if not usermap:
-            usermap = app_tables.usermap.add_row(user=user)
-        if user['tenant'] and not usermap['tenants']:
-            usermap['tenants'] = [user['tenant']]
-        usermap['roles'] = user['roles']

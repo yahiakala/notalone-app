@@ -12,29 +12,40 @@ def print_timestamp(input_str):
     print(f"{input_str} : {formatted_time}")
 
 
-def verify_tenant(tenant_id, user, usermap=None):
+def verify_tenant(tenant_id, user, tenant=None, usermap=None):
     """Verify a user is in this tenant."""
-    tenant_row = app_tables.tenants.get_by_id(tenant_id)
-    usermap = usermap or app_tables.usermap.get(user=user)
-    # TODO: might cause an error if none or just 1 tenant
-    if tenant_row not in usermap['tenants']:
-        raise Exception('User does not belong to this tenant.')
-    return tenant_row
+    tenant = tenant or app_tables.tenants.get_by_id(tenant_id)
+    usermap = usermap or app_tables.usermap.get(user=user, tenant=tenant)
+
+    if usermap['tenant'] == tenant:
+        return tenant
+
+    raise Exception('User does not belong to this tenant.')
 
 
-def get_usermap(user):
-    if not app_tables.usermap.get(user=user):
-        # TODO: add some defaults
-        usermap = app_tables.usermap.add_row(user=user)
+def get_usermap(tenant_id, user, tenant=None):
+    tenant = tenant or app_tables.tenants.get_by_id(tenant_id)
+    
+    if not app_tables.usermap.get(user=user, tenant=tenant):
+        new_roles = get_new_user_roles(None, tenant)
+        usermap = app_tables.usermap.add_row(user=user, tenant=tenant, roles=new_roles)
     else:
-        usermap = app_tables.usermap.get(user=user)
+        usermap = app_tables.usermap.get(user=user, tenant=tenant)
     return usermap
+
+
+def get_new_user_roles(tenant_id, tenant=None):
+    """Assign a brand new user a role in this tenant."""
+    # This is where the logic of different tenants comes in.
+    tenant = tenant or app_tables.tenants.get_by_id(tenant_id)
+    new_roles = app_tables.roles.search(tenant=tenant, name='Applicant', can_edit=False)
+    return list(new_roles)
 
 
 def get_user_roles(tenant_id, user, usermap=None, tenant=None):
     """Get names of roles for a user in a tenant."""
     usermap = usermap if usermap is not None else app_tables.usermap.get(user=user)
-    tenant = tenant if tenant is not None else verify_tenant(tenant_id, user, usermap)
+    tenant = tenant if tenant is not None else verify_tenant(tenant_id, user, usermap=usermap)
 
     roles = []
     if usermap['roles']:
@@ -43,22 +54,11 @@ def get_user_roles(tenant_id, user, usermap=None, tenant=None):
     return list(set(roles))
 
 
-def get_user_notes(tenant_id, user, usermap=None, tenant=None):
-    usermap = usermap if usermap is not None else app_tables.usermap.get(user=user)
-    tenant = tenant if tenant is not None else verify_tenant(tenant_id, user, usermap)
-    note_row = app_tables.notes.get(user=usermap['user'], tenant=tenant)
-    if note_row:
-        return note_row['notes'] or ''
-    else:
-        return app_tables.notes.add_row(user=user, notes='', tenant=tenant)['notes']
-
-
-def get_permissions(tenant_id, user, usermap=None, tenant=None):
+def get_permissions(tenant_id, user, tenant=None, usermap=None):
     """Get the permissions of a user in a particular tenant."""
-    usermap = usermap if usermap is not None else app_tables.usermap.get(user=user)
-    tenant = tenant if tenant is not None else verify_tenant(tenant_id, user, usermap)
-    # print(tenant['name'])
-    
+    tenant = tenant if tenant is not None else verify_tenant(tenant_id, user, usermap=usermap)
+    usermap = usermap if usermap is not None else app_tables.usermap.get(user=user, tenant=tenant)
+        
     user_permissions = []
     if usermap['roles']:
         for role in usermap['roles']:
@@ -70,10 +70,10 @@ def get_permissions(tenant_id, user, usermap=None, tenant=None):
 
 
 def validate_user(tenant_id, user, usermap=None, permissions=None, tenant=None):
-    usermap = usermap if usermap is not None else get_usermap(user)
-    tenant = tenant if tenant is not None else verify_tenant(tenant_id, user, usermap)
+    tenant = tenant if tenant is not None else verify_tenant(tenant_id, user, usermap=usermap)
+    usermap = usermap if usermap is not None else get_usermap(tenant_id, user, tenant)
     permissions = permissions if permissions is not None else get_permissions(tenant_id, user, usermap, tenant)
-    return usermap, permissions, tenant
+    return tenant, usermap, permissions
 
 
 def get_users_with_permission(tenant_id, permission, tenant=None):

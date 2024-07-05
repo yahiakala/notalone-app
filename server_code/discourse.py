@@ -27,7 +27,7 @@ def login_sso(sso, sig, session_id=None):
 
     discourse_url = params.get('discourse_domain')
     tenant = app_tables.tenants.get(discourse_url=discourse_url)
-    usermap, permissions, _ = validate_user(None, user, tenant=tenant)
+    _, usermap, permissions = validate_user(None, user, tenant=tenant)
     
     if 'see_forum' not in permissions:
         return anvil.server.HttpResponse(302, headers={"Location": anvil.server.get_app_origin()})
