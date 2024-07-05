@@ -174,8 +174,8 @@ def cancel_sub(**params):
 @authorisation_required('see_members')
 def check_sub(tenant_id, user_row):
     # TODO: deprecate this in favor of a webhook of a subscription expiring
-    from dateutil.relativedelta import relativedelta
-    import datetime as dt
+    # from dateutil.relativedelta import relativedelta
+    # import datetime as dt
     tenant = app_tables.tenants.get_by_id(tenant_id)
         
     usermap = app_tables.usermap.get(tenant=tenant, user=user_row)

@@ -101,6 +101,9 @@ db_schema:
     - name: name
       admin_ui: {width: 200}
       type: string
+    - name: description
+      admin_ui: {width: 200, order: 1}
+      type: string
   forum:
     title: Forum
     client: none
