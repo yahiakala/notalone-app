@@ -63,17 +63,8 @@ def create_sub(tenant_id, plan_id):
     # import requests
     user = anvil.users.get_user(allow_remembered=True)
     tenant, usermap, permissions = validate_user(tenant_id, user)
-    
-    access_token = get_paypal_auth(tenant)
-    print(anvil.server.get_app_origin())
-    user = anvil.users.get_user(allow_remembered=True)
 
-    if plan_amt == 10:
-        plan_id = anvil.secrets.get_secret('pp_plan_id_10')
-        user['fee'] = 10
-    else:
-        plan_id = anvil.secrets.get_secret('pp_plan_id_50')
-        user['fee'] = 50
+    access_token = get_paypal_auth(tenant)
 
     try:
         response = anvil.http.request(
@@ -87,14 +78,20 @@ def create_sub(tenant_id, plan_id):
                 'plan_id': plan_id,
                 'application_context': {
                     # TODO: these should be app pages. Webhooks are set up separately.
-                    'return_url': anvil.server.get_api_origin() + '/capture-sub',
-                    'cancel_url': anvil.server.get_api_origin() + '/cancel-sub'
+                    'return_url': anvil.server.get_app_origin() + '/#app/profile',
+                    'cancel_url': anvil.server.get_app_origin() + '/#app/profile'
                 }
             },
             json=True
         )
-        user['paypal_sub_id'] = response['id']
-        return user, response['links'][0]['href']
+        
+        # TODO: move this to the webhook endpoint
+        plans = tenant['paypal_plans']
+        plan = [i for i in plans if i['plan_id'] == plan_id][0]
+        usermap['fee'] = plan['plan_amt']
+        
+        usermap['paypal_sub_id'] = response['id']
+        return response['links'][0]['href']
     except anvil.http.HttpError as e:
         print(f"Error {e.status} {e.content}")
 
