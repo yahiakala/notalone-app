@@ -172,50 +172,23 @@ def cancel_sub(**params):
 
 @anvil.server.callable(require_user=True)
 @authorisation_required('see_members')
-def check_sub(user_dict):
-    # TODO: overhaul with new data model
+def check_sub(tenant_id, user_row):
+    # TODO: deprecate this in favor of a webhook of a subscription expiring
     from dateutil.relativedelta import relativedelta
     import datetime as dt
-    
-    if user_dict:
-        user_ref = app_tables.users.get(email=user_dict['email'])
-    else:
-        user = anvil.users.get_user(allow_remembered=True)
-        user_ref = app_tables.users.get(email=user_dict['email'], tenant=user['tenant'])
+    tenant = app_tables.tenants.get_by_id(tenant_id)
+        
+    usermap = app_tables.usermap.get(tenant=tenant, user=user_row)
 
-    if not user_ref:
+    if not usermap:
         return None
 
-    status, last_payment, payment_amt = get_subscriptions(user_ref['paypal_sub_id'])
-    user_ref['payment_status'] = status
-    
-    if last_payment and user_ref['fee'] != 0:
-        user_ref['fee'] = payment_amt
-        user_ref['payment_expiry'] = last_payment + relativedelta(years=1)
-        if user_ref['payment_expiry'] >= dt.date.today() or status == 'ACTIVE' or user_ref['fee'] == 0:
-            user_ref['good_standing'] = True
-            # Allow the user in the forum if they have not been banned/removed.
-            if user_ref['auth_profile']:  # If banned/removed, they won't have auth_profile
-                user_ref['auth_forumchat'] = True
-        else:
-            # Disable the user's forum privileges until back in good standing.
-            user_ref['good_standing'] = False
-            user_ref['auth_forumchat'] = False
-    elif user_ref['fee'] == 0:
-        user_ref['good_standing'] = True
-        user_ref['auth_forumchat'] = True
-    else:
-        user_ref['good_standing'] = False
-        user_ref['auth_forumchat'] = False
-    return user_ref
+    status, last_payment, payment_amt = get_subscriptions(usermap['paypal_sub_id'])
+    usermap['payment_status'] = status
+    usermap['fee'] = payment_amt
 
 
 #%% Scheduled Task -------------------------------
-@anvil.server.background_task
-def check_subs():
-    for user in app_tables.users.search():
-        # TODO: break up check_sub to accept a user tenant
-        _ = check_sub(user)
 
 
 @anvil.server.background_task
