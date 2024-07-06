@@ -37,7 +37,7 @@ class Router(RouterTemplate):
         self.link_fin.tag.globals = []
         self.link_volunteers.tag.globals = []
         
-        self.btn_test.tag.url_hash = 'app/tests'
+        # self.btn_test.tag.url_hash = 'app/tests'
         self.load_globals = []
         self.populate_globals()
 

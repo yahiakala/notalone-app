@@ -17,11 +17,12 @@ class MyGroupRow(MyGroupRowTemplate):
 
     def btn_enter_group_click(self, **event_args):
         """This method is called when the button is clicked"""
-        Global.tenant_id = self.item['tenant_id']
-        self.btn_enter_group.enabled = False
-        self.btn_leave_tenant.enabled = False
-        self.btn_enter_group.text = 'Entering...'
-        self.btn_enter_group.italic = True
         with anvil.server.no_loading_indicator:
+            Global.tenant_id = self.item['tenant_id']
+            self.btn_enter_group.enabled = False
+            self.btn_leave_tenant.enabled = False
+            self.btn_enter_group.text = 'Entering...'
+            self.btn_enter_group.italic = True
+        
             self.user = Global.user
-        routing.set_url_hash('app')
+            routing.set_url_hash('app')

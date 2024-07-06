@@ -16,7 +16,7 @@ class MemberRow(MemberRowTemplate):
             else:
                 self.link_last_login.text = 'Never'
             if self.item['user']['signed_up']:
-                self.link_signed_up.text = 'Signed up: ' + self.item['signed_up'].strftime('%Y-%m-%d')
+                self.link_signed_up.text = 'Signed up: ' + self.item['user']['signed_up'].strftime('%Y-%m-%d')
             else:
                 self.link_signed_up.text = 'Manual'
         else:

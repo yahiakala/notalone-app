@@ -1,7 +1,7 @@
 from ._anvil_designer import MembersTemplate
 from anvil import *
 import anvil.tables.query as q
-# import anvil.server
+import anvil.server
 
 from ..Global import Global
 from anvil_extras import routing
@@ -18,15 +18,18 @@ class Members(MembersTemplate):
         self.members = [None]
         self.populate_rp()
 
-        # with anvil.server.no_loading_indicator():
+        # with anvil.server.no_loading_indicator:
         if Global.get_s('users'):
             self.load_data(None)
         else:
             call_async('get_tenanted_data', Global.tenant_id, 'users').on_result(self.load_data)
 
     def load_data(self, res):
-        if res:
-            Global.users = res.search(
+        with anvil.server.no_loading_indicator:
+            if res:
+                Global.users = res
+    
+            self.members = Global.users.search(
                 q.fetch_only(
                     'user',
                     user=q.fetch_only(
@@ -34,19 +37,15 @@ class Members(MembersTemplate):
                     )
                 )
             )
-        else:
-            res = Global.users
-        
-        self.members = res
-        self.btn_qf_applicants.enabled = True
-        self.btn_qf_regular.enabled = True
-        self.btn_qf_admins.enabled = True
-        self.btn_qf_disabled.enabled = True
-        self.btn_qf_inactive.enabled = True
-        self.tb_mb_search.enabled = True
-
-        if self.members is not None:
-            self.populate_rp()
+            self.btn_qf_applicants.enabled = True
+            self.btn_qf_regular.enabled = True
+            self.btn_qf_admins.enabled = True
+            self.btn_qf_disabled.enabled = True
+            self.btn_qf_inactive.enabled = True
+            self.tb_mb_search.enabled = True
+    
+            if self.members is not None:
+                self.populate_rp()
 
     
     def populate_rp(self, **event_args):

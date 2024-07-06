@@ -72,7 +72,7 @@ def get_permissions(tenant_id, user, tenant=None, usermap=None):
 def validate_user(tenant_id, user, usermap=None, permissions=None, tenant=None):
     tenant = tenant if tenant is not None else verify_tenant(tenant_id, user, usermap=usermap)
     usermap = usermap if usermap is not None else get_usermap(tenant_id, user, tenant)
-    permissions = permissions if permissions is not None else get_permissions(tenant_id, user, usermap, tenant)
+    permissions = permissions if permissions is not None else get_permissions(tenant_id, user, usermap=usermap, tenant=tenant)
     return tenant, usermap, permissions
 
 
