@@ -68,6 +68,13 @@ def get_tenanted_data(tenant_id, key):
         return get_roles(tenant_id, user)
 
 
+def get_users_iterable(tenant_id, user):
+    """Get an iterable of the users."""
+    tenant, usermap, permissions = validate_user(tenant_id, user)
+    if 'see_members' not in permissions:
+        return []
+    return app_tables.usermap.search(tenant=tenant)
+
 def get_users(tenant_id, user, usermap=None, permissions=None, tenant=None):
     print_timestamp('_get_users: start')
     tenant, usermap, permissions = validate_user(tenant_id, user, usermap=usermap, permissions=permissions, tenant=tenant)
