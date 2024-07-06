@@ -9,22 +9,24 @@ class MemberRow(MemberRowTemplate):
         self.init_components(**properties)
         # Only need email, first_name, last_name, last_login, signed_up
         if self.item:
-            self.link_email.text = self.item['user']['email']
-            self.link_name.text = self.item['user']['first_name'] + ' ' + self.item['user']['last_name']
-            if self.item['user']['last_login']:
-                self.link_last_login.text = 'Last login: ' + self.item['user']['last_login'].strftime('%Y-%m-%d')
-            else:
-                self.link_last_login.text = 'Never'
-            if self.item['user']['signed_up']:
-                self.link_signed_up.text = 'Signed up: ' + self.item['user']['signed_up'].strftime('%Y-%m-%d')
-            else:
-                self.link_signed_up.text = 'Manual'
+            self.populate_data()
+
+    def populate_data(self, **event_args):
+        self.link_email.text = self.item['user']['email']
+        self.link_name.text = self.item['user']['first_name'] + ' ' + self.item['user']['last_name']
+        if self.item['user']['last_login']:
+            self.link_last_login.text = self.item['user']['last_login'].strftime('%Y-%m-%d')
         else:
-            self.link_email.role = 'skeleton'
-            self.link_name.role = 'skeleton'
-            self.link_last_login.role = 'skeleton'
-            self.link_signed_up.role = 'skeleton'
-        # Any code you write here will run before the form opens.
+            self.link_last_login.text = 'Never'
+        if self.item['user']['signed_up']:
+            self.link_signed_up.text = self.item['user']['signed_up'].strftime('%Y-%m-%d')
+        else:
+            self.link_signed_up.text = 'Manual'
+
+        self.link_email.role = None
+        self.link_name.role = None
+        self.link_last_login.role = None
+        self.link_signed_up.role = None
 
     def link_email_click(self, **event_args):
         """This method is called when the link is clicked"""
