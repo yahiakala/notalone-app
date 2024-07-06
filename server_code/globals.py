@@ -73,6 +73,7 @@ def get_users_iterable(tenant_id, user):
     tenant, usermap, permissions = validate_user(tenant_id, user)
     if 'see_members' not in permissions:
         return []
+    # TODO: use q_only_cols to avoid pulling in tenant data with this.
     return app_tables.usermap.search(tenant=tenant)
 
 def get_users(tenant_id, user, usermap=None, permissions=None, tenant=None):
