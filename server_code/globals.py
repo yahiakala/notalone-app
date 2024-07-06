@@ -75,7 +75,7 @@ def get_users(tenant_id, user, usermap=None, permissions=None, tenant=None):
     if 'see_members' not in permissions:
         return []
 
-    member_rows = app_tables.usermap.search(tenants=[tenant])
+    member_rows = app_tables.usermap.search(tenant=tenant)
     if anvil.server.context.background_task_id:
         anvil.server.task_state['users_len'] = len(member_rows)
 
