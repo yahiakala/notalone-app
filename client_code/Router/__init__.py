@@ -39,16 +39,17 @@ class Router(RouterTemplate):
         
         self.btn_test.tag.url_hash = 'app/tests'
         self.load_globals = []
+        self.populate_globals()
 
     def populate_globals(self):
-        with anvil.server.no_loading_indicator:
-            self.user = Global.user
-            self.set_account_state(self.user)
-            Global.launch_bk_tenanted()
-    
-            if Global.is_mobile:
-                self.lbl_app_title.visible = False
-                self.link_forum_nav.text = ''
+        # with anvil.server.no_loading_indicator:
+        self.user = Global.user
+        self.set_account_state(self.user)
+        # Global.launch_bk_tenanted()
+
+        if Global.is_mobile:
+            self.lbl_app_title.visible = False
+            self.link_forum_nav.text = ''
         
         print_timestamp('Populated globals on Router')
 
@@ -116,10 +117,10 @@ class Router(RouterTemplate):
         return True
     
     def nav_click(self, sender, **event_args):
-        if not self.check_if_loaded(sender.tag.globals):
-            self.img_loading.visible = True
-            self.load_globals = sender.tag.globals
-            self.ti_global_page.interval = 1
+        # if not self.check_if_loaded(sender.tag.globals):
+        #     self.img_loading.visible = True
+        #     self.load_globals = sender.tag.globals
+        #     self.ti_global_page.interval = 1
 
         if sender.tag.url_hash == '':
             if Global.user:
@@ -141,18 +142,18 @@ class Router(RouterTemplate):
         """Any time a form is loaded."""
         self.on_navigation(url_hash, url_pattern, url_dict, form)
 
-    def ti_load_tick(self, **event_args):
-        """This method is called Every [interval] seconds. Does not trigger if [interval] is 0."""
-        self.ti_load.interval = 0
-        self.populate_globals()
-        self.img_loading.visible = False
-        self.ti_globals.interval = 1
+    # def ti_load_tick(self, **event_args):
+    #     """This method is called Every [interval] seconds. Does not trigger if [interval] is 0."""
+    #     self.ti_load.interval = 0
+    #     self.populate_globals()
+    #     self.img_loading.visible = False
+    #     self.ti_globals.interval = 1
 
-    def ti_global_page_tick(self, **event_args):
-        """This method is called Every [interval] seconds. Does not trigger if [interval] is 0."""
-        if self.check_if_loaded(self.load_globals):
-            self.ti_globals.interval = 0
-            self.img_loading.visible = False
+    # def ti_global_page_tick(self, **event_args):
+    #     """This method is called Every [interval] seconds. Does not trigger if [interval] is 0."""
+    #     if self.check_if_loaded(self.load_globals):
+    #         self.ti_globals.interval = 0
+    #         self.img_loading.visible = False
 
     def ti_globals_tick(self, **event_args):
         """This method is called Every [interval] seconds. Does not trigger if [interval] is 0."""

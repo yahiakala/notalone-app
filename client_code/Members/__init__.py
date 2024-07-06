@@ -26,7 +26,14 @@ class Members(MembersTemplate):
 
     def load_data(self, res):
         if res:
-            Global.users = res.search(q.fetch_only('user', user=q.fetch_only('email', 'first_name', 'last_name', 'last_login', 'signed_up')))
+            Global.users = res.search(
+                q.fetch_only(
+                    'user',
+                    user=q.fetch_only(
+                        'email', 'first_name', 'last_name', 'last_login', 'signed_up'
+                    )
+                )
+            )
         else:
             res = Global.users
         
