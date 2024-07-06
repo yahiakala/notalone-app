@@ -55,7 +55,7 @@ def get_tenanted_data(tenant_id, key):
     anvil.server.session['tenant_id'] = tenant_id
     
     if key == 'users':
-        return get_users(tenant_id, user)
+        return get_users_iterable(tenant_id, user)
     elif key == 'permissions':
         return get_permissions(tenant_id, user)
     elif key == 'screenerlink':
@@ -73,8 +73,8 @@ def get_users_iterable(tenant_id, user):
     tenant, usermap, permissions = validate_user(tenant_id, user)
     if 'see_members' not in permissions:
         return []
-    # TODO: use q_only_cols to avoid pulling in tenant data with this.
-    return app_tables.usermap.search(tenant=tenant)
+    return app_tables.usermap.client_readable(q.only_cols('user'), tenant=tenant)
+
 
 def get_users(tenant_id, user, usermap=None, permissions=None, tenant=None):
     print_timestamp('_get_users: start')

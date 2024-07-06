@@ -7,14 +7,15 @@ class MemberRow(MemberRowTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.
         self.init_components(**properties)
+        # Only need email, first_name, last_name, last_login, signed_up
         if self.item:
-            self.link_email.text = self.item['email']
-            self.link_name.text = self.item['first_name'] + ' ' + self.item['last_name']
-            if self.item['last_login']:
-                self.link_last_login.text = 'Last login: ' + self.item['last_login'].strftime('%Y-%m-%d')
+            self.link_email.text = self.item['user']['email']
+            self.link_name.text = self.item['user']['first_name'] + ' ' + self.item['user']['last_name']
+            if self.item['user']['last_login']:
+                self.link_last_login.text = 'Last login: ' + self.item['user']['last_login'].strftime('%Y-%m-%d')
             else:
                 self.link_last_login.text = 'Never'
-            if self.item['signed_up']:
+            if self.item['user']['signed_up']:
                 self.link_signed_up.text = 'Signed up: ' + self.item['signed_up'].strftime('%Y-%m-%d')
             else:
                 self.link_signed_up.text = 'Manual'

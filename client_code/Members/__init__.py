@@ -1,13 +1,14 @@
 from ._anvil_designer import MembersTemplate
 from anvil import *
 import anvil.tables.query as q
-import anvil.server
+# import anvil.server
 
 from ..Global import Global
 from anvil_extras import routing
 import datetime as dt
-from anvil_extras.logging import TimerLogger
+# from anvil_extras.logging import TimerLogger
 from anvil_squared.utils import print_timestamp
+from anvil_extras.non_blocking import call_async
 
 
 @routing.route('/members', template='Router')
@@ -16,12 +17,31 @@ class Members(MembersTemplate):
         self.init_components(**properties)
         self.members = [None]
         self.populate_rp()
-        if Global.get_s('users'):
-            self.ti_load_tick()
-        else:
-            print_timestamp('Members: Starting timer')
-            self.ti_load.interval = 1
 
+        # with anvil.server.no_loading_indicator():
+        if Global.get_s('users'):
+            self.load_data(None)
+        else:
+            call_async('get_tenanted_data', Global.tenant_id, 'users').on_result(self.load_data)
+
+    def load_data(self, res):
+        if res:
+            Global.users = res.search(q.fetch_only('user', user=q.fetch_only('email', 'first_name', 'last_name', 'last_login', 'signed_up')))
+        else:
+            res = Global.users
+        
+        self.members = res
+        self.btn_qf_applicants.enabled = True
+        self.btn_qf_regular.enabled = True
+        self.btn_qf_admins.enabled = True
+        self.btn_qf_disabled.enabled = True
+        self.btn_qf_inactive.enabled = True
+        self.tb_mb_search.enabled = True
+
+        if self.members is not None:
+            self.populate_rp()
+
+    
     def populate_rp(self, **event_args):
         self.mb_count = len(self.members)
         # self.lbl_num_results.text = str(self.mb_count) + ' result(s)'
@@ -46,6 +66,8 @@ class Members(MembersTemplate):
         # search_txt = '%' + self.tb_mb_search.text + '%'
         srch = self.tb_mb_search.text
         print(srch)
+        # Gonna need to search through users first, then put that into an OR condition
+        # in a larger query on the usermap
         self.members = [
             i for i in Global.users
             if srch in i['first_name'].lower() or srch in i['last_name'].lower() or srch in i['email'].lower() or srch in i['notes'].lower()
@@ -119,28 +141,6 @@ class Members(MembersTemplate):
         ]
         self.refresh_search()
         self.btn_norole.role = 'filled-button'
-
-    def ti_load_tick(self, **event_args):
-        """This method is called Every [interval] seconds. Does not trigger if [interval] is 0."""
-        # self.members = Global.get_s('users')
-        self.members = Global.get_bk('users')
-        
-        if Global.get_s('users') is None:
-            # Still loading full dataset
-            pass
-        else:
-            # self.ind_load.visible = False
-            self.ti_load.interval = 0
-            self.members = Global.get_s('users')
-            self.btn_qf_applicants.enabled = True
-            self.btn_qf_regular.enabled = True
-            self.btn_qf_admins.enabled = True
-            self.btn_qf_disabled.enabled = True
-            self.btn_qf_inactive.enabled = True
-            self.tb_mb_search.enabled = True
-
-        if self.members is not None:
-            self.populate_rp()
 
     def btn_qf_applicants_click(self, **event_args):
         """This method is called when the button is clicked"""
