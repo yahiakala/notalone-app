@@ -265,6 +265,7 @@ def update_role(tenant_id, role_name, new_role_dict):
     user = anvil.users.get_user(allow_remembered=True)
     anvil.server.launch_background_task('update_role_bk', tenant_id, user, role_name, new_role_dict)
 
+
 @anvil.server.background_task
 def update_role_bk(tenant_id, user, role_name, new_role_dict):
     tenant, usermap, permissions = validate_user(tenant_id, user)
@@ -274,3 +275,20 @@ def update_role_bk(tenant_id, user, role_name, new_role_dict):
     if role['can_edit']:
         for key, val in new_role_dict.items():
             role[key] = val
+
+
+@anvil.server.callable(require_user=True)
+def search_users(tenant_id, search_string):
+    user = anvil.users.get_user(allow_remembered=True)
+    tenant, usermap, permissions = validate_user(tenant_id, user)
+    if 'see_members' in permissions:
+        return app_tables.users.search(
+            q.fetch_only('email', 'first_name', 'last_name'),
+            q.any_of(
+                email=q.ilike('%'+search_string+'%'),
+                first_name=q.ilike('%'+search_string+'%'),
+                last_name=q.ilike('%'+search_string+'%')
+            )
+        )
+    else:
+        return []

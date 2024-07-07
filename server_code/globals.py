@@ -73,7 +73,7 @@ def get_users_iterable(tenant_id, user):
     tenant, usermap, permissions = validate_user(tenant_id, user)
     if 'see_members' not in permissions:
         return []
-    return app_tables.usermap.client_readable(q.only_cols('user'), tenant=tenant)
+    return app_tables.usermap.client_readable(q.only_cols('user', 'notes'), tenant=tenant)
 
 
 def get_users(tenant_id, user, usermap=None, permissions=None, tenant=None):
