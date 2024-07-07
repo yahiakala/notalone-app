@@ -1,6 +1,7 @@
 from ._anvil_designer import RouterTemplate
 from anvil import *
 import anvil.users
+import anvil.server
 
 # from ..HomeAnonComponent import HomeAnonComponent
 from ..Home import Home
@@ -44,11 +45,12 @@ class Router(RouterTemplate):
 
     def link_logout_click(self, **event_args):
         """This method is called when the link is clicked"""
-        anvil.users.logout()
-        self.set_account_state(None)
-        routing.clear_cache()
-        Global.user = None  # Haven't tested this.
-        routing.set_url_hash('sign', load_from_cache=False)
+        with anvil.server.no_loading_indicator:
+            anvil.users.logout()
+            self.set_account_state(None)
+            routing.clear_cache()
+            Global.user = None  # Haven't tested this.
+            routing.set_url_hash('sign', load_from_cache=False)
 
     def set_account_state(self, user):
         print_timestamp('set_account_state')

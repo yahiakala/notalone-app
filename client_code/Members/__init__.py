@@ -14,7 +14,7 @@ from anvil_squared.utils import print_timestamp
 class Members(MembersTemplate):
     def __init__(self, **properties):
         self.init_components(**properties)
-        self.members = [None]
+        self.members = [None, None, None]
         self.populate_rp()
 
     def form_show(self, **event_args):
@@ -38,6 +38,9 @@ class Members(MembersTemplate):
     
             if self.members is not None:
                 self.populate_rp()
+
+            self.pagination_1.data_grid = self.dg_members
+            self.pagination_1.repeating_panel = self.rp_members
 
     def populate_rp(self, **event_args):
         self.mb_count = len(self.members)
