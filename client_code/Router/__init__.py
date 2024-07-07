@@ -29,23 +29,12 @@ class Router(RouterTemplate):
         self.link_members.tag.url_hash = 'app/members'
         self.link_fin.tag.url_hash = 'app/financials'
         self.link_volunteers.tag.url_hash = 'app/volunteers'
-
-        self.link_home.tag.globals = []
-        self.link_apply.tag.globals = []
-        self.link_profile.tag.globals = ['permissions']
-        self.link_members.tag.globals = ['users']
-        self.link_fin.tag.globals = []
-        self.link_volunteers.tag.globals = []
         
-        # self.btn_test.tag.url_hash = 'app/tests'
-        self.load_globals = []
         self.populate_globals()
 
     def populate_globals(self):
-        # with anvil.server.no_loading_indicator:
         self.user = Global.user
         self.set_account_state(self.user)
-        # Global.launch_bk_tenanted()
 
         if Global.is_mobile:
             self.lbl_app_title.visible = False
@@ -59,7 +48,7 @@ class Router(RouterTemplate):
         self.set_account_state(None)
         routing.clear_cache()
         Global.user = None  # Haven't tested this.
-        routing.set_url_hash('', load_from_cache=False)
+        routing.set_url_hash('sign', load_from_cache=False)
 
     def set_account_state(self, user):
         print_timestamp('set_account_state')
@@ -109,19 +98,8 @@ class Router(RouterTemplate):
         Global.user = self.user
         self.refresh_everything()
         self.nav_click(self.link_home)
-
-    def check_if_loaded(self, keys):
-        for key in keys:
-            if Global.get_s(key) is None:
-                return False
-        return True
     
     def nav_click(self, sender, **event_args):
-        # if not self.check_if_loaded(sender.tag.globals):
-        #     self.img_loading.visible = True
-        #     self.load_globals = sender.tag.globals
-        #     self.ti_global_page.interval = 1
-
         if sender.tag.url_hash == '':
             if Global.user:
                 self.set_account_state(Global.user)
@@ -141,23 +119,3 @@ class Router(RouterTemplate):
     def on_form_load(self, url_hash, url_pattern, url_dict, form):
         """Any time a form is loaded."""
         self.on_navigation(url_hash, url_pattern, url_dict, form)
-
-    # def ti_load_tick(self, **event_args):
-    #     """This method is called Every [interval] seconds. Does not trigger if [interval] is 0."""
-    #     self.ti_load.interval = 0
-    #     self.populate_globals()
-    #     self.img_loading.visible = False
-    #     self.ti_globals.interval = 1
-
-    # def ti_global_page_tick(self, **event_args):
-    #     """This method is called Every [interval] seconds. Does not trigger if [interval] is 0."""
-    #     if self.check_if_loaded(self.load_globals):
-    #         self.ti_globals.interval = 0
-    #         self.img_loading.visible = False
-
-    def ti_globals_tick(self, **event_args):
-        """This method is called Every [interval] seconds. Does not trigger if [interval] is 0."""
-        with anvil.server.no_loading_indicator:
-            if Global.update_bk_tenanted():
-                self.ti_globals.interval = 0
-                print_timestamp('Fully loaded tenanted globals')

@@ -1,6 +1,8 @@
 from ._anvil_designer import SignupTemplate
 from anvil import *
 import anvil.users
+import time
+
 from anvil_extras import routing
 from anvil_squared import utils
 
@@ -63,4 +65,10 @@ class Signup(SignupTemplate):
 
     def link_signin_click(self, **event_args):
         """This method is called when the link is clicked"""
-        routing.set_url_hash(url_pattern='signin', url_dict=self.url_dict)
+        with anvil.server.no_loading_indicator:
+            routing.set_url_hash(url_pattern='signin', url_dict=self.url_dict)
+
+    def form_show(self, **event_args):
+        """This method is called when the form is shown on the page"""
+        time.sleep(0.5)
+        self.cp_login.visible = True

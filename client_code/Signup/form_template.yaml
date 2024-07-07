@@ -1,4 +1,6 @@
-container: {type: ColumnPanel}
+container:
+  type: ColumnPanel
+  event_bindings: {show: form_show}
 components:
 - name: spacer_1
   properties: {height: '30', visible: false}
@@ -7,6 +9,7 @@ components:
 - name: cp_login
   properties:
     role: [elevated-card, narrow-col]
+    visible: false
   type: ColumnPanel
   components:
   - name: lbl_title

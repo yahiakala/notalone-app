@@ -1,7 +1,8 @@
 from ._anvil_designer import SigninTemplate
 from anvil import *
 import anvil.users
-# import time
+import anvil.server
+import time
 from anvil_extras import routing
 from anvil_squared import utils
 
@@ -36,8 +37,13 @@ class Signin(SigninTemplate):
     
     def btn_google_click(self, **event_args):
         """Signin with google. Creates a user if none exists."""
-        self.user = anvil.users.login_with_google(remember=True)
-        self.route_user()
+        with anvil.server.no_loading_indicator:
+            self.btn_google.text = 'Signing in...'
+            self.btn_google.italic = True
+            self.user = anvil.users.login_with_google(remember=True)
+            self.route_user()
+            self.btn_google.text = 'Sign in with Google'
+            self.btn_google.italic = False
 
     def link_forgot_click(self, **event_args):
         """This method is called when the link is clicked"""
@@ -45,15 +51,26 @@ class Signin(SigninTemplate):
 
     def link_signup_click(self, **event_args):
         """This method is called when the link is clicked"""
-        routing.set_url_hash(url_pattern='signup', url_dict=self.url_dict)
+        with anvil.server.no_loading_indicator:
+            routing.set_url_hash(url_pattern='signup', url_dict=self.url_dict)
 
     def btn_signin_click_custom(self, **event_args):
-        self.user = utils.signin_with_email(
-            self.tb_email, self.tb_password,
-            'login_with_email_custom', self.lbl_error
-        )
-        self.route_user()
+        with anvil.server.no_loading_indicator:
+            self.btn_signin.text = 'Signing in...'
+            self.btn_signin.italic = True
+            self.user = utils.signin_with_email(
+                self.tb_email, self.tb_password,
+                'login_with_email_custom', self.lbl_error
+            )
+            self.route_user()
+            self.btn_signin.text = 'Sign in'
+            self.btn_signin.italic = False
 
     def link_help_click(self, **event_args):
         """This method is called when the link is clicked"""
         alert("Email support@dreambyte.ai and we'll get back to you within 24-48 hours.")
+
+    def form_show(self, **event_args):
+        """This method is called when the form is shown on the page"""
+        time.sleep(0.5)
+        self.cp_login.visible = True

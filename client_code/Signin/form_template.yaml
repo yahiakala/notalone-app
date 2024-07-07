@@ -1,6 +1,7 @@
 container:
   type: ColumnPanel
   properties: {role: null}
+  event_bindings: {show: form_show}
 components:
 - name: spacer_1
   properties: {height: '30', visible: false}
@@ -9,7 +10,7 @@ components:
 - name: cp_login
   properties:
     role: [elevated-card, narrow-col]
-    visible: true
+    visible: false
   type: ColumnPanel
   components:
   - name: lbl_title
@@ -20,6 +21,7 @@ components:
     properties: {display_mode: shrink_to_fit, source: _/theme/Not Alone_thin.png, height: ''}
     type: Image
     layout_properties: {grid_position: 'NGTDNA,MYPWAV'}
+    event_bindings: {}
   - name: btn_google
     properties:
       text: Sign in with Google

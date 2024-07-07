@@ -8,7 +8,6 @@ from anvil_extras import routing
 import datetime as dt
 # from anvil_extras.logging import TimerLogger
 from anvil_squared.utils import print_timestamp
-from anvil_extras.non_blocking import call_async
 
 
 @routing.route('/members', template='Router')
@@ -18,17 +17,10 @@ class Members(MembersTemplate):
         self.members = [None]
         self.populate_rp()
 
-        # with anvil.server.no_loading_indicator:
-        if Global.get_s('users'):
-            self.load_data(None)
-        else:
-            call_async('get_tenanted_data', Global.tenant_id, 'users').on_result(self.load_data)
-
-    def load_data(self, res):
+    def form_show(self, **event_args):
+        """This method is called when the form is shown on the page"""
         with anvil.server.no_loading_indicator:
-            if res:
-                Global.users = res
-    
+            self.users = Global.users
             self.members = Global.users.search(
                 q.fetch_only(
                     'user',
@@ -47,7 +39,6 @@ class Members(MembersTemplate):
             if self.members is not None:
                 self.populate_rp()
 
-    
     def populate_rp(self, **event_args):
         self.mb_count = len(self.members)
         # self.lbl_num_results.text = str(self.mb_count) + ' result(s)'
@@ -169,3 +160,5 @@ class Members(MembersTemplate):
     def apply_filters(self, **event_args):
         pass
         # enable to check if ONLY one role or ONLY certain permissions
+
+
