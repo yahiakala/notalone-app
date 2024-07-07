@@ -5,9 +5,9 @@ import anvil.server
 
 from ..Global import Global
 from anvil_extras import routing
-import datetime as dt
+# import datetime as dt
 # from anvil_extras.logging import TimerLogger
-from anvil_squared.utils import print_timestamp
+# from anvil_squared.utils import print_timestamp
 
 
 @routing.route('/members', template='Router')
@@ -41,15 +41,6 @@ class Members(MembersTemplate):
 
             self.pagination_1.data_grid = self.dg_members
             self.pagination_1.repeating_panel = self.rp_members
-
-    def refresh_search(self):
-        """Refresh the button roles and pagination"""
-        
-        self.mb_count = len(self.members)
-        # self.mb_count_show = min(10, self.mb_count)
-        self.btn_clear_search.enabled = True
-        self.rp_members.items = self.members
-        self.refresh_data_bindings()  # for num results label
 
     def tb_mb_search_pressed_enter(self, **event_args):
         """This method is called when the user presses Enter in this text box"""
