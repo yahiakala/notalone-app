@@ -113,7 +113,7 @@ def save_user_notes(tenant_id, user_email, new_note):
 @anvil.server.background_task
 def save_user_notes_bk(tenant_id, user, user_email, new_note):
     tenant, usermap, permissions = validate_user(tenant_id, user)
-    if 'see_applicants' in permissions:
+    if 'see_members' in permissions:
         member_user = app_tables.users.get(email=user_email)
         member_usermap = app_tables.usermap.get(user=member_user, tenant=tenant)
         member_usermap['notes'] = new_note

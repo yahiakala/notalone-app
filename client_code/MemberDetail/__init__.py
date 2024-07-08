@@ -165,3 +165,21 @@ class MemberDetail(MemberDetailTemplate):
         Global.users = None
         routing.clear_cache()
         routing.go_back()
+
+    def btn_save_notes_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        self.btn_save_notes.text = 'Saving...'
+        self.btn_save_notes.italic = True
+        with anvil.server.no_loading_indicator:
+            if 'edit_members' in Global.permissions:
+                self.usermap['notes'] = self.ta_user_notes.text
+            else:
+                anvil.server.call(
+                    'save_user_notes',
+                    Global.tenant_id,
+                    self.email,
+                    self.ta_user_notes.text
+                )
+        self.btn_save_notes.italic = False
+        self.btn_save_notes.text = 'Save Notes'
+        
