@@ -84,6 +84,28 @@ def get_users_with_permission(tenant_id, permission, tenant=None):
     return usermaps
 
 
+def usermap_row_to_dict(row):
+    row_dict = {
+        'first_name': row['user']['first_name'] or '',
+        'last_name': row['user']['last_name'] or '',
+        'email': row['user']['email'],
+        'discord': row['discord'] or '',
+        'fee': row['fee'],
+        'phone': row['phone'] or '',
+        'consent_check': row['consent_check'],
+        'booking_link': row['booking_link'],
+        'payment_status': row['payment_status'],
+        'payment_expiry': row['payment_expiry'],
+        'last_login': row['user']['last_login'],
+        'signed_up': row['user']['signed_up'],
+        'paypal_sub_id': row['paypal_sub_id'],
+        'permissions': get_permissions(None, row['user'], row['tenant'], row),
+        'roles': get_user_roles(None, None, row, row['tenant']),
+        'notes': row['notes']
+    }
+    return row_dict
+
+
 permissions = [
     'see_applicants',
     'see_members',

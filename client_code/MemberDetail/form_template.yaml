@@ -1,6 +1,7 @@
 container:
   type: ColumnPanel
   properties: {col_widths: '{}'}
+  event_bindings: {show: form_show}
 components:
 - name: btn_back
   properties: {text: Back, align: left, icon: 'fa:angle-left', role: outlined-button, visible: false}
@@ -21,7 +22,26 @@ components:
     name: lbl_email
     layout_properties: {grid_position: 'HKINEJ,DDZPCS'}
   - type: TextBox
-    properties: {role: outlined, bold: false, align: left, placeholder: Enter email, spacing_above: small, background: '', type: text, underline: false, font: '', hide_text: false, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: false, font_size: null, tooltip: '', text: ''}
+    properties:
+      role: [skeleton, outlined]
+      bold: false
+      align: left
+      placeholder: ''
+      spacing_above: small
+      background: ''
+      type: text
+      underline: false
+      font: ''
+      hide_text: false
+      foreground: ''
+      spacing_below: small
+      visible: true
+      border: ''
+      italic: false
+      enabled: false
+      font_size: null
+      tooltip: ''
+      text: ''
     name: tb_email
     layout_properties: {grid_position: 'HKINEJ,OGGOPT'}
     data_bindings: []
@@ -30,7 +50,26 @@ components:
     name: lbl_firstname
     layout_properties: {grid_position: 'ZAJLOH,CPUQXK'}
   - type: TextBox
-    properties: {role: outlined, bold: false, align: left, placeholder: Enter first name, spacing_above: small, background: '', type: text, underline: false, font: '', hide_text: false, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: ''}
+    properties:
+      role: [outlined, skeleton]
+      bold: false
+      align: left
+      placeholder: ''
+      spacing_above: small
+      background: ''
+      type: text
+      underline: false
+      font: ''
+      hide_text: false
+      foreground: ''
+      spacing_below: small
+      visible: true
+      border: ''
+      italic: false
+      enabled: true
+      font_size: null
+      tooltip: ''
+      text: ''
     name: tb_firstname
     layout_properties: {grid_position: 'ZAJLOH,QWXXQK'}
     data_bindings: []
@@ -40,7 +79,26 @@ components:
     name: lbl_lastname
     layout_properties: {grid_position: 'XDASUB,ZLOKBT'}
   - type: TextBox
-    properties: {role: outlined, bold: false, align: left, placeholder: Enter last name, spacing_above: small, background: '', type: text, underline: false, font: '', hide_text: false, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: ''}
+    properties:
+      role: [outlined, skeleton]
+      bold: false
+      align: left
+      placeholder: ''
+      spacing_above: small
+      background: ''
+      type: text
+      underline: false
+      font: ''
+      hide_text: false
+      foreground: ''
+      spacing_below: small
+      visible: true
+      border: ''
+      italic: false
+      enabled: true
+      font_size: null
+      tooltip: ''
+      text: ''
     name: tb_lastname
     layout_properties: {grid_position: 'XDASUB,GVMFKW'}
     data_bindings: []
@@ -50,7 +108,26 @@ components:
     type: Label
     layout_properties: {grid_position: 'ILIWTK,BSAFMB'}
   - name: tb_phone
-    properties: {role: outlined, bold: false, align: left, placeholder: Enter phone number, spacing_above: small, background: '', type: text, underline: false, font: '', hide_text: false, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: ''}
+    properties:
+      role: [outlined, skeleton]
+      bold: false
+      align: left
+      placeholder: ''
+      spacing_above: small
+      background: ''
+      type: text
+      underline: false
+      font: ''
+      hide_text: false
+      foreground: ''
+      spacing_below: small
+      visible: true
+      border: ''
+      italic: false
+      enabled: true
+      font_size: null
+      tooltip: ''
+      text: ''
     type: TextBox
     layout_properties: {grid_position: 'ILIWTK,RLHKRF'}
     data_bindings: []
@@ -69,7 +146,26 @@ components:
     type: Label
     layout_properties: {grid_position: 'ZDFNLF,HIEVSD'}
   - name: ta_user_notes
-    properties: {role: outlined, bold: false, align: left, placeholder: User Notes are Empty, spacing_above: small, background: '', underline: false, font: '', foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, auto_expand: true, font_size: null, tooltip: '', height: '', text: ''}
+    properties:
+      role: [outlined, skeleton]
+      bold: false
+      align: left
+      placeholder: User Notes are Empty
+      spacing_above: small
+      background: ''
+      underline: false
+      font: ''
+      foreground: ''
+      spacing_below: small
+      visible: true
+      border: ''
+      italic: false
+      enabled: true
+      auto_expand: true
+      font_size: null
+      tooltip: ''
+      height: ''
+      text: ''
     type: TextArea
     layout_properties: {grid_position: 'GKVBPX,IFEJQB'}
     data_bindings: []
@@ -122,7 +218,26 @@ components:
     layout_properties: {grid_position: 'OKHKDC,FSIGED'}
     data_bindings: []
   - name: tb_discord_user
-    properties: {role: outlined, bold: false, align: left, placeholder: Discord Username, spacing_above: small, background: '', type: text, underline: false, font: '', hide_text: false, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: ''}
+    properties:
+      role: [outlined, skeleton]
+      bold: false
+      align: left
+      placeholder: ''
+      spacing_above: small
+      background: ''
+      type: text
+      underline: false
+      font: ''
+      hide_text: false
+      foreground: ''
+      spacing_below: small
+      visible: true
+      border: ''
+      italic: false
+      enabled: true
+      font_size: null
+      tooltip: ''
+      text: ''
     type: TextBox
     layout_properties: {grid_position: 'OKHKDC,GDPJAW'}
     data_bindings: []
@@ -240,7 +355,7 @@ components:
       type: Label
       layout_properties: {grid_position: 'JQNSNR,EAYBFC'}
     - name: lbl_fee_paid_amt
-      properties: {role: null, bold: false, align: left, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, font_size: null, tooltip: '', text: ''}
+      properties: {role: skeleton, bold: false, align: left, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, font_size: null, tooltip: '', text: ''}
       type: Label
       layout_properties: {grid_position: 'JQNSNR,DFSSCC'}
       data_bindings: []
@@ -260,7 +375,26 @@ components:
     layout_properties: {grid_position: 'KBYNLO,NAEOZB'}
     data_bindings: []
   - name: tb_booking_link
-    properties: {role: outlined, bold: false, align: left, placeholder: Booking Link, spacing_above: small, background: '', type: text, underline: false, font: '', hide_text: false, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: Booking Link}
+    properties:
+      role: [outlined, skeleton]
+      bold: false
+      align: left
+      placeholder: Booking Link
+      spacing_above: small
+      background: ''
+      type: text
+      underline: false
+      font: ''
+      hide_text: false
+      foreground: ''
+      spacing_below: small
+      visible: true
+      border: ''
+      italic: false
+      enabled: true
+      font_size: null
+      tooltip: ''
+      text: ''
     type: TextBox
     layout_properties: {grid_position: 'KBYNLO,FJNBOS'}
     data_bindings: []

@@ -21,14 +21,15 @@ class Members(MembersTemplate):
         """This method is called when the form is shown on the page"""
         with anvil.server.no_loading_indicator:
             self.users = Global.users
-            self.members = Global.users.search(
-                q.fetch_only(
-                    'user',
-                    user=q.fetch_only(
-                        'email', 'first_name', 'last_name', 'last_login', 'signed_up'
+            if self.members == [None, None, None]:
+                self.members = Global.users.search(
+                    q.fetch_only(
+                        'user',
+                        user=q.fetch_only(
+                            'email', 'first_name', 'last_name', 'last_login', 'signed_up'
+                        )
                     )
                 )
-            )
             self.btn_qf_applicants.enabled = True
             self.btn_qf_regular.enabled = True
             self.btn_qf_admins.enabled = True
@@ -51,7 +52,8 @@ class Members(MembersTemplate):
 
     def btn_clear_search_click(self, **event_args):
         """This method is called when the button is clicked"""
-        self.rp_members.items = [None, None, None]
+        self.members = [None, None, None]
+        self.rp_members.items = self.members
         self.reset_buttons()
         self.form_show()
         self.tb_mb_search.text = None

@@ -4,7 +4,7 @@ from anvil.tables import app_tables
 import anvil.tables.query as q
 import anvil.email
 
-from .helpers import print_timestamp, verify_tenant, validate_user, get_usermap, get_users_with_permission
+from .helpers import print_timestamp, verify_tenant, validate_user, get_usermap, get_users_with_permission, usermap_row_to_dict
 import datetime as dt
 
 from . import authorisation
@@ -307,6 +307,21 @@ def search_users_by_text(tenant_id, search_string):
     )
     return usermaps
 
+
+@anvil.server.callable(require_user=True)
+def get_user_by_email(tenant_id, email):
+    user = anvil.users.get_user(allow_remembered=True)
+    tenant, usermap, permissions = validate_user(tenant_id, user)
+    if 'see_members' not in permissions:
+        return None
+
+    get_user = app_tables.users.get(
+        q.fetch_only('email'),
+        email=email
+    )
+    get_usermap = app_tables.usermap.get(user=get_user, tenant=tenant)
+    return usermap_row_to_dict(get_usermap)
+    
 
 @anvil.server.callable(require_user=True)
 def search_users_by_role(tenant_id, role_name):

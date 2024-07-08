@@ -32,5 +32,5 @@ class MemberRow(MemberRowTemplate):
         """This method is called when the link is clicked"""
         routing.set_url_hash(
             url_pattern='app/memberdetail',
-            url_dict={'user_email': self.item['email']}
+            url_dict={'user_email': self.item['user']['email']}
         )

@@ -3,7 +3,7 @@ from anvil.tables import app_tables
 import anvil.tables.query as q
 
 from anvil_squared.helpers import print_timestamp
-from .helpers import validate_user, get_usermap, get_permissions, get_user_roles
+from .helpers import validate_user, get_usermap, get_permissions, get_user_roles, usermap_row_to_dict
 
 
 # --------------------
@@ -90,7 +90,7 @@ def get_users(tenant_id, user, usermap=None, permissions=None, tenant=None):
     memberlist = []
     for member in member_rows:
         try:
-            memberlist.append(usermap_row_to_dict(tenant, member))
+            memberlist.append(usermap_row_to_dict(member))
         except anvil.tables.RowDeleted:
             member.delete()
             if anvil.server.context.background_task_id:
@@ -101,28 +101,6 @@ def get_users(tenant_id, user, usermap=None, permissions=None, tenant=None):
 
     print_timestamp('_get_users: end')
     return memberlist
-
-
-def usermap_row_to_dict(tenant, row):
-    row_dict = {
-        'first_name': row['user']['first_name'] or '',
-        'last_name': row['user']['last_name'] or '',
-        'email': row['user']['email'],
-        'discord': row['discord'] or '',
-        'fee': row['fee'],
-        'phone': row['phone'] or '',
-        'consent_check': row['consent_check'],
-        'booking_link': row['booking_link'],
-        'payment_status': row['payment_status'],
-        'payment_expiry': row['payment_expiry'],
-        'last_login': row['user']['last_login'],
-        'signed_up': row['user']['signed_up'],
-        'paypal_sub_id': row['paypal_sub_id'],
-        'permissions': get_permissions(None, row['user'], row, tenant),
-        'roles': get_user_roles(None, None, row, tenant),
-        'notes': row['notes']
-    }
-    return row_dict
 
 
 def get_screenerlink(tenant_id, user, usermap=None, permissions=None, tenant=None):
