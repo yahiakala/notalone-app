@@ -7,11 +7,6 @@ import anvil.email
 from .helpers import print_timestamp, verify_tenant, validate_user, get_usermap, get_users_with_permission, usermap_row_to_dict
 import datetime as dt
 
-from . import authorisation
-from .authorisation import authorisation_required
-
-authorisation.set_config(get_roles='usermap', tenanted=True)
-
 
 def clean_up_user(user):
     if not user['first_name']:
@@ -86,7 +81,6 @@ def update_member(tenant_id, email, col_dict):
 
 
 @anvil.server.callable(require_user=True)
-@authorisation_required('delete_members')
 def delete_user(tenant_id, user_email):
     print_timestamp('delete_user')
     user = anvil.users.get_user(allow_remembered=True)
@@ -110,7 +104,6 @@ def delete_user_bk(tenant_id, user, user_email):
 
 
 @anvil.server.callable(require_user=True)
-@authorisation_required('see_applicants')
 def save_user_notes(tenant_id, user_email, new_note):
     """Save user notes."""
     user = anvil.users.get_user(allow_remembered=True)
@@ -127,7 +120,6 @@ def save_user_notes_bk(tenant_id, user, user_email, new_note):
 
 
 @anvil.server.callable(require_user=True)
-@authorisation_required('see_applicants')
 def notify_accept(tenant_id, email_to):
     """Notify the applicant they've been accepted."""
     # TODO: roll this into one function for approving an applicant.
@@ -170,7 +162,6 @@ def notify_accept_bk(tenant_id, user, email_to):
 
 
 @anvil.server.callable(require_user=True)
-@authorisation_required('edit_members')
 def add_role_to_member(tenant_id, role_name, member_email):
     """Add volunteer role to member."""
     user = anvil.users.get_user(allow_remembered=True)
@@ -199,7 +190,6 @@ def add_role_to_member_bk(tenant_id, user, role_name, member_email):
 
 
 @anvil.server.callable(require_user=True)
-@authorisation_required('edit_members')
 def remove_role_from_member(tenant_id, role_name, member_email):
     """Remove volunteer role from member."""
     user = anvil.users.get_user(allow_remembered=True)
@@ -222,7 +212,6 @@ def remove_role_from_member_bk(tenant_id, user, role_name, member_email):
 
 
 @anvil.server.callable(require_user=True)
-@authorisation_required('edit_roles')
 def add_role(tenant_id, role_name, reports_to, role_members):
     """Add volunteer role definition."""
     user = anvil.users.get_user(allow_remembered=True)
@@ -241,7 +230,6 @@ def add_role_bk(tenant_id, user, role_name, reports_to, role_members):
 
 
 @anvil.server.callable(require_user=True)
-@authorisation_required('edit_roles')
 def upload_role_guide(tenant_id, role_name, file):
     user = anvil.users.get_user(allow_remembered=True)
     anvil.server.launch_background_task('upload_role_guide_bk', tenant_id, user, role_name, file)
@@ -260,7 +248,6 @@ def upload_role_guide_bk(tenant_id, user, role_name, file):
 
 
 @anvil.server.callable(require_user=True)
-@authorisation_required('edit_roles')
 def update_role(tenant_id, role_name, new_role_dict):
     user = anvil.users.get_user(allow_remembered=True)
     anvil.server.launch_background_task('update_role_bk', tenant_id, user, role_name, new_role_dict)
@@ -315,12 +302,27 @@ def get_user_by_email(tenant_id, email):
     if 'see_members' not in permissions:
         return None
 
-    get_user = app_tables.users.get(
+    user_user = app_tables.users.get(
         q.fetch_only('email'),
         email=email
     )
-    get_usermap = app_tables.usermap.get(user=get_user, tenant=tenant)
-    return usermap_row_to_dict(get_usermap)
+    user_usermap = app_tables.usermap.client_readable(tenant=tenant, user=user_user).get()
+    return user_usermap
+
+
+@anvil.server.callable(require_user=True)
+def get_user_by_email_writable(tenant_id, email):
+    user = anvil.users.get_user(allow_remembered=True)
+    tenant, usermap, permissions = validate_user(tenant_id, user)
+    if 'edit_members' not in permissions:
+        return None
+
+    user_user = app_tables.users.get(
+        q.fetch_only('email'),
+        email=email
+    )
+    user_usermap = app_tables.usermap.client_writable(tenant=tenant, user=user_user).get()
+    return user_usermap
     
 
 @anvil.server.callable(require_user=True)

@@ -89,6 +89,12 @@ db_schema:
     - name: screening_slots
       admin_ui: {width: 200, order: 13}
       type: simpleObject
+    - name: first_name
+      admin_ui: {order: 3, width: 200}
+      type: string
+    - name: last_name
+      admin_ui: {order: 3.5, width: 200}
+      type: string
   permissions:
     title: Permissions
     client: none

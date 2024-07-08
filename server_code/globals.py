@@ -3,7 +3,7 @@ from anvil.tables import app_tables
 import anvil.tables.query as q
 
 from anvil_squared.helpers import print_timestamp
-from .helpers import validate_user, get_usermap, get_permissions, get_user_roles, usermap_row_to_dict
+from .helpers import validate_user, get_usermap, get_permissions, get_user_roles, usermap_row_to_dict, verify_tenant
 
 
 # --------------------
@@ -66,6 +66,15 @@ def get_tenanted_data(tenant_id, key):
         return get_forumlink(tenant_id, user)
     elif key == 'roles':
         return get_roles(tenant_id, user)
+    elif key == 'my_usermap':
+        return get_my_usermap(tenant_id, user)
+
+
+def get_my_usermap(tenant_id, user):
+    user = anvil.users.get_user(allow_remembered=True)
+    tenant = verify_tenant(tenant_id, user)
+    user_usermap = app_tables.usermap.client_writable(tenant=tenant, user=user).get()
+    return user_usermap
 
 
 def get_users_iterable(tenant_id, user):

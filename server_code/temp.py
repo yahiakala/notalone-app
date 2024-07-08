@@ -54,4 +54,13 @@ def upsert_role(usermap, role_name):
         usermap['roles'] = [role]
     elif role not in usermap['roles']:
         usermap['roles'] = usermap['roles'] + [role]
-    
+
+def migrate_firstlast():
+    users = app_tables.users.search(tenant=q.not_(None))
+    for user in users:
+        usermap = app_tables.usermap.get(user=user, tenant=user['tenant'])
+        if not usermap:
+            usermap = app_tables.usermap.add_row(user=user, tenant=user['tenant'])
+
+        usermap['first_name'] = user['first_name']
+        usermap['last_name'] = user['last_name']

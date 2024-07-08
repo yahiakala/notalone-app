@@ -11,6 +11,7 @@ _global_dict = {
 }
 _tenanted_dict = {
     'user_data': None,
+    'my_usermap': None,
     'permissions': None,
     'users': None,
     'applied': None,
