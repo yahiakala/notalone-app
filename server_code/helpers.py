@@ -80,8 +80,16 @@ def get_users_with_permission(tenant_id, permission, tenant=None):
     tenant = tenant or app_tables.tenants.get_by_id(tenant_id)
     perm_row = app_tables.permissions.get(name=permission)
     role_rows = app_tables.roles.search(permissions=perm_row, tenant=tenant)
-    usermaps = app_tables.usermap.search(roles=q.any_of(*role_rows))
+    usermaps = app_tables.usermap.search(roles=q.any_of(*role_rows), tenant=tenant)
     return usermaps
+
+
+def upsert_role(usermap, role_name):
+    role = app_tables.roles.get(tenant=usermap['tenant'], name=role_name)
+    if not usermap['roles']:
+        usermap['roles'] = [role]
+    elif role not in usermap['roles']:
+        usermap['roles'] = usermap['roles'] + [role]
 
 
 def usermap_row_to_dict(row):

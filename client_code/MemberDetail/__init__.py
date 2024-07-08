@@ -13,6 +13,9 @@ class MemberDetail(MemberDetailTemplate):
         self.init_components(**properties)
         if 'memberdetail' in routing.get_url_pattern():
             self.btn_back.visible = True
+            self.msc_roles.visible = True
+        else:
+            self.msc_roles.visible = False
 
     def btn_save_click(self, **event_args):
         """This method is called when the button is clicked"""
@@ -34,6 +37,21 @@ class MemberDetail(MemberDetailTemplate):
                 self.usermap['phone'] = self.tb_phone.text
                 self.usermap['discord'] = self.tb_discord_user.text
                 self.usermap['booking_link'] = self.tb_booking_link.text
+            
+            if 'memberdetail' in routing.get_url_pattern() and 'edit_members' in Global.permissions:
+                self.usermap = anvil.server.call(
+                    'save_user_roles',
+                    Global.tenant_id,
+                    self.email,
+                    [i['key'] for i in self.msc_roles.selected]
+                )
+                self.roles = self.get_roles(self.usermap)
+                self.permissions = self.get_permissions(self.usermap)
+                routing.clear_cache()
+
+            if 'memberdetail' in routing.get_url_pattern() and 'see_members' in Global.permissions:
+                # save notes
+                pass
 
         self.btn_save.italic = False
         self.btn_save.text = 'Save all changes'
@@ -75,12 +93,16 @@ class MemberDetail(MemberDetailTemplate):
         self.usermap = anvil.server.call('reject_applicant', Global.tenant_id, self.email)
         self.roles = self.get_roles(self.usermap)
         self.permissions = self.get_permissions(self.usermap)
+        self.populate_role_list()
+        routing.clear_cache()
         
     def btn_accept_applicant_click(self, **event_args):
         """This method is called when the button is clicked"""
         self.usermap = anvil.server.call('accept_applicant', Global.tenant_id, self.email)
         self.roles = self.get_roles(self.usermap)
         self.permissions = self.get_permissions(self.usermap)
+        self.populate_role_list()
+        routing.clear_cache()
 
     def form_show(self, **event_args):
         """This method is called when the form is shown on the page"""
@@ -103,12 +125,18 @@ class MemberDetail(MemberDetailTemplate):
                 raise anvil.server.PermissionDenied('You do not have permission to see this.')
 
             self.permissions = self.get_permissions(self.usermap)
+            self.roles = self.get_roles(self.usermap)
             self.email = self.url_dict['user_email']
             self.cp_admin.visible = True
             self.ta_user_notes.text = self.usermap['notes']
+            self.populate_role_list()
 
         if 'see_forum' not in self.permissions:
             self.btn_pay_new.enabled = True
+
+        if 'Applicant' in self.roles:
+            self.btn_accept_applicant.visible = True 
+            self.btn_reject_applicant.visible = True
         
         self.tb_email.text = self.email
         self.tb_firstname.text = self.usermap['first_name']
@@ -129,7 +157,7 @@ class MemberDetail(MemberDetailTemplate):
         if 'see_forum' in self.permissions:
             self.cp_discord.visible = True
 
-        if 'see_applicants' in self.permissions:
+        if 'see_members' in self.permissions:
             self.cp_booking_link.visible = True
 
         self.tb_email.role = 'outlined'
@@ -159,6 +187,13 @@ class MemberDetail(MemberDetailTemplate):
                         user_permissions.append(permission['name'])
         return list(set(user_permissions))
 
+    def get_roles(self, usermap):
+        user_roles = []
+        if usermap['roles']:
+            for role in usermap['roles']:
+                user_roles.append(role['name'])
+        return list(set(user_roles))
+
     def btn_del_click(self, **event_args):
         """This method is called when the button is clicked"""
         anvil.server.call('delete_user', Global.tenant_id, self.email)
@@ -182,4 +217,23 @@ class MemberDetail(MemberDetailTemplate):
                 )
         self.btn_save_notes.italic = False
         self.btn_save_notes.text = 'Save Notes'
-        
+
+
+    def populate_role_list(self):
+        self.all_roles = [i['name'] for i in Global.roles]
+        self.msc_roles.items = [
+            {
+                'key': i['name'],
+                'value': i['name'],
+                'description': i['name']
+            }
+            for i in Global.roles
+        ]
+        self.msc_roles.selected = [
+            {
+                'key': i,
+                'value': i,
+                'description': i
+            }
+            for i in self.roles
+        ]

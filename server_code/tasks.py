@@ -4,7 +4,7 @@ from anvil.tables import app_tables
 import anvil.tables.query as q
 import anvil.email
 
-from .helpers import print_timestamp, verify_tenant, validate_user, get_usermap, get_users_with_permission, usermap_row_to_dict
+from .helpers import print_timestamp, verify_tenant, validate_user, get_usermap, get_users_with_permission
 import datetime as dt
 
 
@@ -47,37 +47,6 @@ def join_tenant(tenant_id):
 def leave_tenant():
     """Leave a tenant."""
     pass
-
-
-@anvil.server.callable(require_user=True)
-def update_user(tenant_id, user_dict):
-    user = anvil.users.get_user(allow_remembered=True)
-    verify_tenant(tenant_id, user)
-    for key in ['first_name', 'last_name', 'fb_url', 'fee', 'consent_check', 'paypal_sub_id', 'phone', 'discord']:
-        if user[key] != user_dict[key]:
-            user[key] = user_dict[key]
-    user = clean_up_user(user)
-    return user
-
-
-@anvil.server.callable(require_user=True)
-def update_member(tenant_id, email, col_dict):
-    """Update roles for a member."""
-    print_timestamp('update_member: ' + email + ' col_dict: ' + str(col_dict))
-    user = anvil.users.get_user(allow_remembered=True)
-    tenant, usermap, permissions = validate_user(tenant_id, user)
-
-    member_user = app_tables.users.get(email=email)
-    member_usermap = app_tables.users.get(user=member_user, tenant=tenant)
-    if 'see_members' in permissions:
-        pass
-    elif 'see_applicants' in permissions:
-        pass
-    elif 'edit_members' in permissions:
-        pass
-    else:
-        raise Exception('Authorisation required.')
-    # TODO: complete this function
 
 
 @anvil.server.callable(require_user=True)
@@ -125,34 +94,30 @@ def notify_accept(tenant_id, email_to):
     # TODO: roll this into one function for approving an applicant.
     print_timestamp('notify_accept: ' + email_to)
     user = anvil.users.get_user(allow_remembered=True)
-    anvil.server.launch_background_task('notify_accept_bk', tenant_id, user, email_to)
+    # anvil.server.launch_background_task('notify_accept_bk', tenant_id, user, email_to)
 
 
 @anvil.server.background_task
-def notify_accept_bk(tenant_id, user, email_to):
+def email_accept_applicant(tenant, email):
     """Send an email to an applicant upon acceptance."""
-    tenant, usermap, permissions = validate_user(tenant_id, user)
-
-    if 'see_applicants' not in permissions:
-        return None
 
     msg_body = f"""
     <p>Hi! This is an automated message from the {tenant['name']} community platform.</p>
 
-    <p>You have passed the screening interview!</p>
+    <p>Your application to join the group has been accepted!</p>
 
     <p>Please log into the app for next steps (see link below). Fill out your profile, read the community guidelines, and make the membership payment.</p>
 
     <p>{anvil.server.get_app_origin()}</p>
     
     <p>Regards,</p>
-    <p>NotAlone team.</p>
+    <p>{tenant['name']} via the NotAlone Platform.</p>
     """
 
-    screeners = get_users_with_permission(tenant_id, 'see_applicants', tenant)
+    screeners = get_users_with_permission(None, 'see_members', tenant)
     screener_list = [i['user']['email'] for i in screeners]
     anvil.email.send(
-        to=email_to,
+        to=email,
         bcc=screener_list,
         from_address="noreply",
         from_name="noreply",
@@ -265,6 +230,21 @@ def update_role_bk(tenant_id, user, role_name, new_role_dict):
 
 
 @anvil.server.callable(require_user=True)
+def save_user_roles(tenant_id, email, new_roles):
+    user = anvil.users.get_user(allow_remembered=True)
+    tenant, usermap, permissions = validate_user(tenant_id, user)
+    if 'edit_members' not in permissions:
+        return None
+    
+    roles = app_tables.roles.search(tenant=tenant, name=q.any_of(*new_roles))
+    
+    member_user = app_tables.users.get(email=email)
+    member_usermap = app_tables.usermap.get(tenant=tenant, user=member_user)
+    member_usermap['roles'] = list(roles)
+    return member_usermap
+
+
+@anvil.server.callable(require_user=True)
 def search_users_by_text(tenant_id, search_string):
     user = anvil.users.get_user(allow_remembered=True)
     tenant, usermap, permissions = validate_user(tenant_id, user)
@@ -347,3 +327,33 @@ def search_users_by_role(tenant_id, role_name):
         tenant=tenant
     )
     return usermaps
+
+
+@anvil.server.callable(require_user=True)
+def accept_applicant(tenant_id, email):
+    user = anvil.users.get_user(allow_remembered=True)
+    tenant, usermap, permissions = validate_user(tenant_id, user)
+
+    if 'see_members' not in permissions:
+        return None
+
+    member_user = app_tables.users.get(email=email)
+    member_usermap = app_tables.usermap.get(user=member_user, tenant=tenant)
+    member_usermap['roles'] = [app_tables.roles.get(tenant=tenant, name='Approved')]
+
+    email_accept_applicant(tenant, member_user['email'])
+    return member_usermap
+
+
+@anvil.server.callable(require_user=True)
+def reject_applicant(tenant_id, email):
+    user = anvil.users.get_user(allow_remembered=True)
+    tenant, usermap, permissions = validate_user(tenant_id, user)
+
+    if 'see_members' not in permissions:
+        return None
+
+    member_user = app_tables.users.get(email=email)
+    member_usermap = app_tables.usermap.get(user=member_user, tenant=tenant)
+    member_usermap['roles'] = None
+    return member_usermap
