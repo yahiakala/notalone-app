@@ -278,17 +278,55 @@ def update_role_bk(tenant_id, user, role_name, new_role_dict):
 
 
 @anvil.server.callable(require_user=True)
-def search_users(tenant_id, search_string):
+def search_users_by_text(tenant_id, search_string):
     user = anvil.users.get_user(allow_remembered=True)
     tenant, usermap, permissions = validate_user(tenant_id, user)
-    if 'see_members' in permissions:
-        return app_tables.users.search(
-            q.fetch_only('email', 'first_name', 'last_name'),
-            q.any_of(
-                email=q.ilike('%'+search_string+'%'),
-                first_name=q.ilike('%'+search_string+'%'),
-                last_name=q.ilike('%'+search_string+'%')
-            )
-        )
-    else:
+    if 'see_members' not in permissions:
         return []
+    
+    users = app_tables.users.search(
+        q.fetch_only('email', 'first_name', 'last_name'),
+        q.any_of(
+            email=q.ilike('%'+search_string+'%'),
+            first_name=q.ilike('%'+search_string+'%'),
+            last_name=q.ilike('%'+search_string+'%')
+        )
+    )
+    usermaps = app_tables.usermap.search(
+        q.fetch_only(
+            'user',
+            user=q.fetch_only(
+                'email', 'first_name', 'last_name', 'last_login', 'signed_up'
+            )
+        ),
+        q.any_of(
+            user=q.any_of(*users),
+            notes=q.ilike('%'+search_string+'%')
+        ),
+        tenant=tenant
+    )
+    return usermaps
+
+
+@anvil.server.callable(require_user=True)
+def search_users_by_role(tenant_id, role_name):
+    user = anvil.users.get_user(allow_remembered=True)
+    tenant, usermap, permissions = validate_user(tenant_id, user)
+    if 'see_members' not in permissions:
+        return []
+
+    role = None
+    if role_name:
+        role = q.any_of([app_tables.roles.get(tenant=tenant, name=role_name)])
+
+    usermaps = app_tables.usermap.search(
+        q.fetch_only(
+            'user',
+            user=q.fetch_only(
+                'email', 'first_name', 'last_name', 'last_login', 'signed_up'
+            )
+        ),
+        roles=role,
+        tenant=tenant
+    )
+    return usermaps

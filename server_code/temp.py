@@ -26,3 +26,32 @@ def tenants_to_tenant():
         note = app_tables.notes.get(user=user, tenant=user['tenant'])
         if note:
             usermap['notes'] = note['notes']
+
+def migrate_roles():
+    users = app_tables.users.search(tenant=q.not_(None))
+    for user in users:
+        usermap = app_tables.usermap.get(user=user, tenant=user['tenant'])
+        if not usermap:
+            usermap = app_tables.usermap.add_row(user=user, tenant=user['tenant'])
+            
+        if user['auth_members']:
+            upsert_role(usermap, 'Admin')
+        elif user['auth_screenings']:
+            upsert_role(usermap, 'Interviewer')
+        elif user['auth_forumchat']:
+            upsert_role(usermap, 'Member')
+        elif user['auth_profile']:
+            upsert_role(usermap, 'Approved')
+        elif user['auth_booking']:
+            upsert_role(usermap, 'Applicant')
+        else:
+            usermap['roles'] = None
+
+
+def upsert_role(usermap, role_name):
+    role = app_tables.roles.get(tenant=usermap['tenant'], name=role_name)
+    if not usermap['roles']:
+        usermap['roles'] = [role]
+    elif role not in usermap['roles']:
+        usermap['roles'] = usermap['roles'] + [role]
+    

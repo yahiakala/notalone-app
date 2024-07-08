@@ -9,27 +9,27 @@ components:
   layout_properties: {grid_position: 'GYCPND,DMGFXC'}
   components:
   - name: btn_qf_applicants
-    properties: {role: tonal-button, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: false, font_size: null, tooltip: '', text: Applicants}
+    properties: {role: tonal-button, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: false, font_size: null, tooltip: Users who have not been approved yet to join the group., text: Applicants}
     type: Button
     layout_properties: {}
     event_bindings: {click: btn_qf_applicants_click}
   - name: btn_qf_regular
-    properties: {role: tonal-button, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: false, font_size: null, tooltip: '', text: Regular Members}
+    properties: {role: tonal-button, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: false, font_size: null, tooltip: Users who are in good standing and can access the group as members, text: Regular Members}
     type: Button
     layout_properties: {}
-    event_bindings: {}
+    event_bindings: {click: btn_qf_regular_click}
   - name: btn_qf_admins
-    properties: {role: tonal-button, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: false, font_size: null, tooltip: '', text: Admins}
+    properties: {role: tonal-button, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: false, font_size: null, tooltip: Users with administrative privileges, text: Admins}
     type: Button
     layout_properties: {}
-    event_bindings: {}
+    event_bindings: {click: btn_qf_admins_click}
   - name: btn_qf_disabled
-    properties: {role: tonal-button, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: false, font_size: null, tooltip: '', text: Disabled Members}
+    properties: {role: tonal-button, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: false, font_size: null, tooltip: Users who have had their access revoked or their application rejected, text: Disabled Members}
     type: Button
     layout_properties: {}
     event_bindings: {click: btn_qf_disabled_click}
   - name: btn_qf_inactive
-    properties: {role: tonal-button, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: false, font_size: null, tooltip: '', text: Inactive}
+    properties: {role: tonal-button, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: false, font_size: null, tooltip: 'Users who are not in good standing - whether they have recently been approved but haven''t paid, or their payments have expired.', text: Inactive}
     type: Button
     layout_properties: {}
     event_bindings: {click: btn_qf_inactive_click}

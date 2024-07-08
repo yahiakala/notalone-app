@@ -44,73 +44,72 @@ class Members(MembersTemplate):
 
     def tb_mb_search_pressed_enter(self, **event_args):
         """This method is called when the user presses Enter in this text box"""
-        self.btn_clear_search.text = 'Searching...'
-        self.btn_clear_search.italic = True
-        self.btn_clear_search.enabled = True
-        self.rp_members.items = [None, None, None]
+        self.start_search()
         with anvil.server.no_loading_indicator:
-            self.user_search = anvil.server.call('search_users', Global.tenant_id, self.tb_mb_search.text)
-
-            self.members = Global.users.search(
-                q.fetch_only(
-                    'user',
-                    user=q.fetch_only(
-                        'email', 'first_name', 'last_name', 'last_login', 'signed_up'
-                    )
-                ),
-                q.any_of(
-                    user=q.any_of(*self.user_search),
-                    notes=q.ilike('%' + self.tb_mb_search.text + '%')
-                )
-            )
-            self.rp_members.items = self.members
-            self.pagination_1.repeating_panel = self.rp_members
-            self.btn_clear_search.text = 'Clear Search'
-            self.btn_clear_search.italic = False
+            self.members = anvil.server.call('search_users_by_text', Global.tenant_id, self.tb_mb_search.text)
+            self.end_search()
 
     def btn_clear_search_click(self, **event_args):
         """This method is called when the button is clicked"""
         self.rp_members.items = [None, None, None]
-        self.btn_qf_admins.role = 'tonal-button'
-        self.btn_qf_applicants.role = 'tonal-button'
-        self.btn_qf_disabled.role = 'tonal-button'
-        self.btn_qf_inactive.role = 'tonal-button'
-        self.btn_qf_regular.role = 'tonal-button'
+        self.reset_buttons()
         self.form_show()
         self.tb_mb_search.text = None
         self.btn_clear_search.enabled = False
 
     def btn_qf_admins_click(self, **event_args):
         """Get admins."""
-        # ['see_members']
-        pass
+        self.start_search()
+        with anvil.server.no_loading_indicator:
+            self.members = anvil.server.call('search_users_by_role', Global.tenant_id, 'Admin')
+            self.end_search()
 
     def btn_qf_applicants_click(self, **event_args):
         """This method is called when the button is clicked"""
-        # TODO: apply filters
-        # ['book_interview']
+        self.start_search()
+        with anvil.server.no_loading_indicator:
+            self.members = anvil.server.call('search_users_by_role', Global.tenant_id, 'Applicant')
+            self.end_search()
 
     def btn_qf_inactive_click(self, **event_args):
         """This method is called when the button is clicked"""
-        # not see_profile, not book_interview
-        pass
-
+        self.start_search()
+        with anvil.server.no_loading_indicator:
+            self.members = anvil.server.call('search_users_by_role', Global.tenant_id, 'Approved')
+            self.end_search()
     
     def btn_qf_disabled_click(self, **event_args):
         """This method is called when the button is clicked"""
-        # has see_profile, does not have see_forum
-        pass
+        self.start_search()
+        with anvil.server.no_loading_indicator:
+            self.members = anvil.server.call('search_users_by_role', Global.tenant_id, None)
+            self.end_search()
 
-    def apply_filters(self, **event_args):
-        pass
-        # enable to check if ONLY one role or ONLY certain permissions
-
+    def btn_qf_regular_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        self.start_search()
+        with anvil.server.no_loading_indicator:
+            self.members = anvil.server.call('search_users_by_role', Global.tenant_id, 'Member')
+            self.end_search()
+    
     def reset_buttons(self, **event_args):
         self.btn_qf_admins.role = 'tonal-button'
         self.btn_qf_applicants.role = 'tonal-button'
         self.btn_qf_disabled.role = 'tonal-button'
         self.btn_qf_inactive.role = 'tonal-button'
         self.btn_qf_regular.role = 'tonal-button'
-        self.quick_filters = ''
+
+    def start_search(self):
+        self.reset_buttons()
+        self.btn_clear_search.text = 'Searching...'
+        self.btn_clear_search.italic = True
+        self.btn_clear_search.enabled = True
+        self.rp_members.items = [None, None, None]
+
+    def end_search(self):
+        self.rp_members.items = self.members
+        self.pagination_1.repeating_panel = self.rp_members
+        self.btn_clear_search.text = 'Clear Search'
+        self.btn_clear_search.italic = False
 
 
