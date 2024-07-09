@@ -149,3 +149,30 @@ def get_discordlink(tenant_id, user, usermap=None, permissions=None, tenant=None
     if 'see_forum' in permissions:
         return tenant['discord_invite']
     return ''
+
+
+def get_roles(tenant_id, user, usermap=None, permissions=None, tenant=None):
+    tenant, usermap, permissions = validate_user(tenant_id, user, usermap, permissions, tenant)
+    if 'see_forum' in permissions:
+        role_list = []
+        role_search = app_tables.roles.search(tenant=tenant)
+        if anvil.server.context.background_task_id:
+            anvil.server.task_state['roles_len'] = len(role_search)
+        for role in role_search:
+            if role['permissions']:
+                role_perm = [j['name'] for j in role['permissions']]
+            else:
+                role_perm = []
+            role_list.append(
+                {
+                    'name': role['name'],
+                    'reports_to': role['reports_to'],
+                    'last_update': role['last_update'],
+                    'guide': role['guide'],
+                    'permissions': role_perm
+                }
+            )
+            if anvil.server.context.background_task_id:
+                anvil.server.task_state['roles'] = role_list
+        return role_list
+    return []
