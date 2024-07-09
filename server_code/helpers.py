@@ -158,3 +158,4 @@ def populate_roles(tenant):
         is_it_there = app_tables.roles.get(name=key, tenant=tenant)
         if not is_it_there:
             app_tables.roles.add_row(name=key, tenant=tenant, permissions=list(perm_rows), can_edit=False)
+    return app_tables.roles.search(tenant=tenant)

@@ -4,8 +4,9 @@ from anvil.tables import app_tables
 import anvil.tables.query as q
 import anvil.email
 
-from .helpers import print_timestamp, verify_tenant, validate_user, get_usermap, get_users_with_permission
+from .helpers import print_timestamp, verify_tenant, validate_user, get_usermap, get_users_with_permission, populate_roles
 import datetime as dt
+from .globals import get_permissions
 
 
 def clean_up_user(user):
@@ -31,6 +32,20 @@ def clean_up_users():
     for user in app_tables.users.search(discord=None):
         user['discord'] = ''
 
+
+@anvil.server.callable(require_user=True)
+def create_tenant_single():
+    """Create a tenant."""
+    user = anvil.users.get_user(allow_remembered=True)
+    if len(app_tables.tenants.search()) != 0:
+        return None
+
+    tenant = app_tables.tenants.add_row()
+    _ = populate_roles(tenant)
+    admin_role = app_tables.roles.get(tenant=tenant, name='Admin')
+    _ = app_tables.usermap.add_row(tenant=tenant, user=user, roles=[admin_role])
+    return tenant.get_id()
+    
 
 @anvil.server.callable(require_user=True)
 def join_tenant(tenant_id):

@@ -3,10 +3,9 @@ from anvil import *
 import anvil.users
 import anvil.server
 
-# from ..HomeAnonComponent import HomeAnonComponent
 from ..Home import Home
 from ..BookingComponent import BookingComponent
-# from ..ProfileComponent import ProfileComponent
+from ..Setup import Setup
 from ..MemberDetail import MemberDetail
 from ..Members import Members
 from ..FinComponent import FinComponent
@@ -30,6 +29,7 @@ class Router(RouterTemplate):
         self.link_members.tag.url_hash = 'app/members'
         self.link_fin.tag.url_hash = 'app/financials'
         self.link_volunteers.tag.url_hash = 'app/volunteers'
+        self.link_admin.tag.url_hash = 'app/admin'
         
         self.populate_globals()
 
@@ -72,6 +72,7 @@ class Router(RouterTemplate):
                 user['first_name'] != '' and
                 user['last_name'] != ''
             )
+            self.link_admin.visible = 'delete_admin' in self.permissions
             if 'dev' in self.permissions:
                 self.tb_impersonate.visible = True
 

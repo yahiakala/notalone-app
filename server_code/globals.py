@@ -4,7 +4,7 @@ from anvil.tables import app_tables
 import anvil.tables.query as q
 
 from anvil_squared.helpers import print_timestamp
-from .helpers import validate_user, get_usermap, get_permissions, get_user_roles, usermap_row_to_dict, verify_tenant
+from .helpers import validate_user, get_usermap, get_permissions, get_user_roles, usermap_row_to_dict, verify_tenant, populate_roles
 
 
 # --------------------
@@ -152,10 +152,12 @@ def get_discordlink(tenant_id, user, usermap=None, permissions=None, tenant=None
 
 
 def get_roles(tenant_id, user, usermap=None, permissions=None, tenant=None):
-    tenant, usermap, permissions = validate_user(tenant_id, user, usermap, permissions, tenant)
+    tenant, usermap, permissions = validate_user(tenant_id, user, usermap=usermap, permissions=permissions, tenant=tenant)
     if 'see_forum' in permissions:
         role_list = []
         role_search = app_tables.roles.search(tenant=tenant)
+        if len(role_search) == 0:
+            role_search = populate_roles(tenant)
         if anvil.server.context.background_task_id:
             anvil.server.task_state['roles_len'] = len(role_search)
         for role in role_search:
