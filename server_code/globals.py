@@ -10,40 +10,9 @@ from .helpers import validate_user, get_usermap, get_permissions, get_user_roles
 # Non tenanted globals
 # --------------------
 @anvil.server.callable(require_user=True)
-def get_data(name):
-    user = anvil.users.get_user(allow_remembered=True)
-    if name == 'tenants':
-        return get_tenants(user)
-    elif name == 'my_tenants':
-        return get_my_tenants(user)
-
-
-def get_tenants(user):
-    """Get a list of tenants for joining purposes."""
-    # This being slow is okay.
-    # user = anvil.users.get_user(allow_remembered=True)
-    return app_tables.tenants.client_readable(q.only_cols('name'))
-
-
-def get_my_tenants(user):
-    """Get a list of tenants for joining purposes."""
-    # This being slow is okay.
-    usermaps = app_tables.usermap.search(user=user)
-    if len(usermaps) == 0:
-        return []
-
-    # TODO: get more data if admin on these tenants.
-    tenant_list = [
-        {
-            'tenant_id': i['tenant'].get_id(),
-            'name': i['tenant']['name'],
-            'discordlink': i['tenant']['discord_invite'],
-            'discourselink': i['tenant']['discourse_url'],
-            'waiver': i['tenant']['waiver']
-        }
-        for i in usermaps
-    ]
-    return tenant_list
+def get_tenant_id():
+    """Get the tenant id for a single-tenant version of the app."""
+    return app_tables.tenants.get().get_id()
 
 
 # ----------------
