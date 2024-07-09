@@ -29,6 +29,8 @@ def get_my_tenants(user):
     """Get a list of tenants for joining purposes."""
     # This being slow is okay.
     usermaps = app_tables.usermap.search(user=user)
+    if len(usermaps) == 0:
+        return []
 
     # TODO: get more data if admin on these tenants.
     tenant_list = [
