@@ -1,23 +1,55 @@
 container:
   type: ColumnPanel
-  properties: {col_widths: '{"IUQBBU":15,"OLIGWL":45,"NAHIWQ":15,"BAKJKP":15,"PLXZJR":15,"BDBRQE":45,"WEERLN":45}'}
+  properties: {col_widths: '{"IUQBBU":14,"NAHIWQ":15,"BAKJKP":15,"PLXZJR":15,"BDBRQE":45,"WEERLN":45,"NILUCE":45,"YXWODB":45,"UVIXIO":15,"FJXWKF":45,"QZSWXM":15,"JZLQIV":45,"NXWYID":15,"TDBVMS":45}'}
 components:
-- name: label_1
-  properties: {}
+- name: lbl_title
+  properties: {text: Group Settings, align: center, role: headline, underline: false, bold: true}
   type: Label
   layout_properties: {grid_position: 'YPBQXY,VXNXOE'}
-- name: button_1
-  properties: {text: button_1}
-  type: Button
-  layout_properties: {grid_position: 'QMWGGL,YHCUVN'}
+- name: lbl_title_general
+  properties: {align: center, text: General Settings, icon: '', role: title}
+  type: Label
+  layout_properties: {grid_position: 'RWVBUW,JFQGCW'}
+- name: lbl_waiver
+  properties: {text: Waiver / Code of Conduct, role: input-prompt}
+  type: Label
+  layout_properties: {grid_position: 'GAFFRI,QZSWXM'}
+- name: tb_waiver_link
+  properties: {role: outlined, placeholder: Insert public link to your waiver or code of conduct}
+  type: TextBox
+  layout_properties: {grid_position: 'GAFFRI,JZLQIV'}
+- name: lbl_logo
+  properties: {text: Group Logo Image, role: input-prompt, tooltip: This logo image will show in your app bar when logged in.}
+  type: Label
+  layout_properties: {grid_position: 'MMBUVB,NXWYID'}
+- name: img_logo
+  properties: {visible: false}
+  type: Image
+  layout_properties: {grid_position: 'MMBUVB,TDBVMS KLBUMB,YDVWXR'}
+- name: fl_logo
+  properties: {}
+  type: FileLoader
+  layout_properties: {grid_position: 'MMBUVB,TDBVMS XGHYCN,ULUJLS'}
+- name: lbl_title_discourse
+  properties: {align: center, text: Discourse Forum Settings, icon: 'fa:users', role: title}
+  type: Label
+  layout_properties: {grid_position: 'RAYARV,WGMANH'}
 - name: lbl_discourse_secret
   properties: {text: Discourse Connect Secret, role: input-prompt, spacing_above: medium, icon: 'fa:info-circle'}
   type: Label
   layout_properties: {grid_position: 'TBNPMT,IUQBBU'}
+- name: sv_discourse_secret
+  properties: {}
+  type: form:dep_yfmcrf11pl29j4:SecretViewer
+  layout_properties: {grid_position: 'TBNPMT,NILUCE'}
 - name: lbl_discourse_api
   properties: {text: Discourse API Key, role: input-prompt, spacing_above: medium, tooltip: This API key will be used for automatically posting welcome messages in your forum., icon: 'fa:info-circle'}
   type: Label
   layout_properties: {grid_position: 'IZBCBD,NAHIWQ'}
+- name: sv_discourse_api
+  properties: {}
+  type: form:dep_yfmcrf11pl29j4:SecretViewer
+  layout_properties: {grid_position: 'IZBCBD,YXWODB'}
 - name: lbl_title_paypal
   properties: {align: center, text: PayPal Settings, icon: 'fa:paypal', role: title}
   type: Label
@@ -26,16 +58,28 @@ components:
   properties: {text: PayPal Client ID, role: input-prompt, spacing_above: medium, tooltip: This API key will be used for automatically posting welcome messages in your forum., icon: 'fa:info-circle'}
   type: Label
   layout_properties: {grid_position: 'WKWROP,BAKJKP'}
-- name: cv_paypal_client_id
+- name: sv_paypal_client_id
   properties: {}
   type: form:dep_yfmcrf11pl29j4:SecretViewer
   layout_properties: {grid_position: 'WKWROP,WEERLN'}
 - name: lbl_paypal_secret
-  properties: {text: PayPal Client ID, role: input-prompt, spacing_above: medium, tooltip: This API key will be used for automatically posting welcome messages in your forum., icon: 'fa:info-circle'}
+  properties: {text: PayPal Secret, role: input-prompt, spacing_above: medium, tooltip: This API key will be used for automatically posting welcome messages in your forum., icon: 'fa:info-circle'}
   type: Label
   layout_properties: {grid_position: 'FEDURM,PLXZJR'}
 - name: sv_paypal_secret
   properties: {}
   type: form:dep_yfmcrf11pl29j4:SecretViewer
   layout_properties: {grid_position: 'FEDURM,BDBRQE'}
+- name: lbl_title_discord
+  properties: {align: center, text: Discord Settings, icon: '', role: title}
+  type: Label
+  layout_properties: {grid_position: 'PBWIOI,PWUUPE'}
+- name: lbl_discord_invite
+  properties: {text: Discord Invite, role: input-prompt, spacing_above: medium, tooltip: This API key will be used for automatically posting welcome messages in your forum., icon: 'fa:info-circle'}
+  type: Label
+  layout_properties: {grid_position: 'PAHCHU,UVIXIO'}
+- name: tb_discord
+  properties: {role: outlined}
+  type: TextBox
+  layout_properties: {grid_position: 'PAHCHU,FJXWKF'}
 is_package: true
