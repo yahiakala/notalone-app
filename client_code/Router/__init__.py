@@ -19,7 +19,7 @@ from ..Global import Global
 from anvil_squared.utils import print_timestamp
 
 
-@routing.template(path='app', priority=13, condition=lambda: Global.get_s('tenant_id') is not None)
+@routing.template(path='app', priority=5, condition=lambda: Global.get_s('tenant_id') is not None)
 class Router(RouterTemplate):
     def __init__(self, **properties):
         self.init_components(**properties)

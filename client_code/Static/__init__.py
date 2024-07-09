@@ -8,10 +8,10 @@ from ..Sign import Sign
 # from ..Launchpad import Launchpad
 
 
-@routing.template(path='', priority=10, condition=None)
+@routing.template(path='', priority=3, condition=None)
 class Static(StaticTemplate):
     def __init__(self, **properties):
-        # Set Form properties and Data Bindings.
+        # All other templates need higher priority than this one.
         self.init_components(**properties)
 
         # Any code you write here will run before the form opens.

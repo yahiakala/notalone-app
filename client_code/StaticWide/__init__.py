@@ -4,7 +4,7 @@ from anvil_extras import routing
 from ..Setup import Setup
 
 
-@routing.template(path="staticwide", priority=11, condition=None)
+@routing.template(path="staticwide", priority=7, condition=None)
 class StaticWide(StaticWideTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.
