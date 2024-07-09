@@ -2,6 +2,33 @@
  This CSS implements the Material Design 3 look and feel for Anvil apps.
  **/
 
+:root {
+    --primary: %color:Primary%;
+    --onsurface: %color:On Surface%;
+    --background: %color:Background%;
+    --onprimarycontainer: %color:On Primary Container%;
+    --primaryoverlay1: %color:Primary Overlay 1%;
+    --onsurfacevariant: %color:On Surface Variant%;
+    --darkoverlay1: %color:Dark Overlay 1%;
+    --secondarycontainer: %color:Secondary Container%;
+    --onsecondarycontainer: %color:On Secondary Container%;
+    --surface: %color:Surface%;
+    --primaryoverlay2: %color:Primary Overlay 2%;
+    --primaryoverlay3: %color:Primary Overlay 3%;
+    --onbackground: %color:On Background%;
+    --lightoverlay1: %color:Light Overlay 1%;
+    --lightoverlay2: %color:Light Overlay 2%;
+    --outline: %color:Outline%;
+    --onprimary: %color:On Primary%;
+    --darkoverlay2: %color:Dark Overlay 2%;
+    --ondisabled: %color:On Disabled%;
+    --disabledcontainer: %color:Disabled Container%;
+    --surfacevariant: %color:Surface Variant%;
+    --error: %color:Error%;
+    --primary500: %color:Primary 500%;
+    --primarycontainer: %color:Primary Container%;
+}
+
 /* Stop panel-cols cutting off drop shadows */
 .anvil-panel-col {
   padding-bottom: 10px;
@@ -637,7 +664,7 @@ button.close > span, button.close {
 }
 
 .anvil-role-filled-button > .btn, .btn-primary, .anvil-role-filled-button.file-loader>label {
-  background-color: %color:Primary%;
+  background-color: var(--primary);
   color: %color:On Primary%; 
 }
 
