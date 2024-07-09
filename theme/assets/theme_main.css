@@ -2,33 +2,6 @@
  This CSS implements the Material Design 3 look and feel for Anvil apps.
  **/
 
-:root {
-    --primary: %color:Primary%;
-    --onsurface: %color:On Surface%;
-    --background: %color:Background%;
-    --onprimarycontainer: %color:On Primary Container%;
-    --primaryoverlay1: %color:Primary Overlay 1%;
-    --onsurfacevariant: %color:On Surface Variant%;
-    --darkoverlay1: %color:Dark Overlay 1%;
-    --secondarycontainer: %color:Secondary Container%;
-    --onsecondarycontainer: %color:On Secondary Container%;
-    --surface: %color:Surface%;
-    --primaryoverlay2: %color:Primary Overlay 2%;
-    --primaryoverlay3: %color:Primary Overlay 3%;
-    --onbackground: %color:On Background%;
-    --lightoverlay1: %color:Light Overlay 1%;
-    --lightoverlay2: %color:Light Overlay 2%;
-    --outline: %color:Outline%;
-    --onprimary: %color:On Primary%;
-    --darkoverlay2: %color:Dark Overlay 2%;
-    --ondisabled: %color:On Disabled%;
-    --disabledcontainer: %color:Disabled Container%;
-    --surfacevariant: %color:Surface Variant%;
-    --error: %color:Error%;
-    --primary500: %color:Primary 500%;
-    --primarycontainer: %color:Primary Container%;
-}
-
 /* Stop panel-cols cutting off drop shadows */
 .anvil-panel-col {
   padding-bottom: 10px;
@@ -302,7 +275,6 @@ color: var(--onprimarycontainer);
 .nav-holder .left-nav, .left-nav-placeholder {
   display: flex;
   flex-direction: column;
-  /* background: linear-gradient(0deg, %color:Primary Overlay 1%, %color:Primary Overlay 1%), %color:Background%; */
   border-right: 1px solid var(--outline); /* YK */
   font-size: 14px;
   font-weight: 500;
@@ -664,7 +636,6 @@ button.close > span, button.close {
 }
 
 .anvil-role-filled-button > .btn, .btn-primary, .anvil-role-filled-button.file-loader>label {
-  /* background-color: %color:Primary%; */
   background-color: var(--primary);
   color: var(--onprimary); 
 }
@@ -932,26 +903,22 @@ textarea.anvil-component.anvil-role-outlined-error[disabled], input.anvil-compon
 }
 
 .daterangepicker td.off {
-  color: %color:On Disabled%;
+  color: var(--ondisabled);
 }
 
 textarea.anvil-component.anvil-role-outlined-error, input.anvil-component.anvil-role-outlined-error, 
 .anvil-component.anvil-role-outlined-error select, .anvil-datepicker.anvil-role-outlined-error input {
-  color: %color:Error%;
+  color: var(--error);
   background-color: transparent;
-  border: 1px solid %color:Error%;;
+  border: 1px solid var(--error);
   border-radius: 4px;
 }
 
 textarea.anvil-component.anvil-role-input-error, input.anvil-component.anvil-role-input-error, 
 .anvil-component.anvil-role-input-error select, .anvil-datepicker.anvil-role-input-error input {
-  color: %color:Error%;
-  border-color: %color:Error%; 
+  color: var(--error);
+  border-color: var(--error); 
 }
-
-/* .daterangepicker .btn-success {
-  color: %color:Primary 500%;
-} */
 
 /* Component: CheckBox, RadioButton */
 .checkbox input, .radio input {
@@ -960,8 +927,7 @@ textarea.anvil-component.anvil-role-input-error, input.anvil-component.anvil-rol
   width: 15px;
   height: 15px;
   border-radius: 1px;
-  background-color: %color:Surface Variant%; 
-/*   color: %color:On Surface Variant%; */
+  background-color: var(--surfacevariant); 
 }
 
 .radio input {
@@ -969,7 +935,7 @@ textarea.anvil-component.anvil-role-input-error, input.anvil-component.anvil-rol
 }
 
 .checkbox input:hover, .radio input:hover {
-  background: linear-gradient(0deg, %color:Light Overlay 1%, %color:Light Overlay 1%), %color:Surface Variant%;
+  background: linear-gradient(0deg, var(--lightoverlay1), var(--lightoverlay1)), var(--surfacevariant);
 }
 
 .checkbox input:focus, .radio input:focus {
@@ -982,12 +948,12 @@ textarea.anvil-component.anvil-role-input-error, input.anvil-component.anvil-rol
 
 .checkbox input[type="checkbox"][disabled]:hover, .radio input[type="radio"][disabled]:hover, 
 .checkbox input[type="checkbox"][disabled], .radio input[type="radio"][disabled] {
-  background: %color:Disabled Container%; 
+  background: var(--disabledcontainer); 
 }
 
 input[disabled] ~ span {
   cursor: not-allowed;
-  color: %color:On Disabled%;
+  color: var(--ondisabled);
 }
 
 .checkbox input, .radio input {
@@ -997,8 +963,8 @@ input[disabled] ~ span {
 }
 
 .checkbox input:checked, .radio input:checked {
-  background-color: %color:Primary Container%;
-  color: %color:On Primary Container%;
+  background-color: var(--primarycontainer);
+  color: var(--onprimarycontainer);
 }
 
 .checkbox input:checked:before {
@@ -1019,8 +985,8 @@ input[disabled] ~ span {
 
 /* Data Grids */
 .anvil-role-tonal-data-grid.anvil-data-grid > .data-grid-child-panel>div.auto-grid-header {
-  background: linear-gradient(0deg, %color:Primary Overlay 2%, %color:Primary Overlay 2%), %color:Background%;
-  border-bottom: 1px solid %color:Surface Variant%;
+  background: linear-gradient(0deg, var(--primaryoverlay2), var(--primaryoverlay2)), var(--background);
+  border-bottom: 1px solid var(--surfacevariant);
   border-radius: 24px 24px 0 0;
 }
 
@@ -1031,12 +997,12 @@ input[disabled] ~ span {
 
 .anvil-role-tonal-data-grid.anvil-data-grid {
   border-radius: 24px;
-  border: 1px solid %color:Surface Variant%;
+  border: 1px solid var(--surfacevariant);
 }
 
 .anvil-role-tonal-data-grid.anvil-data-grid .data-grid-child-panel div.data-row-col {
-  border-left: 1px solid %color:Surface Variant%;
-  border-bottom: 1px solid %color:Surface Variant%;
+  border-left: 1px solid var(--surfacevariant);
+  border-bottom: 1px solid var(--surfacevariant);
 }
 
 .anvil-role-tonal-data-grid.anvil-data-grid .data-grid-child-panel div.data-row-col:first-child {
@@ -1053,7 +1019,7 @@ input[disabled] ~ span {
 /*Plots*/
 
 div.plot-container.plotly svg.main-svg {
-  border: 1px solid %color:Surface Variant%;
+  border: 1px solid var(--surfacevariant);
   border-radius: 12px;
 }
 
@@ -1062,12 +1028,12 @@ div.plot-container.plotly svg.main-svg {
 }
 
 .plot-container.plotly .main-svg .parcoords .y-axis .axis > path.domain {
-  stroke: %color:Outline%;
+  stroke: var(--outline);
 }
 
 #loadingSpinner {
-  background-color: %color:Surface Variant%;
-  box-shadow: 0px 0px 100px 100px %color:Surface Variant%;
+  background-color: var(--surfacevariant);
+  box-shadow: 0px 0px 100px 100px var(--surfacevariant);
 }
 
 
@@ -1075,7 +1041,7 @@ div.plot-container.plotly svg.main-svg {
 .anvil-role-soft-fp {
     border-radius: 5px;
     padding: 0px 20px;
-    border: solid 1px %color:Outline%;
+    border: solid 1px var(--outline);
 }
 .anvil-role-soft-button > .btn {
     border-radius: 10px;
@@ -1126,7 +1092,6 @@ div.plot-container.plotly svg.main-svg {
 }
 
 .anvil-role-table-row:hover {
-  /* background: linear-gradient(0deg, %color:Dark Overlay 1%, %color:Dark Overlay 1%), linear-gradient(0deg, %color:Primary Overlay 1%, %color:Primary Overlay 1%), %color:Background%; */
     background: hsl(315, 100%, 98.22%);
     opacity: 100%;
 }
@@ -1134,7 +1099,7 @@ div.plot-container.plotly svg.main-svg {
 .anvil-role-table-row {
     /* border-bottom: 1px solid #E1E0E7; */
     /* border-bottom: none; */
-    border: solid 1px %color:Outline%;
+    border: solid 1px var(--outline);
     border-radius: 12px;
     display: flex;
     align-items: center;
