@@ -353,6 +353,8 @@ native_deps:
   head_html: |-
     <meta name="theme-color" content="#FFFBFE">
 
+    <link rel="stylesheet" type="text/css" href="_/theme/theme_main.css">
+
     <script defer>
         document.querySelector('meta[name="theme-color"]').setAttribute('content', '#FFFBFE');
     </script>
