@@ -24,6 +24,7 @@ def verify_tenant(tenant_id, user, tenant=None, usermap=None):
 
 
 def get_usermap(tenant_id, user, tenant=None):
+    """Get a usermap. A user with no tenant will be added to this tenant."""
     tenant = tenant or app_tables.tenants.get_by_id(tenant_id)
     
     if not app_tables.usermap.get(user=user, tenant=tenant):

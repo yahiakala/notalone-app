@@ -1,4 +1,5 @@
 import anvil.server
+import anvil.users
 from anvil.tables import app_tables
 import anvil.tables.query as q
 
@@ -10,10 +11,27 @@ from .helpers import validate_user, get_usermap, get_permissions, get_user_roles
 # Non tenanted globals
 # --------------------
 @anvil.server.callable(require_user=True)
-def get_tenant_id():
+def get_tenant_data():
     """Get the tenant id for a single-tenant version of the app."""
     return app_tables.tenants.get().get_id()
 
+
+@anvil.server.callable(require_user=True)
+def get_tenant(user=None):
+    """Get the tenant in this instance."""
+    tenant = app_tables.tenants.get()
+
+    # TODO: get more data if admin on these tenants.
+    tenant_list = [
+        {
+            'tenant_id': tenant.get_id(),
+            'name': tenant['name'],
+            'discordlink': tenant['discord_invite'],
+            'discourselink': tenant['discourse_url'],
+            'waiver': tenant['waiver']
+        }
+    ]
+    return tenant_list
 
 # ----------------
 # Tenanted globals

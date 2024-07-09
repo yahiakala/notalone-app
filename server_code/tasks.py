@@ -35,11 +35,10 @@ def clean_up_users():
 @anvil.server.callable(require_user=True)
 def join_tenant(tenant_id):
     """Join a tenant by its database row id."""
+    # Kind of unnecessary as get_usermap joins the tenant.
     user = anvil.users.get_user(allow_remembered=True)
-    usermap = get_usermap(user)
     tenant = app_tables.tenants.get_by_id(tenant_id)
     usermap = get_usermap(tenant_id, user, tenant)
-    # TODO: figure out something to return if necessary.
     return usermap
 
 
