@@ -5,7 +5,8 @@ from .Static import Static
 from .Global import Global
 
 
-Global.tenant_id = anvil.server.call('get_tenant_id')
+Global.my_tenants = anvil.server.call('get_tenant')
+Global.tenant_id = Global.my_tenants[0]['tenant_id']
 
 @routing.redirect(path="app", priority=20, condition=lambda: Global.user is None)
 @routing.redirect(path="launch", priority=20, condition=lambda: Global.user is None)
