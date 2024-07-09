@@ -11,12 +11,6 @@ from .helpers import validate_user, get_usermap, get_permissions, get_user_roles
 # Non tenanted globals
 # --------------------
 @anvil.server.callable(require_user=True)
-def get_tenant_data():
-    """Get the tenant id for a single-tenant version of the app."""
-    return app_tables.tenants.get().get_id()
-
-
-@anvil.server.callable(require_user=True)
 def get_tenant(user=None):
     """Get the tenant in this instance."""
     tenant = app_tables.tenants.get()
