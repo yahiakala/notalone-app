@@ -1,6 +1,6 @@
 container:
   type: ColumnPanel
-  properties: {col_widths: '{"IUQBBU":15,"OLIGWL":45,"NAHIWQ":15,"OHUJVY":45,"BAKJKP":15,"FCWHWR":45}'}
+  properties: {col_widths: '{"IUQBBU":15,"OLIGWL":45,"NAHIWQ":15,"OHUJVY":45,"BAKJKP":15,"PLXZJR":15,"BDBRQE":45,"WEERLN":45}'}
 components:
 - name: label_1
   properties: {}
@@ -60,21 +60,16 @@ components:
   properties: {text: PayPal Client ID, role: input-prompt, spacing_above: medium, tooltip: This API key will be used for automatically posting welcome messages in your forum., icon: 'fa:info-circle'}
   type: Label
   layout_properties: {grid_position: 'WKWROP,BAKJKP'}
-- name: fp_paypal_client_id
-  properties: {align: right, vertical_align: middle, spacing_below: small}
-  type: FlowPanel
-  layout_properties: {grid_position: 'WKWROP,FCWHWR'}
-  components:
-  - name: tb_discourse_api_copy
-    properties: {role: outlined, hide_text: true, spacing_below: none}
-    type: TextBox
-    layout_properties: {expand: true, width: 300}
-  - name: btn_discourse_api_view_copy
-    properties: {text: '', icon: 'fa:eye', role: filled-button, tooltip: View key}
-    type: Button
-    layout_properties: {}
-  - name: btn_discourse_api_reset_copy
-    properties: {text: '', icon: 'fa:refresh', role: filled-button, tooltip: Reset key}
-    type: Button
-    layout_properties: {}
+- name: cv_paypal_client_id
+  properties: {}
+  type: form:dep_yfmcrf11pl29j4:SecretViewer
+  layout_properties: {grid_position: 'WKWROP,WEERLN'}
+- name: lbl_paypal_secret
+  properties: {text: PayPal Client ID, role: input-prompt, spacing_above: medium, tooltip: This API key will be used for automatically posting welcome messages in your forum., icon: 'fa:info-circle'}
+  type: Label
+  layout_properties: {grid_position: 'FEDURM,PLXZJR'}
+- name: sv_paypal_secret
+  properties: {}
+  type: form:dep_yfmcrf11pl29j4:SecretViewer
+  layout_properties: {grid_position: 'FEDURM,BDBRQE'}
 is_package: true
