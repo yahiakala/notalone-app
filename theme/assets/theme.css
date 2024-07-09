@@ -3,7 +3,7 @@
  **/
 
 :root {
-    --primary: %color:Primary%;
+    /* --primary: %color:Primary%; */
     /* --primary: black; */
     --onsurface: %color:On Surface%;
     --background: %color:Background%;
