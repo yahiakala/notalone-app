@@ -14,6 +14,7 @@ print(Global.tenant_id)
 
 @routing.redirect(path="app", priority=20, condition=lambda: Global.user is None)
 def redirect_no_user():
+    print('something')
     return "sign"
 
 
