@@ -19,8 +19,8 @@ def redirect_no_user():
 
 @routing.redirect(path="app", priority=19, condition=lambda: Global.get_s('my_tenants') is None and Global.user is not None)
 def redirect_no_tenant():
-    routing.set_url_hash('staticwide/setup')
-    # return "staticwide/setup"
+    # routing.set_url_hash('staticwide')
+    return "staticwide"
 
 
 hash, pattern, dict = routing.get_url_components()
