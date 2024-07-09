@@ -68,11 +68,12 @@ def migrate_firstlast():
 
 def clear_tenant_data():
     tenant = app_tables.tenants.get(name=None)
-    usermaps = app_tables.usermap.search(tenant=tenant)
-    for usermap in usermaps:
-        usermap.delete()
-    roles = app_tables.roles.search(tenant=tenant)
-    for role in roles:
-        role.delete()
-    for perm in app_tables.permissions.search():
-        perm.delete()
+    if tenant:
+        usermaps = app_tables.usermap.search(tenant=tenant)
+        for usermap in usermaps:
+            usermap.delete()
+        roles = app_tables.roles.search(tenant=tenant)
+        for role in roles:
+            role.delete()
+        for perm in app_tables.permissions.search():
+            perm.delete()
