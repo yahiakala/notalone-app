@@ -3,6 +3,22 @@ import anvil.tables.query as q
 # from anvil_squared.helpers import print_timestamp
 
 
+role_dict = {
+        'Applicant': ['book_interview'],
+        'Approved': ['see_profile'],
+        'Member': ['see_profile', 'see_forum'],
+        'Interviewer': ['see_profile', 'see_forum', 'see_applicants', 'see_members'],
+        'Admin': ['see_profile', 'see_forum', 'see_applicants', 'see_members', 'edit_members', 'delete_members', 'delete_admin', 'edit_roles'],
+        'Dev': ['see_profile', 'see_forum', 'see_applicants', 'see_members', 'edit_members', 'delete_members', 'delete_admin', 'edit_roles', 'dev']
+    }
+
+perm_list = []
+for key, val in role_dict.items():
+    perm_dict = perm_list + val
+
+perm_list = list(set(perm_list))
+
+
 def print_timestamp(input_str):
     import datetime as dt
     import pytz
@@ -113,28 +129,6 @@ def usermap_row_to_dict(row):
         'notes': row['notes']
     }
     return row_dict
-
-
-permissions = [
-    'see_applicants',
-    'see_members',
-    'edit_members',
-    'delete_members',
-    'see_profile',
-    'see_forum',
-    'book_interview',
-    'see_finances',
-    'dev',
-    'edit_roles'
-]
-
-role_dict = {
-        'Applicant': ['book_interview'],
-        'Approved': ['see_profile'],
-        'Member': ['see_profile', 'see_forum'],
-        'Interviewer': ['see_profile', 'see_forum', 'see_applicants', 'see_members'],
-        'Admin': ['see_profile', 'see_forum', 'see_applicants', 'see_members', 'edit_members', 'delete_members', 'delete_admin', 'edit_roles']
-    }
 
 
 def populate_permissions():
