@@ -4,8 +4,8 @@ from ..Global import Global
 from anvil_extras import routing
 
 
-@routing.route('', template='StaticWide')
-@routing.route('/setup', template='StaticWide')
+# @routing.route('', template='StaticWide')
+# @routing.route('/setup', template='StaticWide')
 @routing.route('/admin', template='Router')
 class Setup(SetupTemplate):
     def __init__(self, **properties):

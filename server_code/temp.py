@@ -77,3 +77,4 @@ def clear_tenant_data():
             role.delete()
         for perm in app_tables.permissions.search():
             perm.delete()
+        tenant.delete()

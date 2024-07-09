@@ -6,7 +6,7 @@ import anvil.email
 
 from .helpers import print_timestamp, verify_tenant, validate_user, get_usermap, get_users_with_permission, populate_roles
 import datetime as dt
-from .globals import get_permissions
+from .globals import get_permissions, get_tenant
 
 
 def clean_up_user(user):
@@ -44,7 +44,7 @@ def create_tenant_single():
     _ = populate_roles(tenant)
     admin_role = app_tables.roles.get(tenant=tenant, name='Admin')
     _ = app_tables.usermap.add_row(tenant=tenant, user=user, roles=[admin_role])
-    return tenant.get_id()
+    return get_tenant(user, tenant)
     
 
 @anvil.server.callable(require_user=True)
