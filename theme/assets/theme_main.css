@@ -1050,7 +1050,7 @@ div.plot-container.plotly svg.main-svg {
 /* Create a picture inside of the button */
 .anvil-role-google-sign > button::before {
     content: "";
-    background-image: url("_/theme/search.png");
+    background-image: url("search.png");
     background-repeat: no-repeat;
     position: absolute;
     left: 0;
@@ -1164,7 +1164,7 @@ div.plot-container.plotly svg.main-svg {
     border-radius: 0;
     box-shadow: none;/*0px 0px 10px 10px #fcfcfc;*/
     background-color: transparent;
-    background-image: url("_/theme/Not%20Alone_thin.png") !important;
+    background-image: url("Not%20Alone_thin.png") !important;
 }
 
 /* Loading Skeletons */

@@ -243,8 +243,8 @@ db_schema:
     server: full
     columns:
     - name: email
+      admin_ui: {order: -1, width: 200}
       type: string
-      admin_ui: {order: 0, width: 200}
     - name: enabled
       type: bool
       admin_ui: {order: 1, width: 200}

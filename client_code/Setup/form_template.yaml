@@ -1,0 +1,11 @@
+container: {type: ColumnPanel}
+components:
+- name: label_1
+  properties: {}
+  type: Label
+  layout_properties: {grid_position: 'YPBQXY,VXNXOE'}
+- name: button_1
+  properties: {text: button_1}
+  type: Button
+  layout_properties: {grid_position: 'QMWGGL,YHCUVN'}
+is_package: true
