@@ -4,13 +4,13 @@ import anvil.tables.query as q
 
 
 role_dict = {
-        'Applicant': ['book_interview'],
-        'Approved': ['see_profile'],
-        'Member': ['see_profile', 'see_forum'],
-        'Interviewer': ['see_profile', 'see_forum', 'see_applicants', 'see_members'],
-        'Admin': ['see_profile', 'see_forum', 'see_applicants', 'see_members', 'edit_members', 'delete_members', 'delete_admin', 'edit_roles'],
-        'Dev': ['see_profile', 'see_forum', 'see_applicants', 'see_members', 'edit_members', 'delete_members', 'delete_admin', 'edit_roles', 'dev']
-    }
+    'Applicant': ['book_interview'],
+    'Approved': ['see_profile'],
+    'Member': ['see_profile', 'see_forum'],
+    'Interviewer': ['see_profile', 'see_forum', 'see_applicants', 'see_members'],
+    'Admin': ['see_profile', 'see_forum', 'see_applicants', 'see_members', 'edit_members', 'delete_members', 'delete_admin', 'edit_roles'],
+    'Dev': ['see_profile', 'see_forum', 'see_applicants', 'see_members', 'edit_members', 'delete_members', 'delete_admin', 'edit_roles', 'dev']
+}
 
 perm_list = []
 for key, val in role_dict.items():
