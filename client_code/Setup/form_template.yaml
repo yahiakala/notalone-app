@@ -1,4 +1,6 @@
-container: {type: ColumnPanel}
+container:
+  type: ColumnPanel
+  properties: {col_widths: '{"IUQBBU":15,"OLIGWL":45,"NAHIWQ":15,"OHUJVY":45,"BAKJKP":15,"FCWHWR":45}'}
 components:
 - name: label_1
   properties: {}
@@ -8,4 +10,71 @@ components:
   properties: {text: button_1}
   type: Button
   layout_properties: {grid_position: 'QMWGGL,YHCUVN'}
+- name: lbl_discourse_secret
+  properties: {text: Discourse Connect Secret, role: input-prompt, spacing_above: medium, icon: 'fa:info-circle'}
+  type: Label
+  layout_properties: {grid_position: 'TBNPMT,IUQBBU'}
+- name: fp_discourse_secret
+  properties: {align: right, vertical_align: middle, spacing_below: small}
+  type: FlowPanel
+  layout_properties: {grid_position: 'TBNPMT,OLIGWL'}
+  components:
+  - name: tb_discourse_secret
+    properties: {role: outlined, hide_text: true, spacing_below: none}
+    type: TextBox
+    layout_properties: {expand: true, width: 300}
+  - name: btn_discourse_secret_view
+    properties: {text: '', icon: 'fa:eye', role: filled-button, tooltip: View key}
+    type: Button
+    layout_properties: {}
+  - name: btn_discourse_secret_reset
+    properties: {text: '', icon: 'fa:refresh', role: filled-button, tooltip: Reset key}
+    type: Button
+    layout_properties: {}
+- name: lbl_discourse_api
+  properties: {text: Discourse API Key, role: input-prompt, spacing_above: medium, tooltip: This API key will be used for automatically posting welcome messages in your forum., icon: 'fa:info-circle'}
+  type: Label
+  layout_properties: {grid_position: 'IZBCBD,NAHIWQ'}
+- name: fp_discourse_api_key
+  properties: {align: right, vertical_align: middle, spacing_below: small}
+  type: FlowPanel
+  layout_properties: {grid_position: 'IZBCBD,OHUJVY'}
+  components:
+  - name: tb_discourse_api
+    properties: {role: outlined, hide_text: true, spacing_below: none}
+    type: TextBox
+    layout_properties: {expand: true, width: 300}
+  - name: btn_discourse_api_view
+    properties: {text: '', icon: 'fa:eye', role: filled-button, tooltip: View key}
+    type: Button
+    layout_properties: {}
+  - name: btn_discourse_api_reset
+    properties: {text: '', icon: 'fa:refresh', role: filled-button, tooltip: Reset key}
+    type: Button
+    layout_properties: {}
+- name: lbl_title_paypal
+  properties: {align: center, text: PayPal Settings, icon: 'fa:paypal', role: title}
+  type: Label
+  layout_properties: {grid_position: 'DQSKDD,YEJLHL'}
+- name: lbl_paypal_client_id
+  properties: {text: PayPal Client ID, role: input-prompt, spacing_above: medium, tooltip: This API key will be used for automatically posting welcome messages in your forum., icon: 'fa:info-circle'}
+  type: Label
+  layout_properties: {grid_position: 'WKWROP,BAKJKP'}
+- name: fp_paypal_client_id
+  properties: {align: right, vertical_align: middle, spacing_below: small}
+  type: FlowPanel
+  layout_properties: {grid_position: 'WKWROP,FCWHWR'}
+  components:
+  - name: tb_discourse_api_copy
+    properties: {role: outlined, hide_text: true, spacing_below: none}
+    type: TextBox
+    layout_properties: {expand: true, width: 300}
+  - name: btn_discourse_api_view_copy
+    properties: {text: '', icon: 'fa:eye', role: filled-button, tooltip: View key}
+    type: Button
+    layout_properties: {}
+  - name: btn_discourse_api_reset_copy
+    properties: {text: '', icon: 'fa:refresh', role: filled-button, tooltip: Reset key}
+    type: Button
+    layout_properties: {}
 is_package: true
