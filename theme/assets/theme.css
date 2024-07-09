@@ -665,7 +665,7 @@ button.close > span, button.close {
 
 .anvil-role-filled-button > .btn, .btn-primary, .anvil-role-filled-button.file-loader>label {
   /* background-color: %color:Primary%; */
-  background-color: black;
+  background-color: var(--primary);
   color: %color:On Primary%; 
 }
 
