@@ -4,6 +4,7 @@
 
 :root {
     --primary: %color:Primary%;
+    /* --primary: black; */
     --onsurface: %color:On Surface%;
     --background: %color:Background%;
     --onprimarycontainer: %color:On Primary Container%;
