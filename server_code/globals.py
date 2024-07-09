@@ -36,7 +36,7 @@ def get_tenant(user=None):
 def get_tenanted_data(tenant_id, key):
     print_timestamp(f'get_tenanted_data: {key}')
     user = anvil.users.get_user(allow_remembered=True)
-    # todo: verify tenant here.
+    # todo: verify tenant here?
     
     if key == 'users':
         return get_users_iterable(tenant_id, user)

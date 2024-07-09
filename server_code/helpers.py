@@ -14,7 +14,7 @@ role_dict = {
 
 perm_list = []
 for key, val in role_dict.items():
-    perm_dict = perm_list + val
+    perm_list = perm_list + val
 
 perm_list = list(set(perm_list))
 
@@ -135,7 +135,7 @@ def populate_permissions():
     """Populate the permissions table."""
     print_timestamp('populate_permissions')
     if len(app_tables.permissions.search()) == 0:
-        for perm in permissions:
+        for perm in perm_list:
             app_tables.permissions.add_row(name=perm)
 
 
