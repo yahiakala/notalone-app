@@ -34,10 +34,9 @@ def get_tenant(user=None):
 # ----------------
 @anvil.server.callable(require_user=True)
 def get_tenanted_data(tenant_id, key):
-    # TODO: deprecate as only want to get tenanted globals from a bk task.
     print_timestamp(f'get_tenanted_data: {key}')
     user = anvil.users.get_user(allow_remembered=True)
-    anvil.server.session['tenant_id'] = tenant_id
+    # todo: verify tenant here.
     
     if key == 'users':
         return get_users_iterable(tenant_id, user)
@@ -56,7 +55,6 @@ def get_tenanted_data(tenant_id, key):
 
 
 def get_my_usermap(tenant_id, user):
-    user = anvil.users.get_user(allow_remembered=True)
     tenant = verify_tenant(tenant_id, user)
     user_usermap = app_tables.usermap.client_writable(tenant=tenant, user=user).get()
     return user_usermap
@@ -68,33 +66,6 @@ def get_users_iterable(tenant_id, user):
     if 'see_members' not in permissions:
         return []
     return app_tables.usermap.client_readable(q.only_cols('user', 'notes'), tenant=tenant)
-
-
-def get_users(tenant_id, user, usermap=None, permissions=None, tenant=None):
-    print_timestamp('_get_users: start')
-    tenant, usermap, permissions = validate_user(tenant_id, user, usermap=usermap, permissions=permissions, tenant=tenant)
-    
-    if 'see_members' not in permissions:
-        return []
-
-    member_rows = app_tables.usermap.search(tenant=tenant)
-    if anvil.server.context.background_task_id:
-        anvil.server.task_state['users_len'] = len(member_rows)
-
-    memberlist = []
-    for member in member_rows:
-        try:
-            memberlist.append(usermap_row_to_dict(member))
-        except anvil.tables.RowDeleted:
-            member.delete()
-            if anvil.server.context.background_task_id:
-                anvil.server.task_state['users_len'] = anvil.server.task_state['users_len'] - 1
-
-        if anvil.server.context.background_task_id:
-            anvil.server.task_state['users'] = memberlist
-
-    print_timestamp('_get_users: end')
-    return memberlist
 
 
 def get_screenerlink(tenant_id, user, usermap=None, permissions=None, tenant=None):
