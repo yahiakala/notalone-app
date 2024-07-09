@@ -35,11 +35,11 @@ services:
   client_config: {}
   server_config: {}
 startup: {type: module, module: startup}
-package_name: notalone_app
+package_name: notalone_oss
 allow_embedding: false
-name: notalone app
+name: notalone oss
 runtime_options: {version: 2, client_version: '3', server_version: python3-full, server_spec: null}
-metadata: {logo_img: 'asset:Screenshot 2023-12-05 at 1.20.04 PM.png'}
+metadata: {logo_img: 'asset:notalone-2.png'}
 startup_form: null
 db_schema:
   usermap:
