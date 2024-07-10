@@ -1,6 +1,7 @@
 container:
   type: ColumnPanel
   properties: {col_widths: '{"IUQBBU":14,"NAHIWQ":15,"BAKJKP":15,"PLXZJR":15,"BDBRQE":45,"WEERLN":45,"NILUCE":45,"YXWODB":45,"UVIXIO":15,"FJXWKF":45,"QZSWXM":15,"JZLQIV":45,"NXWYID":15,"TDBVMS":45,"QAYIPQ":15,"FURJFU":45}'}
+  event_bindings: {show: form_show}
 components:
 - name: lbl_title_general
   properties: {align: center, text: General Settings, icon: '', role: title}

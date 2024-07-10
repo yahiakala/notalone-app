@@ -356,6 +356,9 @@ secrets:
   discourse_secret:
     value: {T4BTSIBAI26CJ3RZ: LxWTCDa4glKt5MGjpmZQsMHDgdrMroStnezc36F0n8N96IgU3h08uhnkm7Agqzp4Xu9fnHWp05V3iEs1A5i27lxaWxaKI7Vx0lImZb12RrzBDvY8rPgWl67KOyEmBS/WM44zB4qWMq92E5Oy/j3b2uqitznf84U=}
     type: secret
+  encryption_key:
+    type: key
+    value: {T4BTSIBAI26CJ3RZ: l+TpS8nkOBcBEWM1IlatDl+c+zkivrSRhSRSmkZnvHPhENEfBT2eYBdYvIqKRpjAlQ1aHpHBK55gf6kgIyEMjGVmRx6a2KfSngdFUO3NgOviO+5nzSf+lcxIb21oEhE/s8g4jJELubTwRgJzp3sLSH9GFQA4qRo=}
 renamed: true
 native_deps:
   head_html: |-
