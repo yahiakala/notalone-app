@@ -2,6 +2,7 @@ import anvil.server
 import anvil.users
 import anvil.secrets
 from anvil.tables import app_tables
+import anvil.tables.query as q
 
 import base64
 import hmac
@@ -26,7 +27,9 @@ def login_sso(sso, sig, session_id=None):
 
     discourse_url = params.get('discourse_domain')
     # return_sso_url
-    tenant = app_tables.tenants.get(discourse_url=discourse_url)
+    discourse_url = params['return_sso_url'].replace('https://', '').replace('/session/sso_login', '')
+    tenant = app_tables.tenants.get(discourse_url=q.ilike('%'+discourse_url+'%'))
+    
     _, usermap, permissions = validate_user(None, user, tenant=tenant)
     
     if 'see_forum' not in permissions:
@@ -70,7 +73,7 @@ def login_sso(sso, sig, session_id=None):
     # print(return_sig)
 
     # Redirect back to Discourse
-    discourse_redirect_url = f"https://{discourse_url}/session/sso_login?sso={url_encoded_payload}&sig={return_sig}"
+    discourse_redirect_url = f"https://{payload['return_sso_url']}?sso={url_encoded_payload}&sig={return_sig}"
     return anvil.server.HttpResponse(302, headers={"Location": discourse_redirect_url})
 
 
