@@ -26,6 +26,11 @@ def redirect_no_tenant2():
     return 'app/admin'
 
 
+@routing.redirect(path="app", priority=18, condition=lambda: Global.my_tenants[0]['name'] is not None and 'book_interview' in Global.permissions)
+def redirect_applicant():
+    return 'app/apply'
+
+
 hash, pattern, dict = routing.get_url_components()
 
 routing.set_url_hash(hash)
