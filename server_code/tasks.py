@@ -361,3 +361,11 @@ def reject_applicant(tenant_id, email):
     member_usermap = app_tables.usermap.get(user=member_user, tenant=tenant)
     member_usermap['roles'] = None
     return usermap_row_to_dict(member_usermap)
+
+
+@anvil.server.callable(require_user=True)
+def generate_secret():
+    import secrets
+    import string
+    characters = string.ascii_letters + string.digits
+    return ''.join(secrets.choice(characters) for _ in range(20))

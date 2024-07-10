@@ -1,6 +1,7 @@
 from anvil.tables import app_tables
 import anvil.tables.query as q
 # from anvil_squared.helpers import print_timestamp
+import anvil.secrets
 
 
 role_dict = {
@@ -153,3 +154,10 @@ def populate_roles(tenant):
         if not is_it_there:
             app_tables.roles.add_row(name=key, tenant=tenant, permissions=list(perm_rows), can_edit=False)
     return app_tables.roles.search(tenant=tenant)
+
+
+def decrypt(something):
+    if something:
+        return anvil.secrets.decrypt_with_key("encryption_key", something)
+    else:
+        return ''

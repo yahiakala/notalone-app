@@ -4,7 +4,7 @@ from anvil.tables import app_tables
 import anvil.tables.query as q
 
 from anvil_squared.helpers import print_timestamp
-from .helpers import validate_user, get_usermap, get_permissions, get_user_roles, usermap_row_to_dict, verify_tenant, populate_roles
+from .helpers import validate_user, get_usermap, get_permissions, get_user_roles, usermap_row_to_dict, verify_tenant, populate_roles, decrypt
 
 
 # --------------------
@@ -59,33 +59,24 @@ def get_tenanted_data(tenant_id, key):
         # return get_forumlink(tenant_id, user)
     elif key == 'roles':
         return get_roles(tenant_id, user)
-    elif key == 'usermap':
-        return get_my_usermap(tenant_id, user)
+    # elif key == 'usermap':
+    #     return get_my_usermap(tenant_id, user)
+    elif key == 'tenant_secrets':
+        return get_tenant_secrets(tenant_id, user)
 
 
-# def get_my_usermap(tenant_id, user):
-#     tenant = verify_tenant(tenant_id, user)
-#     user_usermap = app_tables.usermap.get(tenant=tenant, user=user)
-#     user_roles = []
-#     if usermap['roles']:
-#         for role in usermap['roles']:
-#             user_roles.append(role['name'])
-#     user_roles = list(set(user_roles))
+def get_tenant_secrets(tenant_id, user):
+    tenant, usermap, permissions = validate_user(tenant_id, user)
+    if 'delete_members' not in permissions:
+        return {}
 
-#     usermap_dict = {
-#         'first_name': user_usermap['first_name'],
-#         'last_name': user_usermap['last_name'],
-#         'fee': '',
-#         'consent_check': '',
-#         'booking_link': '',
-#         'payment_expiry': '',
-#         'payment_status': '',
-#         'discord': '',
-#         'phone': '',
-#         'screening_slots': '',
-#         'roles': 
-#     }
-#     return usermap_dict
+    secrets = {
+        'discourse_api_key': decrypt(tenant['discourse_api_key']),
+        'discourse_secret': decrypt(tenant['discourse_secret']),
+        'paypal_client_id': decrypt(tenant['paypal_client_id']),
+        'paypal_secret': decrypt(tenant['paypal_secret'])
+    }
+    return secrets
 
 
 def get_users_iterable(tenant_id, user):
