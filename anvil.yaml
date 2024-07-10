@@ -38,7 +38,12 @@ startup: {type: module, module: startup}
 package_name: notalone_oss
 allow_embedding: false
 name: notalone oss
-runtime_options: {version: 2, client_version: '3', server_version: python3-full, server_spec: null}
+runtime_options:
+  version: 3
+  client_version: '3'
+  server_version: python3-full
+  server_spec: null
+  legacy_features: {class_names: true, bootstrap3: true, __dict__: true, root_container: true}
 metadata: {logo_img: 'asset:notalone-2.png'}
 startup_form: null
 db_schema:
