@@ -18,7 +18,7 @@ from ..Global import Global
 from anvil_squared.utils import print_timestamp
 
 
-@routing.template(path='app', priority=5, condition=lambda: Global.get_s('tenant_id') is not None)
+@routing.template(path='app', priority=5, condition=lambda: Global.get_s('tenant') is not None)
 class Router(RouterTemplate):
     def __init__(self, **properties):
         self.init_components(**properties)
@@ -76,7 +76,7 @@ class Router(RouterTemplate):
             if 'dev' in self.permissions:
                 self.tb_impersonate.visible = True
 
-            self.lbl_app_title.text = [i for i in Global.my_tenants if i['tenant_id'] == Global.tenant_id][0]['name']
+            self.lbl_app_title.text = Global.tenant['name']
             self.link_help.visible = True
 
     def refresh_everything(self, **event_args):
@@ -87,7 +87,7 @@ class Router(RouterTemplate):
 
     def link_forum_nav_click(self, **event_args):
         """This method is called when the link is clicked"""
-        anvil.js.window.location.href = Global.forumlink
+        anvil.js.window.location.href = Global.tenant['discourse_url']
 
     def link_help_click(self, **event_args):
         """This method is called when the link is clicked"""

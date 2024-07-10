@@ -25,33 +25,27 @@ class MemberDetail(MemberDetailTemplate):
         self.btn_save.italic = True
         
         with anvil.server.no_loading_indicator:
-            if self.usermap["first_name"] == "" or self.usermap["last_name"] == "":
+            if self.member["first_name"] == "" or self.member["last_name"] == "":
                 self.lbl_namealert.visible = True
             else:
                 self.lbl_namealert.visible = False
-            print("fee: " + str(self.usermap["fee"]))
-    
-            if 'profile' in routing.get_url_pattern() or 'edit_members' in Global.permissions:
-                self.usermap['first_name'] = self.tb_firstname.text
-                self.usermap['last_name'] = self.tb_lastname.text
-                self.usermap['phone'] = self.tb_phone.text
-                self.usermap['discord'] = self.tb_discord_user.text
-                self.usermap['booking_link'] = self.tb_booking_link.text
+            
+            self.member['first_name'] = self.tb_firstname.text
+            self.member['last_name'] = self.tb_lastname.text
+            self.member['phone'] = self.tb_phone.text
+            self.member['discord'] = self.tb_discord_user.text
+            self.member['booking_link'] = self.tb_booking_link.text
             
             if 'memberdetail' in routing.get_url_pattern() and 'edit_members' in Global.permissions:
-                self.usermap = anvil.server.call(
-                    'save_user_roles',
-                    Global.tenant_id,
-                    self.email,
-                    [i['key'] for i in self.msc_roles.selected]
-                )
-                self.roles = self.get_roles(self.usermap)
-                self.permissions = self.get_permissions(self.usermap)
-                routing.clear_cache()
+                self.member['roles'] = [i['key'] for i in self.msc_roles.selected]
+                self.member['notes'] = self.ta_user_notes.text
 
-            if 'memberdetail' in routing.get_url_pattern() and 'see_members' in Global.permissions:
-                # save notes
-                pass
+            self.member = anvil.server.call(
+                'edit_member',
+                Global.tenant_id,
+                self.member,
+            )
+            routing.clear_cache()
 
         self.btn_save.italic = False
         self.btn_save.text = 'Save all changes'
@@ -71,13 +65,14 @@ class MemberDetail(MemberDetailTemplate):
         print_timestamp('memberdetail: btn_pay_new_click')
         from anvil.js import window
 
-        fee_send = self.usermap["fee"]
-        if not self.usermap["fee"]:
+        # TODO: make this more robust
+        fee_send = self.member["fee"]
+        if not self.member["fee"]:
             fee_send = 10
 
         Global.user, self.payment_url = anvil.server.call("create_sub", fee_send)
         self.user = dict(Global.user)  # avoid errors with data bindings
-        print("fee: " + str(self.usermap["fee"]))
+        print("fee: " + str(self.member["fee"]))
         self.btn_save_click()
         # window.open(self.payment_url)
         window.location.href = self.payment_url  # same window
@@ -90,17 +85,13 @@ class MemberDetail(MemberDetailTemplate):
 
     def btn_reject_applicant_click(self, **event_args):
         """This method is called when the button is clicked"""
-        self.usermap = anvil.server.call('reject_applicant', Global.tenant_id, self.email)
-        self.roles = self.get_roles(self.usermap)
-        self.permissions = self.get_permissions(self.usermap)
+        self.member = anvil.server.call('reject_applicant', Global.tenant_id, self.email)
         self.populate_role_list()
         routing.clear_cache()
         
     def btn_accept_applicant_click(self, **event_args):
         """This method is called when the button is clicked"""
-        self.usermap = anvil.server.call('accept_applicant', Global.tenant_id, self.email)
-        self.roles = self.get_roles(self.usermap)
-        self.permissions = self.get_permissions(self.usermap)
+        self.member = anvil.server.call('accept_applicant', Global.tenant_id, self.email)
         self.populate_role_list()
         routing.clear_cache()
 
@@ -110,54 +101,43 @@ class MemberDetail(MemberDetailTemplate):
             self.load_data()
 
     def load_data(self):
-        self.tenant = [i for i in Global.my_tenants if i['tenant_id'] == Global.tenant_id][0]
+        
         if 'profile' in routing.get_url_pattern():
-            self.usermap = Global.my_usermap
-            self.permissions = Global.permissions
-            self.cp_booking_link.visible = True
             self.email = Global.user['email']
+            self.cp_booking_link.visible = True
         else:
-            if 'edit_members' in Global.permissions:
-                self.usermap = anvil.server.call('get_user_by_email_writable', Global.tenant_id, self.url_dict['user_email'])
-            elif 'see_members' in Global.permissions:
-                self.usermap = anvil.server.call('get_user_by_email', Global.tenant_id, self.url_dict['user_email'])
-            else:
-                raise anvil.server.PermissionDenied('You do not have permission to see this.')
-
-            self.permissions = self.get_permissions(self.usermap)
-            self.roles = self.get_roles(self.usermap)
             self.email = self.url_dict['user_email']
             self.cp_admin.visible = True
-            self.ta_user_notes.text = self.usermap['notes']
-            self.populate_role_list()
 
-        if 'see_forum' not in self.permissions:
+        self.member = anvil.server.call('get_member_data', Global.tenant_id, self.email)
+        self.populate_role_list()
+        self.ta_user_notes.text = self.member['notes']
+        
+        if 'see_forum' not in self.member['permissions']:
             self.btn_pay_new.enabled = True
 
-        if 'Applicant' in self.roles:
+        if 'Applicant' in self.member['roles']:
             self.btn_accept_applicant.visible = True 
             self.btn_reject_applicant.visible = True
         
         self.tb_email.text = self.email
-        self.tb_firstname.text = self.usermap['first_name']
-        self.tb_lastname.text = self.usermap['last_name']
-        self.tb_phone.text = self.usermap['phone']
-        self.tb_discord_user.text = self.usermap['discord']
-        self.link_discord.url = self.tenant['discordlink']
-        self.link_codeofconduct.url = self.tenant['waiver']
-        self.cb_signoff.checked = self.usermap['consent_check']
+        self.tb_firstname.text = self.member['first_name']
+        self.tb_lastname.text = self.member['last_name']
+        self.tb_phone.text = self.member['phone']
+        self.tb_discord_user.text = self.member['discord']
+        self.link_discord.url = Global.tenant['discord_invite']
+        self.link_codeofconduct.url = Global.tenant['waiver']
+        self.cb_signoff.checked = self.member['consent_check']
 
-        self.dd_membertier.selected_value = self.usermap['fee']
-        self.lbl_fee_paid_amt.text = self.usermap['fee']
-        if 'see_forum' in self.permissions:
+        self.dd_membertier.selected_value = self.member['fee']
+        self.lbl_fee_paid_amt.text = self.member['fee']
+        if 'see_forum' in self.member['permissions']:
             self.cp_payment_status.visible = True
-
-        self.tb_booking_link.text = self.usermap['booking_link']
-
-        if 'see_forum' in self.permissions:
             self.cp_discord.visible = True
 
-        if 'see_members' in self.permissions:
+        self.tb_booking_link.text = self.member['booking_link']
+
+        if 'see_members' in self.member['permissions']:
             self.cp_booking_link.visible = True
 
         self.tb_email.role = 'outlined'
@@ -170,29 +150,6 @@ class MemberDetail(MemberDetailTemplate):
         self.lbl_fee_paid_amt.role = None
         self.tb_booking_link.role = 'outlined'
 
-    def get_user_readable(self):
-        self.usermap = anvil.server.call('get_user_by_email', Global.tenant_id, self.url_dict['user_email'])
-        self.permissions = self.get_permissions(self.usermap)
-
-    def get_user_writable(self):
-        self.usermap = anvil.server.call('get_user_by_email_writable', Global.tenant_id, self.url_dict['user_email'])
-        self.permissions = self.get_permissions(self.usermap)
-
-    def get_permissions(self, usermap):
-        user_permissions = []
-        if usermap['roles']:
-            for role in usermap['roles']:
-                if role['permissions']:
-                    for permission in role['permissions']:
-                        user_permissions.append(permission['name'])
-        return list(set(user_permissions))
-
-    def get_roles(self, usermap):
-        user_roles = []
-        if usermap['roles']:
-            for role in usermap['roles']:
-                user_roles.append(role['name'])
-        return list(set(user_roles))
 
     def btn_del_click(self, **event_args):
         """This method is called when the button is clicked"""
@@ -207,14 +164,14 @@ class MemberDetail(MemberDetailTemplate):
         self.btn_save_notes.italic = True
         with anvil.server.no_loading_indicator:
             if 'edit_members' in Global.permissions:
-                self.usermap['notes'] = self.ta_user_notes.text
-            else:
                 anvil.server.call(
                     'save_user_notes',
                     Global.tenant_id,
                     self.email,
                     self.ta_user_notes.text
                 )
+                self.member['notes'] = self.ta_user_notes.text
+                
         self.btn_save_notes.italic = False
         self.btn_save_notes.text = 'Save Notes'
 
@@ -235,5 +192,5 @@ class MemberDetail(MemberDetailTemplate):
                 'value': i,
                 'description': i
             }
-            for i in self.roles
+            for i in self.member['roles']
         ]

@@ -4,9 +4,9 @@ from anvil.tables import app_tables
 import anvil.tables.query as q
 import anvil.email
 
-from .helpers import print_timestamp, verify_tenant, validate_user, get_usermap, get_users_with_permission, populate_roles
+from .helpers import print_timestamp, verify_tenant, validate_user, get_usermap, get_users_with_permission, populate_roles, usermap_row_to_dict
 import datetime as dt
-from .globals import get_permissions, get_tenant
+from .globals import get_permissions, get_tenant_single
 
 
 def clean_up_user(user):
@@ -44,7 +44,7 @@ def create_tenant_single():
     _ = populate_roles(tenant)
     admin_role = app_tables.roles.get(tenant=tenant, name='Admin')
     _ = app_tables.usermap.add_row(tenant=tenant, user=user, roles=[admin_role])
-    return get_tenant(user, tenant)
+    return get_tenant_single(user, tenant)
     
 
 @anvil.server.callable(require_user=True)
@@ -290,33 +290,23 @@ def search_users_by_text(tenant_id, search_string):
 
 
 @anvil.server.callable(require_user=True)
-def get_user_by_email(tenant_id, email):
+def get_member_data(tenant_id, email):
     user = anvil.users.get_user(allow_remembered=True)
     tenant, usermap, permissions = validate_user(tenant_id, user)
-    if 'see_members' not in permissions:
-        return None
 
-    user_user = app_tables.users.get(
+    member = app_tables.users.get(
         q.fetch_only('email'),
         email=email
     )
-    user_usermap = app_tables.usermap.client_readable(tenant=tenant, user=user_user).get()
-    return user_usermap
+    
+    if 'see_members' in permissions:
+        membermap = app_tables.usermap.get(tenant=tenant, user=member)
+        notes = membermap['notes']
+    else:
+        membermap = app_tables.usermap.get(tenant=tenant, user=user)
+        notes = None
 
-
-@anvil.server.callable(require_user=True)
-def get_user_by_email_writable(tenant_id, email):
-    user = anvil.users.get_user(allow_remembered=True)
-    tenant, usermap, permissions = validate_user(tenant_id, user)
-    if 'edit_members' not in permissions:
-        return None
-
-    user_user = app_tables.users.get(
-        q.fetch_only('email'),
-        email=email
-    )
-    user_usermap = app_tables.usermap.client_writable(tenant=tenant, user=user_user).get()
-    return user_usermap
+    return usermap_row_to_dict(membermap, notes)
     
 
 @anvil.server.callable(require_user=True)
@@ -356,7 +346,7 @@ def accept_applicant(tenant_id, email):
     member_usermap['roles'] = [app_tables.roles.get(tenant=tenant, name='Approved')]
 
     email_accept_applicant(tenant, member_user['email'])
-    return member_usermap
+    return usermap_row_to_dict(member_usermap)
 
 
 @anvil.server.callable(require_user=True)
@@ -370,4 +360,4 @@ def reject_applicant(tenant_id, email):
     member_user = app_tables.users.get(email=email)
     member_usermap = app_tables.usermap.get(user=member_user, tenant=tenant)
     member_usermap['roles'] = None
-    return member_usermap
+    return usermap_row_to_dict(member_usermap)

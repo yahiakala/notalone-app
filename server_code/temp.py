@@ -67,7 +67,7 @@ def migrate_firstlast():
 
 
 def clear_tenant_data():
-    tenant = app_tables.tenants.get(name=None)
+    tenant = app_tables.tenants.get()
     if tenant:
         usermaps = app_tables.usermap.search(tenant=tenant)
         for usermap in usermaps:

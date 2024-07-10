@@ -87,8 +87,8 @@ def get_permissions(tenant_id, user, tenant=None, usermap=None):
 
 
 def validate_user(tenant_id, user, usermap=None, permissions=None, tenant=None):
+    usermap = usermap if usermap is not None else get_usermap(tenant_id, user, tenant=tenant)
     tenant = tenant if tenant is not None else verify_tenant(tenant_id, user, usermap=usermap)
-    usermap = usermap if usermap is not None else get_usermap(tenant_id, user, tenant)
     permissions = permissions if permissions is not None else get_permissions(tenant_id, user, usermap=usermap, tenant=tenant)
     return tenant, usermap, permissions
 
@@ -109,7 +109,7 @@ def upsert_role(usermap, role_name):
         usermap['roles'] = usermap['roles'] + [role]
 
 
-def usermap_row_to_dict(row):
+def usermap_row_to_dict(row, notes=None):
     row_dict = {
         'first_name': row['user']['first_name'] or '',
         'last_name': row['user']['last_name'] or '',
@@ -126,7 +126,7 @@ def usermap_row_to_dict(row):
         'paypal_sub_id': row['paypal_sub_id'],
         'permissions': get_permissions(None, row['user'], row['tenant'], row),
         'roles': get_user_roles(None, None, row, row['tenant']),
-        'notes': row['notes']
+        'notes': notes or row['notes']
     }
     return row_dict
 

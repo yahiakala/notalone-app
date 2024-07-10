@@ -11,23 +11,32 @@ from .helpers import validate_user, get_usermap, get_permissions, get_user_roles
 # Non tenanted globals
 # --------------------
 @anvil.server.callable()
-def get_tenant(user=None, tenant=None):
+def get_tenant_single(user=None, tenant=None):
     """Get the tenant in this instance."""
+    user = anvil.users.get_user(allow_remembered=True)
     tenant = tenant or app_tables.tenants.get()
 
     if not tenant:
         return None
+    
     # TODO: get more data if admin on these tenants.
-    tenant_list = [
-        {
-            'tenant_id': tenant.get_id(),
-            'name': tenant['name'],
-            'discordlink': tenant['discord_invite'],
-            'discourselink': tenant['discourse_url'],
-            'waiver': tenant['waiver']
-        }
-    ]
-    return tenant_list
+    tenant_dict = {
+        'id': tenant.get_id(),
+        'name': tenant['name'],
+        'discord_invite': tenant['discord_invite'],
+        'discourse_url': tenant['discourse_url'],
+        'waiver': tenant['waiver'],
+        'logo': tenant['logo'],
+        'paypal_plans': tenant['paypal_plans']
+    }
+    if user:
+        # usermap = get_usermap(tenant.get_id(), user, tenant)
+        # permissions = get_permissions(tenant.get_id(), user, tenant, usermap)
+        tenant, usermap, permissions = validate_user(tenant.get_id(), user, tenant=tenant)
+        if 'delete_members' in permissions:
+            return app_tables.tenants.client_writable().get()
+    
+    return tenant_dict
 
 # ----------------
 # Tenanted globals
@@ -44,20 +53,39 @@ def get_tenanted_data(tenant_id, key):
         return get_permissions(tenant_id, user)
     elif key == 'screenerlink':
         return get_screenerlink(tenant_id, user)
-    elif key == 'forumlink':
-        return get_discordlink(tenant_id, user)
-    elif key == 'discordlink':
-        return get_forumlink(tenant_id, user)
+    # elif key == 'forumlink':
+        # return get_discordlink(tenant_id, user)
+    # elif key == 'discordlink':
+        # return get_forumlink(tenant_id, user)
     elif key == 'roles':
         return get_roles(tenant_id, user)
-    elif key == 'my_usermap':
+    elif key == 'usermap':
         return get_my_usermap(tenant_id, user)
 
 
-def get_my_usermap(tenant_id, user):
-    tenant = verify_tenant(tenant_id, user)
-    user_usermap = app_tables.usermap.client_writable(tenant=tenant, user=user).get()
-    return user_usermap
+# def get_my_usermap(tenant_id, user):
+#     tenant = verify_tenant(tenant_id, user)
+#     user_usermap = app_tables.usermap.get(tenant=tenant, user=user)
+#     user_roles = []
+#     if usermap['roles']:
+#         for role in usermap['roles']:
+#             user_roles.append(role['name'])
+#     user_roles = list(set(user_roles))
+
+#     usermap_dict = {
+#         'first_name': user_usermap['first_name'],
+#         'last_name': user_usermap['last_name'],
+#         'fee': '',
+#         'consent_check': '',
+#         'booking_link': '',
+#         'payment_expiry': '',
+#         'payment_status': '',
+#         'discord': '',
+#         'phone': '',
+#         'screening_slots': '',
+#         'roles': 
+#     }
+#     return usermap_dict
 
 
 def get_users_iterable(tenant_id, user):
@@ -81,6 +109,8 @@ def get_screenerlink(tenant_id, user, usermap=None, permissions=None, tenant=Non
         booking_link=q.not_(None),
         tenant=tenant
     )
+    if len(screeners) == 0:
+        return {'first_name': 'No Interviewer Available', 'booking_link': ''}
     
     records = [
         {
@@ -109,17 +139,17 @@ def get_finances(tenant_id, user, usermap=None, permissions=None, tenant=None):
     }
 
 
-def get_forumlink(tenant_id, user, usermap=None, permissions=None, tenant=None):
-    """Get link to forum."""
-    tenant, usermap, permissions = validate_user(tenant_id, user, usermap, permissions, tenant)
-    return tenant['discourse_url']
+# def get_forumlink(tenant_id, user, usermap=None, permissions=None, tenant=None):
+#     """Get link to forum."""
+#     tenant, usermap, permissions = validate_user(tenant_id, user, usermap, permissions, tenant)
+#     return tenant['discourse_url']
 
 
-def get_discordlink(tenant_id, user, usermap=None, permissions=None, tenant=None):
-    tenant, usermap, permissions = validate_user(tenant_id, user, usermap, permissions, tenant)
-    if 'see_forum' in permissions:
-        return tenant['discord_invite']
-    return ''
+# def get_discordlink(tenant_id, user, usermap=None, permissions=None, tenant=None):
+#     tenant, usermap, permissions = validate_user(tenant_id, user, usermap, permissions, tenant)
+#     if 'see_forum' in permissions:
+#         return tenant['discord_invite']
+#     return ''
 
 
 def get_roles(tenant_id, user, usermap=None, permissions=None, tenant=None):

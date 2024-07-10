@@ -1,8 +1,8 @@
 from ._anvil_designer import HomeTemplate
 from anvil import *
 import anvil.tables.query as q
-import anvil.server
-from anvil_extras.logging import TimerLogger
+# import anvil.server
+# from anvil_extras.logging import TimerLogger
 from anvil_extras import routing
 from ..Global import Global
 
@@ -15,30 +15,3 @@ class Home(HomeTemplate):
         self.groups = []
         self.user = Global.user
         self.init_components(**properties)
-
-        # self.rp_groups.add_event_handler('x-refresh', self.update_stuff)
-        # self.img_tenant.source = Global.tenant_info['logo']
-
-    def update_stuff(self, **event_args):
-        """Refresh the whole page so the user sees the booking page."""
-        self.groups = []
-        self.user = Global.user
-        self.refresh_data_bindings()
-        routing.set_url_hash('app/apply', load_from_cache=False)
-
-    def tb_search_group_pressed_enter(self, **event_args):
-        """This method is called when the user presses Enter in this text box"""
-        search_txt = '%' + self.tb_search_group.text + '%'
-        self.groups = Global.tenants.search(
-            name=q.ilike(search_txt)
-        )
-        self.refresh_data_bindings()
-        self.btn_clear_search.visible = True
-        
-
-    def btn_clear_search_click(self, **event_args):
-        """This method is called when the button is clicked"""
-        self.groups = []
-        self.refresh_data_bindings()
-        self.tb_search_group.text = None
-        self.btn_clear_search.visible = False

@@ -213,7 +213,7 @@ db_schema:
       admin_ui: {order: -1, width: 200}
       type: string
     - name: name
-      admin_ui: {order: 1, width: 348}
+      admin_ui: {order: -2, width: 348}
       type: string
     - name: waiver
       admin_ui: {width: 200}
