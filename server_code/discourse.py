@@ -71,7 +71,7 @@ def login_sso(sso, sig, session_id=None):
     # print(return_sig)
 
     # Redirect back to Discourse
-    discourse_redirect_url = f"https://{params['return_sso_url']}?sso={url_encoded_payload}&sig={return_sig}"
+    discourse_redirect_url = f"{params['return_sso_url']}?sso={url_encoded_payload}&sig={return_sig}"
     return anvil.server.HttpResponse(302, headers={"Location": discourse_redirect_url})
 
 
