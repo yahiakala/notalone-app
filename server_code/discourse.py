@@ -11,7 +11,7 @@ import json
 from .helpers import validate_user
 
 
-@anvil.server.http_endpoint('/login-sso', cross_site_session=True, enable_cors=True)
+@anvil.server.http_endpoint('/discourse-sso', cross_site_session=True, enable_cors=True)
 def login_sso(sso, sig, session_id=None):
     # Decode the payload
     payload = base64.b64decode(urllib.parse.unquote(sso)).decode()

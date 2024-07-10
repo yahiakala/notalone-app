@@ -49,7 +49,7 @@ class Router(RouterTemplate):
             anvil.users.logout()
             self.set_account_state(None)
             routing.clear_cache()
-            Global.user = None  # Haven't tested this.
+            Global.clear_global_attributes()
             routing.set_url_hash('sign', load_from_cache=False)
 
     def set_account_state(self, user):
