@@ -13,7 +13,6 @@ from .helpers import validate_user
 
 @anvil.server.http_endpoint('/login-sso', cross_site_session=True, enable_cors=True)
 def login_sso(sso, sig, session_id=None):
-
     # Decode the payload
     payload = base64.b64decode(urllib.parse.unquote(sso)).decode()
     print(payload)
@@ -26,25 +25,33 @@ def login_sso(sso, sig, session_id=None):
         return anvil.server.HttpResponse(302, headers={"Location": anvil.server.get_app_origin()})
 
     discourse_url = params.get('discourse_domain')
+    # return_sso_url
     tenant = app_tables.tenants.get(discourse_url=discourse_url)
     _, usermap, permissions = validate_user(None, user, tenant=tenant)
     
     if 'see_forum' not in permissions:
         return anvil.server.HttpResponse(302, headers={"Location": anvil.server.get_app_origin()})
 
-    secret_key = tenant['discourse_secret']
+    secret_key = anvil.secrets.get_secret('discourse_secret')
 
     expected_sig = hmac.new(secret_key.encode(), msg=sso.encode(), digestmod=hashlib.sha256).hexdigest()
     if not hmac.compare_digest(expected_sig, sig):
         raise anvil.server.HttpError(403, "Signature mismatch")
 
     # Prepare the return payload with user info
+    first_name = user['first_name'] or ''
+    last_name = user['last_name'] or ''
+    if first_name == '' and last_name == '':
+        username = user['email'].split('@')[0]
+    else:
+        username = first_name + ' ' + last_name
+    
     user_info = {
         'nonce': nonce,
         'email': user['email'],
         'external_id': user.get_id(),
-        'username': user['first_name'] + '_' + user['last_name'],
-        'name': user['first_name'] + ' ' + user['last_name']
+        'username': username,
+        'name': username
     }
     print(user_info)
     return_payload = '&'.join([f"{key}={value}" for key, value in user_info.items()])
@@ -78,6 +85,7 @@ def new_member():
     payload_dict = json.loads(payload.decode('utf-8'))
     print(payload_dict)
 
+    # TODO: untested
     DISCOURSE_URL = anvil.server.request.headers.get('x-discourse-instance')
     
     # Verify the signature
@@ -97,7 +105,7 @@ def new_member():
 
 def create_topic(title='Test post', message='Test post this is a test', discourse_url=None):
     post_url = f"{discourse_url}/posts"
-    api_key = app_tables.tenants.get_by_id(anvil.server.session.get('tenant_id', None))
+    api_key = app_tables.tenants.get(discourse_url=discourse_url)['discourse_api_key']
     headers = {
         'Api-Key': api_key,
         'Api-Username': 'system',
@@ -120,7 +128,7 @@ def create_topic(title='Test post', message='Test post this is a test', discours
 def verify_signature(payload, header_signature, discourse_url):
     # Assuming Discourse sends the signature in the format `sha256=signature`
     algorithm, signature = header_signature.split('=')
-    secret_key = app_tables.tenants.get(discourse_url=discourse_url)['discourse_secret']
+    secret_key = anvil.secrets.get_secret('discourse_secret')
     # Use the corresponding hash function for the algorithm used by Discourse
     if algorithm == 'sha256':
         hash_function = hashlib.sha256

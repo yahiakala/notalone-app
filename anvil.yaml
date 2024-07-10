@@ -353,6 +353,9 @@ secrets:
   paypal_secret_sandbox:
     value: {T4BTSIBAI26CJ3RZ: hHVZwjuAVUh1BfZbXPJwcXU7/ZOWEMiIfGuCmpBcvn0DepMTwMK9WH9KSuJ986gjJcwlkAYIiCDiJYKhIxzabL7V2hketoU4Jdw+8XZD/IUOzymLnrJZ9xPpfDYDQ6NVke0DSaVU1fRl0LNQw6JY8pObeXAGXC8a1PFWV+3QNokFT3oL+BqeuuDHKc1u0Q2+kIhRt8q5zxcVqkX/Jk/yhGmP4VhmmA7O5MmeU/5BnQ==}
     type: secret
+  discourse_secret:
+    value: {T4BTSIBAI26CJ3RZ: LxWTCDa4glKt5MGjpmZQsMHDgdrMroStnezc36F0n8N96IgU3h08uhnkm7Agqzp4Xu9fnHWp05V3iEs1A5i27lxaWxaKI7Vx0lImZb12RrzBDvY8rPgWl67KOyEmBS/WM44zB4qWMq92E5Oy/j3b2uqitznf84U=}
+    type: secret
 renamed: true
 native_deps:
   head_html: |-
