@@ -12,7 +12,7 @@ components:
   type: Label
   layout_properties: {grid_position: 'ROCKPW,QAYIPQ'}
 - name: tb_name
-  properties: {role: outlined, placeholder: Group name}
+  properties: {role: outlined, placeholder: Group name, enabled: true}
   type: TextBox
   layout_properties: {grid_position: 'ROCKPW,FURJFU'}
 - name: lbl_waiver
