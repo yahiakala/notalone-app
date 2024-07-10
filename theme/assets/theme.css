@@ -891,6 +891,17 @@ textarea.anvil-component.anvil-role-outlined-error[disabled], input.anvil-compon
   padding-bottom: 8px;
 }
 
+/* YK Fix */
+textarea.anvil-component.anvil-role-outlined[disabled]:hover, input.anvil-component.anvil-role-outlined[disabled]:hover, 
+.anvil-component.anvil-role-outlined select[disabled]:hover, .anvil-datepicker.anvil-role-outlined input[disabled]:hover, 
+textarea.anvil-component.anvil-role-outlined-error[disabled]:hover, input.anvil-component.anvil-role-outlined-error[disabled]:hover, 
+.anvil-component.anvil-role-outlined-error select[disabled]:hover, .anvil-datepicker.anvil-role-outlined-error input[disabled]:hover {
+  border: 1px solid %color:On Disabled%;
+  color: %color:On Disabled%;
+  padding: 8px 16px;
+}
+
+
 .daterangepicker td.active {
   background: %color:Primary%;
 }

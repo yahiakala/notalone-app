@@ -20,7 +20,7 @@ components:
   type: Label
   layout_properties: {grid_position: 'GAFFRI,QZSWXM'}
 - name: tb_waiver_link
-  properties: {role: outlined, placeholder: Insert public link to your waiver or code of conduct}
+  properties: {role: outlined, placeholder: Insert public link to your waiver or code of conduct, enabled: false}
   type: TextBox
   layout_properties: {grid_position: 'GAFFRI,JZLQIV'}
 - name: lbl_logo
