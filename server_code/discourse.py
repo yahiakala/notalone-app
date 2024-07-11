@@ -94,18 +94,20 @@ def new_member():
         return anvil.server.HttpResponse(403, "Forbidden: Signature mismatch.")
 
     
-    if payload_dict:
+    if payload_dict and 'user' in payload_dict:
         new_member_username = payload_dict['user']['username']
         new_member_name = new_member_username.split('_')[0]
         welcome_message = f"Welcome to the forum, @{new_member_username}! We're glad to have you here. Please tell the group a bit about yourself!"
         title = f'[New Member] Welcome {new_member_name}!'
-        create_topic(title=title, message=welcome_message, discourse_url=DISCOURSE_URL)
+        create_topic(title=title, message=welcome_message, discourse_url=discourse_url)
     return anvil.server.HttpResponse(200)
 
 
 def create_topic(title='Test post', message='Test post this is a test', discourse_url=None):
     post_url = f"{discourse_url}/posts"
-    api_key = app_tables.tenants.get(discourse_url=discourse_url)['discourse_api_key']
+    tenant = app_tables.tenants.get(discourse_url=q.ilike('%'+discourse_url.replace('https://', '')+'%'))
+    api_key = anvil.secrets.decrypt_with_key('encryption_key', tenant['discourse_api_key'])
+    
     headers = {
         'Api-Key': api_key,
         'Api-Username': 'system',
@@ -114,7 +116,7 @@ def create_topic(title='Test post', message='Test post this is a test', discours
     post_data = {
         'title': title,
         'raw': message,
-        'category': 4
+        'category': 4  # General
     }
     try:
         response = anvil.http.request(post_url, method="POST", data=post_data, headers=headers, json=True)
