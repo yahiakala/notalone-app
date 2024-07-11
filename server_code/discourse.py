@@ -103,7 +103,7 @@ def new_member():
     return anvil.server.HttpResponse(200)
 
 
-def create_topic(title='Test post', message='Test post this is a test', discourse_url=None):
+def create_topic(title='This is a test post for notalone', message='Test post this is a test', discourse_url=None):
     post_url = f"{discourse_url}/posts"
     tenant = app_tables.tenants.get(discourse_url=q.ilike('%'+discourse_url.replace('https://', '')+'%'))
     api_key = anvil.secrets.decrypt_with_key('encryption_key', tenant['discourse_api_key'])
@@ -120,11 +120,10 @@ def create_topic(title='Test post', message='Test post this is a test', discours
     }
     try:
         response = anvil.http.request(post_url, method="POST", data=post_data, headers=headers, json=True)
+        print(response)
     except anvil.http.HttpError as e:
         print(e.content)
         print(f"Error {e.status}")
-    
-    print(response)
 
 
 def verify_signature(payload, header_signature, discourse_url):
