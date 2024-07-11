@@ -19,8 +19,11 @@ class Setup(SetupTemplate):
             self.tenant = Global.tenant
             self.tb_name.text = self.tenant['name']
             self.tb_waiver_link.text = self.tenant['waiver']
+            self.img_logo.source = self.tenant['logo']
+            self.tb_discord.text = self.tenant['discord_invite']
+            self.rp_paypal_plans.items = self.tenant['paypal_plans']
+            
             self.tenant_secrets = self.tenant_secrets or anvil.server.call('get_tenanted_data', Global.tenant_id, 'tenant_secrets')
-
             self.sv_discourse_api.secret = self.tenant_secrets['discourse_api_key']
             self.sv_discourse_secret.secret = self.tenant_secrets['discourse_secret']
             self.sv_paypal_client_id.secret = self.tenant_secrets['paypal_client_id']

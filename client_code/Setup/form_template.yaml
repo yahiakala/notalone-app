@@ -94,7 +94,7 @@ components:
   type: DataGrid
   components:
   - name: rp_paypal_plans
-    properties: {item_template: Setup.RowTemplate1}
+    properties: {item_template: Setup.PlanRow}
     type: RepeatingPanel
   layout_properties: {grid_position: 'IGRVTK,PVWEFQ'}
 - name: lbl_no_plan

@@ -5,3 +5,4 @@ components:
   properties: {text: Show roles, role: outlined-button, align: left}
   type: Button
   layout_properties: {column: PUBCMA}
+  event_bindings: {click: btn_show_roles_click}

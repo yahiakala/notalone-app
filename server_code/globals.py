@@ -148,8 +148,7 @@ def get_roles(tenant_id, user, usermap=None, permissions=None, tenant=None):
     if 'see_forum' in permissions:
         role_list = []
         role_search = app_tables.roles.search(tenant=tenant)
-        if anvil.server.context.background_task_id:
-            anvil.server.task_state['roles_len'] = len(role_search)
+            
         for role in role_search:
             if role['permissions']:
                 role_perm = [j['name'] for j in role['permissions']]
@@ -164,7 +163,6 @@ def get_roles(tenant_id, user, usermap=None, permissions=None, tenant=None):
                     'permissions': role_perm
                 }
             )
-            if anvil.server.context.background_task_id:
-                anvil.server.task_state['roles'] = role_list
+            
         return role_list
     return []
