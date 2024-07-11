@@ -102,26 +102,6 @@ components:
   properties: {text: There are no PayPal plans configured for your group., visible: false, align: center}
   type: Label
   layout_properties: {grid_position: 'KOJANN,DQZRPF'}
-- name: tb_plan_name
-  properties: {role: outlined}
-  type: TextBox
-  layout_properties: {grid_position: 'NJJLYG,NBREFC'}
-- name: tb_plan_id
-  properties: {role: outlined}
-  type: TextBox
-  layout_properties: {grid_position: 'NJJLYG,QBUPLH'}
-- name: tb_plan_amt
-  properties: {role: outlined}
-  type: TextBox
-  layout_properties: {grid_position: 'NJJLYG,XJVPCW'}
-- name: tb_plan_frequency
-  properties: {role: outlined}
-  type: TextBox
-  layout_properties: {grid_position: 'NJJLYG,FIFCYQ'}
-- name: btn_plan_roles
-  properties: {text: Roles, role: outlined-button, align: full}
-  type: Button
-  layout_properties: {grid_position: 'NJJLYG,FBHYUY', full_width_row: false}
 - name: btn_add_plan
   properties: {text: Add Plan, role: filled-button, icon: 'fa:plus'}
   type: Button
@@ -139,4 +119,9 @@ components:
   properties: {role: outlined}
   type: TextBox
   layout_properties: {grid_position: 'PAHCHU,FJXWKF'}
+- name: btn_save
+  properties: {text: Save Changes, role: filled-button}
+  type: Button
+  layout_properties: {grid_position: 'TTSZNX,AVUOFB'}
+  event_bindings: {click: btn_save_click}
 is_package: true

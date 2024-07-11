@@ -1,0 +1,27 @@
+container: {type: ColumnPanel}
+components:
+- name: tb_plan_id
+  properties: {role: outlined}
+  type: TextBox
+  layout_properties: {grid_position: 'WXNWYX,KZBUEA'}
+- name: tb_plan_name
+  properties: {role: outlined}
+  type: TextBox
+  layout_properties: {grid_position: 'FLNKUA,AXPMDS'}
+- name: tb_plan_amt
+  properties: {role: outlined}
+  type: TextBox
+  layout_properties: {grid_position: 'AQTBBN,TAGIGI'}
+- name: tb_plan_frequency
+  properties: {role: outlined}
+  type: TextBox
+  layout_properties: {grid_position: 'TPYYUI,MDZBYG'}
+- name: lbl_roles_title
+  properties: {text: Roles, align: center}
+  type: Label
+  layout_properties: {grid_position: 'GPEKWE,MMNIFA'}
+- name: rp_roles
+  properties: {item_template: Setup.PlanEdit.RoleRow}
+  type: RepeatingPanel
+  layout_properties: {grid_position: 'BMQCQG,CBPMZX'}
+is_package: true

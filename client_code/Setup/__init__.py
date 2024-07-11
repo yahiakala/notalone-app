@@ -45,9 +45,27 @@ class Setup(SetupTemplate):
             }
             self.rp_paypal_plans.items = self.tenant['paypal_plans'] + [new_plan]
             
-            with anvil.server.no_loading_indicator:
-                anvil.server.call('update_paypal_plan', self.tenant['paypal_plans'] + [new_plan])
-
             self.add_roles = None
-        routing.alert('Please add roles to this new plan.')
+        else:
+            routing.alert('Please add roles to this new plan.')
+
+    def btn_save_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        with anvil.server.no_loading_indicator:
+            new_tenant_data = {
+                'discourse_api_key': self.sv_discourse_api.secret,
+                'discourse_secret': self.sv_discourse_secret.secret,
+                'paypal_client_id': self.sv_paypal_client_id.secret,
+                'paypal_secret': self.sv_paypal_secret.secret,
+                'name': self.tb_name.text,
+                'waiver': self.tb_waiver_link.text,
+                'logo': self.img_logo.source,
+                'discord_invite': self.tb_discord.text,
+                'paypal_plans': self.rp_paypal_plans.items
+            }
+            anvil.server.call('update_tenant_data', Global.tenant_id, new_tenant_data)
+
+    def btn_plan_roles_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        self.add_roles = None
         

@@ -1,7 +1,0 @@
-container: {type: ColumnPanel}
-components:
-- name: rp_roles
-  properties: {item_template: Setup.RoleSelect.RoleRow}
-  type: RepeatingPanel
-  layout_properties: {grid_position: 'BMQCQG,CBPMZX'}
-is_package: true

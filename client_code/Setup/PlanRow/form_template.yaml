@@ -1,11 +1,6 @@
 is_package: true
 container: {type: DataRowPanel}
 components:
-- name: btn_show_roles
-  properties: {text: Show roles, role: outlined-button, align: left}
-  type: Button
-  layout_properties: {column: PUBCMA}
-  event_bindings: {click: btn_show_roles_click}
 - name: fp_actions
   properties: {}
   type: FlowPanel
