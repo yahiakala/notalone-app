@@ -81,16 +81,15 @@ def new_member():
     payload = anvil.server.request.body.get_bytes()
     # print(payload)
     header_signature = anvil.server.request.headers.get('x-discourse-event-signature')
+    discourse_url = anvil.server.request.headers.get('x-discourse-instance')
+    
     # print(header_signature)
     # print(data)
     payload_dict = json.loads(payload.decode('utf-8'))
     print(payload_dict)
-
-    # TODO: untested
-    DISCOURSE_URL = anvil.server.request.headers.get('x-discourse-instance')
     
     # Verify the signature
-    if not verify_signature(payload, header_signature, DISCOURSE_URL):
+    if not verify_signature(payload, header_signature, discourse_url):
         # If the signature verification fails, return a 403 Forbidden response
         return anvil.server.HttpResponse(403, "Forbidden: Signature mismatch.")
 
@@ -129,7 +128,9 @@ def create_topic(title='Test post', message='Test post this is a test', discours
 def verify_signature(payload, header_signature, discourse_url):
     # Assuming Discourse sends the signature in the format `sha256=signature`
     algorithm, signature = header_signature.split('=')
-    secret_key = anvil.secrets.get_secret('discourse_secret')
+    # secret_key = anvil.secrets.get_secret('discourse_secret')
+    tenant = app_tables.tenants.get(discourse_url=q.ilike('%'+discourse_url.replace('https://', '')+'%'))
+    secret_key = anvil.secrets.decrypt_with_key('encryption_key', tenant['discourse_secret'])
     # Use the corresponding hash function for the algorithm used by Discourse
     if algorithm == 'sha256':
         hash_function = hashlib.sha256
