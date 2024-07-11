@@ -98,6 +98,7 @@ class Router(RouterTemplate):
         self.user = anvil.server.call('impersonate_user', self.tb_impersonate.text)
         # reset the globals
         Global.clear_global_attributes()
+        routing.clear_cache()
         Global.user = self.user
         self.refresh_everything()
         self.nav_click(self.link_home)
