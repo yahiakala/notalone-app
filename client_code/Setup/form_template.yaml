@@ -87,7 +87,7 @@ components:
     - {id: VJQQOR, title: Plan ID, data_key: id}
     - {id: OJLQEN, title: Plan Amount, data_key: amt}
     - {id: RJQCHE, data_key: frequency, title: Payment Frequency}
-    - {id: PUBCMA, data_key: plan_roles, title: Roles}
+    - {id: PUBCMA, data_key: roles, title: Roles}
     - {id: CFLVXO, data_key: column_1, title: Actions}
     show_page_controls: false
     rows_per_page: 0

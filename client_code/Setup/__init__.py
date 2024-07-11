@@ -3,6 +3,7 @@ from anvil import *
 from ..Global import Global
 from anvil_extras import routing
 import anvil.server
+from .PlanEdit import PlanEdit
 
 
 @routing.route('/admin', template='Router')
@@ -21,7 +22,7 @@ class Setup(SetupTemplate):
             self.tb_waiver_link.text = self.tenant['waiver']
             self.img_logo.source = self.tenant['logo']
             self.tb_discord.text = self.tenant['discord_invite']
-            self.rp_paypal_plans.items = self.tenant['paypal_plans']
+            self.rp_paypal_plans.items = self.tenant['paypal_plans'] or []
             
             self.tenant_secrets = self.tenant_secrets or anvil.server.call('get_tenanted_data', Global.tenant_id, 'tenant_secrets')
             self.sv_discourse_api.secret = self.tenant_secrets['discourse_api_key']
@@ -35,19 +36,15 @@ class Setup(SetupTemplate):
 
     def btn_add_plan_click(self, **event_args):
         """This method is called when the button is clicked"""
-        if self.add_roles:
-            new_plan = {
-                'name': self.tb_plan_name.text,
-                'id': self.tb_plan_id.text,
-                'amt': self.tb_plan_amt.text,
-                'frequency': self.tb_plan_frequency.text,
-                'roles': self.add_roles
-            }
-            self.rp_paypal_plans.items = self.tenant['paypal_plans'] + [new_plan]
-            
-            self.add_roles = None
-        else:
-            routing.alert('Please add roles to this new plan.')
+        self.btn_add_plan.text = 'Adding...'
+        self.btn_add_plan.italic = True
+        with anvil.server.no_loading_indicator:
+            new_plan = routing.alert(PlanEdit(), dismissible=False, buttons=None)
+            if new_plan:
+                self.rp_paypal_plans.items = self.rp_paypal_plans.items + [new_plan]
+        # self.btn_add_plan.italic = False
+        # self.btn_add_plan.text = 'Add Plan'
+        
 
     def btn_save_click(self, **event_args):
         """This method is called when the button is clicked"""

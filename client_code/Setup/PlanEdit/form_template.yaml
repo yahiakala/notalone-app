@@ -1,27 +1,55 @@
 container: {type: ColumnPanel}
 components:
+- name: label_1
+  properties: {text: Plan ID, role: input-prompt}
+  type: Label
+  layout_properties: {grid_position: 'WXNWYX,ZGKYLU'}
 - name: tb_plan_id
   properties: {role: outlined}
   type: TextBox
   layout_properties: {grid_position: 'WXNWYX,KZBUEA'}
+- name: label_1_copy
+  properties: {text: Plan Name, role: input-prompt}
+  type: Label
+  layout_properties: {grid_position: 'FLNKUA,TRWQQS'}
 - name: tb_plan_name
   properties: {role: outlined}
   type: TextBox
   layout_properties: {grid_position: 'FLNKUA,AXPMDS'}
+- name: label_1_copy_2
+  properties: {text: Plan Amount, role: input-prompt}
+  type: Label
+  layout_properties: {grid_position: 'AQTBBN,VVJHOP'}
 - name: tb_plan_amt
-  properties: {role: outlined}
+  properties: {role: outlined, type: number}
   type: TextBox
   layout_properties: {grid_position: 'AQTBBN,TAGIGI'}
+- name: label_1_copy_3
+  properties: {text: 'Plan Frequency (Monthly, Yearly)', role: input-prompt}
+  type: Label
+  layout_properties: {grid_position: 'TPYYUI,CEFTAD'}
 - name: tb_plan_frequency
   properties: {role: outlined}
   type: TextBox
   layout_properties: {grid_position: 'TPYYUI,MDZBYG'}
 - name: lbl_roles_title
-  properties: {text: Roles, align: center}
+  properties: {text: Roles, align: center, role: title}
   type: Label
   layout_properties: {grid_position: 'GPEKWE,MMNIFA'}
-- name: rp_roles
-  properties: {item_template: Setup.PlanEdit.RoleRow}
-  type: RepeatingPanel
-  layout_properties: {grid_position: 'BMQCQG,CBPMZX'}
+- name: msdd_roles
+  properties: {}
+  type: form:dep_dmhomulhrajp9w:MultiSelectDropDown
+  layout_properties: {grid_position: 'GVTYBZ,NKKIHQ', full_width_row: false}
+  data_bindings:
+  - {property: width, code: '''auto''', writeback: false}
+- name: btn_save
+  properties: {text: Save, role: filled-button, align: right}
+  type: Button
+  layout_properties: {grid_position: 'RKOZRR,IKZCCT'}
+  event_bindings: {click: btn_save_click}
+- name: btn_cancel
+  properties: {text: Cancel, role: outlined-button, align: left}
+  type: Button
+  layout_properties: {grid_position: 'RKOZRR,TDSXEX'}
+  event_bindings: {click: btn_cancel_click}
 is_package: true

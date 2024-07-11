@@ -16,3 +16,7 @@ components:
     type: Button
     layout_properties: {}
     event_bindings: {click: btn_delete_click}
+- name: lbl_roles
+  properties: {}
+  type: Label
+  layout_properties: {column: PUBCMA}
