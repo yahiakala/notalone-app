@@ -6,3 +6,18 @@ components:
   type: Button
   layout_properties: {column: PUBCMA}
   event_bindings: {click: btn_show_roles_click}
+- name: fp_actions
+  properties: {}
+  type: FlowPanel
+  layout_properties: {column: CFLVXO}
+  components:
+  - name: btn_edit
+    properties: {text: '', role: outlined-button, icon: 'fa:pencil'}
+    type: Button
+    layout_properties: {}
+    event_bindings: {click: btn_edit_click}
+  - name: btn_delete
+    properties: {text: '', icon: 'fa:trash', role: outlined-button}
+    type: Button
+    layout_properties: {}
+    event_bindings: {click: btn_delete_click}

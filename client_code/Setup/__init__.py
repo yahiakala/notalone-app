@@ -32,4 +32,22 @@ class Setup(SetupTemplate):
     def sv_discourse_secret_reset(self, **event_args):
         with anvil.server.no_loading_indicator:
             self.sv_discourse_secret.secret = anvil.server.call('generate_secret')
+
+    def btn_add_plan_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        if self.add_roles:
+            new_plan = {
+                'name': self.tb_plan_name.text,
+                'id': self.tb_plan_id.text,
+                'amt': self.tb_plan_amt.text,
+                'frequency': self.tb_plan_frequency.text,
+                'roles': self.add_roles
+            }
+            self.rp_paypal_plans.items = self.tenant['paypal_plans'] + [new_plan]
+            
+            with anvil.server.no_loading_indicator:
+                anvil.server.call('update_paypal_plan', self.tenant['paypal_plans'] + [new_plan])
+
+            self.add_roles = None
+        routing.alert('Please add roles to this new plan.')
         

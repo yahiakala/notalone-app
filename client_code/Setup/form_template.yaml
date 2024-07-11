@@ -83,11 +83,12 @@ components:
 - name: dg_paypal_plans
   properties:
     columns:
-    - {id: JKSDUP, title: Plan Name, data_key: plan_name}
-    - {id: VJQQOR, title: Plan ID, data_key: plan_id}
-    - {id: OJLQEN, title: Plan Amount, data_key: plan_amt}
-    - {id: RJQCHE, data_key: plan_frequency, title: Payment Frequency}
+    - {id: JKSDUP, title: Plan Name, data_key: name}
+    - {id: VJQQOR, title: Plan ID, data_key: id}
+    - {id: OJLQEN, title: Plan Amount, data_key: amt}
+    - {id: RJQCHE, data_key: frequency, title: Payment Frequency}
     - {id: PUBCMA, data_key: plan_roles, title: Roles}
+    - {id: CFLVXO, data_key: column_1, title: Actions}
     show_page_controls: false
     rows_per_page: 0
     auto_header: true
@@ -125,6 +126,7 @@ components:
   properties: {text: Add Plan, role: filled-button, icon: 'fa:plus'}
   type: Button
   layout_properties: {grid_position: 'YSKMOS,YHVMUE'}
+  event_bindings: {click: btn_add_plan_click}
 - name: lbl_title_discord
   properties: {align: center, text: Discord Settings, icon: '', role: title}
   type: Label

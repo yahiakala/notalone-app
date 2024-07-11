@@ -20,3 +20,11 @@ class PlanRow(PlanRowTemplate):
         new_roles = routing.alert(RoleSelect(item=self.plan_role_perm))
         if new_roles:
             print(new_roles)
+
+    def btn_delete_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        pass
+
+    def btn_edit_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        pass
