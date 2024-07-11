@@ -33,7 +33,7 @@ def login_sso(sso, sig, session_id=None):
     if 'see_forum' not in permissions:
         return anvil.server.HttpResponse(302, headers={"Location": anvil.server.get_app_origin()})
 
-    secret_key = anvil.secrets.get_secret('discourse_secret')
+    secret_key = anvil.secrets.decrypt_with_key('encryption_key', tenant['discourse_secret'])
 
     expected_sig = hmac.new(secret_key.encode(), msg=sso.encode(), digestmod=hashlib.sha256).hexdigest()
     if not hmac.compare_digest(expected_sig, sig):

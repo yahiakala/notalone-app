@@ -3,6 +3,7 @@ import anvil.users
 from anvil.tables import app_tables
 import anvil.tables.query as q
 import anvil.email
+import anvil.secrets
 
 from .helpers import print_timestamp, verify_tenant, validate_user, get_usermap, get_users_with_permission, populate_roles, usermap_row_to_dict
 import datetime as dt
@@ -100,15 +101,6 @@ def save_user_notes_bk(tenant_id, user, user_email, new_note):
         member_user = app_tables.users.get(email=user_email)
         member_usermap = app_tables.usermap.get(user=member_user, tenant=tenant)
         member_usermap['notes'] = new_note
-
-
-@anvil.server.callable(require_user=True)
-def notify_accept(tenant_id, email_to):
-    """Notify the applicant they've been accepted."""
-    # TODO: roll this into one function for approving an applicant.
-    print_timestamp('notify_accept: ' + email_to)
-    user = anvil.users.get_user(allow_remembered=True)
-    # anvil.server.launch_background_task('notify_accept_bk', tenant_id, user, email_to)
 
 
 @anvil.server.background_task
@@ -369,3 +361,17 @@ def generate_secret():
     import string
     characters = string.ascii_letters + string.digits
     return ''.join(secrets.choice(characters) for _ in range(20))
+
+
+@anvil.server.callable(require_user=True)
+def update_tenant_data(tenant_id, new_dict):
+    user = anvil.users.get_user(allow_remembered=True)
+    tenant, usermap, permissions = validate_user(tenant_id, user)
+    if 'delete_members' not in permissions:
+        return None
+    print(new_dict['name'])
+    for safe_key in ['name', 'waiver', 'logo', 'discord_invite', 'paypal_plans', 'discourse_url']:
+        tenant[safe_key] = new_dict[safe_key]
+
+    for secret_key in ['discourse_api_key', 'discourse_secret', 'paypal_client_id', 'paypal_secret']:
+        tenant[secret_key] = anvil.secrets.encrypt_with_key('encryption_key', new_dict[secret_key])

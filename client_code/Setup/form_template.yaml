@@ -1,6 +1,6 @@
 container:
   type: ColumnPanel
-  properties: {col_widths: '{"IUQBBU":14,"NAHIWQ":15,"BAKJKP":15,"PLXZJR":15,"BDBRQE":45,"WEERLN":45,"NILUCE":45,"YXWODB":45,"UVIXIO":15,"FJXWKF":45,"QZSWXM":15,"JZLQIV":45,"NXWYID":15,"TDBVMS":45,"QAYIPQ":15,"FURJFU":45}'}
+  properties: {col_widths: '{"IUQBBU":14,"NAHIWQ":15,"BAKJKP":15,"PLXZJR":15,"BDBRQE":45,"WEERLN":45,"NILUCE":45,"YXWODB":45,"UVIXIO":15,"FJXWKF":45,"QZSWXM":15,"JZLQIV":45,"NXWYID":15,"TDBVMS":45,"QAYIPQ":15,"FURJFU":45,"CGVQKS":15,"HPXGOA":45}'}
   event_bindings: {show: form_show}
 components:
 - name: lbl_title_general
@@ -20,9 +20,10 @@ components:
   type: Label
   layout_properties: {grid_position: 'GAFFRI,QZSWXM'}
 - name: tb_waiver_link
-  properties: {role: outlined, placeholder: Insert public link to your waiver or code of conduct, enabled: false}
+  properties: {role: outlined, placeholder: Insert public link to your waiver or code of conduct, enabled: true, type: url}
   type: TextBox
   layout_properties: {grid_position: 'GAFFRI,JZLQIV'}
+  event_bindings: {lost_focus: tb_waiver_link_lost_focus}
 - name: lbl_logo
   properties: {text: Group Logo Image, role: input-prompt, tooltip: This logo image will show in your app bar when logged in.}
   type: Label
@@ -35,10 +36,20 @@ components:
   properties: {}
   type: FileLoader
   layout_properties: {grid_position: 'MMBUVB,TDBVMS XGHYCN,ULUJLS'}
+  event_bindings: {change: fl_logo_change}
 - name: lbl_title_discourse
   properties: {align: center, text: Discourse Forum Settings, icon: 'fa:users', role: title}
   type: Label
   layout_properties: {grid_position: 'RAYARV,WGMANH'}
+- name: lbl_discourse_url
+  properties: {text: Discourse Forum URL, role: input-prompt, icon: 'fa:info-circle'}
+  type: Label
+  layout_properties: {grid_position: 'JJTCMB,CGVQKS'}
+- name: tb_discourse_url
+  properties: {role: outlined, type: url}
+  type: TextBox
+  layout_properties: {grid_position: 'JJTCMB,HPXGOA'}
+  event_bindings: {lost_focus: tb_discourse_url_lost_focus}
 - name: lbl_discourse_secret
   properties: {text: Discourse Connect Secret, role: input-prompt, spacing_above: medium, icon: 'fa:info-circle'}
   type: Label
@@ -116,9 +127,10 @@ components:
   type: Label
   layout_properties: {grid_position: 'PAHCHU,UVIXIO'}
 - name: tb_discord
-  properties: {role: outlined}
+  properties: {role: outlined, type: url}
   type: TextBox
   layout_properties: {grid_position: 'PAHCHU,FJXWKF'}
+  event_bindings: {lost_focus: tb_discord_lost_focus}
 - name: btn_save
   properties: {text: Save Changes, role: filled-button}
   type: Button

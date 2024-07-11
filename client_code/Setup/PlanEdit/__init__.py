@@ -18,6 +18,7 @@ class PlanEdit(PlanEditTemplate):
         
         if self.item:
             self.tb_plan_id.text = self.item['id']
+            self.tb_plan_id.enabled = False
             self.tb_plan_name.text = self.item['name']
             self.tb_plan_amt.text = self.item['amt']
             self.tb_plan_frequency.text = self.item['frequency']
