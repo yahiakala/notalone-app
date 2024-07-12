@@ -211,6 +211,8 @@ def verify_paypal_webhook(tenant, headers, body):
 
     signature = base64.b64decode(headers['paypal-transmission-sig'])
     print('signature')
+    print(headers['paypal-transmission-sig'])
+    print('signature decoded')
     print(signature)
     
     cert_pem = get_certificate(tenant, headers['paypal-cert-url'])
