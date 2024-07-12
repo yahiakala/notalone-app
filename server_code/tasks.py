@@ -293,12 +293,13 @@ def get_member_data(tenant_id, email):
     
     if 'see_members' in permissions:
         membermap = app_tables.usermap.get(tenant=tenant, user=member)
-        notes = membermap['notes']
+        membermap_dict = usermap_row_to_dict(membermap)
     else:
         membermap = app_tables.usermap.get(tenant=tenant, user=user)
-        notes = None
+        membermap_dict = usermap_row_to_dict(membermap)
+        membermap_dict['notes'] = ''
 
-    return usermap_row_to_dict(membermap, notes)
+    return membermap_dict
     
 
 @anvil.server.callable(require_user=True)

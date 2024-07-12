@@ -110,7 +110,7 @@ def upsert_role(usermap, role_name):
         usermap['roles'] = usermap['roles'] + [role]
 
 
-def usermap_row_to_dict(row, notes=None):
+def usermap_row_to_dict(row):
     row_dict = {
         'first_name': row['user']['first_name'] or '',
         'last_name': row['user']['last_name'] or '',
@@ -127,7 +127,7 @@ def usermap_row_to_dict(row, notes=None):
         'paypal_sub_id': row['paypal_sub_id'],
         'permissions': get_permissions(None, row['user'], row['tenant'], row),
         'roles': get_user_roles(None, None, row, row['tenant']),
-        'notes': notes or row['notes']
+        'notes': row['notes']
     }
     return row_dict
 

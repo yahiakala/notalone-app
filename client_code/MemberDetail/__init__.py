@@ -70,13 +70,12 @@ class MemberDetail(MemberDetailTemplate):
         if not self.member["fee"]:
             fee_send = 10
 
-        Global.user, self.payment_url = anvil.server.call("create_sub", fee_send)
+        self.member, self.payment_url = anvil.server.call("create_sub", fee_send)
         self.user = dict(Global.user)  # avoid errors with data bindings
         print("fee: " + str(self.member["fee"]))
         self.btn_save_click()
         # window.open(self.payment_url)
         window.location.href = self.payment_url  # same window
-        self.refresh_data_bindings()
         routing.set_url_hash("homedetail", load_from_cache=False)
 
     def btn_back_click(self, **event_args):

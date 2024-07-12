@@ -5,7 +5,7 @@ from anvil.tables import app_tables
 import anvil.tables.query as q
 import anvil.users
 
-from .helpers import get_users_with_permission, validate_user
+from .helpers import get_users_with_permission, validate_user, usermap_row_to_dict
 
 # https://developer.paypal.com/docs/api/subscriptions/v1/#subscriptions_create
 
@@ -88,7 +88,12 @@ def create_sub(tenant_id, plan_id):
         
         usermap['fee'] = plan['amt']
         usermap['paypal_sub_id'] = response['id']
-        return response['links'][0]['href']
+        # TODO: also return usermap_row_to_dict
+        membermap = usermap_row_to_dict(usermap)
+        if 'see_members' not in permissions:
+            membermap['notes'] = ''
+        
+        return membermap, response['links'][0]['href']
     except anvil.http.HttpError as e:
         print(f"Error {e.status} {e.content}")
 
