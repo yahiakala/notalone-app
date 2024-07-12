@@ -153,6 +153,7 @@ def capture_sub(**params):
     usermap = app_tables.usermap.get(paypal_sub_id=body['resource']['id'])
     # if not usermap:
     #     return anvil.server.HttpResponse(400)
+    verify_paypal_webhook2(None, headers, raw_body)
     
     if not verify_paypal_webhook(None, headers, raw_body):
         print('Webhook not verified.')
@@ -190,6 +191,35 @@ def update_subscription(headers, raw_body):
     #     notify_paid(screener['user'], usermap['user'])
     # return anvil.server.HttpResponse(302, headers={'Location': anvil.server.get_app_origin() + '/#profile'})
 
+
+def verify_paypal_webhook2(tenant, headers, body):
+    import requests
+
+    ACCESS_TOKEN = get_paypal_auth(
+        None,
+        client_id,
+        client_secret
+    )
+    
+    new_headers = {
+        'Content-Type': 'application/json',
+        'Authorization': f'Bearer {ACCESS_TOKEN}'
+    }
+
+    data = {
+        'auth_algo': headers['paypal-auth-algo'], 
+        'cert_url': headers['paypal-cert-url'],
+        'transmission_id': headers['paypal-transmission-id'],
+        'transmission_sig': headers['paypal-transmission-sig'],
+        'transmission_time': headers['paypal-transmission-time'],
+        'webhook_id': '61X642557J038062F',
+        'webhook_event': body
+    }
+    response = requests.post(
+        'https://api-m.sandbox.paypal.com/v1/notifications/verify-webhook-signature',
+        headers=new_headers, json=data
+    )
+    print(response)
 
 def verify_paypal_webhook(tenant, headers, body):
     import zlib
