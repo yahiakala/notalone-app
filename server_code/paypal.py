@@ -231,6 +231,7 @@ def verify_paypal_webhook2(tenant, headers, body):
     # print(response.content)
 
 def verify_paypal_webhook(tenant, headers, body):
+    """Couldn't get this to work."""
     import zlib
     import hmac
     import hashlib
