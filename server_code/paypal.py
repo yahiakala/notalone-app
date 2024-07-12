@@ -285,13 +285,6 @@ def get_certificate(tenant, url):
         return cert_data
 
 
-@anvil.server.http_endpoint('/cancel-sub')
-def cancel_sub(**params):
-    row = app_tables.users.get(paypal_sub_id=params['subscription_id'])
-    row['paypal_sub_id'] = None
-    return anvil.server.HttpResponse(302, headers={'Location': anvil.server.get_app_origin() + '/#profile'})
-
-
 #%% Scheduled Task -------------------------------
 @anvil.server.background_task
 def calc_rev12():
