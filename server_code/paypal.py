@@ -13,11 +13,11 @@ from .emails import notify_paid
 if anvil.server.get_app_origin() is None or 'debug' in anvil.server.get_app_origin() or 'test' in anvil.server.get_app_origin():
     TOKEN_URL = 'https://api-m.sandbox.paypal.com/v1/oauth2/token'
     SUBSCRIPTION_URL = 'https://api-m.sandbox.paypal.com/v1/billing/subscriptions'
-    # TOKEN_URL = 'https://api.paypal.com/v1/oauth2/token'
-    # SUBSCRIPTION_URL = 'https://api.paypal.com/v1/billing/subscriptions'
+    VERIFY_URL = 'https://api.sandbox.paypal.com/v1/notifications/verify-webhook-signature'
 else:
     TOKEN_URL = 'https://api.paypal.com/v1/oauth2/token'
     SUBSCRIPTION_URL = 'https://api.paypal.com/v1/billing/subscriptions'
+    VERIFY_URL = 'https://api.paypal.com/v1/notifications/verify-webhook-signature'
 
 def get_paypal_auth(tenant, client_id=None, client_secret=None):
     import json
@@ -195,14 +195,7 @@ def update_subscription(headers, body):
 
 
 def verify_paypal_webhook2(tenant, headers, body):
-    # import requests
-    import json
-
-    ACCESS_TOKEN = get_paypal_auth(
-        None,
-        'AR3dzutbtWcc9tSKbgf9wXZsxl9914ljHoTFUd7Lamrg_46P5M8FLtIaUYOW1HAJ1llc39bnPldS7uCG',
-        'EGG-4s3okd5VvMLqbMAfC1LPegVNn9-MNgsu_c2cFwKdOXyBYCDPk1B6-Jg3d1zDzpFgoo8ZiTZArj7J'
-    )
+    ACCESS_TOKEN = get_paypal_auth(tenant)
     
     new_headers = {
         'Content-Type': 'application/json',
@@ -219,7 +212,7 @@ def verify_paypal_webhook2(tenant, headers, body):
         'webhook_event': body
     }
     response = anvil.http.request(
-        'https://api.sandbox.paypal.com/v1/notifications/verify-webhook-signature',
+        VERIFY_URL,
         headers=new_headers,
         method='POST',
         data=data,
