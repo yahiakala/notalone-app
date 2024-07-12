@@ -137,47 +137,57 @@ def create_sub(tenant_id, plan_id):
 
 @anvil.server.http_endpoint('/capture-sub', methods=['POST'])
 def capture_sub(**params):
-    verify_paypal_webhook(anvil.server.request.headers, anvil.server.request.body_json)
+    headers = anvil.server.request.headers
+    print(headers)
+    # body = anvil.server.request.body_json
+    raw_body = anvil.server.request.body.get_bytes().decode('utf-8')
+    print(raw_body)
+    anvil.server.launch_background_task('update_subscription', headers, raw_body)
+    anvil.server.HttpResponse(200)
+
+
+@anvil.server.background_task
+def update_subscription(headers, raw_body):
+    verify_paypal_webhook(headers, raw_body)
     
-    usermap = app_tables.usermap.get(paypal_sub_id=params['subscription_id'])
-    usermap['roles'] = [i for i in usermap['roles'] if i['name'] != 'Applicant']
-    member_role = app_tables.roles.get(tenant=usermap['tenant'], name='Member')
+    # usermap = app_tables.usermap.get(paypal_sub_id=params['subscription_id'])
+    # usermap['roles'] = [i for i in usermap['roles'] if i['name'] != 'Applicant']
+    # member_role = app_tables.roles.get(tenant=usermap['tenant'], name='Member')
     
-    if member_role not in usermap['roles']:
-        usermap['roles'] = usermap['roles'] + member_role
+    # if member_role not in usermap['roles']:
+    #     usermap['roles'] = usermap['roles'] + member_role
     
-    print(usermap['user']['email'] + ' has just paid. Sending email to screeners.')
+    # print(usermap['user']['email'] + ' has just paid. Sending email to screeners.')
     
-    screeners = get_users_with_permission(None, 'see_members', usermap['tenant'])
-    for screener in screeners:
-        print('Sending email to : ' + screener['user']['email'])
-        notify_paid(screener['user'], usermap['user'])
-    return anvil.server.HttpResponse(302, headers={'Location': anvil.server.get_app_origin() + '/#profile'})
+    # screeners = get_users_with_permission(None, 'see_members', usermap['tenant'])
+    # for screener in screeners:
+    #     print('Sending email to : ' + screener['user']['email'])
+    #     notify_paid(screener['user'], usermap['user'])
+    # return anvil.server.HttpResponse(302, headers={'Location': anvil.server.get_app_origin() + '/#profile'})
 
 
-def verify_paypal_webhook(request_headers, request_json):
-    from paypalcheckoutsdk.core import PayPalHttpClient, SandboxEnvironment
-    from paypalcheckoutsdk.notifications import WebhookEvent
+def verify_paypal_webhook(headers, body):
+    import zlib
+    import hmac
+    import hashlib
+    import base64
+    
+    transmission_id = headers['paypal-transmission-id']
+    timestamp = headers['paypal-transmission-time']
+    crc = zlib.crc32(body.encode('utf-8'))
+    WEBHOOK_ID = ''
+    message = f"{transmission_id}|{timestamp}|{WEBHOOK_ID}|{crc}"
+    cert_url = headers['paypal-cert-url']
+    
+    cert_pem = download_and_cache(cert_url)
+    
+    signature = base64.b64decode(headers['paypal-transmission-sig'])
+    
+    verifier = hmac.new(cert_pem.encode(), message.encode(), hashlib.sha256)
+    return hmac.compare_digest(verifier.digest(), signature)
+    
 
-    environment = SandboxEnvironment(client_id='YOUR_PAYPAL_CLIENT_ID', client_secret='YOUR_PAYPAL_CLIENT_SECRET')
-    client = PayPalHttpClient(environment)
-
-    paypal_transmission_id = request_headers['Paypal-Transmission-Id']
-    paypal_transmission_time = request_headers['Paypal-Transmission-Time']
-    paypal_transmission_sig = request_headers['Paypal-Transmission-Sig']
-    cert_url = request_headers['Paypal-Cert-Url']
-    auth_algo = request_headers['Paypal-Auth-Algo']
-
-    verification_status = WebhookEvent.verify(
-        transmission_id=paypal_transmission_id,
-        timestamp=paypal_transmission_time,
-        webhook_id='YOUR_WEBHOOK_ID',  # Replace with your webhook ID
-        event_body=request_json,
-        cert_url=cert_url,
-        actual_sig=paypal_transmission_sig,
-        auth_algo=auth_algo,
-        client=client
-        )
+    verification_status = False
     return verification_status
 
 
