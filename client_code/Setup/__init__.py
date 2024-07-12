@@ -34,6 +34,7 @@ class Setup(SetupTemplate):
             self.sv_discourse_secret.secret = self.tenant_secrets['discourse_secret']
             self.sv_paypal_client_id.secret = self.tenant_secrets['paypal_client_id']
             self.sv_paypal_secret.secret = self.tenant_secrets['paypal_secret']
+            self.sv_webhook_id.secret = self.tenant_secrets['paypal_webhook_id']
 
     def sv_discourse_secret_reset(self, **event_args):
         with anvil.server.no_loading_indicator:
@@ -67,6 +68,7 @@ class Setup(SetupTemplate):
                 'discourse_secret': self.sv_discourse_secret.secret,
                 'paypal_client_id': self.sv_paypal_client_id.secret,
                 'paypal_secret': self.sv_paypal_secret.secret,
+                'paypal_webhook_id': self.sv_webhook_id.secret,
                 'name': self.tb_name.text,
                 'email': self.tb_email.text,
                 'discourse_url': self.tb_discourse_url.text,

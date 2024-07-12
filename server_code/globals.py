@@ -19,7 +19,6 @@ def get_tenant_single(user=None, tenant=None):
     if not tenant:
         return None
     
-    # TODO: get more data if admin on these tenants.
     tenant_dict = {
         'id': tenant.get_id(),
         'name': tenant['name'],
@@ -75,7 +74,8 @@ def get_tenant_secrets(tenant_id, user):
         'discourse_api_key': decrypt(tenant['discourse_api_key']),
         'discourse_secret': decrypt(tenant['discourse_secret']),
         'paypal_client_id': decrypt(tenant['paypal_client_id']),
-        'paypal_secret': decrypt(tenant['paypal_secret'])
+        'paypal_secret': decrypt(tenant['paypal_secret']),
+        'paypal_webhook_id': decrypt(tenant['paypal_webhook_id'])
     }
     return secrets
 

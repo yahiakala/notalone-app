@@ -372,5 +372,7 @@ def update_tenant_data(tenant_id, new_dict):
     for safe_key in ['name', 'waiver', 'logo', 'discord_invite', 'paypal_plans', 'discourse_url']:
         tenant[safe_key] = new_dict[safe_key]
 
-    for secret_key in ['discourse_api_key', 'discourse_secret', 'paypal_client_id', 'paypal_secret']:
+    secrets = ['discourse_api_key', 'discourse_secret',
+               'paypal_client_id', 'paypal_secret', 'paypal_webhook_id']
+    for secret_key in secrets:
         tenant[secret_key] = anvil.secrets.encrypt_with_key('encryption_key', new_dict[secret_key])
