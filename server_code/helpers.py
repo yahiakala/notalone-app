@@ -95,8 +95,8 @@ def validate_user(tenant_id, user, usermap=None, permissions=None, tenant=None):
 
 def get_users_with_permission(tenant_id, permission, tenant=None):
     tenant = tenant or app_tables.tenants.get_by_id(tenant_id)
-    perm_row = app_tables.permissions.get(name=permission)
-    role_rows = app_tables.roles.search(permissions=perm_row, tenant=tenant)
+    perm_rows = app_tables.permissions.search(name=permission)
+    role_rows = app_tables.roles.search(permissions=q.any_of(*perm_rows), tenant=tenant)
     usermaps = app_tables.usermap.search(roles=q.any_of(*role_rows), tenant=tenant)
     return usermaps
 
