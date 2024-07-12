@@ -173,7 +173,7 @@ def capture_sub(**params):
 
 
 @anvil.server.background_task
-def update_subscription(headers, raw_body):
+def update_subscription(headers, body):
     pass
     # TODO: look for status 'EXPIRED' to remove roles.
     # TODO: look for status 'ACTIVE' to add roles.
