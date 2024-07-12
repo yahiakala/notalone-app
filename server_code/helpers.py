@@ -107,6 +107,7 @@ def upsert_role(usermap, role_name):
         usermap['roles'] = [role]
     elif role not in usermap['roles']:
         usermap['roles'] = usermap['roles'] + [role]
+    return usermap
 
 
 def usermap_row_to_dict(row):

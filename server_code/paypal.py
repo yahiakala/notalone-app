@@ -181,7 +181,8 @@ def update_subscription(usermap, headers, body):
     elif body['resource']['status'] == 'ACTIVE':
         # Add roles
         for role in plan['roles']:
-            upsert_role(usermap, role)
+            usermap = upsert_role(usermap, role)
+            usermap['roles'] = [i for i in usermap['roles'] if i['name'] not in ['Applicant', 'Approved']]
         notify_admins(usermap)
 
     usermap['payment_status'] = body['resource']['status']
