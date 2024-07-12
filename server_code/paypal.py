@@ -219,7 +219,8 @@ def get_certificate(tenant, url):
     else:
         response = requests.get(url)
         cert_data = response.text
-        tenant['webhook_certificate'] = cert_data
+        if tenant:
+            tenant['webhook_certificate'] = cert_data
         return cert_data
 
 
