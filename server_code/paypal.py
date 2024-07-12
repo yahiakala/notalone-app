@@ -208,7 +208,7 @@ def verify_paypal_webhook2(tenant, headers, body):
         'transmission_id': headers['paypal-transmission-id'],
         'transmission_sig': headers['paypal-transmission-sig'],
         'transmission_time': headers['paypal-transmission-time'],
-        'webhook_id': '61X642557J038062F',
+        'webhook_id': anvil.secrets.decrypt_with_key('encryption_key', tenant['paypal_webhook_id']),
         'webhook_event': body
     }
     response = anvil.http.request(
