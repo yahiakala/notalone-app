@@ -150,7 +150,7 @@ def capture_sub(**params):
     if body['event_type'] in listen_events:
         print(body['resource']['status'])
         print(body['resource']['id'])
-        print(body['resrouce']['plan_id']) # TODO: match it up later with plan roles.
+        print(body['resource']['plan_id']) # TODO: match it up later with plan roles.
     anvil.server.HttpResponse(200)
 
 
