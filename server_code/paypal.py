@@ -220,7 +220,7 @@ def get_certificate(tenant, url):
         response = requests.get(url)
         cert_data = response.text
         if tenant:
-            tenant['webhook_certificate'] = cert_data
+            tenant['paypal_webhook_certificate'] = cert_data
         return cert_data
 
 
