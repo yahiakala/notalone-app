@@ -83,6 +83,7 @@ def create_sub(tenant_id, plan_id):
         # Use the subscription id to match them up.
         response = anvil.http.request(
             'https://api.paypal.com/v1/billing/subscriptions',
+            # https://api-m.sandbox.paypal.com/v1/billing/subscriptions
             method='POST',
             headers={
                 'Authorization': f'Bearer {access_token}',
