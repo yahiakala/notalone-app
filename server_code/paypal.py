@@ -143,19 +143,21 @@ def capture_sub(**params):
     raw_body = anvil.server.request.body.get_bytes().decode('utf-8')
     print(raw_body)
 
-    # listen_events = ['BILLING.SUBSCRIPTION.ACTIVATED',
-    #                  'BILLING.SUBSCRIPTION.EXPIRED',
-    #                  'BILLING.SUBSCRIPTION.UPDATED']
+    listen_events = ['BILLING.SUBSCRIPTION.ACTIVATED',
+                     'BILLING.SUBSCRIPTION.EXPIRED',
+                     'BILLING.SUBSCRIPTION.UPDATED']
     # if body['event_type'] not in listen_events:
     #     print(f"not interested in this event: {body['event_type']}")
     #     return anvil.server.HttpResponse(200)
 
     usermap = app_tables.usermap.get(paypal_sub_id=body['resource']['id'])
-    # if not usermap:
-    #     return anvil.server.HttpResponse(400)
-    verify_paypal_webhook2(None, headers, raw_body)
+    if not usermap:
+        return anvil.server.HttpResponse(400)
+
+    print('Found user:')
+    print(usermap['user']['email'])
     
-    if not verify_paypal_webhook(None, headers, raw_body):
+    if not verify_paypal_webhook2(usermap['tenant'], headers, body):    
         print('Webhook not verified.')
         return anvil.server.HttpResponse(400)
     print('Webhook verified.')
@@ -193,7 +195,7 @@ def update_subscription(headers, raw_body):
 
 
 def verify_paypal_webhook2(tenant, headers, body):
-    import requests
+    # import requests
     import json
 
     ACCESS_TOKEN = get_paypal_auth(
@@ -214,7 +216,7 @@ def verify_paypal_webhook2(tenant, headers, body):
         'transmission_sig': headers['paypal-transmission-sig'],
         'transmission_time': headers['paypal-transmission-time'],
         'webhook_id': '61X642557J038062F',
-        'webhook_event': json.loads(body)
+        'webhook_event': body
     }
     response = anvil.http.request(
         'https://api.sandbox.paypal.com/v1/notifications/verify-webhook-signature',
@@ -228,7 +230,10 @@ def verify_paypal_webhook2(tenant, headers, body):
     #     headers=new_headers, json=data
     # )
     print(response)
-    # print(response.content)
+    if response['verification_status'] == 'SUCCESS':
+        return True
+    else:
+        return False
 
 def verify_paypal_webhook(tenant, headers, body):
     """Couldn't get this to work."""
