@@ -10,7 +10,7 @@ from .emails import notify_paid
 
 
 # https://developer.paypal.com/docs/api/subscriptions/v1/#subscriptions_create
-if anvil.server.get_app_origin() is None or 'debug' in anvil.server.get_app_origin():
+if anvil.server.get_app_origin() is None or 'debug' in anvil.server.get_app_origin() or 'test' in anvil.server.get_app_origin():
     TOKEN_URL = 'https://api-m.sandbox.paypal.com/v1/oauth2/token'
     SUBSCRIPTION_URL = 'https://api-m.sandbox.paypal.com/v1/billing/subscriptions'
     # TOKEN_URL = 'https://api.paypal.com/v1/oauth2/token'
