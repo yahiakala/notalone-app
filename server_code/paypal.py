@@ -187,6 +187,7 @@ def update_subscription(usermap, headers, body):
     usermap['payment_status'] = body['resource']['status']
     usermap['fee'] = float(body['resource']['billing_info']['last_payment']['amount']['value'])
 
+
 def notify_admins(usermap):
     screeners = get_users_with_permission(None, 'see_members', usermap['tenant'])
     for screener in screeners:
@@ -218,15 +219,12 @@ def verify_paypal_webhook2(tenant, headers, body):
         data=data,
         json=True
     )
-    # response = requests.post(
-    #     'https://api.sandbox.paypal.com/v1/notifications/verify-webhook-signature',
-    #     headers=new_headers, json=data
-    # )
     print(response)
     if response['verification_status'] == 'SUCCESS':
         return True
     else:
         return False
+
 
 def verify_paypal_webhook(tenant, headers, body):
     """Couldn't get this to work."""
