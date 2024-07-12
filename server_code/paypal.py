@@ -142,6 +142,10 @@ def capture_sub(**params):
     body = anvil.server.request.body_json
     raw_body = anvil.server.request.body.get_bytes().decode('utf-8')
     print(raw_body)
+
+    if not verify_paypal_webhook(headers, raw_body):
+        return anvil.server.HttpResponse(400)
+    
     # anvil.server.launch_background_task('update_subscription', headers, raw_body)
     # update_subscription(headers, raw_body)
     listen_events = ['BILLING.SUBSCRIPTION.ACTIVATED',
@@ -151,7 +155,7 @@ def capture_sub(**params):
         print(body['resource']['status'])
         print(body['resource']['id'])
         print(body['resource']['plan_id']) # TODO: match it up later with plan roles.
-    anvil.server.HttpResponse(200)
+    return anvil.server.HttpResponse(200)
 
 
 @anvil.server.background_task
