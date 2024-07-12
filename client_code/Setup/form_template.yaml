@@ -1,6 +1,6 @@
 container:
   type: ColumnPanel
-  properties: {col_widths: '{"IUQBBU":14,"NAHIWQ":15,"BAKJKP":15,"PLXZJR":15,"BDBRQE":45,"WEERLN":45,"NILUCE":45,"YXWODB":45,"UVIXIO":15,"FJXWKF":45,"QZSWXM":15,"JZLQIV":45,"NXWYID":15,"TDBVMS":45,"QAYIPQ":15,"FURJFU":45,"CGVQKS":15,"HPXGOA":45}'}
+  properties: {col_widths: '{"IUQBBU":14,"NAHIWQ":15,"BAKJKP":15,"PLXZJR":15,"BDBRQE":45,"WEERLN":45,"NILUCE":45,"YXWODB":45,"UVIXIO":15,"FJXWKF":45,"QZSWXM":15,"JZLQIV":45,"NXWYID":15,"TDBVMS":45,"QAYIPQ":15,"FURJFU":45,"CGVQKS":15,"HPXGOA":45,"PJPARK":15,"FVPFTI":45,"IEZEYK":15,"RYHILR":45}'}
   event_bindings: {show: form_show}
 components:
 - name: lbl_title_general
@@ -24,6 +24,14 @@ components:
   type: TextBox
   layout_properties: {grid_position: 'GAFFRI,JZLQIV'}
   event_bindings: {lost_focus: tb_waiver_link_lost_focus}
+- name: lbl_email
+  properties: {text: Contact Email for Members, role: input-prompt}
+  type: Label
+  layout_properties: {grid_position: 'YKDEON,PJPARK'}
+- name: tb_email
+  properties: {role: outlined}
+  type: TextBox
+  layout_properties: {grid_position: 'YKDEON,FVPFTI'}
 - name: lbl_logo
   properties: {text: Group Logo Image, role: input-prompt, tooltip: This logo image will show in your app bar when logged in.}
   type: Label
@@ -87,6 +95,14 @@ components:
   properties: {}
   type: form:dep_yfmcrf11pl29j4:SecretViewer
   layout_properties: {grid_position: 'FEDURM,BDBRQE'}
+- name: lbl_webhook_id
+  properties: {text: PayPal Webhook ID, role: input-prompt, icon: 'fa:info-circle', spacing_above: medium}
+  type: Label
+  layout_properties: {grid_position: 'UQPFNT,IEZEYK'}
+- name: sv_webhook_id
+  properties: {}
+  type: form:dep_yfmcrf11pl29j4:SecretViewer
+  layout_properties: {grid_position: 'UQPFNT,RYHILR'}
 - name: lbl_paypal_plans
   properties: {text: PayPal Plans, role: input-prompt, spacing_above: medium, tooltip: This API key will be used for automatically posting welcome messages in your forum., icon: 'fa:info-circle', align: center}
   type: Label

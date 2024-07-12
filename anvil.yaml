@@ -242,6 +242,9 @@ db_schema:
     - name: discord_invite
       admin_ui: {width: 200, order: 10}
       type: string
+    - name: paypal_webhook_id
+      admin_ui: {width: 200, order: 11}
+      type: string
     title: Tenants
   users:
     client: none

@@ -23,6 +23,7 @@ def get_tenant_single(user=None, tenant=None):
     tenant_dict = {
         'id': tenant.get_id(),
         'name': tenant['name'],
+        'email': tenant['email'],
         'discord_invite': tenant['discord_invite'],
         'discourse_url': tenant['discourse_url'],
         'waiver': tenant['waiver'],

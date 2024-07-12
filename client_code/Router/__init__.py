@@ -92,7 +92,7 @@ class Router(RouterTemplate):
 
     def link_help_click(self, **event_args):
         """This method is called when the link is clicked"""
-        alert('For help, contact ' + Global.tenant_info['email'])
+        alert('For help, contact ' + Global.tenant['email'])
 
     def tb_impersonate_pressed_enter(self, **event_args):
         """This method is called when the user presses Enter in this text box"""

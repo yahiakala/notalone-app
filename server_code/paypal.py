@@ -135,11 +135,8 @@ def create_sub(tenant_id, plan_id):
         raise anvil.http.HttpError(e.status, e.content)
 
 
-@anvil.server.http_endpoint('/capture-sub')
+@anvil.server.http_endpoint('/capture-sub', methods=['POST'])
 def capture_sub(**params):
-    # TODO: use fake paypal to test this
-    # TODO: secure this
-    # TODO: use anvil.server.session.get('tenant_id', None)
     verify_paypal_webhook(anvil.server.request.headers, anvil.server.request.body_json)
     
     usermap = app_tables.usermap.get(paypal_sub_id=params['subscription_id'])

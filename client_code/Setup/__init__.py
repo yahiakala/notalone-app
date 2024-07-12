@@ -22,6 +22,7 @@ class Setup(SetupTemplate):
         with anvil.server.no_loading_indicator:
             self.tenant = Global.tenant
             self.tb_name.text = self.tenant['name']
+            self.tb_email.text = self.tenant['email']
             self.tb_waiver_link.text = self.tenant['waiver']
             self.img_logo.source = self.tenant['logo']
             self.tb_discourse_url.text = self.tenant['discourse_url']
@@ -67,6 +68,7 @@ class Setup(SetupTemplate):
                 'paypal_client_id': self.sv_paypal_client_id.secret,
                 'paypal_secret': self.sv_paypal_secret.secret,
                 'name': self.tb_name.text,
+                'email': self.tb_email.text,
                 'discourse_url': self.tb_discourse_url.text,
                 'waiver': self.tb_waiver_link.text,
                 'logo': self.img_logo.source,
