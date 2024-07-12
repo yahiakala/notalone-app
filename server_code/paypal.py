@@ -144,6 +144,13 @@ def capture_sub(**params):
     print(raw_body)
     # anvil.server.launch_background_task('update_subscription', headers, raw_body)
     # update_subscription(headers, raw_body)
+    listen_events = ['BILLING.SUBSCRIPTION.ACTIVATED',
+                     'BILLING.SUBSCRIPTION.EXPIRED',
+                     'BILLING.SUBSCRIPTION.UPDATED']
+    if raw_body['event_type'] in listen_events:
+        print(raw_body['resource']['status'])
+        print(raw_body['resource']['id'])
+        print(raw_body['resrouce']['plan_id']) # TODO: match it up later with plan roles.
     anvil.server.HttpResponse(200)
 
 
