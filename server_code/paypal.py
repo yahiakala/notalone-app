@@ -196,19 +196,33 @@ def verify_paypal_webhook(tenant, headers, body):
     import hmac
     import hashlib
     import base64
+    from Crypto.PublicKey import RSA
+    from Crypto.Hash import SHA256
+    from Crypto.Signature import pkcs1_15
     
     transmission_id = headers['paypal-transmission-id']
     timestamp = headers['paypal-transmission-time']
     crc = zlib.crc32(body.encode('utf-8'))
     WEBHOOK_ID = 'WEBHOOK_ID'
+    
     message = f"{transmission_id}|{timestamp}|{WEBHOOK_ID}|{crc}"
-    
-    cert_pem = get_certificate(tenant, headers['paypal-cert-url'])
-    
+
     signature = base64.b64decode(headers['paypal-transmission-sig'])
     
-    verifier = hmac.new(cert_pem.encode(), message.encode(), hashlib.sha256)
-    return hmac.compare_digest(verifier.digest(), signature)
+    cert_pem = get_certificate(tenant, headers['paypal-cert-url'])
+    cert_key = RSA.import_key(cert_pem)
+    
+    h = SHA256.new(message.encode('utf-8'))
+
+    return pkcs1_15.new(cert_key).verify(h, signature)
+    # try:
+    #     pkcs1_15.new(cert_key).verify(h, signature)
+    #     return True
+    # except (ValueError, TypeError):
+    #     return False
+    
+    # verifier = hmac.new(cert_pem.encode(), message.encode(), hashlib.sha256)
+    # return hmac.compare_digest(verifier.digest(), signature)
 
 
 def get_certificate(tenant, url):
