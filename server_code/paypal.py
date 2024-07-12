@@ -139,7 +139,7 @@ def create_sub(tenant_id, plan_id):
 def capture_sub(**params):
     headers = anvil.server.request.headers
     print(headers)
-    # body = anvil.server.request.body_json
+    body = anvil.server.request.body_json
     raw_body = anvil.server.request.body.get_bytes().decode('utf-8')
     print(raw_body)
     # anvil.server.launch_background_task('update_subscription', headers, raw_body)
@@ -147,17 +147,19 @@ def capture_sub(**params):
     listen_events = ['BILLING.SUBSCRIPTION.ACTIVATED',
                      'BILLING.SUBSCRIPTION.EXPIRED',
                      'BILLING.SUBSCRIPTION.UPDATED']
-    if raw_body['event_type'] in listen_events:
-        print(raw_body['resource']['status'])
-        print(raw_body['resource']['id'])
-        print(raw_body['resrouce']['plan_id']) # TODO: match it up later with plan roles.
+    if body['event_type'] in listen_events:
+        print(body['resource']['status'])
+        print(body['resource']['id'])
+        print(body['resrouce']['plan_id']) # TODO: match it up later with plan roles.
     anvil.server.HttpResponse(200)
 
 
 @anvil.server.background_task
 def update_subscription(headers, raw_body):
     verify_paypal_webhook(headers, raw_body)
-    
+
+
+    # TODO: look for status 'EXPIRED'
     # usermap = app_tables.usermap.get(paypal_sub_id=params['subscription_id'])
     # usermap['roles'] = [i for i in usermap['roles'] if i['name'] != 'Applicant']
     # member_role = app_tables.roles.get(tenant=usermap['tenant'], name='Member')
