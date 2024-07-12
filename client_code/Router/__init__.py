@@ -73,7 +73,7 @@ class Router(RouterTemplate):
                 user['last_name'] != ''
             )
             self.link_admin.visible = 'delete_admin' in self.permissions
-            if 'dev' in self.permissions:
+            if 'debug' in anvil.server.get_app_origin():
                 # TODO: change to app origin check debug
                 self.tb_impersonate.visible = True
 
