@@ -347,12 +347,6 @@ db_schema:
       type: string
     title: Users
 secrets:
-  paypal_client_id_sandbox:
-    value: {T4BTSIBAI26CJ3RZ: sJLxw+sI+jvS2nL6zggMoPAarjm9WC+MNiDfLJeJoUT2JPjoaxwsvwVSIc5YAzN7tn67nT5pXUIzUoIP+JAf7+5mXitOOFiBDjhiSXNJidxlP0hMrfbf5mIQYSr8Ay2u3Jy/XabGJq9MdGtmf3VqepG9jNkEda1N8inUcT3aJlKYNtoIn5r3u4aNBk2Qaq48XxV3orH9UmIAr0QmIpJPqS2FzF4x7uOpkidid2evxg==}
-    type: secret
-  paypal_secret_sandbox:
-    value: {T4BTSIBAI26CJ3RZ: hHVZwjuAVUh1BfZbXPJwcXU7/ZOWEMiIfGuCmpBcvn0DepMTwMK9WH9KSuJ986gjJcwlkAYIiCDiJYKhIxzabL7V2hketoU4Jdw+8XZD/IUOzymLnrJZ9xPpfDYDQ6NVke0DSaVU1fRl0LNQw6JY8pObeXAGXC8a1PFWV+3QNokFT3oL+BqeuuDHKc1u0Q2+kIhRt8q5zxcVqkX/Jk/yhGmP4VhmmA7O5MmeU/5BnQ==}
-    type: secret
   encryption_key:
     type: key
     value: {T4BTSIBAI26CJ3RZ: l+TpS8nkOBcBEWM1IlatDl+c+zkivrSRhSRSmkZnvHPhENEfBT2eYBdYvIqKRpjAlQ1aHpHBK55gf6kgIyEMjGVmRx6a2KfSngdFUO3NgOviO+5nzSf+lcxIb21oEhE/s8g4jJELubTwRgJzp3sLSH9GFQA4qRo=}
