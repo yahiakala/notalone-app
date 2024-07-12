@@ -164,17 +164,23 @@ def capture_sub(**params):
     
     # anvil.server.launch_background_task('update_subscription', headers, raw_body)
     # update_subscription(headers, raw_body)
-    
-    if body['event_type'] in listen_events:
-        print(body['resource']['status'])
-        print(body['resource']['id'])
-        print(body['resource']['plan_id']) # TODO: match it up later with plan roles.
+    update_subscription(usermap, headers, body)
     return anvil.server.HttpResponse(200)
 
 
 @anvil.server.background_task
-def update_subscription(headers, body):
-    pass
+def update_subscription(usermap, headers, body):
+    plan_id = body['resource']['plan_id']
+    
+    plan = [i for i in usermap['tenant']['paypal_plans'] if i['id'] == plan_id][0]
+
+    if body['resource']['status'] == 'EXPIRED':
+        pass
+    elif body['resource']['status'] == 'ACTIVE':
+        # Add roles
+        pass
+
+    usermap['paypal_status'] = body['resource']['status']
     # TODO: look for status 'EXPIRED' to remove roles.
     # TODO: look for status 'ACTIVE' to add roles.
     # everything else just update
