@@ -55,6 +55,21 @@ def get_subscriptions(tenant, subscription_id, access_token=None, verbose=False)
     return status, last_payment, payment_amt
 
 
+def check_sub(tenant_id, user_row):
+    # TODO: deprecate this in favor of a webhook of a subscription expiring
+    # from dateutil.relativedelta import relativedelta
+    # import datetime as dt
+    tenant = app_tables.tenants.get_by_id(tenant_id)
+    usermap = app_tables.usermap.get(tenant=tenant, user=user_row)
+
+    if not usermap:
+        return None
+
+    status, last_payment, payment_amt = get_subscriptions(tenant, usermap['paypal_sub_id'])
+    usermap['payment_status'] = status
+    usermap['fee'] = payment_amt
+
+
 @anvil.server.callable(require_user=True)
 def create_sub(tenant_id, plan_id):
     # import requests
@@ -104,9 +119,11 @@ def capture_sub(**params):
     # TODO: secure this
     # TODO: use anvil.server.session.get('tenant_id', None)
     verify_paypal_webhook(anvil.server.request.headers, anvil.server.request.body_json)
+    
     usermap = app_tables.usermap.get(paypal_sub_id=params['subscription_id'])
     usermap['roles'] = [i for i in usermap['roles'] if i['name'] != 'Applicant']
     member_role = app_tables.roles.get(tenant=usermap['tenant'], name='Member')
+    
     if member_role not in usermap['roles']:
         usermap['roles'] = usermap['roles'] + member_role
     
