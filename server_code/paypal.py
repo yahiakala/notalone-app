@@ -11,10 +11,10 @@ from .emails import notify_paid
 
 # https://developer.paypal.com/docs/api/subscriptions/v1/#subscriptions_create
 if anvil.server.get_app_origin() is None or 'debug' in anvil.server.get_app_origin():
-    # TOKEN_URL = 'https://api-m.sandbox.paypal.com/v1/oauth2/token'
-    # SUBSCRIPTION_URL = 'https://api-m.sandbox.paypal.com/v1/billing/subscriptions'
-    TOKEN_URL = 'https://api.paypal.com/v1/oauth2/token'
-    SUBSCRIPTION_URL = 'https://api.paypal.com/v1/billing/subscriptions'
+    TOKEN_URL = 'https://api-m.sandbox.paypal.com/v1/oauth2/token'
+    SUBSCRIPTION_URL = 'https://api-m.sandbox.paypal.com/v1/billing/subscriptions'
+    # TOKEN_URL = 'https://api.paypal.com/v1/oauth2/token'
+    # SUBSCRIPTION_URL = 'https://api.paypal.com/v1/billing/subscriptions'
 else:
     TOKEN_URL = 'https://api.paypal.com/v1/oauth2/token'
     SUBSCRIPTION_URL = 'https://api.paypal.com/v1/billing/subscriptions'
@@ -34,7 +34,7 @@ def get_paypal_auth(tenant, client_id=None, client_secret=None):
             headers={
                 'Accept': 'application/json'
             },
-            data={'grant_type': 'client_credentials'},
+            data={'grant_type': 'client_credentials'}
         )
         # print(auth_response.get_bytes())
         auth_response = json.loads(auth_response.get_bytes().decode('utf-8'))
@@ -44,6 +44,7 @@ def get_paypal_auth(tenant, client_id=None, client_secret=None):
     except anvil.http.HttpError as e:
         print(f"Error {e.status} {e.content}")
         print(e.content.get_bytes())
+        raise anvil.http.HttpError(e.status, e.content)
 
 
 def get_subscriptions(tenant, subscription_id, access_token=None, verbose=False):
@@ -130,6 +131,8 @@ def create_sub(tenant_id, plan_id):
         return membermap, response['links'][0]['href']
     except anvil.http.HttpError as e:
         print(f"Error {e.status} {e.content}")
+        print(plan_id)
+        raise anvil.http.HttpError(e.status, e.content)
 
 
 @anvil.server.http_endpoint('/capture-sub')
