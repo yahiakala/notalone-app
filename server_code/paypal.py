@@ -220,6 +220,8 @@ def verify_paypal_webhook(tenant, headers, body):
     cert_key = RSA.import_key(cert_pem)
     
     h = SHA256.new(message.encode('utf-8'))
+    print('h: ', h)
+    print('SHA256 Hash:', h.hexdigest())
 
     return pkcs1_15.new(cert_key).verify(h, signature)
     # try:
