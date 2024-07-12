@@ -5,7 +5,7 @@ from anvil.tables import app_tables
 import anvil.tables.query as q
 import anvil.users
 
-from .helpers import get_users_with_permission, validate_user, usermap_row_to_dict
+from .helpers import get_users_with_permission, validate_user, usermap_row_to_dict, upsert_role
 from .emails import notify_paid
 
 
@@ -143,9 +143,9 @@ def capture_sub(**params):
     raw_body = anvil.server.request.body.get_bytes().decode('utf-8')
     print(raw_body)
 
-    listen_events = ['BILLING.SUBSCRIPTION.ACTIVATED',
-                     'BILLING.SUBSCRIPTION.EXPIRED',
-                     'BILLING.SUBSCRIPTION.UPDATED']
+    # listen_events = ['BILLING.SUBSCRIPTION.ACTIVATED',
+    #                  'BILLING.SUBSCRIPTION.EXPIRED',
+    #                  'BILLING.SUBSCRIPTION.UPDATED']
     # if body['event_type'] not in listen_events:
     #     print(f"not interested in this event: {body['event_type']}")
     #     return anvil.server.HttpResponse(200)
@@ -175,29 +175,23 @@ def update_subscription(usermap, headers, body):
     plan = [i for i in usermap['tenant']['paypal_plans'] if i['id'] == plan_id][0]
 
     if body['resource']['status'] == 'EXPIRED':
-        pass
+        # remove roles
+        for role in plan['roles']:
+            usermap['roles'] = [i for i in usermap['roles'] if i['name'] != role]
     elif body['resource']['status'] == 'ACTIVE':
         # Add roles
-        pass
+        for role in plan['roles']:
+            upsert_role(usermap, role)
+        notify_admins(usermap)
 
-    usermap['paypal_status'] = body['resource']['status']
-    # TODO: look for status 'EXPIRED' to remove roles.
-    # TODO: look for status 'ACTIVE' to add roles.
-    # everything else just update
-    # usermap = app_tables.usermap.get(paypal_sub_id=params['subscription_id'])
-    # usermap['roles'] = [i for i in usermap['roles'] if i['name'] != 'Applicant']
-    # member_role = app_tables.roles.get(tenant=usermap['tenant'], name='Member')
-    
-    # if member_role not in usermap['roles']:
-    #     usermap['roles'] = usermap['roles'] + member_role
-    
-    # print(usermap['user']['email'] + ' has just paid. Sending email to screeners.')
-    
-    # screeners = get_users_with_permission(None, 'see_members', usermap['tenant'])
-    # for screener in screeners:
-    #     print('Sending email to : ' + screener['user']['email'])
-    #     notify_paid(screener['user'], usermap['user'])
-    # return anvil.server.HttpResponse(302, headers={'Location': anvil.server.get_app_origin() + '/#profile'})
+    usermap['payment_status'] = body['resource']['status']
+    usermap['fee'] = float(body['resource']['billing_info']['last_payment']['amount']['value'])
+
+def notify_admins(usermap):
+    screeners = get_users_with_permission(None, 'see_members', usermap['tenant'])
+    for screener in screeners:
+        print('Sending email to : ' + screener['user']['email'])
+        notify_paid(screener['user'], usermap['user'])
 
 
 def verify_paypal_webhook2(tenant, headers, body):
