@@ -154,6 +154,7 @@ def capture_sub(**params):
     #     return anvil.server.HttpResponse(400)
     
     if not verify_paypal_webhook(None, headers, raw_body):
+        print('Webhook not verified.')
         return anvil.server.HttpResponse(400)
     print('Webhook verified.')
     
