@@ -95,10 +95,17 @@ def validate_user(tenant_id, user, usermap=None, permissions=None, tenant=None):
 
 def get_users_with_permission(tenant_id, permission, tenant=None):
     tenant = tenant or app_tables.tenants.get_by_id(tenant_id)
-    perm_rows = app_tables.permissions.search(name=permission)
-    role_rows = app_tables.roles.search(permissions=q.any_of(*perm_rows), tenant=tenant)
-    usermaps = app_tables.usermap.search(roles=q.any_of(*role_rows), tenant=tenant)
-    return usermaps
+    perm_row = app_tables.permissions.get(name=permission)
+    role_rows = app_tables.roles.search(permissions=[perm_row], tenant=tenant)
+    usermap_list = []
+    for role in role_rows:
+        usermaps = app_tables.usermap.search(roles=[role], tenant=tenant)
+        for usermap in usermaps:
+            if usermap not in usermap_list:
+                usermap_list.append(usermap)
+    for i in usermap_list:
+        print(i['user']['email'])
+    return usermap_list
 
 
 def upsert_role(usermap, role_name):
