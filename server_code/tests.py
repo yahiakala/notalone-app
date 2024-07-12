@@ -11,6 +11,7 @@ def create_test_data():
 
 @anvil.server.callable(require_user=True)
 def impersonate_user(email):
-    new_user = app_tables.users.get(email=email)
-    anvil.users.force_login(new_user)
-    return new_user
+    if 'debug' in anvil.server.get_app_origin():
+        new_user = app_tables.users.get(email=email)
+        anvil.users.force_login(new_user)
+        return new_user
