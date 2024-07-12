@@ -194,6 +194,7 @@ def update_subscription(headers, raw_body):
 
 def verify_paypal_webhook2(tenant, headers, body):
     import requests
+    import json
 
     ACCESS_TOKEN = get_paypal_auth(
         None,
@@ -213,7 +214,7 @@ def verify_paypal_webhook2(tenant, headers, body):
         'transmission_sig': headers['paypal-transmission-sig'],
         'transmission_time': headers['paypal-transmission-time'],
         'webhook_id': '61X642557J038062F',
-        'webhook_event': body
+        'webhook_event': json.loads(body)
     }
     response = requests.post(
         'https://api.sandbox.paypal.com/v1/notifications/verify-webhook-signature',
