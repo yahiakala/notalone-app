@@ -8,6 +8,7 @@ import anvil.secrets
 from .helpers import print_timestamp, verify_tenant, validate_user, get_usermap, get_users_with_permission, populate_roles, usermap_row_to_dict
 import datetime as dt
 from .globals import get_permissions, get_tenant_single
+from .emails import email_accept_applicant
 
 
 def clean_up_user(user):
@@ -101,35 +102,6 @@ def save_user_notes_bk(tenant_id, user, user_email, new_note):
         member_user = app_tables.users.get(email=user_email)
         member_usermap = app_tables.usermap.get(user=member_user, tenant=tenant)
         member_usermap['notes'] = new_note
-
-
-@anvil.server.background_task
-def email_accept_applicant(tenant, email):
-    """Send an email to an applicant upon acceptance."""
-
-    msg_body = f"""
-    <p>Hi! This is an automated message from the {tenant['name']} community platform.</p>
-
-    <p>Your application to join the group has been accepted!</p>
-
-    <p>Please log into the app for next steps (see link below). Fill out your profile, read the community guidelines, and make the membership payment.</p>
-
-    <p>{anvil.server.get_app_origin()}</p>
-    
-    <p>Regards,</p>
-    <p>{tenant['name']} via the NotAlone Platform.</p>
-    """
-
-    screeners = get_users_with_permission(None, 'see_members', tenant)
-    screener_list = [i['user']['email'] for i in screeners]
-    anvil.email.send(
-        to=email,
-        bcc=screener_list,
-        from_address="noreply",
-        from_name="noreply",
-        subject=f"Welcome to the {tenant['name']} Community!",
-        html=msg_body
-    )
 
 
 @anvil.server.callable(require_user=True)

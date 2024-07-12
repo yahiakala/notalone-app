@@ -6,25 +6,50 @@ import anvil.tables.query as q
 import anvil.users
 
 from .helpers import get_users_with_permission, validate_user, usermap_row_to_dict
+from .emails import notify_paid
+
 
 # https://developer.paypal.com/docs/api/subscriptions/v1/#subscriptions_create
+if anvil.server.get_app_origin() and 'debug' in anvil.server.get_app_origin():
+    # TOKEN_URL = 'https://api-m.sandbox.paypal.com/v1/oauth2/token'
+    # SUBSCRIPTION_URL = 'https://api-m.sandbox.paypal.com/v1/billing/subscriptions'
+    TOKEN_URL = 'https://api.paypal.com/v1/oauth2/token'
+    SUBSCRIPTION_URL = 'https://api.paypal.com/v1/billing/subscriptions'
+else:
+    TOKEN_URL = 'https://api.paypal.com/v1/oauth2/token'
+    SUBSCRIPTION_URL = 'https://api.paypal.com/v1/billing/subscriptions'
 
+def get_paypal_auth(tenant, client_id=None, client_secret=None):
+    # TODO: accept client id and secret as args.
+    import base64
+    client_id = client_id or anvil.secrets.decrypt_with_key('encryption_key', tenant['paypal_client_id'])
+    client_secret = client_secret or anvil.secrets.decrypt_with_key('encryption_key', tenant['paypal_secret'])
 
-def get_paypal_auth(tenant):
-    import requests
-    client_id = tenant['paypal_client_id']
-    client_secret = tenant['paypal_secret']
+    client_id = base64.b64encode(client_id.encode('utf-8')).decode('utf-8')
+    client_secret = base64.b64encode(client_secret.encode('utf-8')).decode('utf-8')
     
-    auth_response = requests.post(
-        'https://api.paypal.com/v1/oauth2/token', 
-        auth=(client_id, client_secret), 
-        headers={'Accept': 'application/json', 'Accept-Language': 'en_US'}, 
-        data={'grant_type': 'client_credentials'}
-    )
-    
-    auth_response_json = auth_response.json()
-    access_token = auth_response_json['access_token']
-    return access_token
+    try:
+        auth_response = anvil.http.request(
+            TOKEN_URL,
+            method="POST",
+            username=client_id,
+            password=client_secret,
+            headers={
+                'Accept': 'application/json',
+                'Accept-Language': 'en_US',
+                'Content-Type': 'application/x-www-form-urlencoded'
+            },
+            data={'grant_type': 'client_credentials'},
+            json=True
+        )
+        
+        # auth_response_json = auth_response.json()
+        access_token = auth_response['access_token']
+        return access_token
+    except anvil.http.HttpError as e:
+        print(client_id)
+        print(client_secret)
+        print(f"Error {e.status} {e.content}")
 
 
 def get_subscriptions(tenant, subscription_id, access_token=None, verbose=False):
@@ -39,7 +64,7 @@ def get_subscriptions(tenant, subscription_id, access_token=None, verbose=False)
         'Authorization': f'Bearer {access_token}',
         'Content-Type': 'application/json',
     }
-    subscription_detail_response = requests.get(f'https://api.paypal.com/v1/billing/subscriptions/{subscription_id}', headers=headers)
+    subscription_detail_response = requests.get(f'{SUBSCRIPTION_URL}/{subscription_id}', headers=headers)
     if verbose:
         print(subscription_detail_response.json())
     try:
@@ -72,7 +97,7 @@ def check_sub(tenant_id, user_row):
 
 @anvil.server.callable(require_user=True)
 def create_sub(tenant_id, plan_id):
-    # import requests
+    # TODO: make this flexible for user that is sent.
     user = anvil.users.get_user(allow_remembered=True)
     tenant, usermap, permissions = validate_user(tenant_id, user)
 
@@ -82,8 +107,7 @@ def create_sub(tenant_id, plan_id):
         # Don't specify an email, in case they want to pay with a diff email.
         # Use the subscription id to match them up.
         response = anvil.http.request(
-            'https://api.paypal.com/v1/billing/subscriptions',
-            # https://api-m.sandbox.paypal.com/v1/billing/subscriptions
+            SUBSCRIPTION_URL,
             method='POST',
             headers={
                 'Authorization': f'Bearer {access_token}',
@@ -161,27 +185,6 @@ def verify_paypal_webhook(request_headers, request_json):
         client=client
         )
     return verification_status
-
-
-def notify_paid(user_ref, applicant):
-    """Notify the screeners that someone paid."""
-    print('Sending email.')
-    msg_body = f"""
-    <p>Hi {user_ref['first_name']}!</p>
-
-    <p>You are getting this message because an applicant: 
-    {applicant['first_name'] + ' ' + applicant['last_name']} ({applicant['email']}) has just paid.</p>
-
-    <p>Regards,</p>
-    <p>NotAlone App</p>
-    """
-    anvil.email.send(
-        to=user_ref['email'],
-        from_address='noreply',
-        from_name="NotAlone",
-        subject="Applicant Paid",
-        html=msg_body
-    )
 
 
 @anvil.server.http_endpoint('/cancel-sub')

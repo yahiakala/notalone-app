@@ -3,6 +3,7 @@ from anvil import *
 import anvil.server
 from anvil_extras import routing
 from ..Global import Global
+from .PriceCard import PriceCard
 from anvil_squared.utils import print_timestamp
 
 
@@ -16,7 +17,64 @@ class MemberDetail(MemberDetailTemplate):
             self.msc_roles.visible = True
         else:
             self.msc_roles.visible = False
+        self.fp_pricing_table.add_event_handler('x-pay-click', self.pay_click)
+    
+    def form_show(self, **event_args):
+        """This method is called when the form is shown on the page"""
+        with anvil.server.no_loading_indicator:
+            self.load_data()
 
+    def load_data(self):
+        
+        if 'profile' in routing.get_url_pattern():
+            self.email = Global.user['email']
+            self.cp_booking_link.visible = True
+        else:
+            self.email = self.url_dict['user_email']
+            self.cp_admin.visible = True
+
+        self.member = anvil.server.call('get_member_data', Global.tenant_id, self.email)
+        self.populate_role_list()
+        self.ta_user_notes.text = self.member['notes']
+
+        if 'Applicant' in self.member['roles']:
+            self.btn_accept_applicant.visible = True 
+            self.btn_reject_applicant.visible = True
+        
+        self.tb_email.text = self.email
+        self.tb_firstname.text = self.member['first_name']
+        self.tb_lastname.text = self.member['last_name']
+        self.tb_phone.text = self.member['phone']
+        self.tb_discord_user.text = self.member['discord']
+        self.link_discord.url = Global.tenant['discord_invite']
+        self.link_codeofconduct.url = Global.tenant['waiver']
+        self.cb_signoff.checked = self.member['consent_check']
+
+        self.lbl_fee_paid_amt.text = self.member['fee']
+        if 'see_forum' in self.member['permissions']:
+            self.cp_payment_status.visible = True
+            self.cp_discord.visible = True
+
+        self.tb_booking_link.text = self.member['booking_link']
+
+        if 'see_members' in self.member['permissions']:
+            self.cp_booking_link.visible = True
+
+        self.tb_email.role = 'outlined'
+        self.tb_firstname.role = 'outlined'
+        self.tb_lastname.role = 'outlined'
+        self.tb_phone.role = 'outlined'
+
+        self.ta_user_notes.role = 'outlined'
+        self.tb_discord_user.role = 'outlined'
+        self.lbl_fee_paid_amt.role = None
+        self.tb_booking_link.role = 'outlined'
+
+        if 'see_forum' not in self.member['permissions']:
+            for plan in Global.tenant['paypal_plans']:
+                self.fp_pricing_table.add_component(PriceCard(item=plan))
+            self.fp_pricing_table.visible = True
+    
     def btn_save_click(self, **event_args):
         """This method is called when the button is clicked"""
         print_timestamp('memberdetail: btn_save_click')
@@ -60,23 +118,18 @@ class MemberDetail(MemberDetailTemplate):
             else self.lbl_50
         )
 
-    def btn_pay_new_click(self, **event_args):
+    def pay_click(self, item, **event_args):
         """This method is called when the button is clicked"""
-        print_timestamp('memberdetail: btn_pay_new_click')
+        print_timestamp('memberdetail: pay_click')
         from anvil.js import window
 
-        # TODO: make this more robust
-        fee_send = self.member["fee"]
-        if not self.member["fee"]:
-            fee_send = 10
+        self.member, self.payment_url = anvil.server.call("create_sub", Global.tenant_id, item['id'])
 
-        self.member, self.payment_url = anvil.server.call("create_sub", fee_send)
-        self.user = dict(Global.user)  # avoid errors with data bindings
-        print("fee: " + str(self.member["fee"]))
         self.btn_save_click()
+        
         # window.open(self.payment_url)
+        routing.clear_cache()
         window.location.href = self.payment_url  # same window
-        routing.set_url_hash("homedetail", load_from_cache=False)
 
     def btn_back_click(self, **event_args):
         """This method is called when the button is clicked"""
@@ -93,62 +146,6 @@ class MemberDetail(MemberDetailTemplate):
         self.member = anvil.server.call('accept_applicant', Global.tenant_id, self.email)
         self.populate_role_list()
         routing.clear_cache()
-
-    def form_show(self, **event_args):
-        """This method is called when the form is shown on the page"""
-        with anvil.server.no_loading_indicator:
-            self.load_data()
-
-    def load_data(self):
-        
-        if 'profile' in routing.get_url_pattern():
-            self.email = Global.user['email']
-            self.cp_booking_link.visible = True
-        else:
-            self.email = self.url_dict['user_email']
-            self.cp_admin.visible = True
-
-        self.member = anvil.server.call('get_member_data', Global.tenant_id, self.email)
-        self.populate_role_list()
-        self.ta_user_notes.text = self.member['notes']
-        
-        if 'see_forum' not in self.member['permissions']:
-            self.btn_pay_new.enabled = True
-
-        if 'Applicant' in self.member['roles']:
-            self.btn_accept_applicant.visible = True 
-            self.btn_reject_applicant.visible = True
-        
-        self.tb_email.text = self.email
-        self.tb_firstname.text = self.member['first_name']
-        self.tb_lastname.text = self.member['last_name']
-        self.tb_phone.text = self.member['phone']
-        self.tb_discord_user.text = self.member['discord']
-        self.link_discord.url = Global.tenant['discord_invite']
-        self.link_codeofconduct.url = Global.tenant['waiver']
-        self.cb_signoff.checked = self.member['consent_check']
-
-        self.dd_membertier.selected_value = self.member['fee']
-        self.lbl_fee_paid_amt.text = self.member['fee']
-        if 'see_forum' in self.member['permissions']:
-            self.cp_payment_status.visible = True
-            self.cp_discord.visible = True
-
-        self.tb_booking_link.text = self.member['booking_link']
-
-        if 'see_members' in self.member['permissions']:
-            self.cp_booking_link.visible = True
-
-        self.tb_email.role = 'outlined'
-        self.tb_firstname.role = 'outlined'
-        self.tb_lastname.role = 'outlined'
-        self.tb_phone.role = 'outlined'
-
-        self.ta_user_notes.role = 'outlined'
-        self.tb_discord_user.role = 'outlined'
-        self.lbl_fee_paid_amt.role = None
-        self.tb_booking_link.role = 'outlined'
-
 
     def btn_del_click(self, **event_args):
         """This method is called when the button is clicked"""

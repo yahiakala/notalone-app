@@ -1,0 +1,25 @@
+container: {type: ColumnPanel}
+components:
+- name: outlined_card_1
+  properties: {role: tonal-card}
+  type: ColumnPanel
+  layout_properties: {grid_position: 'EFKPEI,TYFPHR'}
+  components:
+  - name: lbl_name
+    properties: {align: center, bold: true}
+    type: Label
+    layout_properties: {grid_position: 'KZQTDE,IJDDGS'}
+  - name: lbl_amt
+    properties: {align: center}
+    type: Label
+    layout_properties: {grid_position: 'MIBCAK,XPDGJK'}
+  - name: lbl_frequency
+    properties: {align: center, italic: true}
+    type: Label
+    layout_properties: {grid_position: 'VDQFUN,ZVANKL'}
+  - name: btn_pay_link
+    properties: {text: Pay Now, role: filled-button}
+    type: Button
+    layout_properties: {grid_position: 'JAXVBB,MEFWST'}
+    event_bindings: {click: btn_pay_link_click}
+is_package: true
