@@ -142,7 +142,8 @@ def capture_sub(**params):
     # body = anvil.server.request.body_json
     raw_body = anvil.server.request.body.get_bytes().decode('utf-8')
     print(raw_body)
-    anvil.server.launch_background_task('update_subscription', headers, raw_body)
+    # anvil.server.launch_background_task('update_subscription', headers, raw_body)
+    # update_subscription(headers, raw_body)
     anvil.server.HttpResponse(200)
 
 
@@ -175,7 +176,7 @@ def verify_paypal_webhook(headers, body):
     transmission_id = headers['paypal-transmission-id']
     timestamp = headers['paypal-transmission-time']
     crc = zlib.crc32(body.encode('utf-8'))
-    WEBHOOK_ID = ''
+    WEBHOOK_ID = 'WEBHOOK_ID'
     message = f"{transmission_id}|{timestamp}|{WEBHOOK_ID}|{crc}"
     
     cert_pem = get_certificate(headers['paypal-cert-url'])
