@@ -143,14 +143,23 @@ def capture_sub(**params):
     raw_body = anvil.server.request.body.get_bytes().decode('utf-8')
     print(raw_body)
 
-    if not verify_paypal_webhook(headers, raw_body):
-        return anvil.server.HttpResponse(400)
-    
-    # anvil.server.launch_background_task('update_subscription', headers, raw_body)
-    # update_subscription(headers, raw_body)
     listen_events = ['BILLING.SUBSCRIPTION.ACTIVATED',
                      'BILLING.SUBSCRIPTION.EXPIRED',
                      'BILLING.SUBSCRIPTION.UPDATED']
+    if body['event_type'] not in listen_events:
+        return anvil.server.HttpResponse(200)
+
+    usermap = app_tables.usermap.get(paypal_sub_id=body['resource']['id'])
+    # if not usermap:
+    #     return anvil.server.HttpResponse(400)
+    
+    if not verify_paypal_webhook(None, headers, raw_body):
+        return anvil.server.HttpResponse(400)
+    print('Webhook verified.')
+    
+    # anvil.server.launch_background_task('update_subscription', headers, raw_body)
+    # update_subscription(headers, raw_body)
+    
     if body['event_type'] in listen_events:
         print(body['resource']['status'])
         print(body['resource']['id'])
@@ -160,10 +169,10 @@ def capture_sub(**params):
 
 @anvil.server.background_task
 def update_subscription(headers, raw_body):
-    verify_paypal_webhook(headers, raw_body)
-
-
-    # TODO: look for status 'EXPIRED'
+    pass
+    # TODO: look for status 'EXPIRED' to remove roles.
+    # TODO: look for status 'ACTIVE' to add roles.
+    # everything else just update
     # usermap = app_tables.usermap.get(paypal_sub_id=params['subscription_id'])
     # usermap['roles'] = [i for i in usermap['roles'] if i['name'] != 'Applicant']
     # member_role = app_tables.roles.get(tenant=usermap['tenant'], name='Member')
@@ -180,7 +189,7 @@ def update_subscription(headers, raw_body):
     # return anvil.server.HttpResponse(302, headers={'Location': anvil.server.get_app_origin() + '/#profile'})
 
 
-def verify_paypal_webhook(headers, body):
+def verify_paypal_webhook(tenant, headers, body):
     import zlib
     import hmac
     import hashlib
@@ -192,7 +201,7 @@ def verify_paypal_webhook(headers, body):
     WEBHOOK_ID = 'WEBHOOK_ID'
     message = f"{transmission_id}|{timestamp}|{WEBHOOK_ID}|{crc}"
     
-    cert_pem = get_certificate(headers['paypal-cert-url'])
+    cert_pem = get_certificate(tenant, headers['paypal-cert-url'])
     
     signature = base64.b64decode(headers['paypal-transmission-sig'])
     
@@ -203,7 +212,7 @@ def verify_paypal_webhook(headers, body):
 def get_certificate(tenant, url):
     import requests
     
-    if tenant['webhook_certificate']:
+    if tenant and tenant['webhook_certificate']:
         return tenant['webhook_certificate']
     else:
         response = requests.get(url)
