@@ -10,7 +10,6 @@ role_dict = {
     'Member': ['see_profile', 'see_forum'],
     'Interviewer': ['see_profile', 'see_forum', 'see_applicants', 'see_members'],
     'Admin': ['see_profile', 'see_forum', 'see_applicants', 'see_members', 'edit_members', 'delete_members', 'delete_admin', 'edit_roles'],
-    'Dev': ['see_profile', 'see_forum', 'see_applicants', 'see_members', 'edit_members', 'delete_members', 'delete_admin', 'edit_roles', 'dev']
 }
 
 perm_list = []
