@@ -216,10 +216,11 @@ def verify_paypal_webhook2(tenant, headers, body):
         'webhook_event': body
     }
     response = requests.post(
-        'https://api-m.sandbox.paypal.com/v1/notifications/verify-webhook-signature',
+        'https://api.sandbox.paypal.com/v1/notifications/verify-webhook-signature',
         headers=new_headers, json=data
     )
     print(response)
+    print(response.content)
 
 def verify_paypal_webhook(tenant, headers, body):
     import zlib
