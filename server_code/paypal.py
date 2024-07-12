@@ -8,11 +8,6 @@ import anvil.users
 from .helpers import get_users_with_permission, validate_user
 
 # https://developer.paypal.com/docs/api/subscriptions/v1/#subscriptions_create
-from . import authorisation
-from .authorisation import authorisation_required
-
-authorisation.set_config(get_roles='usermap', tenanted=True)
-
 
 
 def get_paypal_auth(tenant):
@@ -20,10 +15,12 @@ def get_paypal_auth(tenant):
     client_id = tenant['paypal_client_id']
     client_secret = tenant['paypal_secret']
     
-    auth_response = requests.post('https://api.paypal.com/v1/oauth2/token', 
-                                auth=(client_id, client_secret), 
-                                headers={'Accept': 'application/json', 'Accept-Language': 'en_US'}, 
-                                data={'grant_type': 'client_credentials'})
+    auth_response = requests.post(
+        'https://api.paypal.com/v1/oauth2/token', 
+        auth=(client_id, client_secret), 
+        headers={'Accept': 'application/json', 'Accept-Language': 'en_US'}, 
+        data={'grant_type': 'client_credentials'}
+    )
     
     auth_response_json = auth_response.json()
     access_token = auth_response_json['access_token']
@@ -67,6 +64,8 @@ def create_sub(tenant_id, plan_id):
     access_token = get_paypal_auth(tenant)
 
     try:
+        # Don't specify an email, in case they want to pay with a diff email.
+        # Use the subscription id to match them up.
         response = anvil.http.request(
             'https://api.paypal.com/v1/billing/subscriptions',
             method='POST',
@@ -85,11 +84,9 @@ def create_sub(tenant_id, plan_id):
             json=True
         )
         
-        # TODO: move this to the webhook endpoint
-        plans = tenant['paypal_plans']
-        plan = [i for i in plans if i['plan_id'] == plan_id][0]
-        usermap['fee'] = plan['plan_amt']
+        plan = [i for i in tenant['paypal_plans'] if i['id'] == plan_id][0]
         
+        usermap['fee'] = plan['amt']
         usermap['paypal_sub_id'] = response['id']
         return response['links'][0]['href']
     except anvil.http.HttpError as e:
@@ -171,27 +168,7 @@ def cancel_sub(**params):
     return anvil.server.HttpResponse(302, headers={'Location': anvil.server.get_app_origin() + '/#profile'})
 
 
-@anvil.server.callable(require_user=True)
-@authorisation_required('see_members')
-def check_sub(tenant_id, user_row):
-    # TODO: deprecate this in favor of a webhook of a subscription expiring
-    # from dateutil.relativedelta import relativedelta
-    # import datetime as dt
-    tenant = app_tables.tenants.get_by_id(tenant_id)
-        
-    usermap = app_tables.usermap.get(tenant=tenant, user=user_row)
-
-    if not usermap:
-        return None
-
-    status, last_payment, payment_amt = get_subscriptions(tenant, usermap['paypal_sub_id'])
-    usermap['payment_status'] = status
-    usermap['fee'] = payment_amt
-
-
 #%% Scheduled Task -------------------------------
-
-
 @anvil.server.background_task
 def calc_rev12():
     for tenant in app_tables.tenants.search():
@@ -204,41 +181,3 @@ def calc_rev12():
         for user_ref in app_tables.users.search(tenant=tenant, fee=q.not_(None), good_standing=True, payment_status='ACTIVE'):
             total_rev += user_ref['fee']*0.97-0.3
         tenantfin['rev_12_active'] = total_rev
-
-
-@anvil.server.callable(require_user=True)
-@authorisation_required('edit_members')
-def notify_payment(user_ref, tenant=None):
-    """Notify the member they need to make a payment."""
-    # TODO: overhaul with new data model
-    print('Sending email.')
-    if not tenant:
-        user = anvil.users.get_user(allow_remembered=True)
-        tenant = {'name': user['tenant']['name'], 'email': user['tenant']['email']}
-
-    msg_body = f"""
-    <p>Hi {user_ref['first_name']}!</p>
-
-    <p>You are getting this message because either your membership payment has expired or
-    your payments are not linked to your profile on our NotAlone platform.</p>
-
-    <p>Please sign in to your account with this email: <b>{user_ref['email']}</b></p>
-
-    <p>Sign in here: {anvil.server.get_app_origin()}</p>
-
-    <h2>First Time Logging In?</h2>
-    <p>If your email is not a gmail account, reset your password.</p>
-    <p>If it is your first time and you do have a gmail account, log in with Google.</p>
-
-    <p>Regards,</p>
-    <p>{tenant['name']}</p>
-    <p>Reply to: {tenant['email']}</p>
-    """
-    anvil.email.send(
-        to=user_ref['email'],
-        from_address='noreply',
-        bcc=tenant['email'],
-        from_name="NotAlone",
-        subject="Membership Payment",
-        html=msg_body
-    )
