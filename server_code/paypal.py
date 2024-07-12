@@ -214,8 +214,8 @@ def verify_paypal_webhook(tenant, headers, body):
 def get_certificate(tenant, url):
     import requests
     
-    if tenant and tenant['webhook_certificate']:
-        return tenant['webhook_certificate']
+    if tenant and tenant['paypal_webhook_certificate']:
+        return tenant['paypal_webhook_certificate']
     else:
         response = requests.get(url)
         cert_data = response.text
