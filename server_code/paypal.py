@@ -214,6 +214,7 @@ def verify_paypal_webhook(tenant, headers, body):
     print(signature)
     
     cert_pem = get_certificate(tenant, headers['paypal-cert-url'])
+    print('cert_url', headers['paypal-cert-url'])
     print('cert_pem')
     print(cert_pem)
     cert_key = RSA.import_key(cert_pem)
