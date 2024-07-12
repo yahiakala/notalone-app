@@ -23,6 +23,7 @@ def login_sso(sso, sig, session_id=None):
 
     user = anvil.users.get_user(allow_remembered=True)
     if not user:
+        print('No user logged in.')
         return anvil.server.HttpResponse(302, headers={"Location": anvil.server.get_app_origin()})
 
     discourse_url = params['return_sso_url'].replace('https://', '').replace('/session/sso_login', '')
@@ -39,6 +40,8 @@ def login_sso(sso, sig, session_id=None):
     if not hmac.compare_digest(expected_sig, sig):
         raise anvil.server.HttpError(403, "Signature mismatch")
 
+    print('user is logged in: ' + user['email'])
+    
     # Prepare the return payload with user info
     first_name = user['first_name'] or ''
     last_name = user['last_name'] or ''
