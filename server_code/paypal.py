@@ -177,18 +177,25 @@ def verify_paypal_webhook(headers, body):
     crc = zlib.crc32(body.encode('utf-8'))
     WEBHOOK_ID = ''
     message = f"{transmission_id}|{timestamp}|{WEBHOOK_ID}|{crc}"
-    cert_url = headers['paypal-cert-url']
     
-    cert_pem = download_and_cache(cert_url)
+    cert_pem = get_certificate(headers['paypal-cert-url'])
     
     signature = base64.b64decode(headers['paypal-transmission-sig'])
     
     verifier = hmac.new(cert_pem.encode(), message.encode(), hashlib.sha256)
     return hmac.compare_digest(verifier.digest(), signature)
-    
 
-    verification_status = False
-    return verification_status
+
+def get_certificate(tenant, url):
+    import requests
+    
+    if tenant['webhook_certificate']:
+        return tenant['webhook_certificate']
+    else:
+        response = requests.get(url)
+        cert_data = response.text
+        tenant['webhook_certificate'] = cert_data
+        return cert_data
 
 
 @anvil.server.http_endpoint('/cancel-sub')
