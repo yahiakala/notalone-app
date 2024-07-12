@@ -89,6 +89,32 @@ def delete_user_bk(tenant_id, user, user_email):
 
 
 @anvil.server.callable(require_user=True)
+def edit_member(tenant_id, new_dict):
+    user = anvil.users.get_user(allow_remembered=True)
+    tenant, usermap, permissions = validate_user(tenant_id, user)
+
+    member = app_tables.users.get(email=new_dict['email'])
+    _, membermap, _ = validate_user(tenant_id, member, tenant=tenant)
+
+    if user == member or 'edit_members' in permissions:
+        membermap['first_name'] = new_dict['first_name']
+        membermap['last_name'] = new_dict['last_name']
+        membermap['phone'] = new_dict['phone']
+        membermap['discord'] = new_dict['discord']
+        membermap['booking_link'] = new_dict['booking_link']
+        membermap['consent_check'] = new_dict['consent_check']
+
+    if 'edit_members' in permissions:
+        roles = app_tables.roles.search(tenant=tenant, name=q.any_of(*new_dict['roles']))
+        membermap['roles'] = list(roles)
+
+    if 'see_members' in permissions:
+        membermap['notes'] = new_dict['notes']
+
+    return usermap_row_to_dict(membermap)
+
+
+@anvil.server.callable(require_user=True)
 def save_user_notes(tenant_id, user_email, new_note):
     """Save user notes."""
     user = anvil.users.get_user(allow_remembered=True)

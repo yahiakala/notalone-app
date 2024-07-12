@@ -93,8 +93,10 @@ class MemberDetail(MemberDetailTemplate):
             self.member['phone'] = self.tb_phone.text
             self.member['discord'] = self.tb_discord_user.text
             self.member['booking_link'] = self.tb_booking_link.text
+            self.member['consent_check'] = self.cb_signoff.checked
             
             if 'memberdetail' in routing.get_url_pattern() and 'edit_members' in Global.permissions:
+                print(self.msc_roles.selected)
                 self.member['roles'] = [i['key'] for i in self.msc_roles.selected]
                 self.member['notes'] = self.ta_user_notes.text
 
