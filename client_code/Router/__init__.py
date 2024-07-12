@@ -74,6 +74,7 @@ class Router(RouterTemplate):
             )
             self.link_admin.visible = 'delete_admin' in self.permissions
             if 'dev' in self.permissions:
+                # TODO: change to app origin check debug
                 self.tb_impersonate.visible = True
 
             self.lbl_app_title.text = Global.tenant['name']
