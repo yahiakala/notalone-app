@@ -216,12 +216,19 @@ def verify_paypal_webhook2(tenant, headers, body):
         'webhook_id': '61X642557J038062F',
         'webhook_event': json.loads(body)
     }
-    response = requests.post(
+    response = anvil.http.request(
         'https://api.sandbox.paypal.com/v1/notifications/verify-webhook-signature',
-        headers=new_headers, json=data
+        headers=new_headers,
+        method='POST',
+        data=data,
+        json=True
     )
+    # response = requests.post(
+    #     'https://api.sandbox.paypal.com/v1/notifications/verify-webhook-signature',
+    #     headers=new_headers, json=data
+    # )
     print(response)
-    print(response.content)
+    # print(response.content)
 
 def verify_paypal_webhook(tenant, headers, body):
     import zlib
