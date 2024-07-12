@@ -197,8 +197,8 @@ def verify_paypal_webhook2(tenant, headers, body):
 
     ACCESS_TOKEN = get_paypal_auth(
         None,
-        client_id,
-        client_secret
+        'AR3dzutbtWcc9tSKbgf9wXZsxl9914ljHoTFUd7Lamrg_46P5M8FLtIaUYOW1HAJ1llc39bnPldS7uCG',
+        'EGG-4s3okd5VvMLqbMAfC1LPegVNn9-MNgsu_c2cFwKdOXyBYCDPk1B6-Jg3d1zDzpFgoo8ZiTZArj7J'
     )
     
     new_headers = {
