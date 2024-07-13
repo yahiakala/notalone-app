@@ -11,6 +11,7 @@ from ..Members import Members
 from ..FinComponent import FinComponent
 from ..VolunteerComponent import VolunteerComponent
 from ..LoadingPopup import LoadingPopup
+from ..PaymentConfirm import PaymentConfirm
 
 from anvil_extras.logging import TimerLogger
 from anvil_extras import routing
