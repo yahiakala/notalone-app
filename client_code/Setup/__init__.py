@@ -28,6 +28,14 @@ class Setup(SetupTemplate):
             self.tb_discourse_url.text = self.tenant['discourse_url']
             self.tb_discord.text = self.tenant['discord_invite']
             self.rp_paypal_plans.items = self.tenant['paypal_plans'] or []
+            self.msdd_new_roles.items = [
+                {
+                    'key': i['name'],
+                    'value': i['name'],
+                    'subtext': ', '.join(i['permissions'])
+                }
+                for i in Global.roles
+            ]
             
             self.tenant_secrets = self.tenant_secrets or anvil.server.call('get_tenanted_data', Global.tenant_id, 'tenant_secrets')
             self.sv_discourse_api.secret = self.tenant_secrets['discourse_api_key']
@@ -75,7 +83,8 @@ class Setup(SetupTemplate):
                 'waiver': self.tb_waiver_link.text,
                 'logo': self.img_logo.source,
                 'discord_invite': self.tb_discord.text,
-                'paypal_plans': self.rp_paypal_plans.items
+                'paypal_plans': self.rp_paypal_plans.items,
+                'new_roles': self.msdd_new_roles.selected
             }
             anvil.server.call('update_tenant_data', Global.tenant_id, new_tenant_data)
             Global.tenant = new_tenant_data

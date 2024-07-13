@@ -76,11 +76,10 @@ def update_subscription(usermap, headers, body):
     plan = [i for i in usermap['tenant']['paypal_plans'] if i['id'] == plan_id][0]
 
     if body['resource']['status'] == 'EXPIRED':
-        # remove roles
         for role in plan['roles']:
             usermap['roles'] = [i for i in usermap['roles'] if i['name'] != role]
+            usermap = upsert_role(usermap, 'Approved')
     elif body['resource']['status'] == 'ACTIVE':
-        # Add roles
         for role in plan['roles']:
             usermap = upsert_role(usermap, role)
             usermap['roles'] = [i for i in usermap['roles'] if i['name'] not in ['Applicant', 'Approved']]
@@ -88,6 +87,7 @@ def update_subscription(usermap, headers, body):
 
     usermap['payment_status'] = body['resource']['status']
     usermap['fee'] = float(body['resource']['billing_info']['last_payment']['amount']['value'])
+
 
 def notify_admins(usermap):
     screeners = get_users_with_permission(None, 'see_members', usermap['tenant'])

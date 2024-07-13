@@ -345,7 +345,8 @@ def update_tenant_data(tenant_id, new_dict):
     if 'delete_members' not in permissions:
         return None
     print(new_dict['name'])
-    for safe_key in ['name', 'waiver', 'logo', 'discord_invite', 'paypal_plans', 'discourse_url']:
+    for safe_key in ['name', 'waiver', 'logo', 'discord_invite',
+                     'paypal_plans', 'discourse_url', 'new_roles']:
         tenant[safe_key] = new_dict[safe_key]
 
     secrets = ['discourse_api_key', 'discourse_secret',

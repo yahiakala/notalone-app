@@ -53,9 +53,12 @@ def get_usermap(tenant_id, user, tenant=None):
 
 def get_new_user_roles(tenant_id, tenant=None):
     """Assign a brand new user a role in this tenant."""
-    # This is where the logic of different tenants comes in.
     tenant = tenant or app_tables.tenants.get_by_id(tenant_id)
-    new_roles = app_tables.roles.search(tenant=tenant, name='Applicant', can_edit=False)
+    new_roles = app_tables.roles.search(
+        tenant=tenant,
+        name=q.any_of(*tenant['new_roles']),
+        can_edit=False
+    )
     return list(new_roles)
 
 
