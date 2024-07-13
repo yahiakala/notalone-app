@@ -11,15 +11,15 @@ from .paypal import verify_webhook, create_subscription, get_subscription_id
 
 @anvil.server.callable(require_user=True)
 def create_sub(tenant_id, plan_id):
-    # TODO: make this flexible for user that is sent.
     user = anvil.users.get_user(allow_remembered=True)
     tenant, usermap, permissions = validate_user(tenant_id, user)
 
     client_id = anvil.secrets.decrypt_with_key('encryption_key', tenant['paypal_client_id'])
     client_secret = anvil.secrets.decrypt_with_key('encryption_key', tenant['paypal_secret'])
 
-    return_url = anvil.server.get_app_origin() + '/#app/profile'
-    response = create_subscription(client_id, client_secret, plan_id, return_url, return_url)
+    return_url = anvil.server.get_app_origin() + '/#app/paymentconfirm'
+    cancel_url = anvil.server.get_app_origin() + '/#app/profile'
+    response = create_subscription(client_id, client_secret, plan_id, return_url, cancel_url)
 
     plan = [i for i in tenant['paypal_plans'] if i['id'] == plan_id][0]
     

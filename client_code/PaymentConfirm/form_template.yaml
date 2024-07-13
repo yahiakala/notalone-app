@@ -1,0 +1,16 @@
+container: {type: ColumnPanel}
+components:
+- name: label_1
+  properties: {text: Please wait while we update our records with your payment confirmation. This could take up to 5 minutes., align: center}
+  type: Label
+  layout_properties: {grid_position: 'SUEQCU,INEETC'}
+- name: image_1
+  properties: {source: _/theme/loading6.gif, height: 39.8984375}
+  type: Image
+  layout_properties: {grid_position: 'PGORQV,LHUAOV'}
+- name: ti_payment
+  properties: {interval: 1}
+  type: Timer
+  layout_properties: {grid_position: 'HPBPMG,AFHINJ'}
+  event_bindings: {tick: ti_payment_tick}
+is_package: true
