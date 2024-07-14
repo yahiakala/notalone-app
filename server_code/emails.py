@@ -3,20 +3,20 @@ import anvil.email
 from .helpers import get_users_with_permission
 
 
-def notify_paid(user_ref, applicant):
-    """Notify the screeners that someone paid."""
+def notify_paid(usermap, membermap):
+    """Notify the admins that someone paid."""
     print('Sending email.')
     msg_body = f"""
-    <p>Hi {user_ref['first_name']}!</p>
+    <p>Hi {usermap['first_name']}!</p>
 
     <p>You are getting this message because an applicant: 
-    {applicant['first_name'] + ' ' + applicant['last_name']} ({applicant['email']}) has just paid.</p>
+    {membermap['first_name'] + ' ' + membermap['last_name']} ({membermap['user']['email']}) has just paid.</p>
 
     <p>Regards,</p>
-    <p>NotAlone App</p>
+    <p>NotAlone App on behalf of {membermap['tenant']['name']}</p>
     """
     anvil.email.send(
-        to=user_ref['email'],
+        to=usermap['user']['email'],
         from_address='noreply',
         from_name="NotAlone",
         subject="Applicant Paid",

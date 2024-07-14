@@ -93,7 +93,7 @@ def notify_admins(usermap):
     screeners = get_users_with_permission(None, 'see_members', usermap['tenant'])
     for screener in screeners:
         print('Sending email to : ' + screener['user']['email'])
-        notify_paid(screener['user'], usermap['user'])
+        notify_paid(screener, usermap)
 
 
 def calc_rev12():
