@@ -97,7 +97,7 @@ def get_screenerlink(tenant_id, user, usermap=None, permissions=None, tenant=Non
         return ''
 
     # TODO: in future, make sure they have an interviewer role
-    screeners = app_tables.users.search(
+    screeners = app_tables.usermap.search(
         booking_link=q.not_(None),
         tenant=tenant
     )
@@ -106,7 +106,7 @@ def get_screenerlink(tenant_id, user, usermap=None, permissions=None, tenant=Non
     
     records = [
         {
-            'first_name': r['first_name'],
+            'first_name': r['first_name'] or 'Interviewer',
             'booking_link': r['booking_link'],
         }
         for r in screeners

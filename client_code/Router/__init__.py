@@ -68,11 +68,6 @@ class Router(RouterTemplate):
             self.link_members.visible = 'see_members' in self.permissions
             self.link_fin.visible = 'see_financials' in self.permissions
             self.link_volunteers.visible = 'see_members' in self.permissions  # TODO
-            self.link_forum_nav.visible = (
-                'see_forum' in self.permissions and
-                user['first_name'] != '' and
-                user['last_name'] != ''
-            )
             self.link_admin.visible = 'delete_admin' in self.permissions
             if 'debug' in anvil.server.get_app_origin():
                 # TODO: change to app origin check debug

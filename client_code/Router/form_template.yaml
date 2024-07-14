@@ -19,7 +19,7 @@ components:
     layout_properties: {}
     event_bindings: {pressed_enter: tb_impersonate_pressed_enter}
   - name: link_forum_nav
-    properties: {role: null, bold: false, align: left, col_widths: '', spacing_above: small, background: '', icon: 'fa:comments', wrap_on: mobile, underline: false, font: '', col_spacing: medium, icon_align: left, foreground: '', url: '', spacing_below: small, visible: false, border: '', italic: false, font_size: null, tooltip: '', text: Forum}
+    properties: {role: null, bold: false, align: left, col_widths: '', spacing_above: small, background: '', icon: 'fa:comments', wrap_on: mobile, underline: false, font: '', col_spacing: medium, icon_align: left, foreground: '', url: '', spacing_below: small, visible: true, border: '', italic: false, font_size: null, tooltip: '', text: Forum}
     type: Link
     layout_properties: {}
     event_bindings: {click: link_forum_nav_click}
