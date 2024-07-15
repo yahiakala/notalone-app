@@ -35,7 +35,8 @@ def get_tenant_single(user=None, tenant=None):
         'discourse_url': tenant['discourse_url'],
         'waiver': tenant['waiver'],
         'logo': tenant['logo'],
-        'paypal_plans': tenant['paypal_plans']
+        'paypal_plans': tenant['paypal_plans'],
+        'custom_reports': tenant['custom_reports']
     }
     if user:
         # usermap = get_usermap(tenant.get_id(), user, tenant)

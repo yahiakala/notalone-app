@@ -1,0 +1,23 @@
+is_package: true
+container:
+  type: ColumnPanel
+  event_bindings: {show: form_show}
+components:
+- name: fp_report
+  properties: {align: justify, vertical_align: middle}
+  type: FlowPanel
+  layout_properties: {grid_position: 'ZRZJXD,IWRGSQ'}
+  components:
+  - name: lbl_report_name
+    properties: {role: skeleton, text: '                                                                                                                           '}
+    type: Label
+    layout_properties: {}
+  - name: btn_run
+    properties: {text: Download Report, role: outlined-button}
+    type: Button
+    layout_properties: {}
+    event_bindings: {click: btn_run_click}
+- name: img_report
+  properties: {source: _/theme/loading6.gif, height: 73.59765625, visible: false}
+  type: Image
+  layout_properties: {grid_position: 'DVKMYP,BUXTQP'}

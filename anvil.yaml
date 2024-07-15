@@ -266,6 +266,9 @@ db_schema:
     - name: new_roles
       admin_ui: {width: 200, order: 13}
       type: simpleObject
+    - name: custom_reports
+      admin_ui: {width: 200, order: 14}
+      type: simpleObject
     title: Tenants
   users:
     client: none

@@ -151,6 +151,31 @@ def decrypt(something):
         return ''
 
 
+def list_to_csv(data):
+    """Output a list of dicts to csv."""
+    import io
+    import csv
+    import anvil.media
+    
+    output = io.StringIO()
+    
+    # Create a CSV writer object
+    writer = csv.DictWriter(output, fieldnames=data[0].keys())
+    # Write the header
+    writer.writeheader()
+    # Write the data
+    for row in data:
+        writer.writerow(row)
+    # Get the CSV content
+    csv_content = output.getvalue()
+    # Close the string buffer
+    output.close()
+    
+    # Create a media object from the CSV content
+    csv_file = anvil.media.from_string(csv_content, 'text/csv', 'data.csv')
+    return csv_file
+
+
 # --------------------
 # Return rows as dicts
 # --------------------
