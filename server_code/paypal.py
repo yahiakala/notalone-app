@@ -89,9 +89,8 @@ def create_subscription(client_id, client_secret, plan_id,
             data={
                 'plan_id': plan_id,
                 'application_context': {
-                    # TODO: these should be app pages. Webhooks are set up separately.
-                    'return_url': anvil.server.get_app_origin() + '/#app/profile',
-                    'cancel_url': anvil.server.get_app_origin() + '/#app/profile'
+                    'return_url': return_url,
+                    'cancel_url': cancel_url
                 }
             },
             json=True
