@@ -14,9 +14,6 @@ class MemberDetail(MemberDetailTemplate):
         self.init_components(**properties)
         if 'memberdetail' in routing.get_url_pattern():
             self.btn_back.visible = True
-            self.msc_roles.visible = True
-        else:
-            self.msc_roles.visible = False
         self.fp_pricing_table.add_event_handler('x-pay-click', self.pay_click)
     
     def form_show(self, **event_args):
@@ -32,6 +29,16 @@ class MemberDetail(MemberDetailTemplate):
         else:
             self.email = self.url_dict['user_email']
             self.cp_admin.visible = True
+            if 'edit_members' not in Global.permissions:
+                self.tb_firstname.enabled = False
+                self.tb_lastname.enabled = False
+                self.tb_phone.enabled = False
+                self.tb_discord_user.enabled = False
+                self.cb_signoff.enabled = False
+                self.tb_booking_link.enabled = False
+                self.btn_save.visible = False
+                self.msc_roles.visible = False
+                self.btn_del.visible = False
 
         self.member = anvil.server.call('get_member_data', Global.tenant_id, self.email)
         self.populate_role_list()
@@ -141,12 +148,16 @@ class MemberDetail(MemberDetailTemplate):
         self.member = anvil.server.call('reject_applicant', Global.tenant_id, self.email)
         self.populate_role_list()
         routing.clear_cache()
+        self.btn_accept_applicant.visible = False
+        self.btn_reject_applicant.visible = False
         
     def btn_accept_applicant_click(self, **event_args):
         """This method is called when the button is clicked"""
         self.member = anvil.server.call('accept_applicant', Global.tenant_id, self.email)
         self.populate_role_list()
         routing.clear_cache()
+        self.btn_accept_applicant.visible = False
+        self.btn_reject_applicant.visible = False
 
     def btn_del_click(self, **event_args):
         """This method is called when the button is clicked"""
