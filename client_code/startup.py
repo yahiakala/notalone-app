@@ -27,7 +27,7 @@ def redirect_no_tenant():
     if 'delete_members' in Global.permissions and (Global.tenant['name'] is None or Global.tenant['name'] == ''):
         return 'app/admin'
 
-    return 'app'
+    return routing.get_url_hash()
 
 
 @routing.redirect(path="app", priority=17, condition=lambda: Global.get_s('tenant') is not None and 'book_interview' in Global.permissions and 'see_profile' not in Global.permissions)
