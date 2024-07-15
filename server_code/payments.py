@@ -17,8 +17,8 @@ def create_sub(tenant_id, plan_id):
     client_id = anvil.secrets.decrypt_with_key('encryption_key', tenant['paypal_client_id'])
     client_secret = anvil.secrets.decrypt_with_key('encryption_key', tenant['paypal_secret'])
 
-    return_url = anvil.server.get_app_origin() + '/#app/paymentconfirm'
-    cancel_url = anvil.server.get_app_origin() + '/#app/profile'
+    return_url = anvil.server.get_app_origin() + '/payment-success'
+    cancel_url = anvil.server.get_app_origin() + '/payment-cancel'
     print(return_url)
     print(cancel_url)
     # return anvil.server.HttpResponse(302, headers={'Location': anvil.server.get_app_origin() + '/#profile'})
@@ -36,14 +36,14 @@ def create_sub(tenant_id, plan_id):
     return membermap, response['links'][0]['href']
 
 
-# @anvil.server.route('/payment-success')
-# def payment_success(**kwargs):
-#     return anvil.server.HttpResponse(302, headers={'Location': anvil.server.get_app_origin() + '/#app/paymentconfirm'})
+@anvil.server.route('/payment-success')
+def payment_success(**kwargs):
+    return anvil.server.HttpResponse(302, headers={'Location': anvil.server.get_app_origin() + '/#app/paymentconfirm'})
 
 
-# @anvil.server.route('/payment-cancel')
-# def payment_cancel(**kwargs):
-#     return anvil.server.HttpResponse(302, headers={'Location': anvil.server.get_app_origin() + '/#app/profile'})
+@anvil.server.route('/payment-cancel')
+def payment_cancel(**kwargs):
+    return anvil.server.HttpResponse(302, headers={'Location': anvil.server.get_app_origin() + '/#app/profile'})
 
 
 @anvil.server.http_endpoint('/capture-sub', methods=['POST'])

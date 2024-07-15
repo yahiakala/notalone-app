@@ -84,7 +84,7 @@ class Router(RouterTemplate):
 
     def link_forum_nav_click(self, **event_args):
         """This method is called when the link is clicked"""
-        if 'see_forum' not in self.permissions:
+        if 'see_forum' not in Global.permissions:
             routing.alert('Please make sure your membership is in good standing before accessing the forum.')
         else:
             anvil.js.window.location.href = Global.tenant['discourse_url']
