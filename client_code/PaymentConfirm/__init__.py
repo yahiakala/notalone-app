@@ -4,6 +4,7 @@ import anvil.server
 from ..Global import Global
 from anvil_extras import routing
 
+
 @routing.route('/paymentconfirm')
 class PaymentConfirm(PaymentConfirmTemplate):
     def __init__(self, **properties):
