@@ -160,7 +160,7 @@ class MemberDetail(MemberDetailTemplate):
         self.btn_save_notes.text = 'Saving...'
         self.btn_save_notes.italic = True
         with anvil.server.no_loading_indicator:
-            if 'edit_members' in Global.permissions:
+            if 'see_members' in Global.permissions:
                 anvil.server.call(
                     'save_user_notes',
                     Global.tenant_id,

@@ -101,7 +101,7 @@ def get_screenerlink(tenant_id, user, usermap=None, permissions=None, tenant=Non
     screeners = app_tables.usermap.search(
         booking_link=q.not_(None),
         tenant=tenant,
-        role=[interview_role]
+        roles=[interview_role]
     )
     if len(screeners) == 0:
         return {'first_name': 'No Interviewer Available', 'booking_link': ''}
