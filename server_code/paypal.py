@@ -89,8 +89,8 @@ def create_subscription(client_id, client_secret, plan_id,
             data={
                 'plan_id': plan_id,
                 'application_context': {
-                    'return_url': return_url,
-                    'cancel_url': cancel_url
+                    'return_url': anvil.http.url_encode(return_url),
+                    'cancel_url': anvil.http.url_encode(cancel_url)
                 }
             },
             json=True
