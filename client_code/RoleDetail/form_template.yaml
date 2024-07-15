@@ -1,6 +1,7 @@
 container:
   type: ColumnPanel
   properties: {col_widths: '{"MMKOUJ":10,"DLHAAZ":50,"IIVKSR":10,"GFVWMS":50}'}
+  event_bindings: {show: form_show}
 components:
 - name: lbl_name
   properties: {text: Role Name, role: input-prompt, spacing_above: small}
