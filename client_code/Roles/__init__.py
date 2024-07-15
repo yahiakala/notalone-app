@@ -1,4 +1,4 @@
-from ._anvil_designer import VolunteerComponentTemplate
+from ._anvil_designer import RolesTemplate
 from anvil import *
 import anvil.server
 from ..Global import Global
@@ -6,7 +6,7 @@ from anvil_extras import routing
 
 
 @routing.route('/volunteers', template='Router')
-class VolunteerComponent(VolunteerComponentTemplate):
+class Roles(RolesTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.
         self.user = Global.user

@@ -1,0 +1,17 @@
+is_package: true
+container: {type: DataRowPanel}
+components:
+- name: fp_actions
+  properties: {}
+  type: FlowPanel
+  layout_properties: {column: OJLQEN}
+  components:
+  - name: btn_members
+    properties: {text: Members, role: outlined-button}
+    type: Button
+    event_bindings: {click: btn_members_click}
+  - name: btn_edit
+    properties: {text: Edit, role: outlined-button}
+    type: Button
+    layout_properties: {}
+    event_bindings: {click: btn_edit_click}

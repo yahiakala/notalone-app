@@ -9,7 +9,7 @@ from ..Setup import Setup
 from ..MemberDetail import MemberDetail
 from ..Members import Members
 from ..FinComponent import FinComponent
-from ..VolunteerComponent import VolunteerComponent
+from ..Roles import Roles
 from ..LoadingPopup import LoadingPopup
 from ..PaymentConfirm import PaymentConfirm
 

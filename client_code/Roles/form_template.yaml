@@ -1,5 +1,19 @@
 container: {type: ColumnPanel}
 components:
+- name: dg_roles
+  properties:
+    columns:
+    - {id: JKSDUP, title: Name, data_key: name}
+    - {id: VJQQOR, title: Last Edit, data_key: last_update}
+    - {id: OJLQEN, title: Actions, data_key: column_3}
+    show_page_controls: false
+    rows_per_page: 0
+  type: DataGrid
+  components:
+  - name: rp_roles
+    properties: {item_template: Roles.RoleRow}
+    type: RepeatingPanel
+  layout_properties: {grid_position: 'PSLCFY,GQWGSN'}
 - name: cp_volunteer
   properties: {role: outlined-card}
   type: ColumnPanel
@@ -39,7 +53,7 @@ components:
       layout_properties: {grid_position: 'ASUKQT,CRCIBX'}
       event_bindings: {click: btn_save_new_role_click}
   - name: rp_vol_roles
-    properties: {item_template: VolunteerComponent.VolRoles}
+    properties: {item_template: Roles.VolRoles}
     type: RepeatingPanel
     layout_properties: {grid_position: 'OJCFBF,XROAJT'}
 is_package: true
