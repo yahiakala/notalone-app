@@ -35,12 +35,14 @@ def create_sub(tenant_id, plan_id):
     
     return membermap, response['links'][0]['href']
 
+
 @anvil.server.route('/payment-success')
-def payment_success():
+def payment_success(**kwargs):
     return anvil.server.HttpResponse(302, headers={'Location': anvil.server.get_app_origin() + '/#app/paymentconfirm'})
 
+
 @anvil.server.route('/payment-cancel')
-def payment_cancel():
+def payment_cancel(**kwargs):
     return anvil.server.HttpResponse(302, headers={'Location': anvil.server.get_app_origin() + '/#app/profile'})
 
 
@@ -97,7 +99,8 @@ def update_subscription(usermap, headers, body):
         notify_admins(usermap)
 
     usermap['payment_status'] = body['resource']['status']
-    usermap['fee'] = float(body['resource']['billing_info']['last_payment']['amount']['value'])
+    if 'billing_info' in body['resource']:
+        usermap['fee'] = float(body['resource']['billing_info']['last_payment']['amount']['value'])
 
 
 def notify_admins(usermap):
