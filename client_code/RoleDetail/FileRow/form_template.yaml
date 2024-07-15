@@ -1,0 +1,11 @@
+is_package: true
+container: {type: ColumnPanel}
+components:
+- name: lbl_name
+  properties: {}
+  type: Label
+  layout_properties: {grid_position: 'BTVDDX,CFZBGX'}
+- name: btn_view_file
+  properties: {text: Download File, role: outlined-button}
+  type: Button
+  layout_properties: {grid_position: 'BTVDDX,PRJJJU'}

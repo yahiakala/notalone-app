@@ -1,0 +1,30 @@
+container:
+  type: ColumnPanel
+  properties: {col_widths: '{"MMKOUJ":10,"DLHAAZ":50,"IIVKSR":10,"GFVWMS":50}'}
+components:
+- name: lbl_name
+  properties: {text: Role Name, role: input-prompt, spacing_above: small}
+  type: Label
+  layout_properties: {grid_position: 'KJPGZX,MMKOUJ'}
+- name: tb_name
+  properties: {role: outlined}
+  type: TextBox
+  layout_properties: {grid_position: 'KJPGZX,DLHAAZ'}
+- name: lbl_permissions
+  properties: {role: input-prompt, text: Permissions}
+  type: Label
+  layout_properties: {grid_position: 'FQVGYG,IIVKSR'}
+- name: lbl_permissions_list
+  properties: {role: input-prompt}
+  type: Label
+  layout_properties: {grid_position: 'FQVGYG,GFVWMS'}
+- name: rp_files
+  properties: {item_template: RoleDetail.FileRow}
+  type: RepeatingPanel
+  layout_properties: {grid_position: 'LFMZJR,PYDSFE'}
+- name: fl_add_file
+  properties: {text: Add File, icon_align: left, align: center}
+  type: FileLoader
+  layout_properties: {grid_position: 'CTSYQG,ZYKTUG'}
+  event_bindings: {change: fl_add_file_change}
+is_package: true

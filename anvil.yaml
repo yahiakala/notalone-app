@@ -173,6 +173,21 @@ db_schema:
       type: link_single
       target: tenants
     title: Notes
+  rolefiles:
+    client: none
+    server: full
+    columns:
+    - name: name
+      admin_ui: {width: 200, order: 0}
+      type: string
+    - name: file
+      admin_ui: {width: 200, order: 1}
+      type: media
+    - name: role
+      admin_ui: {width: 200, order: 2}
+      type: link_single
+      target: roles
+    title: RoleFiles
   files:
     client: none
     server: full

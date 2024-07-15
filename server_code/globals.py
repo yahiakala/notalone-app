@@ -160,7 +160,6 @@ def get_roles(tenant_id, user, usermap=None, permissions=None, tenant=None):
             role_list.append(
                 {
                     'name': role['name'],
-                    'reports_to': role['reports_to'],
                     'last_update': role['last_update'],
                     'guide': role['guide'],
                     'permissions': role_perm
