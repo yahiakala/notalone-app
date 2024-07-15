@@ -16,7 +16,10 @@ class RoleRow(RoleRowTemplate):
 
     def btn_members_click(self, **event_args):
         """This method is called when the button is clicked"""
-        pass
+        routing.set_url_hash(
+            url_pattern='app/members',
+            url_dict={'role': self.item['name']}
+        )
 
     def form_show(self, **event_args):
         """This method is called when the form is shown on the page"""

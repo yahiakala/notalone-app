@@ -10,7 +10,7 @@ from anvil_extras import routing
 # from anvil_squared.utils import print_timestamp
 
 
-@routing.route('/members', template='Router')
+@routing.route('/members', template='Router', url_keys=[routing.ANY])
 class Members(MembersTemplate):
     def __init__(self, **properties):
         self.init_components(**properties)
@@ -21,6 +21,15 @@ class Members(MembersTemplate):
         """This method is called when the form is shown on the page"""
         with anvil.server.no_loading_indicator:
             self.users = Global.users
+            
+            if 'role' in self.url_dict:
+                self.start_search()
+                self.members = anvil.server.call('search_users_by_role', Global.tenant_id, self.url_dict['role'])
+                self.rp_members.items = self.members
+                self.pagination_1.data_grid = self.dg_members
+                self.pagination_1.repeating_panel = self.rp_members
+                self.end_search()
+            
             if self.members == [None, None, None]:
                 self.members = Global.users.search(
                     q.fetch_only(
@@ -52,12 +61,20 @@ class Members(MembersTemplate):
 
     def btn_clear_search_click(self, **event_args):
         """This method is called when the button is clicked"""
-        self.members = [None, None, None]
-        self.rp_members.items = self.members
-        self.reset_buttons()
-        self.form_show()
-        self.tb_mb_search.text = None
-        self.btn_clear_search.enabled = False
+        with anvil.server.no_loading_indicator:
+            self.members = Global.users.search(
+                q.fetch_only(
+                    'user',
+                    user=q.fetch_only(
+                        'email', 'first_name', 'last_name', 'last_login', 'signed_up'
+                    )
+                )
+            )
+            self.rp_members.items = self.members
+            self.reset_buttons()
+            # self.form_show()
+            self.tb_mb_search.text = None
+            self.btn_clear_search.enabled = False
 
     def btn_qf_admins_click(self, **event_args):
         """Get admins."""
