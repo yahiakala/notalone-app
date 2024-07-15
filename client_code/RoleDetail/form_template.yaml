@@ -7,7 +7,8 @@ components:
   type: Label
   layout_properties: {grid_position: 'KJPGZX,MMKOUJ'}
 - name: tb_name
-  properties: {role: outlined}
+  properties:
+    role: [outlined, skeleton]
   type: TextBox
   layout_properties: {grid_position: 'KJPGZX,DLHAAZ'}
 - name: lbl_permissions
@@ -15,7 +16,8 @@ components:
   type: Label
   layout_properties: {grid_position: 'FQVGYG,IIVKSR'}
 - name: lbl_permissions_list
-  properties: {role: input-prompt}
+  properties:
+    role: [skeleton, input-prompt]
   type: Label
   layout_properties: {grid_position: 'FQVGYG,GFVWMS'}
 - name: rp_files
