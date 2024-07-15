@@ -11,8 +11,9 @@ components:
   - name: lbl_name
     properties:
       role: [skeleton, input-prompt]
+      text: '                                                                                                                                                                                                 '
     type: Label
-    layout_properties: {expand: true}
+    layout_properties: {expand: true, width: null}
   - name: btn_view_file
     properties: {text: Download File, role: outlined-button, align: right}
     type: Button

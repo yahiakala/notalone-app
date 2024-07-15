@@ -14,7 +14,6 @@ class FileRow(FileRowTemplate):
             self.lbl_name.role = None
             self.file = self.item['file']
         else:
-            self.lbl_name.text = ' ' * 50
             self.file = None
 
     def btn_view_file_click(self, **event_args):
