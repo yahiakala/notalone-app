@@ -81,7 +81,7 @@ def clear_tenant_data():
         tenant.delete()
 
 
-def migrate_all():
+def migrate_all_july24():
     users = app_tables.users.search(tenant=q.not_(None))
     tenant = app_tables.tenants.get()
     
