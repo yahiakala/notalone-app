@@ -55,6 +55,7 @@ def upsert_role(usermap, role_name):
     elif role not in usermap['roles']:
         usermap['roles'] = usermap['roles'] + [role]
 
+
 def migrate_firstlast():
     users = app_tables.users.search(tenant=q.not_(None))
     for user in users:
@@ -78,3 +79,34 @@ def clear_tenant_data():
         for perm in app_tables.permissions.search():
             perm.delete()
         tenant.delete()
+
+
+def migrate_all():
+    users = app_tables.users.search(tenant=q.not_(None))
+    tenant = app_tables.tenants.get()
+    
+    for user in users:
+        usermap = app_tables.usermap.get(user=user, tenant=tenant)
+        if not usermap:
+            usermap = app_tables.usermap.add_row(user=user, tenant=tenant)
+        for key in ['fee', 'paypal_sub_id', 'consent_check', 'booking_link',
+                    'payment_expiry', 'payment_status', 'discord', 'phone', 'screening_slots',
+                    'first_name', 'last_name']:
+            usermap[key] = user[key]
+        
+        note = app_tables.notes.get(user=user, tenant=tenant)
+        if note:
+            usermap['notes'] = note['notes']
+
+        if user['auth_members']:
+            upsert_role(usermap, 'Admin')
+        elif user['auth_screenings']:
+            upsert_role(usermap, 'Interviewer')
+        elif user['auth_forumchat']:
+            upsert_role(usermap, 'Member')
+        elif user['auth_profile']:
+            upsert_role(usermap, 'Approved')
+        elif user['auth_booking']:
+            upsert_role(usermap, 'Applicant')
+        else:
+            usermap['roles'] = None
