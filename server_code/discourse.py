@@ -43,8 +43,8 @@ def login_sso(sso, sig, session_id=None):
     print('user is logged in: ' + user['email'])
     
     # Prepare the return payload with user info
-    first_name = user['first_name'] or ''
-    last_name = user['last_name'] or ''
+    first_name = usermap['first_name'] or ''
+    last_name = usermap['last_name'] or ''
     if first_name == '' and last_name == '':
         username = user['email'].split('@')[0]
     else:

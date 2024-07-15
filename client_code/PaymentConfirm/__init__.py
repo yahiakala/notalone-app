@@ -17,6 +17,7 @@ class PaymentConfirm(PaymentConfirmTemplate):
         self.email = Global.user['email']
         self.member = anvil.server.call('get_member_data', Global.tenant_id, self.email)
         if 'Member' in self.member['roles']:
+            self.ti_payment.interval = 0
             routing.clear_cache()
             Global.permissions = self.member['permissions']
             routing.set_url_hash('app/home')
