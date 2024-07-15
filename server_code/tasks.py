@@ -157,21 +157,24 @@ def remove_role_from_member_bk(tenant_id, user, role_name, member_email):
 
 
 @anvil.server.callable(require_user=True)
-def add_role(tenant_id, role_name, reports_to, role_members):
+def add_role(tenant_id, role_name, role_perms):
     """Add volunteer role definition."""
+    from .helpers import role_row_to_dict
     user = anvil.users.get_user(allow_remembered=True)
-    anvil.server.launch_background_task('add_role_bk', tenant_id, user, role_name, reports_to, role_members)
-
-
-@anvil.server.background_task
-def add_role_bk(tenant_id, user, role_name, reports_to, role_members):
     tenant, usermap, permissions = validate_user(tenant_id, user)
 
     if 'edit_roles' not in permissions:
         return None
 
+    perm_rows = app_tables.permissions.search(name=q.any_of(*role_perms))
     if not app_tables.roles.get(tenant=tenant, name=role_name):
-        app_tables.roles.add_row(name=role_name, reports_to=reports_to, tenant=tenant, last_update=dt.date.today(), can_edit=True)
+        _ = app_tables.roles.add_row(
+            name=role_name, tenant=tenant,
+            last_update=dt.date.today(),
+            can_edit=True,
+            permissions=list(perm_rows)
+        )
+        return [role_row_to_dict(role) for role in app_tables.roles.search(tenant=tenant)]
 
 
 @anvil.server.callable(require_user=True)
@@ -195,15 +198,11 @@ def upload_role_guide_bk(tenant_id, user, role_name, file):
 @anvil.server.callable(require_user=True)
 def update_role(tenant_id, role_name, new_role_dict):
     user = anvil.users.get_user(allow_remembered=True)
-    anvil.server.launch_background_task('update_role_bk', tenant_id, user, role_name, new_role_dict)
-
-
-@anvil.server.background_task
-def update_role_bk(tenant_id, user, role_name, new_role_dict):
     tenant, usermap, permissions = validate_user(tenant_id, user)
     if 'edit_roles' not in permissions:
         return None
-    role = app_tables.roles.get(name=role_name, tenant=tenant)
+    role = app_tables.roles.get(name=role_name, tenant=tenant, can_edit=True)
+    for key in ['']
     if role['can_edit']:
         for key, val in new_role_dict.items():
             role[key] = val

@@ -76,7 +76,7 @@ components:
     components: []
     event_bindings: {click: nav_click}
   - name: link_volunteers
-    properties: {role: null, bold: false, align: left, col_widths: '', spacing_above: small, background: '', icon: '', wrap_on: mobile, underline: false, font: '', col_spacing: medium, icon_align: left, foreground: '', url: '', spacing_below: small, visible: false, border: '', italic: false, font_size: null, tooltip: '', text: Volunteers}
+    properties: {role: null, bold: false, align: left, col_widths: '', spacing_above: small, background: '', icon: '', wrap_on: mobile, underline: false, font: '', col_spacing: medium, icon_align: left, foreground: '', url: '', spacing_below: small, visible: false, border: '', italic: false, font_size: null, tooltip: '', text: Roles}
     type: Link
     layout_properties: {grid_position: 'PFCERG,VDMIUR'}
     event_bindings: {click: nav_click}

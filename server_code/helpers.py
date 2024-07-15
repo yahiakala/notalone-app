@@ -8,8 +8,8 @@ role_dict = {
     'Applicant': ['book_interview'],
     'Approved': ['see_profile'],
     'Member': ['see_profile', 'see_forum'],
-    'Interviewer': ['see_profile', 'see_forum', 'see_applicants', 'see_members'],
-    'Admin': ['see_profile', 'see_forum', 'see_applicants', 'see_members', 'edit_members', 'delete_members', 'delete_admin', 'edit_roles'],
+    'Interviewer': ['see_profile', 'see_forum', 'see_members'],
+    'Admin': ['see_profile', 'see_forum', 'see_members', 'edit_members', 'delete_members', 'delete_admin', 'edit_roles'],
 }
 
 perm_list = []
@@ -120,28 +120,6 @@ def upsert_role(usermap, role_name):
     return usermap
 
 
-def usermap_row_to_dict(row):
-    row_dict = {
-        'first_name': row['user']['first_name'] or '',
-        'last_name': row['user']['last_name'] or '',
-        'email': row['user']['email'],
-        'discord': row['discord'] or '',
-        'fee': row['fee'],
-        'phone': row['phone'] or '',
-        'consent_check': row['consent_check'],
-        'booking_link': row['booking_link'],
-        'payment_status': row['payment_status'],
-        'payment_expiry': row['payment_expiry'],
-        'last_login': row['user']['last_login'],
-        'signed_up': row['user']['signed_up'],
-        'paypal_sub_id': row['paypal_sub_id'],
-        'permissions': get_permissions(None, row['user'], row['tenant'], row),
-        'roles': get_user_roles(None, None, row, row['tenant']),
-        'notes': row['notes']
-    }
-    return row_dict
-
-
 def populate_permissions():
     """Populate the permissions table."""
     print_timestamp('populate_permissions')
@@ -171,3 +149,42 @@ def decrypt(something):
         return anvil.secrets.decrypt_with_key("encryption_key", something)
     else:
         return ''
+
+
+# --------------------
+# Return rows as dicts
+# --------------------
+def usermap_row_to_dict(row):
+    row_dict = {
+        'first_name': row['user']['first_name'] or '',
+        'last_name': row['user']['last_name'] or '',
+        'email': row['user']['email'],
+        'discord': row['discord'] or '',
+        'fee': row['fee'],
+        'phone': row['phone'] or '',
+        'consent_check': row['consent_check'],
+        'booking_link': row['booking_link'],
+        'payment_status': row['payment_status'],
+        'payment_expiry': row['payment_expiry'],
+        'last_login': row['user']['last_login'],
+        'signed_up': row['user']['signed_up'],
+        'paypal_sub_id': row['paypal_sub_id'],
+        'permissions': get_permissions(None, row['user'], row['tenant'], row),
+        'roles': get_user_roles(None, None, row, row['tenant']),
+        'notes': row['notes']
+    }
+    return row_dict
+
+
+def role_row_to_dict(role):
+    if role['permissions']:
+        role_perm = [j['name'] for j in role['permissions']]
+    else:
+        role_perm = []
+    return {
+        'name': role['name'],
+        'last_update': role['last_update'],
+        'guides': app_tables.rolefiles.search(role=role),
+        'permissions': role_perm,
+        'can_edit': role['can_edit']
+    }

@@ -10,6 +10,14 @@ from .helpers import validate_user, get_usermap, get_permissions, get_user_roles
 # --------------------
 # Non tenanted globals
 # --------------------
+@anvil.server.callable(require_user=True)
+def get_data(key):
+    print_timestamp(f'get_data: {key}')
+    # user = anvil.users.get_user(allow_remembered=True)
+    if key == 'all_permissions':
+        return get_all_permissions()
+
+
 @anvil.server.callable()
 def get_tenant_single(user=None, tenant=None):
     """Get the tenant in this instance."""
@@ -37,6 +45,10 @@ def get_tenant_single(user=None, tenant=None):
             return app_tables.tenants.client_writable().get()
     
     return tenant_dict
+
+
+def get_all_permissions():
+    return [i['name'] for i in app_tables.permissions.search()]
 
 # ----------------
 # Tenanted globals
@@ -147,24 +159,11 @@ def get_finances(tenant_id, user, usermap=None, permissions=None, tenant=None):
 
 
 def get_roles(tenant_id, user, usermap=None, permissions=None, tenant=None):
+    from .helpers import role_row_to_dict
     tenant, usermap, permissions = validate_user(tenant_id, user, usermap, permissions, tenant)
     if 'see_forum' in permissions:
-        role_list = []
         role_search = app_tables.roles.search(tenant=tenant)
             
-        for role in role_search:
-            if role['permissions']:
-                role_perm = [j['name'] for j in role['permissions']]
-            else:
-                role_perm = []
-            role_list.append(
-                {
-                    'name': role['name'],
-                    'last_update': role['last_update'],
-                    'guide': role['guide'],
-                    'permissions': role_perm
-                }
-            )
-            
+        role_list = [role_row_to_dict(i) for i in role_search]
         return role_list
     return []

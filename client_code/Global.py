@@ -7,7 +7,8 @@ _global_dict = {
     'tenant': None,
     'tenant_id': None,
     'tenants': None,
-    'my_tenants': None
+    'my_tenants': None,
+    'all_permissions': None
 }
 _tenanted_dict = {
     'usermap': None,

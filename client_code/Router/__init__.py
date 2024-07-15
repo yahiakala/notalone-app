@@ -10,6 +10,7 @@ from ..MemberDetail import MemberDetail
 from ..Members import Members
 from ..FinComponent import FinComponent
 from ..Roles import Roles
+from ..RoleDetail import RoleDetail
 from ..LoadingPopup import LoadingPopup
 from ..PaymentConfirm import PaymentConfirm
 

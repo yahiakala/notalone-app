@@ -1,5 +1,6 @@
 from ._anvil_designer import RoleRowTemplate
 from anvil import *
+from anvil_extras import routing
 
 
 class RoleRow(RoleRowTemplate):
@@ -11,7 +12,7 @@ class RoleRow(RoleRowTemplate):
 
     def btn_edit_click(self, **event_args):
         """This method is called when the button is clicked"""
-        pass
+        routing.set_url_hash(url_pattern='app/roledetail', url_dict={'role': self.item['name']})
 
     def btn_members_click(self, **event_args):
         """This method is called when the button is clicked"""

@@ -12,22 +12,35 @@ class Roles(RolesTemplate):
         self.user = Global.user
         self.init_components(**properties)
 
-        if 'see_members' in Global.permissions:
-            self.rp_vol_roles.items = Global.roles_to_members
+    def form_show(self, **event_args):
+        """This method is called when the form is shown on the page"""
+        self.rp_roles.items = Global.roles
+        if 'edit_roles' in Global.permissions:
+            self.btn_add.visible = True
         else:
-            self.rp_vol_roles.items = Global.roles
-        # Any code you write here will run before the form opens.
+            self.btn_add.visible = False
 
     def btn_add_click(self, **event_args):
         """Add a volunteer role, refresh repeating panel."""
         self.cp_addrole.visible = True
+        self.msdd_permissions.items = [
+            {
+                'key': i,
+                'value': i
+            }
+            for i in Global.all_permissions
+        ]
 
     def btn_save_new_role_click(self, **event_args):
         """This method is called when the button is clicked"""
-        Global.roles_to_members = anvil.server.call('add_role',
-                                                    self.tb_new_role.text,
-                                                    self.tb_new_role_report.text, Global.roles_to_members)
-        self.rp_vol_roles.items = Global.roles_to_members
+        Global.roles = anvil.server.call(
+            'add_role',
+            Global.tenant_id,
+            self.tb_new_role.text,
+            self.msdd_permissions.selected
+        )
+        self.rp_roles.items = Global.roles
         self.lbl_new_role.text = None
-        self.lbl_new_role_reports.text = None
         self.cp_addrole.visible = False
+
+
