@@ -8,12 +8,13 @@ from .Global import Global
 
 @routing.redirect(path="app", priority=20, condition=lambda: Global.user is None)
 def redirect_no_user():
-    print('something')
+    print('redirect_no_user')
     return "sign"
 
 
 @routing.redirect(path="app", priority=18, condition=lambda: Global.get_s('tenant') is None and Global.user is not None)
 def redirect_no_tenant():
+    print('redirect_no_tenant')
     Global.tenant = anvil.server.call('get_tenant_single')
     if Global.get_s('tenant') is None:
         Global.tenant = anvil.server.call('create_tenant_single')
@@ -31,6 +32,7 @@ def redirect_no_tenant():
 
 @routing.redirect(path="app", priority=17, condition=lambda: Global.get_s('tenant') is not None and 'book_interview' in Global.permissions and 'see_profile' not in Global.permissions)
 def redirect_applicant():
+    print('redirect_applicant')
     return 'app/apply'
 
 
