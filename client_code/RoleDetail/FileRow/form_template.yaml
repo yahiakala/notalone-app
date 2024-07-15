@@ -18,3 +18,8 @@ components:
     properties: {text: Download File, role: outlined-button, align: right}
     type: Button
     event_bindings: {click: btn_view_file_click}
+  - name: btn_delete
+    properties: {text: '', role: outlined-button, icon: 'fa:trash'}
+    type: Button
+    layout_properties: {}
+    event_bindings: {click: btn_delete_click}

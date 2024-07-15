@@ -178,21 +178,35 @@ def add_role(tenant_id, role_name, role_perms):
 
 
 @anvil.server.callable(require_user=True)
+def get_role_guides(tenant_id, role_name):
+    user = anvil.users.get_user(allow_remembered=True)
+    tenant, usermap, permissions = validate_user(tenant_id, user)
+    role = app_tables.roles.get(name=role_name, tenant=tenant)
+    return app_tables.rolefiles.search(role=role)
+
+
+@anvil.server.callable(require_user=True)
 def upload_role_guide(tenant_id, role_name, file):
     user = anvil.users.get_user(allow_remembered=True)
-    anvil.server.launch_background_task('upload_role_guide_bk', tenant_id, user, role_name, file)
-
-
-@anvil.server.background_task
-def upload_role_guide_bk(tenant_id, user, role_name, file):
     tenant, usermap, permissions = validate_user(tenant_id, user)
     if 'edit_roles' not in permissions:
         return None
     
-    role = app_tables.roles.get(name=role_name, tenant=tenant)
-    # TODO: allow multiple files
-    if role['can_edit']:
-        role['guide'] = file
+    role = app_tables.roles.get(name=role_name, tenant=tenant, can_edit=True)
+    _ = app_tables.rolefiles.add_row(role=role, name=file.name, file=file)
+    return app_tables.rolefiles.search(role=role)
+
+
+@anvil.server.callable(require_user=True)
+def delete_role_guide(tenant_id, role_name, guide_name):
+    user = anvil.users.get_user(allow_remembered=True)
+    tenant, usermap, permissions = validate_user(tenant_id, user)
+    if 'edit_roles' not in permissions:
+        return None
+    role = app_tables.roles.get(name=role_name, tenant=tenant, can_edit=True)
+    guide = app_tables.rolefiles.get(role=role, name=guide_name)
+    guide.delete()
+    return app_tables.rolefiles.search(role=role)
 
 
 @anvil.server.callable(require_user=True)
@@ -202,10 +216,11 @@ def update_role(tenant_id, role_name, new_role_dict):
     if 'edit_roles' not in permissions:
         return None
     role = app_tables.roles.get(name=role_name, tenant=tenant, can_edit=True)
-    for key in ['']
-    if role['can_edit']:
-        for key, val in new_role_dict.items():
-            role[key] = val
+    for key in ['name']:
+            role[key] = new_role_dict[key]
+    role['last_update'] = dt.date.today()
+    perm_rows = app_tables.permissions.search(name=q.any_of(*new_role_dict['permissions']))
+    role['permissions'] = list(perm_rows)
 
 
 @anvil.server.callable(require_user=True)

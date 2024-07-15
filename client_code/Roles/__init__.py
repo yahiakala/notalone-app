@@ -11,14 +11,16 @@ class Roles(RolesTemplate):
         # Set Form properties and Data Bindings.
         self.user = Global.user
         self.init_components(**properties)
+        self.rp_roles.items = [None, None, None]
 
     def form_show(self, **event_args):
         """This method is called when the form is shown on the page"""
-        self.rp_roles.items = Global.roles
-        if 'edit_roles' in Global.permissions:
-            self.btn_add.visible = True
-        else:
-            self.btn_add.visible = False
+        with anvil.server.no_loading_indicator:
+            self.rp_roles.items = Global.roles
+            if 'edit_roles' in Global.permissions:
+                self.btn_add.visible = True
+            else:
+                self.btn_add.visible = False
 
     def btn_add_click(self, **event_args):
         """Add a volunteer role, refresh repeating panel."""

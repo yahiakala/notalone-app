@@ -29,7 +29,7 @@ components:
   - {property: width, code: '''fit''', writeback: false}
   event_bindings: {change: msdd_permissions_change}
 - name: rp_files
-  properties: {item_template: RoleDetail.FileRow, visible: false}
+  properties: {item_template: RoleDetail.FileRow, visible: true}
   type: RepeatingPanel
   layout_properties: {grid_position: 'LFMZJR,PYDSFE'}
 - name: fl_add_file
@@ -37,4 +37,9 @@ components:
   type: FileLoader
   layout_properties: {grid_position: 'CTSYQG,ZYKTUG'}
   event_bindings: {change: fl_add_file_change}
+- name: btn_save
+  properties: {text: Save Changes, role: filled-button, enabled: true}
+  type: Button
+  layout_properties: {grid_position: 'CCLAFW,DBMTVT'}
+  event_bindings: {click: btn_save_click}
 is_package: true
