@@ -14,4 +14,6 @@ class PriceCard(PriceCardTemplate):
 
     def btn_pay_link_click(self, **event_args):
         """This method is called when the button is clicked"""
+        self.btn_pay_link.text = 'Redirecting...'
+        self.btn_pay_link.italic = True
         self.parent.raise_event('x-pay-click', item=self.item)

@@ -125,13 +125,12 @@ class MemberDetail(MemberDetailTemplate):
         print_timestamp('memberdetail: pay_click')
         from anvil.js import window
 
-        self.member, self.payment_url = anvil.server.call("create_sub", Global.tenant_id, item['id'])
-
-        self.btn_save_click()
-        
-        # window.open(self.payment_url)
-        routing.clear_cache()
-        window.location.href = self.payment_url  # same window
+        with anvil.server.no_loading_indicator:
+            self.member, self.payment_url = anvil.server.call("create_sub", Global.tenant_id, item['id'])
+            self.btn_save_click()
+            # window.open(self.payment_url)
+            routing.clear_cache()
+            window.location.href = self.payment_url  # same window
 
     def btn_back_click(self, **event_args):
         """This method is called when the button is clicked"""

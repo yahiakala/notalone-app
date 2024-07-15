@@ -19,6 +19,7 @@ def create_sub(tenant_id, plan_id):
 
     return_url = anvil.server.get_app_origin() + '/#app/paymentconfirm'
     cancel_url = anvil.server.get_app_origin() + '/#app/profile'
+    print(return_url)
     response = create_subscription(client_id, client_secret, plan_id, return_url, cancel_url)
 
     plan = [i for i in tenant['paypal_plans'] if i['id'] == plan_id][0]

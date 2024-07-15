@@ -8,6 +8,10 @@ components:
   properties: {source: _/theme/loading6.gif, height: 39.8984375}
   type: Image
   layout_properties: {grid_position: 'PGORQV,LHUAOV'}
+- name: lbl_confirmed
+  properties: {text: Your payment is now confirmed. You can access the forum using the button on the top right., align: center, visible: false}
+  type: Label
+  layout_properties: {grid_position: 'ZBJEOB,TNZCDC'}
 - name: ti_payment
   properties: {interval: 1}
   type: Timer
