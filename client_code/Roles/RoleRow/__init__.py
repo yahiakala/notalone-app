@@ -16,3 +16,11 @@ class RoleRow(RoleRowTemplate):
     def btn_members_click(self, **event_args):
         """This method is called when the button is clicked"""
         pass
+
+    def form_show(self, **event_args):
+        """This method is called when the form is shown on the page"""
+        if self.item:
+            self.lbl_name.text = self.item['name']
+            self.lbl_last_update.text = self.item['last_update']
+            self.lbl_name.role = None
+            self.lbl_last_update.role = None

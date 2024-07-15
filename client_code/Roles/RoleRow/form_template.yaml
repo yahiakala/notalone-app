@@ -1,5 +1,7 @@
 is_package: true
-container: {type: DataRowPanel}
+container:
+  type: DataRowPanel
+  event_bindings: {show: form_show}
 components:
 - name: fp_actions
   properties: {}
@@ -15,3 +17,11 @@ components:
     type: Button
     layout_properties: {}
     event_bindings: {click: btn_edit_click}
+- name: lbl_name
+  properties: {role: skeleton}
+  type: Label
+  layout_properties: {column: JKSDUP}
+- name: lbl_last_update
+  properties: {role: skeleton}
+  type: Label
+  layout_properties: {column: VJQQOR}
