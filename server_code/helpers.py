@@ -172,7 +172,7 @@ def list_to_csv(data):
     output.close()
     
     # Create a media object from the CSV content
-    csv_file = anvil.media.from_string(csv_content, 'text/csv', 'data.csv')
+    csv_file = anvil.BlobMedia('text/csv', csv_content.encode('utf-8'), 'data.csv')
     return csv_file
 
 

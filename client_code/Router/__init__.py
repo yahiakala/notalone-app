@@ -13,6 +13,7 @@ from ..Roles import Roles
 from ..RoleDetail import RoleDetail
 from ..LoadingPopup import LoadingPopup
 from ..PaymentConfirm import PaymentConfirm
+from ..Reports import Reports
 
 from anvil_extras.logging import TimerLogger
 from anvil_extras import routing
@@ -32,6 +33,7 @@ class Router(RouterTemplate):
         self.link_fin.tag.url_hash = 'app/financials'
         self.link_volunteers.tag.url_hash = 'app/volunteers'
         self.link_admin.tag.url_hash = 'app/admin'
+        self.link_reports.tag.url_hash = 'app/reports'
         
         self.populate_globals()
 
@@ -70,6 +72,7 @@ class Router(RouterTemplate):
             self.link_fin.visible = 'see_financials' in self.permissions
             self.link_volunteers.visible = 'see_members' in self.permissions  # TODO
             self.link_admin.visible = 'delete_admin' in self.permissions
+            self.link_reports.visible = 'see_members' in self.permissions
             if 'debug' in anvil.server.get_app_origin():
                 # TODO: change to app origin check debug
                 self.tb_impersonate.visible = True

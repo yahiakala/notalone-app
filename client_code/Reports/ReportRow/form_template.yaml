@@ -1,6 +1,7 @@
 is_package: true
 container:
   type: ColumnPanel
+  properties: {role: outlined-card}
   event_bindings: {show: form_show}
 components:
 - name: fp_report
