@@ -17,10 +17,11 @@ def create_sub(tenant_id, plan_id):
     client_id = anvil.secrets.decrypt_with_key('encryption_key', tenant['paypal_client_id'])
     client_secret = anvil.secrets.decrypt_with_key('encryption_key', tenant['paypal_secret'])
 
+    # TODO: add tenant id to the return urls and route the app properly
     return_url = anvil.server.get_app_origin() + '/payment-success'
     cancel_url = anvil.server.get_app_origin() + '/payment-cancel'
-    print(return_url)
-    print(cancel_url)
+    # print(return_url)
+    # print(cancel_url)
     # return anvil.server.HttpResponse(302, headers={'Location': anvil.server.get_app_origin() + '/#profile'})
     response = create_subscription(client_id, client_secret, plan_id, return_url, cancel_url)
 

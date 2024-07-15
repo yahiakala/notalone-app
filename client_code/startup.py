@@ -15,6 +15,7 @@ def redirect_no_user():
 @routing.redirect(path="app", priority=18, condition=lambda: Global.get_s('tenant') is None and Global.user is not None)
 def redirect_no_tenant():
     print('redirect_no_tenant')
+    # TODO: first check if there's a tenant_id parameter in the url_hash
     Global.tenant = anvil.server.call('get_tenant_single')
     if Global.get_s('tenant') is None:
         Global.tenant = anvil.server.call('create_tenant_single')
