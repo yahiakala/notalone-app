@@ -1,16 +1,4 @@
-scheduled_tasks:
-- task_name: check_subs
-  time_spec:
-    n: 1
-    every: day
-    at: {minute: 0, hour: 3}
-  job_id: KGSFSYSW
-- task_name: clean_up_users
-  time_spec:
-    n: 1
-    every: day
-    at: {minute: 0, hour: 3}
-  job_id: DYCHHZXR
+scheduled_tasks: null
 dependencies:
 - dep_id: dep_dmhomulhrajp9w
   version: {dev: false}
