@@ -9,9 +9,10 @@ components:
   layout_properties: {column: OJLQEN}
   components:
   - name: btn_members
-    properties: {text: Members, role: outlined-button}
+    properties: {text: Members, role: outlined-button, visible: false}
     type: Button
     event_bindings: {click: btn_members_click}
+    layout_properties: {}
   - name: btn_edit
     properties: {text: Details, role: outlined-button}
     type: Button

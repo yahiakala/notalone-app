@@ -17,6 +17,8 @@ class RoleRow(RoleRowTemplate):
             self.lbl_last_update.text = self.item['last_update']
             self.lbl_name.role = None
             self.lbl_last_update.role = None
+        if 'see_members' in Global.permissions:
+            self.btn_members.visible = True
             
     def btn_edit_click(self, **event_args):
         """This method is called when the button is clicked"""
