@@ -267,7 +267,7 @@ components:
     name: cb_signoff
     layout_properties: {grid_position: 'VIIDLQ,DYBKHN'}
     data_bindings: []
-    event_bindings: {change: btn_save_click}
+    event_bindings: {}
 - type: ColumnPanel
   properties: {role: outlined-card, col_widths: '{}'}
   name: cp_membership_payments

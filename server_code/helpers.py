@@ -181,8 +181,8 @@ def list_to_csv(data):
 # --------------------
 def usermap_row_to_dict(row):
     row_dict = {
-        'first_name': row['user']['first_name'] or '',
-        'last_name': row['user']['last_name'] or '',
+        'first_name': row['first_name'] or '',
+        'last_name': row['last_name'] or '',
         'email': row['user']['email'],
         'discord': row['discord'] or '',
         'fee': row['fee'],
@@ -194,7 +194,7 @@ def usermap_row_to_dict(row):
         'last_login': row['user']['last_login'],
         'signed_up': row['user']['signed_up'],
         'paypal_sub_id': row['paypal_sub_id'],
-        'permissions': get_permissions(None, row['user'], row['tenant'], row),
+        'permissions': get_permissions(None, row['user'], tenant=row['tenant'], usermap=row),
         'roles': get_user_roles(None, None, row, row['tenant']),
         'notes': row['notes']
     }

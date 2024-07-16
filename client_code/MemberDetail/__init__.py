@@ -90,7 +90,7 @@ class MemberDetail(MemberDetailTemplate):
         self.btn_save.italic = True
         
         with anvil.server.no_loading_indicator:
-            if self.member["first_name"] == "" or self.member["last_name"] == "":
+            if self.tb_firstname.text == "" or self.tb_lastname.text == "":
                 self.lbl_namealert.visible = True
             else:
                 self.lbl_namealert.visible = False
