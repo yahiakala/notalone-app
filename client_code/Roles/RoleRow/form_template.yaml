@@ -13,7 +13,7 @@ components:
     type: Button
     event_bindings: {click: btn_members_click}
   - name: btn_edit
-    properties: {text: Edit, role: outlined-button}
+    properties: {text: Details, role: outlined-button}
     type: Button
     layout_properties: {}
     event_bindings: {click: btn_edit_click}
