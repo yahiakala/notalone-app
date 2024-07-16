@@ -57,7 +57,7 @@ def get_new_user_roles(tenant_id, tenant=None):
     new_roles = app_tables.roles.search(
         tenant=tenant,
         name=q.any_of(*tenant['new_roles']),
-        can_edit=False
+        can_edit=q.not_(True)
     )
     return list(new_roles)
 
