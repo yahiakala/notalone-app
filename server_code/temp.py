@@ -100,9 +100,9 @@ def migrate_all_july24():
 
         if user['auth_members']:
             upsert_role(usermap, 'Admin')
-        elif user['auth_screenings']:
+        if user['auth_screenings']:
             upsert_role(usermap, 'Interviewer')
-        elif user['auth_forumchat']:
+        if user['auth_forumchat']:
             upsert_role(usermap, 'Member')
         elif user['auth_profile']:
             upsert_role(usermap, 'Approved')
