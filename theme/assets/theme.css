@@ -418,7 +418,8 @@ color: %color:On Primary Container%;
 }
 
 .app-bar.scrolled {
-  background: linear-gradient(0deg, %color:Primary Overlay 2%, %color:Primary Overlay 2%), %color:Background%;
+  /* background: linear-gradient(0deg, %color:Primary Overlay 2%, %color:Primary Overlay 2%), %color:Background%; */
+    /* YK */
   transition: background 250ms;
   -webkit-transition: background 250ms;
   -moz-transition: background 250ms;
