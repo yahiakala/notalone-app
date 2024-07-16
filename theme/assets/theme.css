@@ -277,7 +277,7 @@ color: %color:On Primary Container%;
   flex-direction: column;
   /* background: linear-gradient(0deg, %color:Primary Overlay 1%, %color:Primary Overlay 1%), %color:Background%; */
   border-right: 1px solid %color:Outline%; /* YK */
-  background: %color:Background%;
+  background: %color:Background%; /* YK */
   font-size: 14px;
   font-weight: 500;
   color: %color:On Surface Variant%;
