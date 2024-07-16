@@ -24,7 +24,7 @@ def login_sso(sso, sig, session_id=None):
     user = anvil.users.get_user(allow_remembered=True)
     if not user:
         print('No user logged in.')
-        return anvil.server.HttpResponse(302, headers={"Location": anvil.server.get_app_origin()})
+        return anvil.server.HttpResponse(302, headers={"Location": anvil.server.get_app_origin() + '/signin'})
 
     discourse_url = params['return_sso_url'].replace('https://', '').replace('/session/sso_login', '')
     tenant = app_tables.tenants.get(discourse_url=q.ilike('%'+discourse_url+'%'))
