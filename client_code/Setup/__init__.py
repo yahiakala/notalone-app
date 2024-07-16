@@ -15,6 +15,12 @@ class Setup(SetupTemplate):
         self.tenant_secrets = None
         self.rp_paypal_plans.add_event_handler('x-remove-plan', self.remove_plan)
         self.rp_paypal_plans.add_event_handler('x-edit-plan', self.edit_plan)
+        self.sv_discourse_secret.tb_secret.role = 'skeleton'
+        self.sv_discourse_api.tb_secret.role = 'skeleton'
+        self.sv_paypal_client_id.tb_secret.role = 'skeleton'
+        self.sv_paypal_secret.tb_secret.role = 'skeleton'
+        self.sv_webhook_id.tb_secret.role = 'skeleton'
+        # self.rp_paypal_plans.items = [None, None, None]
         
 
     def form_show(self, **event_args):
@@ -43,6 +49,17 @@ class Setup(SetupTemplate):
             self.sv_paypal_client_id.secret = self.tenant_secrets['paypal_client_id']
             self.sv_paypal_secret.secret = self.tenant_secrets['paypal_secret']
             self.sv_webhook_id.secret = self.tenant_secrets['paypal_webhook_id']
+
+            self.tb_name.role = 'outlined'
+            self.tb_waiver_link.role = 'outlined'
+            self.tb_email.role = 'outlined'
+            self.tb_discourse_url.role = 'outlined'
+            self.tb_discord.role = 'outlined'
+            self.sv_discourse_secret.tb_secret.role = 'outlined'
+            self.sv_discourse_api.tb_secret.role = 'outlined'
+            self.sv_paypal_client_id.tb_secret.role = 'outlined'
+            self.sv_paypal_secret.tb_secret.role = 'outlined'
+            self.sv_webhook_id.tb_secret.role = 'outlined'
 
     def sv_discourse_secret_reset(self, **event_args):
         with anvil.server.no_loading_indicator:

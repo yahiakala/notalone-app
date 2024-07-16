@@ -45,7 +45,7 @@ components:
   type: Label
   layout_properties: {grid_position: 'MMBUVB,NXWYID'}
 - name: img_logo
-  properties: {visible: false}
+  properties: {visible: true}
   type: Image
   layout_properties: {grid_position: 'MMBUVB,TDBVMS KLBUMB,YDVWXR'}
 - name: fl_logo
