@@ -14,6 +14,7 @@ from ..RoleDetail import RoleDetail
 from ..LoadingPopup import LoadingPopup
 from ..PaymentConfirm import PaymentConfirm
 from ..Reports import Reports
+from ..Settings import Settings
 
 from anvil_extras.logging import TimerLogger
 from anvil_extras import routing
@@ -34,6 +35,7 @@ class Router(RouterTemplate):
         self.link_volunteers.tag.url_hash = 'app/volunteers'
         self.link_admin.tag.url_hash = 'app/admin'
         self.link_reports.tag.url_hash = 'app/reports'
+        self.link_settings.tag.url_hash = 'app/settings'
         
         self.populate_globals()
 

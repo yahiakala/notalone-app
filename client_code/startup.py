@@ -30,7 +30,7 @@ def redirect_no_tenant():
     return routing.get_url_hash()
 
 
-@routing.redirect(path="app", priority=17, condition=lambda: Global.get_s('tenant') is not None and 'book_interview' in Global.permissions and 'see_profile' not in Global.permissions)
+@routing.redirect(path="app/home", priority=17, condition=lambda: Global.get_s('tenant') is not None and 'book_interview' in Global.permissions and 'see_profile' not in Global.permissions)
 def redirect_applicant():
     print('redirect_applicant')
     return 'app/apply'
