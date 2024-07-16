@@ -2,7 +2,7 @@
 
 ## Beginner - Develop in Anvil
 
-First, create an Anvil account. I recommend the Personal Plan which is approx 15 USD per month.
+First, create an Anvil account. You can run the app using the free plan, but I recommend the Hobby Plan which is approx 15 USD per month.
 
 Complete this free course: https://training.talkpython.fm/courses/explore_anvil/anvil-web-apps-with-just-python
 
