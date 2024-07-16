@@ -12,7 +12,10 @@ components:
   type: Label
   layout_properties: {grid_position: 'ROCKPW,QAYIPQ'}
 - name: tb_name
-  properties: {role: outlined, placeholder: Group name, enabled: true}
+  properties:
+    role: [outlined, skeleton]
+    placeholder: Group name
+    enabled: true
   type: TextBox
   layout_properties: {grid_position: 'ROCKPW,FURJFU'}
 - name: lbl_waiver
@@ -20,7 +23,11 @@ components:
   type: Label
   layout_properties: {grid_position: 'GAFFRI,QZSWXM'}
 - name: tb_waiver_link
-  properties: {role: outlined, placeholder: Insert public link to your waiver or code of conduct, enabled: true, type: url}
+  properties:
+    role: [outlined, skeleton]
+    placeholder: Insert public link to your waiver or code of conduct
+    enabled: true
+    type: url
   type: TextBox
   layout_properties: {grid_position: 'GAFFRI,JZLQIV'}
   event_bindings: {lost_focus: tb_waiver_link_lost_focus}
@@ -29,7 +36,8 @@ components:
   type: Label
   layout_properties: {grid_position: 'YKDEON,PJPARK'}
 - name: tb_email
-  properties: {role: outlined}
+  properties:
+    role: [outlined, skeleton]
   type: TextBox
   layout_properties: {grid_position: 'YKDEON,FVPFTI'}
 - name: lbl_logo
@@ -62,7 +70,9 @@ components:
   type: Label
   layout_properties: {grid_position: 'JJTCMB,CGVQKS'}
 - name: tb_discourse_url
-  properties: {role: outlined, type: url}
+  properties:
+    role: [outlined, skeleton]
+    type: url
   type: TextBox
   layout_properties: {grid_position: 'JJTCMB,HPXGOA'}
   event_bindings: {lost_focus: tb_discourse_url_lost_focus}
@@ -118,11 +128,11 @@ components:
 - name: dg_paypal_plans
   properties:
     columns:
-    - {id: JKSDUP, title: Plan Name, data_key: name}
-    - {id: VJQQOR, title: Plan ID, data_key: id}
-    - {id: OJLQEN, title: Plan Amount, data_key: amt}
-    - {id: RJQCHE, data_key: frequency, title: Payment Frequency}
-    - {id: PUBCMA, data_key: roles, title: Roles}
+    - {id: JKSDUP, title: Plan Name, data_key: name, width: 139.5234375, expand: false}
+    - {id: VJQQOR, title: Plan ID, data_key: id, width: 227.6953125, expand: false}
+    - {id: OJLQEN, title: Plan Amount, data_key: amt, width: 133.25390625, expand: false}
+    - {id: RJQCHE, data_key: frequency, title: Payment Frequency, width: 127.015625, expand: false}
+    - {id: PUBCMA, data_key: roles, title: Roles, width: 108.65625, expand: false}
     - {id: CFLVXO, data_key: column_1, title: Actions}
     show_page_controls: false
     rows_per_page: 0
@@ -151,7 +161,9 @@ components:
   type: Label
   layout_properties: {grid_position: 'PAHCHU,UVIXIO'}
 - name: tb_discord
-  properties: {role: outlined, type: url}
+  properties:
+    role: [outlined, skeleton]
+    type: url
   type: TextBox
   layout_properties: {grid_position: 'PAHCHU,FJXWKF'}
   event_bindings: {lost_focus: tb_discord_lost_focus}
