@@ -4,7 +4,7 @@ dependencies:
   version: {dev: false}
   resolution_hints: {app_id: CVAFGUBPSRFZNPZD, name: anvil_extras, package_name: anvil_extras}
 - dep_id: dep_yfmcrf11pl29j4
-  version: {dev: true}
+  version: {version_tag: v0.06}
   resolution_hints: {app_id: KDKDM3MG6IQHC2FK, name: Anvil Squared, package_name: anvil_squared}
 services:
 - source: /runtime/services/tables.yml
