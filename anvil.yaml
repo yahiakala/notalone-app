@@ -1,16 +1,4 @@
-scheduled_tasks:
-- task_name: check_subs
-  time_spec:
-    n: 1
-    every: day
-    at: {minute: 0, hour: 3}
-  job_id: KGSFSYSW
-- task_name: clean_up_users
-  time_spec:
-    n: 1
-    every: day
-    at: {minute: 0, hour: 3}
-  job_id: DYCHHZXR
+scheduled_tasks: null
 dependencies:
 - dep_id: dep_dmhomulhrajp9w
   version: {dev: false}
@@ -44,7 +32,7 @@ runtime_options:
   server_version: python3-full
   server_spec: null
   legacy_features: {class_names: true, bootstrap3: true, __dict__: true, root_container: true}
-metadata: {logo_img: 'asset:notalone-2.png', title: notalone}
+metadata: {logo_img: 'asset:notalone-2.png', title: notalone, description: notalone}
 startup_form: null
 db_schema:
   usermap:

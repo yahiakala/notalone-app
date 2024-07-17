@@ -64,8 +64,8 @@ def get_new_user_roles(tenant_id, tenant=None):
 
 def get_user_roles(tenant_id, user, usermap=None, tenant=None):
     """Get names of roles for a user in a tenant."""
-    usermap = usermap if usermap is not None else app_tables.usermap.get(user=user)
     tenant = tenant if tenant is not None else verify_tenant(tenant_id, user, usermap=usermap)
+    usermap = usermap if usermap is not None else app_tables.usermap.get(user=user, tenant=tenant)
 
     roles = []
     if usermap['roles']:

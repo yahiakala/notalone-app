@@ -1,5 +1,8 @@
 is_package: true
-container: {type: DataRowPanel}
+container:
+  type: DataRowPanel
+  data_bindings: []
+  properties: {role: table-row}
 components:
 - name: fp_actions
   properties: {}
