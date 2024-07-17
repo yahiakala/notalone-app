@@ -1208,3 +1208,8 @@ div.plot-container.plotly svg.main-svg {
 .checkbox input {
     border: 1px solid black;
 }
+
+.anvil-role-table-row2 .data-row-col {
+    /* word-break: break-all; */
+    overflow-wrap: anywhere;
+}
