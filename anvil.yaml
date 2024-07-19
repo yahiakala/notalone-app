@@ -122,8 +122,8 @@ db_schema:
     server: full
     columns:
     - name: name
+      admin_ui: {order: -1, width: 200}
       type: string
-      admin_ui: {width: 200, order: 0}
     - name: reports_to
       type: string
       admin_ui: {width: 200, order: 1}
