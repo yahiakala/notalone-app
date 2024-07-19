@@ -113,7 +113,7 @@ def get_screenerlink(tenant_id, user, usermap=None, permissions=None, tenant=Non
     interview_role = app_tables.roles.get(tenant=tenant, name='Interviewer')
     
     screeners = app_tables.usermap.search(
-        booking_link=q.not_(None),
+        booking_link=q.not_(None, ''),
         tenant=tenant,
         roles=[interview_role]
     )
