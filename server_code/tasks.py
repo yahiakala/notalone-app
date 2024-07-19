@@ -83,6 +83,8 @@ def edit_member(tenant_id, new_dict):
     if 'edit_members' in permissions:
         roles = app_tables.roles.search(tenant=tenant, name=q.any_of(*new_dict['roles']))
         membermap['roles'] = list(roles)
+        if len(membermap['roles']) == 0:
+            membermap['roles'] = None
 
     if 'see_members' in permissions:
         membermap['notes'] = new_dict['notes']
@@ -106,32 +108,32 @@ def save_user_notes_bk(tenant_id, user, user_email, new_note):
         member_usermap['notes'] = new_note
 
 
-@anvil.server.callable(require_user=True)
-def add_role_to_member(tenant_id, role_name, member_email):
-    """Add volunteer role to member."""
-    user = anvil.users.get_user(allow_remembered=True)
-    anvil.server.launch_background_task('add_role_to_member_bk', tenant_id, user, role_name, member_email)
+# @anvil.server.callable(require_user=True)
+# def add_role_to_member(tenant_id, role_name, member_email):
+#     """Add volunteer role to member."""
+#     user = anvil.users.get_user(allow_remembered=True)
+#     anvil.server.launch_background_task('add_role_to_member_bk', tenant_id, user, role_name, member_email)
 
 
-@anvil.server.background_task
-def add_role_to_member_bk(tenant_id, user, role_name, member_email):
-    tenant, usermap, permissions = validate_user(tenant_id, user)
+# @anvil.server.background_task
+# def add_role_to_member_bk(tenant_id, user, role_name, member_email):
+#     tenant, usermap, permissions = validate_user(tenant_id, user)
 
-    if 'edit_members' not in permissions:
-        return None
+#     if 'edit_members' not in permissions:
+#         return None
 
-    role = app_tables.roles.get(name=role_name, tenant=tenant)
-    role['last_update'] = dt.date.today()
-    member = app_tables.users.get(tenant=tenant, email=member_email)
+#     role = app_tables.roles.get(name=role_name, tenant=tenant)
+#     role['last_update'] = dt.date.today()
+#     member = app_tables.users.get(tenant=tenant, email=member_email)
     
-    member_usermap = get_usermap(member)
-    if member_usermap['roles']:
-        if [role] not in member_usermap['roles']:
-            print('adding additional role')
-            member_usermap['roles'] += [role]
-    else:
-        member_usermap['roles'] = [role]
-    return member_usermap
+#     member_usermap = get_usermap(member)
+#     if member_usermap['roles']:
+#         if [role] not in member_usermap['roles']:
+#             print('adding additional role')
+#             member_usermap['roles'] += [role]
+#     else:
+#         member_usermap['roles'] = [role]
+#     return member_usermap
 
 
 @anvil.server.callable(require_user=True)
@@ -223,19 +225,19 @@ def update_role(tenant_id, role_name, new_role_dict):
     role['permissions'] = list(perm_rows)
 
 
-@anvil.server.callable(require_user=True)
-def save_user_roles(tenant_id, email, new_roles):
-    user = anvil.users.get_user(allow_remembered=True)
-    tenant, usermap, permissions = validate_user(tenant_id, user)
-    if 'edit_members' not in permissions:
-        return None
+# @anvil.server.callable(require_user=True)
+# def save_user_roles(tenant_id, email, new_roles):
+#     user = anvil.users.get_user(allow_remembered=True)
+#     tenant, usermap, permissions = validate_user(tenant_id, user)
+#     if 'edit_members' not in permissions:
+#         return None
     
-    roles = app_tables.roles.search(tenant=tenant, name=q.any_of(*new_roles))
+#     roles = app_tables.roles.search(tenant=tenant, name=q.any_of(*new_roles))
     
-    member_user = app_tables.users.get(email=email)
-    member_usermap = app_tables.usermap.get(tenant=tenant, user=member_user)
-    member_usermap['roles'] = list(roles)
-    return member_usermap
+#     member_user = app_tables.users.get(email=email)
+#     member_usermap = app_tables.usermap.get(tenant=tenant, user=member_user)
+#     member_usermap['roles'] = list(roles)
+#     return member_usermap
 
 
 @anvil.server.callable(require_user=True)

@@ -105,6 +105,8 @@ class MemberDetail(MemberDetailTemplate):
             if 'memberdetail' in routing.get_url_pattern() and 'edit_members' in Global.permissions:
                 print(self.msc_roles.selected)
                 self.member['roles'] = [i['key'] for i in self.msc_roles.selected]
+                print_timestamp('roles at save')
+                print(self.member['roles'])
                 self.member['notes'] = self.ta_user_notes.text
 
             self.member = anvil.server.call(
