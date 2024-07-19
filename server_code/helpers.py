@@ -120,6 +120,14 @@ def upsert_role(usermap, role_name):
     return usermap
 
 
+def remove_role(usermap, role_names):
+    usermap['roles'] = [i for i in usermap['roles'] if i['name'] not in role_names]
+    if len(usermap['roles']) == 0:
+        # Deal with a quirk of empty lists.
+        usermap['roles'] = None
+    return usermap
+
+
 def populate_permissions():
     """Populate the permissions table."""
     print_timestamp('populate_permissions')
