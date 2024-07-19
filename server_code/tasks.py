@@ -297,9 +297,10 @@ def search_users_by_role(tenant_id, role_name):
     if 'see_members' not in permissions:
         return []
 
-    role = None
     if role_name:
         role = q.any_of([app_tables.roles.get(tenant=tenant, name=role_name)])
+    else:
+        role = None
 
     usermaps = app_tables.usermap.search(
         q.fetch_only(
