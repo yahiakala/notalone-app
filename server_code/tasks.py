@@ -83,8 +83,6 @@ def edit_member(tenant_id, new_dict):
     if 'edit_members' in permissions:
         roles = app_tables.roles.search(tenant=tenant, name=q.any_of(*new_dict['roles']))
         membermap['roles'] = list(roles)
-        # print_timestamp('len of roles')
-        # print(membermap['roles'])
         if len(membermap['roles']) == 0:
             membermap['roles'] = None
 
