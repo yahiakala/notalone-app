@@ -43,6 +43,7 @@ def get_tenant_single(user=None, tenant=None):
         # permissions = get_permissions(tenant.get_id(), user, tenant, usermap)
         tenant, usermap, permissions = validate_user(tenant.get_id(), user, tenant=tenant)
         if 'delete_members' in permissions:
+            # TODO: do not return client writable
             return app_tables.tenants.client_writable().get()
     
     return tenant_dict
