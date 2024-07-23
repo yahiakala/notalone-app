@@ -18,7 +18,7 @@ def login_sso(sso=None, sig=None, session_id=None):
     user = anvil.users.get_user(allow_remembered=True)
     if not user:
         print('No user logged in.')
-        return anvil.server.HttpResponse(302, headers={"Location": anvil.server.get_app_origin() + '/signin'})
+        return anvil.server.HttpResponse(302, headers={"Location": anvil.server.get_app_origin() + '/#signin'})
         
     payload = base64.b64decode(urllib.parse.unquote(sso)).decode()
     print(payload)
