@@ -65,18 +65,17 @@ class Members(MembersTemplate):
 
     def btn_clear_search_click(self, **event_args):
         """This method is called when the button is clicked"""
+        self.start_search()
         with anvil.server.no_loading_indicator:
             self.members = Global.users.search(
                 q.fetch_only(
-                    'user',
+                    'user', 'first_name', 'last_name',
                     user=q.fetch_only(
-                        'email', 'first_name', 'last_name', 'last_login', 'signed_up'
+                        'email', 'last_login', 'signed_up'
                     )
                 )
             )
-            self.rp_members.items = self.members
-            self.reset_buttons()
-            # self.form_show()
+            self.end_search()
             self.tb_mb_search.text = None
             self.btn_clear_search.enabled = False
 
