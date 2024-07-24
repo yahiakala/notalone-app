@@ -306,9 +306,9 @@ def search_users_by_role(tenant_id, role_name):
 
     usermaps = app_tables.usermap.search(
         q.fetch_only(
-            'user',
+            'user', 'first_name', 'last_name',
             user=q.fetch_only(
-                'email', 'first_name', 'last_name', 'last_login', 'signed_up'
+                'email', 'last_login', 'signed_up'
             )
         ),
         roles=role,

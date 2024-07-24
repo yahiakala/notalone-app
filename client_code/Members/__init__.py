@@ -33,7 +33,7 @@ class Members(MembersTemplate):
             if self.members == [None, None, None]:
                 self.members = Global.users.search(
                     q.fetch_only(
-                        'user',
+                        'user', 'first_name', 'last_name',
                         user=q.fetch_only(
                             'email', 'last_login', 'signed_up'
                         )
