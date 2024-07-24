@@ -13,8 +13,8 @@ class MemberRow(MemberRowTemplate):
 
     def populate_data(self, **event_args):
         self.link_email.text = self.item['user']['email']
-        first_name = self.item['user']['first_name'] or ''
-        last_name = self.item['user']['last_name'] or ''
+        first_name = self.item['first_name'] or ''
+        last_name = self.item['last_name'] or ''
         self.link_name.text = first_name + ' ' + last_name
         if self.item['user']['last_login']:
             self.link_last_login.text = self.item['user']['last_login'].strftime('%Y-%m-%d')
