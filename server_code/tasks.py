@@ -248,23 +248,23 @@ def search_users_by_text(tenant_id, search_string):
         return []
     
     users = app_tables.users.search(
-        q.fetch_only('email', 'first_name', 'last_name'),
+        q.fetch_only('email'),
         q.any_of(
-            email=q.ilike('%'+search_string+'%'),
-            first_name=q.ilike('%'+search_string+'%'),
-            last_name=q.ilike('%'+search_string+'%')
+            email=q.ilike('%'+search_string+'%')
         )
     )
     usermaps = app_tables.usermap.search(
         q.fetch_only(
-            'user',
+            'user', 'first_name', 'last_name',
             user=q.fetch_only(
-                'email', 'first_name', 'last_name', 'last_login', 'signed_up'
+                'email', 'last_login', 'signed_up'
             )
         ),
         q.any_of(
             user=q.any_of(*users),
-            notes=q.ilike('%'+search_string+'%')
+            notes=q.ilike('%'+search_string+'%'),
+            first_name=q.ilike('%'+search_string+'%'),
+            last_name=q.ilike('%'+search_string+'%')
         ),
         tenant=tenant
     )
