@@ -24,7 +24,11 @@ class Members(MembersTemplate):
             
             if 'role' in self.url_dict:
                 self.start_search()
-                self.members = anvil.server.call('search_users_by_role', Global.tenant_id, self.url_dict['role'])
+                self.members = anvil.server.call(
+                    'search_users_by_role',
+                    Global.tenant_id,
+                    self.url_dict['role']
+                )
                 self.rp_members.items = self.members
                 self.pagination_1.data_grid = self.dg_members
                 self.pagination_1.repeating_panel = self.rp_members
