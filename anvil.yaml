@@ -23,9 +23,9 @@ services:
   client_config: {}
   server_config: {}
 startup: {type: module, module: startup}
-package_name: notalone_oss
+package_name: notalone_oss_main
 allow_embedding: false
-name: notalone oss
+name: notalone oss main
 runtime_options:
   version: 3
   client_version: '3'
