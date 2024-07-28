@@ -204,3 +204,7 @@ class MemberDetail(MemberDetailTemplate):
             }
             for i in self.member['roles']
         ]
+
+    def btn_test_email_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        anvil.server.call('send_test_email', Global.tenant_id, self.email)

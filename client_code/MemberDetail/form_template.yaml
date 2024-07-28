@@ -201,6 +201,11 @@ components:
       layout_properties: {}
       data_bindings: []
       event_bindings: {click: btn_reject_applicant_click}
+    - name: btn_test_email
+      properties: {text: Send Test Email, role: outlined-button}
+      type: Button
+      layout_properties: {}
+      event_bindings: {click: btn_test_email_click}
 - type: ColumnPanel
   properties: {role: outlined-card, col_widths: '{"WZCJJP":50,"FSIGED":10,"GDPJAW":50}'}
   name: cp_social
