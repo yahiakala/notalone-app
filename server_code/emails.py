@@ -56,6 +56,7 @@ def email_accept_applicant(tenant, email):
 def send_test_email(tenant_id, email):
     user = anvil.users.get_user(allow_remembered=True)
     tenant, usermap, permissions = validate_user(tenant_id, user)
+    # TODO: add custom email sender here and in users service.
     anvil.email.send(
         to=email,
         from_address='noreply',
