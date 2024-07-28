@@ -58,7 +58,7 @@ def send_test_email(tenant_id, email):
     tenant, usermap, permissions = validate_user(tenant_id, user)
     anvil.email.send(
         to=email,
-        from_address='noreply',
+        from_address='noreply@mailjet.dreambyte.ai',
         from_name='notalone',
         subject='test email',
         text='this is a test email'

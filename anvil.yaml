@@ -11,7 +11,7 @@ services:
   client_config: {enable_v2: true}
   server_config: {}
 - source: /runtime/services/anvil/users.yml
-  client_config: {mfa_timeout_days: 7, require_secure_passwords: true, allow_mfa_email_reset: true, use_email: true, allow_remember_me: true, allow_signup: true, enable_automatically: true, confirm_email: true, require_mfa: true, remember_me_days: 7, use_google: true}
+  client_config: {remember_me_days: 7, use_email: true, use_google: true, confirm_email: true, require_mfa: true, allow_remember_me: true, enable_automatically: true, allow_signup: true, mfa_timeout_days: 7, require_secure_passwords: true, allow_mfa_email_reset: true}
   server_config: {user_table: users}
 - source: /runtime/services/google.yml
   client_config: {}
@@ -21,7 +21,7 @@ services:
   server_config: {}
 - source: /runtime/services/anvil/email.yml
   client_config: {}
-  server_config: {}
+  server_config: {custom_smtp: true, smtp_host: in-v3.mailjet.com, smtp_port: 587, smtp_encryption: starttls, smtp_user: c9f89f5181517420fdf377716a9f5d10, smtp_password: VmhUG7+1iMp/mWy76U60hvCAk+Ap1ecItBck4PGGSZxGa8VD2G6CG46K/Ol7T+Bt9edm5zGdSfthinQbnIapAUdKo80uyTtJLcmmpnEAn1XAefZiufFc/jrd3YnpdKCC+70NRvoD/EBQcQapF7Rd+VYvdT+pIJOZyqwbdvUogCK2y+L17AqMWi1LpFdehuA4uvmDU29UYHVZ}
 startup: {type: module, module: startup}
 package_name: notalone_oss
 allow_embedding: false
