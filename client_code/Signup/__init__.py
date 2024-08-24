@@ -49,7 +49,7 @@ class Signup(SignupTemplate):
 
         self.user = utils.signup_with_email(
             self.tb_email, self.tb_password, self.tb_password_repeat,
-            'Boilerplate', 'signup_with_email_custom', self.lbl_error
+            'Notalone', 'signup_with_email_custom', self.lbl_error
         )
 
     def tb_signup_lost_focus(self, **event_args):
