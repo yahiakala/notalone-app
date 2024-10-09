@@ -1,65 +1,65 @@
-container:
-  type: ColumnPanel
-  properties: {col_widths: '{"GEHGAQ":50,"DASHTL":10}'}
-  event_bindings: {show: form_show}
 components:
-- type: FlowPanel
-  properties: {role: null, align: center, spacing_above: small, background: '', foreground: '', spacing_below: small, visible: true, border: '', tooltip: '', spacing: medium}
-  name: fp_quickfilters
+- components:
+  - event_bindings: {click: btn_qf_applicants_click}
+    layout_properties: {}
+    name: btn_qf_applicants
+    properties: {align: center, background: '', bold: false, border: '', enabled: false, font: '', font_size: null, foreground: '', icon: '', icon_align: left, italic: false, role: tonal-button, spacing_above: small, spacing_below: small, text: Applicants, tooltip: Users who have not been approved yet to join the group., underline: false, visible: true}
+    type: Button
+  - event_bindings: {click: btn_qf_regular_click}
+    layout_properties: {}
+    name: btn_qf_regular
+    properties: {align: center, background: '', bold: false, border: '', enabled: false, font: '', font_size: null, foreground: '', icon: '', icon_align: left, italic: false, role: tonal-button, spacing_above: small, spacing_below: small, text: Regular Members, tooltip: Users who are in good standing and can access the group as members, underline: false, visible: true}
+    type: Button
+  - event_bindings: {click: btn_qf_admins_click}
+    layout_properties: {}
+    name: btn_qf_admins
+    properties: {align: center, background: '', bold: false, border: '', enabled: false, font: '', font_size: null, foreground: '', icon: '', icon_align: left, italic: false, role: tonal-button, spacing_above: small, spacing_below: small, text: Admins, tooltip: Users with administrative privileges, underline: false, visible: true}
+    type: Button
+  - event_bindings: {click: btn_qf_disabled_click}
+    layout_properties: {}
+    name: btn_qf_disabled
+    properties: {align: center, background: '', bold: false, border: '', enabled: false, font: '', font_size: null, foreground: '', icon: '', icon_align: left, italic: false, role: tonal-button, spacing_above: small, spacing_below: small, text: Disabled Members, tooltip: Users who have had their access revoked or their application rejected, underline: false, visible: true}
+    type: Button
+  - event_bindings: {click: btn_qf_inactive_click}
+    layout_properties: {}
+    name: btn_qf_inactive
+    properties: {align: center, background: '', bold: false, border: '', enabled: false, font: '', font_size: null, foreground: '', icon: '', icon_align: left, italic: false, role: tonal-button, spacing_above: small, spacing_below: small, text: Inactive, tooltip: 'Users who are not in good standing - whether they have recently been approved but haven''t paid, or their payments have expired.', underline: false, visible: true}
+    type: Button
   layout_properties: {grid_position: 'GYCPND,DMGFXC'}
-  components:
-  - name: btn_qf_applicants
-    properties: {role: tonal-button, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: false, font_size: null, tooltip: Users who have not been approved yet to join the group., text: Applicants}
-    type: Button
-    layout_properties: {}
-    event_bindings: {click: btn_qf_applicants_click}
-  - name: btn_qf_regular
-    properties: {role: tonal-button, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: false, font_size: null, tooltip: Users who are in good standing and can access the group as members, text: Regular Members}
-    type: Button
-    layout_properties: {}
-    event_bindings: {click: btn_qf_regular_click}
-  - name: btn_qf_admins
-    properties: {role: tonal-button, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: false, font_size: null, tooltip: Users with administrative privileges, text: Admins}
-    type: Button
-    layout_properties: {}
-    event_bindings: {click: btn_qf_admins_click}
-  - name: btn_qf_disabled
-    properties: {role: tonal-button, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: false, font_size: null, tooltip: Users who have had their access revoked or their application rejected, text: Disabled Members}
-    type: Button
-    layout_properties: {}
-    event_bindings: {click: btn_qf_disabled_click}
-  - name: btn_qf_inactive
-    properties: {role: tonal-button, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: false, font_size: null, tooltip: 'Users who are not in good standing - whether they have recently been approved but haven''t paid, or their payments have expired.', text: Inactive}
-    type: Button
-    layout_properties: {}
-    event_bindings: {click: btn_qf_inactive_click}
-- type: TextBox
-  properties: {role: outlined, bold: false, align: left, placeholder: 'Search for a member by name, email, notes, etc.', spacing_above: small, background: '', type: text, underline: false, font: '', hide_text: false, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: false, font_size: null, tooltip: '', text: ''}
-  name: tb_mb_search
+  name: fp_quickfilters
+  properties: {align: center, background: '', border: '', foreground: '', role: null, spacing: medium, spacing_above: small, spacing_below: small, tooltip: '', visible: true}
+  type: FlowPanel
+- event_bindings: {pressed_enter: tb_mb_search_pressed_enter}
   layout_properties: {grid_position: 'URRSMO,GEHGAQ'}
-  event_bindings: {pressed_enter: tb_mb_search_pressed_enter}
-- type: Button
-  properties: {role: elevated-button, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: false, font_size: null, tooltip: '', text: Clear Search}
-  name: btn_clear_search
+  name: tb_mb_search
+  properties: {align: left, background: '', bold: false, border: '', enabled: false, font: '', font_size: null, foreground: '', hide_text: false, italic: false, placeholder: 'Search for a member by name, email, notes, etc.', role: outlined, spacing_above: small, spacing_below: small, text: '', tooltip: '', type: text, underline: false, visible: true}
+  type: TextBox
+- event_bindings: {click: btn_clear_search_click}
   layout_properties: {grid_position: 'URRSMO,DASHTL'}
-  event_bindings: {click: btn_clear_search_click}
-- name: dg_members
-  properties:
-    columns:
-    - {id: JKSDUP, title: Email, data_key: email}
-    - {id: VJQQOR, title: Name, data_key: name}
-    - {id: OJLQEN, title: Signed Up, data_key: signed_up}
-    - {id: QNHOIB, data_key: last_login, title: Last Login}
-    rows_per_page: 10
-    show_page_controls: false
-  type: DataGrid
-  components:
+  name: btn_clear_search
+  properties: {align: center, background: '', bold: false, border: '', enabled: false, font: '', font_size: null, foreground: '', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: small, spacing_below: small, text: Clear Search, tooltip: '', underline: false, visible: true}
+  type: Button
+- components:
   - name: rp_members
     properties: {item_template: Members.MemberRow}
     type: RepeatingPanel
   layout_properties: {grid_position: 'FLMNIV,XJAVVP'}
-- name: pagination_1
+  name: dg_members
+  properties:
+    columns:
+    - {data_key: email, id: JKSDUP, title: Email}
+    - {data_key: name, id: VJQQOR, title: Name}
+    - {data_key: signed_up, id: OJLQEN, title: Signed Up}
+    - {data_key: last_login, id: QNHOIB, title: Last Login}
+    rows_per_page: 10
+    show_page_controls: false
+  type: DataGrid
+- layout_properties: {grid_position: 'CJIKQP,XYXHFR'}
+  name: pagination_1
   properties: {}
   type: form:dep_yfmcrf11pl29j4:Pagination
-  layout_properties: {grid_position: 'CJIKQP,XYXHFR'}
+container:
+  event_bindings: {show: form_show}
+  properties: {col_widths: '{"GEHGAQ":50,"DASHTL":10}'}
+  type: ColumnPanel
 is_package: true

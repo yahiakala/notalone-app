@@ -1,79 +1,79 @@
-container:
-  type: ColumnPanel
-  properties: {col_widths: '{}'}
 components:
-- type: ColumnPanel
-  properties: {role: outlined-card, col_widths: '{}'}
-  name: cp_rev
-  layout_properties: {grid_position: 'DVPHPM,ZDTJSV'}
-  components:
-  - type: Label
-    properties: {role: null, bold: false, align: right, spacing_above: small, background: '', icon: 'fa:question-circle', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, font_size: null, tooltip: Revenue from all members who are in good standing. This may include members who cancelled their recurring payments but their membership hasn't expired yet., text: Estimated 12 Month Revenue}
+- components:
+  - layout_properties: {grid_position: 'YTVPVZ,GRKCYX THMASY,HRWBJZ'}
     name: lbl_rev12
-    layout_properties: {grid_position: 'YTVPVZ,GRKCYX THMASY,HRWBJZ'}
-  - name: lbl_rev12_active
-    properties: {role: null, bold: false, align: right, spacing_above: small, background: '', icon: 'fa:question-circle', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, font_size: null, tooltip: Revenue from members who have active subscriptions., text: Estimated 12 Month Active Revenue}
+    properties: {align: right, background: '', bold: false, border: '', font: '', font_size: null, foreground: '', icon: 'fa:question-circle', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: Estimated 12 Month Revenue, tooltip: Revenue from all members who are in good standing. This may include members who cancelled their recurring payments but their membership hasn't expired yet., underline: false, visible: true}
     type: Label
-    layout_properties: {grid_position: 'YTVPVZ,GRKCYX LWVQMC,HMXMDW'}
-  - type: Label
-    properties: {}
-    name: lbl_rev12num
+  - layout_properties: {grid_position: 'YTVPVZ,GRKCYX LWVQMC,HMXMDW'}
+    name: lbl_rev12_active
+    properties: {align: right, background: '', bold: false, border: '', font: '', font_size: null, foreground: '', icon: 'fa:question-circle', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: Estimated 12 Month Active Revenue, tooltip: Revenue from members who have active subscriptions., underline: false, visible: true}
+    type: Label
+  - data_bindings:
+    - {code: '"{0:.2f}".format(self.finances[''rev_12''])', property: text, writeback: false}
     layout_properties: {grid_position: 'YTVPVZ,KGBPBH SNCGVR,BURKGS'}
-    data_bindings:
-    - {property: text, code: '"{0:.2f}".format(self.finances[''rev_12''])', writeback: false}
-  - name: lbl_rev12num_active
+    name: lbl_rev12num
     properties: {}
     type: Label
+  - data_bindings:
+    - {code: '"{0:.2f}".format(self.finances[''rev_12_active''])', property: text, writeback: false}
     layout_properties: {grid_position: 'YTVPVZ,KGBPBH QYSMTW,LNNYAP'}
-    data_bindings:
-    - {property: text, code: '"{0:.2f}".format(self.finances[''rev_12_active''])', writeback: false}
-- type: ColumnPanel
-  properties: {role: outlined-card, col_widths: '{"GBBUSD":50,"XWZNSW":10}', spacing_above: small, background: '', wrap_on: mobile, col_spacing: medium, foreground: '', spacing_below: small, visible: true, border: '', tooltip: ''}
-  name: cp_budget
-  layout_properties: {grid_position: 'HUILAS,FZQRRE', full_width_row: false}
-  components:
-  - type: Label
-    properties: {role: title, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, font_size: null, tooltip: '', text: Budgeting}
+    name: lbl_rev12num_active
+    properties: {}
+    type: Label
+  layout_properties: {grid_position: 'DVPHPM,ZDTJSV'}
+  name: cp_rev
+  properties: {col_widths: '{}', role: outlined-card}
+  type: ColumnPanel
+- components:
+  - layout_properties: {grid_position: 'LPGRSW,KFKRAX'}
     name: lbl_budg_title
-    layout_properties: {grid_position: 'LPGRSW,KFKRAX'}
-  - type: RepeatingPanel
-    properties: {item_template: FinComponent.BudgetTemplate}
-    name: rp_budget
+    properties: {align: center, background: '', bold: false, border: '', font: '', font_size: null, foreground: '', icon: '', icon_align: left, italic: false, role: title, spacing_above: small, spacing_below: small, text: Budgeting, tooltip: '', underline: false, visible: true}
+    type: Label
+  - data_bindings:
+    - {code: 'self.finances[''budgets'']', property: items}
     layout_properties: {grid_position: 'SSFUCR,DVLJUF'}
-    data_bindings:
-    - {property: items, code: 'self.finances[''budgets'']'}
-  - type: Button
-    properties: {role: elevated-button, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: Add Budget}
-    name: btn_add_budget
-    layout_properties: {grid_position: 'CSRZOT,OVEQZC'}
-    data_bindings: []
+    name: rp_budget
+    properties: {item_template: FinComponent.BudgetTemplate}
+    type: RepeatingPanel
+  - data_bindings: []
     event_bindings: {click: btn_add_budget_click}
-  - type: ColumnPanel
-    properties: {role: outlined-card, col_widths: '{"VYKXZG":50,"MMXRLM":10}', spacing_above: small, background: '', wrap_on: mobile, col_spacing: medium, foreground: '', spacing_below: small, visible: false, border: '', tooltip: ''}
-    name: cp_add_budget
-    layout_properties: {grid_position: 'INXFZN,FBCUQG'}
-    components:
-    - type: TextBox
-      properties: {role: null, bold: false, align: left, placeholder: Budget Name, spacing_above: small, background: '', type: text, underline: false, font: '', hide_text: false, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: ''}
+    layout_properties: {grid_position: 'CSRZOT,OVEQZC'}
+    name: btn_add_budget
+    properties: {align: center, background: '', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: '', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: small, spacing_below: small, text: Add Budget, tooltip: '', underline: false, visible: true}
+    type: Button
+  - components:
+    - layout_properties: {grid_position: 'OPGQZP,VYKXZG'}
       name: tb_budg_name
-      layout_properties: {grid_position: 'OPGQZP,VYKXZG'}
-    - type: TextBox
-      properties: {role: null, bold: false, align: left, placeholder: Amount, spacing_above: small, background: '', type: number, underline: false, font: '', hide_text: false, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: ''}
+      properties: {align: left, background: '', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: '', hide_text: false, italic: false, placeholder: Budget Name, role: null, spacing_above: small, spacing_below: small, text: '', tooltip: '', type: text, underline: false, visible: true}
+      type: TextBox
+    - layout_properties: {grid_position: 'OPGQZP,MMXRLM'}
       name: tb_budget_amt
-      layout_properties: {grid_position: 'OPGQZP,MMXRLM'}
-    - type: Button
-      properties: {role: elevated-button, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: Save}
-      name: btn_save_budget
+      properties: {align: left, background: '', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: '', hide_text: false, italic: false, placeholder: Amount, role: null, spacing_above: small, spacing_below: small, text: '', tooltip: '', type: number, underline: false, visible: true}
+      type: TextBox
+    - event_bindings: {click: btn_save_budget_click}
       layout_properties: {grid_position: 'CVTLTH,LEFUYE'}
-      event_bindings: {click: btn_save_budget_click}
+      name: btn_save_budget
+      properties: {align: center, background: '', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: '', icon: '', icon_align: left, italic: false, role: elevated-button, spacing_above: small, spacing_below: small, text: Save, tooltip: '', underline: false, visible: true}
+      type: Button
     data_bindings: []
-  - type: Label
-    properties: {role: null, bold: true, align: right, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, font_size: null, tooltip: '', text: Total Budget}
+    layout_properties: {grid_position: 'INXFZN,FBCUQG'}
+    name: cp_add_budget
+    properties: {background: '', border: '', col_spacing: medium, col_widths: '{"VYKXZG":50,"MMXRLM":10}', foreground: '', role: outlined-card, spacing_above: small, spacing_below: small, tooltip: '', visible: false, wrap_on: mobile}
+    type: ColumnPanel
+  - layout_properties: {grid_position: 'IIENKJ,GBBUSD'}
     name: lbl_budg_total
-    layout_properties: {grid_position: 'IIENKJ,GBBUSD'}
-  - type: Label
-    properties: {role: null, bold: false, align: center, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, font_size: null, tooltip: '', text: '0'}
-    name: lbl_budg_total_amt
+    properties: {align: right, background: '', bold: true, border: '', font: '', font_size: null, foreground: '', icon: '', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: Total Budget, tooltip: '', underline: false, visible: true}
+    type: Label
+  - data_bindings: []
     layout_properties: {grid_position: 'IIENKJ,XWZNSW'}
-    data_bindings: []
+    name: lbl_budg_total_amt
+    properties: {align: center, background: '', bold: false, border: '', font: '', font_size: null, foreground: '', icon: '', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: '0', tooltip: '', underline: false, visible: true}
+    type: Label
+  layout_properties: {full_width_row: false, grid_position: 'HUILAS,FZQRRE'}
+  name: cp_budget
+  properties: {background: '', border: '', col_spacing: medium, col_widths: '{"GBBUSD":50,"XWZNSW":10}', foreground: '', role: outlined-card, spacing_above: small, spacing_below: small, tooltip: '', visible: true, wrap_on: mobile}
+  type: ColumnPanel
+container:
+  properties: {col_widths: '{}'}
+  type: ColumnPanel
 is_package: true

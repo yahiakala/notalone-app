@@ -1,40 +1,40 @@
-container:
-  type: ColumnPanel
-  properties: {col_widths: '{}'}
 components:
-- type: ColumnPanel
-  properties: {role: outlined-card, col_widths: '{}'}
-  name: cp_1
-  layout_properties: {grid_position: 'NSGBLX,ZIUBDI'}
-  components:
-  - type: RichText
-    properties:
-      role: null
-      format: markdown
-      align: left
-      spacing_above: small
-      content: "# Applicants\nEvery one of our applicants goes through 1-2 interviews with our screening team. \n\n\n### What to Expect\nThese interviews are about 30 minutes in length. We use the time to get to know you, tell you about our group, and make sure there's a good fit!\n\n### What to Bring\nPlease bring your ID to the call and make sure you're in a private place where you can speak on video."
-      background: ''
-      font: ''
-      foreground: ''
-      spacing_below: small
-      visible: true
-      border: ''
-      enable_slots: true
-      font_size: null
-      tooltip: ''
-      data: null
+- components:
+  - layout_properties: {grid_position: 'FQGWFU,WIWRTG'}
     name: rt_applicants
-    layout_properties: {grid_position: 'FQGWFU,WIWRTG'}
-  - type: Label
-    properties: {role: null, bold: false, align: left, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, font_size: null, tooltip: '', text: 'Please use the link below to book your interview. '}
+    properties:
+      align: left
+      background: ''
+      border: ''
+      content: "# Applicants\nEvery one of our applicants goes through 1-2 interviews with our screening team. \n\n\n### What to Expect\nThese interviews are about 30 minutes in length. We use the time to get to know you, tell you about our group, and make sure there's a good fit!\n\n### What to Bring\nPlease bring your ID to the call and make sure you're in a private place where you can speak on video."
+      data: null
+      enable_slots: true
+      font: ''
+      font_size: null
+      foreground: ''
+      format: markdown
+      role: null
+      spacing_above: small
+      spacing_below: small
+      tooltip: ''
+      visible: true
+    type: RichText
+  - layout_properties: {grid_position: 'YYPSON,GGZMWC'}
     name: lbl_book_instr
-    layout_properties: {grid_position: 'YYPSON,GGZMWC'}
-  - type: Link
-    properties: {role: title, bold: true, align: center, col_widths: '', spacing_above: small, background: '', icon: 'fa:calendar', wrap_on: mobile, underline: true, font: '', col_spacing: medium, icon_align: left, foreground: '', url: '', spacing_below: small, visible: true, border: '', italic: false, font_size: null, tooltip: '', text: ''}
-    name: link_book
+    properties: {align: left, background: '', bold: false, border: '', font: '', font_size: null, foreground: '', icon: '', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: 'Please use the link below to book your interview. ', tooltip: '', underline: false, visible: true}
+    type: Label
+  - data_bindings:
+    - {code: '''Book interview with '' + self.item[''first_name'']', property: text}
+    - {code: 'self.item[''booking_link'']', property: url}
     layout_properties: {grid_position: 'CJEIQS,WCVFGC'}
-    data_bindings:
-    - {property: text, code: '''Book interview with '' + self.item[''first_name'']'}
-    - {property: url, code: 'self.item[''booking_link'']'}
+    name: link_book
+    properties: {align: center, background: '', bold: true, border: '', col_spacing: medium, col_widths: '', font: '', font_size: null, foreground: '', icon: 'fa:calendar', icon_align: left, italic: false, role: title, spacing_above: small, spacing_below: small, text: '', tooltip: '', underline: true, url: '', visible: true, wrap_on: mobile}
+    type: Link
+  layout_properties: {grid_position: 'NSGBLX,ZIUBDI'}
+  name: cp_1
+  properties: {col_widths: '{}', role: outlined-card}
+  type: ColumnPanel
+container:
+  properties: {col_widths: '{}'}
+  type: ColumnPanel
 is_package: true

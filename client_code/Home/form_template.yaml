@@ -1,20 +1,20 @@
-container:
-  type: ColumnPanel
-  properties: {col_widths: '{}'}
 components:
-- name: rich_text_1
+- components:
+  - data_bindings: []
+    layout_properties: {}
+    name: img_tenant
+    properties: {display_mode: fill_width}
+    type: Image
+  data_bindings: []
+  layout_properties: {grid_position: 'YHQZYX,RYXTGG'}
+  name: rich_text_1
   properties:
     content: |-
       # Home
       Welcome! Use the navigation buttons to edit your profile or go to the forum using the top navigation button.
     visible: true
   type: RichText
-  layout_properties: {grid_position: 'YHQZYX,RYXTGG'}
-  data_bindings: []
-  components:
-  - name: img_tenant
-    properties: {display_mode: fill_width}
-    type: Image
-    data_bindings: []
-    layout_properties: {}
+container:
+  properties: {col_widths: '{}'}
+  type: ColumnPanel
 is_package: true

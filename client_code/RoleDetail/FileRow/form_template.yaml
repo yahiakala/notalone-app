@@ -1,25 +1,25 @@
-is_package: true
-container:
-  type: ColumnPanel
-  event_bindings: {show: form_show}
 components:
-- name: fp_file
-  properties: {align: justify, vertical_align: middle}
-  type: FlowPanel
-  layout_properties: {grid_position: 'TIBZZJ,GZVUTK'}
-  components:
-  - name: lbl_name
+- components:
+  - layout_properties: {expand: true, width: null}
+    name: lbl_name
     properties:
       role: [skeleton, input-prompt]
       text: '                                                                                                                                                                                                 '
     type: Label
-    layout_properties: {expand: true, width: null}
-  - name: btn_view_file
-    properties: {text: Download File, role: outlined-button, align: right}
+  - event_bindings: {click: btn_view_file_click}
+    name: btn_view_file
+    properties: {align: right, role: outlined-button, text: Download File}
     type: Button
-    event_bindings: {click: btn_view_file_click}
-  - name: btn_delete
-    properties: {text: '', role: outlined-button, icon: 'fa:trash'}
-    type: Button
+  - event_bindings: {click: btn_delete_click}
     layout_properties: {}
-    event_bindings: {click: btn_delete_click}
+    name: btn_delete
+    properties: {icon: 'fa:trash', role: outlined-button, text: ''}
+    type: Button
+  layout_properties: {grid_position: 'TIBZZJ,GZVUTK'}
+  name: fp_file
+  properties: {align: justify, vertical_align: middle}
+  type: FlowPanel
+container:
+  event_bindings: {show: form_show}
+  type: ColumnPanel
+is_package: true

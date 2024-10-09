@@ -1,5 +1,9 @@
+components:
+- layout_properties: {slot: default}
+  name: content_panel
+  properties: {}
+  type: ColumnPanel
 container:
-  type: HtmlTemplate
   properties:
     html: |-
       <!-- Static with no Bounce Scroll -->
@@ -24,9 +28,5 @@ container:
               max-width:400px;
           }
       </style>
-components:
-- name: content_panel
-  properties: {}
-  type: ColumnPanel
-  layout_properties: {slot: default}
+  type: HtmlTemplate
 is_package: true

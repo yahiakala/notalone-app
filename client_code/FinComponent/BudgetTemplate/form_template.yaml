@@ -1,22 +1,22 @@
-container:
-  type: ColumnPanel
-  properties: {col_widths: '{"VVUUMB":50,"DMZZRZ":23,"DVEWZZ":7}'}
 components:
-- type: Label
-  properties: {}
-  name: lbl_budget_name
+- data_bindings:
+  - {code: 'self.item[''name'']', property: text}
   layout_properties: {grid_position: 'LYIVUM,VVUUMB'}
-  data_bindings:
-  - {property: text, code: 'self.item[''name'']'}
-- type: Label
-  properties: {role: null, bold: false, align: right, spacing_above: small, background: '', icon: '', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, font_size: null, tooltip: '', text: ''}
-  name: lbl_budget_amt
+  name: lbl_budget_name
+  properties: {}
+  type: Label
+- data_bindings:
+  - {code: 'self.item[''amount'']', property: text}
   layout_properties: {grid_position: 'LYIVUM,DMZZRZ'}
-  data_bindings:
-  - {property: text, code: 'self.item[''amount'']'}
-- type: Button
-  properties: {role: null, bold: false, align: center, spacing_above: small, background: '', icon: 'fa:trash', underline: false, font: '', icon_align: left, foreground: '', spacing_below: small, visible: true, border: '', italic: false, enabled: true, font_size: null, tooltip: '', text: ''}
-  name: btn_del_budget
+  name: lbl_budget_amt
+  properties: {align: right, background: '', bold: false, border: '', font: '', font_size: null, foreground: '', icon: '', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: '', tooltip: '', underline: false, visible: true}
+  type: Label
+- event_bindings: {click: btn_del_budget_click}
   layout_properties: {grid_position: 'LYIVUM,DVEWZZ'}
-  event_bindings: {click: btn_del_budget_click}
+  name: btn_del_budget
+  properties: {align: center, background: '', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: '', icon: 'fa:trash', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: '', tooltip: '', underline: false, visible: true}
+  type: Button
+container:
+  properties: {col_widths: '{"VVUUMB":50,"DMZZRZ":23,"DVEWZZ":7}'}
+  type: ColumnPanel
 is_package: true

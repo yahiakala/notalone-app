@@ -1,51 +1,51 @@
-container:
-  type: ColumnPanel
-  event_bindings: {show: form_show}
 components:
-- name: dg_roles
-  properties:
-    columns:
-    - {id: JKSDUP, title: Name, data_key: name}
-    - {id: VJQQOR, title: Last Edit, data_key: last_update}
-    - {id: OJLQEN, title: Actions, data_key: column_3}
-    show_page_controls: false
-    rows_per_page: 0
-  type: DataGrid
-  components:
+- components:
   - name: rp_roles
     properties: {item_template: Roles.RoleRow}
     type: RepeatingPanel
   layout_properties: {grid_position: 'PSLCFY,GQWGSN'}
-- name: btn_add
-  properties: {text: Add Role, role: filled-button, icon: 'fa:plus', align: center}
-  type: Button
-  layout_properties: {grid_position: 'QQRBLC,CHJWDZ'}
+  name: dg_roles
+  properties:
+    columns:
+    - {data_key: name, id: JKSDUP, title: Name}
+    - {data_key: last_update, id: VJQQOR, title: Last Edit}
+    - {data_key: column_3, id: OJLQEN, title: Actions}
+    rows_per_page: 0
+    show_page_controls: false
+  type: DataGrid
+- data_bindings: []
   event_bindings: {click: btn_add_click}
-  data_bindings: []
-- name: cp_addrole
-  properties: {role: outlined-card, col_widths: '{"JGULMP":10,"XFXLWU":50,"VFWGEZ":10,"LVGDBF":50}', visible: false}
-  type: ColumnPanel
-  layout_properties: {grid_position: 'UIHRYA,VUHSJM'}
-  components:
-  - name: lbl_new_role
+  layout_properties: {grid_position: 'QQRBLC,CHJWDZ'}
+  name: btn_add
+  properties: {align: center, icon: 'fa:plus', role: filled-button, text: Add Role}
+  type: Button
+- components:
+  - layout_properties: {grid_position: 'BYOHPT,JGULMP'}
+    name: lbl_new_role
     properties: {align: right, text: Name}
     type: Label
-    layout_properties: {grid_position: 'BYOHPT,JGULMP'}
-  - name: tb_new_role
+  - layout_properties: {grid_position: 'BYOHPT,XFXLWU'}
+    name: tb_new_role
     properties: {role: outlined}
     type: TextBox
-    layout_properties: {grid_position: 'BYOHPT,XFXLWU'}
-  - name: lbl_permissions
+  - layout_properties: {grid_position: 'IWCKSX,VFWGEZ'}
+    name: lbl_permissions
     properties: {text: Permissions}
     type: Label
-    layout_properties: {grid_position: 'IWCKSX,VFWGEZ'}
-  - name: msdd_permissions
+  - layout_properties: {grid_position: 'IWCKSX,LVGDBF'}
+    name: msdd_permissions
     properties: {}
     type: form:dep_dmhomulhrajp9w:MultiSelectDropDown
-    layout_properties: {grid_position: 'IWCKSX,LVGDBF'}
-  - name: btn_save_new_role
-    properties: {text: Save New Role, role: filled-button}
-    type: Button
+  - event_bindings: {click: btn_save_new_role_click}
     layout_properties: {grid_position: 'ASUKQT,CRCIBX'}
-    event_bindings: {click: btn_save_new_role_click}
+    name: btn_save_new_role
+    properties: {role: filled-button, text: Save New Role}
+    type: Button
+  layout_properties: {grid_position: 'UIHRYA,VUHSJM'}
+  name: cp_addrole
+  properties: {col_widths: '{"JGULMP":10,"XFXLWU":50,"VFWGEZ":10,"LVGDBF":50}', role: outlined-card, visible: false}
+  type: ColumnPanel
+container:
+  event_bindings: {show: form_show}
+  type: ColumnPanel
 is_package: true

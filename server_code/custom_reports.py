@@ -23,7 +23,11 @@ def custom_0001(tenant_id, tenant=None, verbose=True):
     user_list = []
     for usermap in usermaps:
         if len(usermap['roles']) == 1:
-            user_list.append(usermap_row_to_dict(usermap))
+            try:
+                user_list.append(usermap_row_to_dict(usermap))
+            except anvil.tables.RowDeleted:
+                # usermap.delete()
+                pass
     if verbose:
         print_timestamp('user_list')
         print(user_list)
