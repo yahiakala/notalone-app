@@ -22,7 +22,6 @@ class MemberDetail(MemberDetailTemplate):
             self.load_data()
 
     def load_data(self):
-        
         if 'profile' in routing.get_url_pattern():
             self.email = Global.user['email']
             self.cp_booking_link.visible = True
@@ -61,6 +60,8 @@ class MemberDetail(MemberDetailTemplate):
         if 'see_forum' in self.member['permissions']:
             self.cp_payment_status.visible = True
             self.cp_discord.visible = True
+            if self.member['paypal_sub_id']:
+                self.btn_cancel_sub.visible = True
 
         self.tb_booking_link.text = self.member['booking_link']
 
@@ -119,15 +120,21 @@ class MemberDetail(MemberDetailTemplate):
         self.btn_save.italic = False
         self.btn_save.text = 'Save all changes'
 
-    def tb_donation_change(self, **event_args):
-        """This method is called when the text in this text box is edited"""
-        self.link_payment.url = (
-            ""
-            if not self.tb_donation.text
-            else self.lbl_10
-            if self.tb_donation.text < 50
-            else self.lbl_50
-        )
+    def btn_cancel_sub_click(self, **event_args):
+        """This method is called when the cancel subscription button is clicked"""
+        if alert("Are you sure you want to cancel this subscription?", buttons=["Yes", "No"]) == "Yes":
+            self.btn_cancel_sub.text = "Cancelling..."
+            self.btn_cancel_sub.enabled = False
+            
+            with anvil.server.no_loading_indicator:
+                try:
+                    self.member = anvil.server.call('cancel_user_subscription', Global.tenant_id, self.email)
+                    self.btn_cancel_sub.visible = False
+                    alert("Subscription cancelled successfully")
+                except Exception as e:
+                    alert(str(e))
+                    self.btn_cancel_sub.text = "Cancel Subscription"
+                    self.btn_cancel_sub.enabled = True
 
     def pay_click(self, item, **event_args):
         """This method is called when the button is clicked"""
@@ -184,7 +191,6 @@ class MemberDetail(MemberDetailTemplate):
                 
         self.btn_save_notes.italic = False
         self.btn_save_notes.text = 'Save Notes'
-
 
     def populate_role_list(self):
         self.all_roles = [i['name'] for i in Global.roles]

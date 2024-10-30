@@ -119,5 +119,31 @@ def get_subscription(client_id, client_secret, subscription_id,
     return response.json()
 
 
+def cancel_subscription(client_id, client_secret, subscription_id, reason="Cancelled by user",
+                       access_token=None, verbose=False):
+    """Cancel a PayPal subscription."""
+    access_token = access_token or get_paypal_auth(client_id, client_secret)
+    
+    try:
+        response = anvil.http.request(
+            f'{SUBSCRIPTION_URL}/{subscription_id}/cancel',
+            method='POST',
+            headers={
+                'Authorization': f'Bearer {access_token}',
+                'Content-Type': 'application/json'
+            },
+            data={
+                'reason': reason
+            },
+            json=True
+        )
+        if verbose:
+            print(response)
+        return response
+    except anvil.http.HttpError as e:
+        print(f"Error {e.status} {e.content}")
+        raise anvil.http.HttpError(e.status, e.content)
+
+
 def get_subscription_id(body):
     return body['resource']['id']
