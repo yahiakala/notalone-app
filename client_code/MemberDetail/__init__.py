@@ -60,6 +60,11 @@ class MemberDetail(MemberDetailTemplate):
         if 'see_forum' in self.member['permissions']:
             self.cp_payment_status.visible = True
             self.cp_discord.visible = True
+            
+            # Update payment status text
+            if self.member['payment_status'] == 'CANCELLED' and 'see_forum' in self.member['permissions']:
+                self.lbl_fee_paid_copy.text = "Subscription cancelled but membership still in good standing."
+            
             if self.member['paypal_sub_id']:
                 self.btn_cancel_sub.visible = True
 
@@ -130,6 +135,7 @@ class MemberDetail(MemberDetailTemplate):
                 try:
                     self.member = anvil.server.call('cancel_user_subscription', Global.tenant_id, self.email)
                     self.btn_cancel_sub.visible = False
+                    self.lbl_fee_paid_copy.text = "Subscription cancelled but membership still in good standing."
                     alert("Subscription cancelled successfully")
                 except Exception as e:
                     alert(str(e))
@@ -144,7 +150,6 @@ class MemberDetail(MemberDetailTemplate):
         with anvil.server.no_loading_indicator:
             self.member, self.payment_url = anvil.server.call("create_sub", Global.tenant_id, item['id'])
             self.btn_save_click()
-            # window.open(self.payment_url)
             routing.clear_cache()
             window.location.href = self.payment_url  # same window
 
