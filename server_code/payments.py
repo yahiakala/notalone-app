@@ -127,7 +127,7 @@ def update_subscription(usermap, headers, body):
 
     if body['resource']['status'] == 'EXPIRED':
         for role in plan['roles']:
-            # TODO: haven't tested this.
+            # TODO: Test more.
             usermap = upsert_role(usermap, 'Approved')
             usermap['roles'] = [i for i in usermap['roles'] if i['name'] != role]
     elif body['resource']['status'] == 'ACTIVE':
