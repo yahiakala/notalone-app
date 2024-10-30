@@ -1,6 +1,6 @@
 import anvil.server
 import anvil.email
-from .helpers import get_users_with_permission
+from .helpers import get_users_with_permission, validate_user
 
 
 def notify_paid(usermap, membermap):
@@ -17,7 +17,7 @@ def notify_paid(usermap, membermap):
     """
     anvil.email.send(
         to=usermap['user']['email'],
-        from_address='noreply',
+        from_address=membermap['tenant']['smtp_email'] or 'noreply',
         from_name="NotAlone",
         subject="Applicant Paid",
         html=msg_body
@@ -45,8 +45,21 @@ def email_accept_applicant(tenant, email):
     anvil.email.send(
         to=email,
         bcc=screener_list,
-        from_address="noreply",
+        from_address=tenant['smtp_email'] or "noreply",
         from_name="noreply",
         subject=f"Welcome to the {tenant['name']} Community!",
         html=msg_body
+    )
+
+
+@anvil.server.callable(require_user=True)
+def send_test_email(tenant_id, email):
+    user = anvil.users.get_user(allow_remembered=True)
+    tenant, usermap, permissions = validate_user(tenant_id, user)
+    anvil.email.send(
+        to=email,
+        from_address=tenant['smtp_email'] or 'noreply',
+        from_name='notalone',
+        subject='test email',
+        text='this is a test email'
     )

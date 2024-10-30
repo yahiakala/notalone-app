@@ -248,23 +248,23 @@ def search_users_by_text(tenant_id, search_string):
         return []
     
     users = app_tables.users.search(
-        q.fetch_only('email', 'first_name', 'last_name'),
+        q.fetch_only('email'),
         q.any_of(
-            email=q.ilike('%'+search_string+'%'),
-            first_name=q.ilike('%'+search_string+'%'),
-            last_name=q.ilike('%'+search_string+'%')
+            email=q.ilike('%'+search_string+'%')
         )
     )
     usermaps = app_tables.usermap.search(
         q.fetch_only(
-            'user',
+            'user', 'first_name', 'last_name',
             user=q.fetch_only(
-                'email', 'first_name', 'last_name', 'last_login', 'signed_up'
+                'email', 'last_login', 'signed_up'
             )
         ),
         q.any_of(
             user=q.any_of(*users),
-            notes=q.ilike('%'+search_string+'%')
+            notes=q.ilike('%'+search_string+'%'),
+            first_name=q.ilike('%'+search_string+'%'),
+            last_name=q.ilike('%'+search_string+'%')
         ),
         tenant=tenant
     )
@@ -300,20 +300,32 @@ def search_users_by_role(tenant_id, role_name):
         return []
 
     if role_name:
-        role = q.any_of([app_tables.roles.get(tenant=tenant, name=role_name)])
+        # role = q.any_of([app_tables.roles.get(tenant=tenant, name=role_name)])
+        role = [app_tables.roles.get(tenant=tenant, name=role_name)]
     else:
         role = None
 
     usermaps = app_tables.usermap.search(
         q.fetch_only(
-            'user',
+            'user', 'first_name', 'last_name',
             user=q.fetch_only(
-                'email', 'first_name', 'last_name', 'last_login', 'signed_up'
+                'email', 'last_login', 'signed_up'
             )
         ),
         roles=role,
         tenant=tenant
     )
+    # usermaps = app_tables.usermap.client_readable(
+    #     q.only_cols('user', 'first_name', 'last_name', 'notes'),
+    #     tenant=tenant
+    # ).search(
+    #     q.fetch_only(
+    #         'user', 'first_name', 'last_name',
+    #         user=q.fetch_only(
+    #             'email', 'last_login', 'signed_up'
+    #         )
+    #     )
+    # )
     return usermaps
 
 

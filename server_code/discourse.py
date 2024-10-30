@@ -13,18 +13,18 @@ from .helpers import validate_user
 
 
 @anvil.server.http_endpoint('/discourse-sso', cross_site_session=True, enable_cors=True)
-def login_sso(sso, sig, session_id=None):
+def login_sso(sso=None, sig=None, session_id=None):
     # Decode the payload
+    user = anvil.users.get_user(allow_remembered=True)
+    if not user:
+        print('No user logged in.')
+        return anvil.server.HttpResponse(302, headers={"Location": anvil.server.get_app_origin() + '/#signin'})
+        
     payload = base64.b64decode(urllib.parse.unquote(sso)).decode()
     print(payload)
     params = dict(urllib.parse.parse_qsl(payload))
     print(params)
     nonce = params['nonce']
-
-    user = anvil.users.get_user(allow_remembered=True)
-    if not user:
-        print('No user logged in.')
-        return anvil.server.HttpResponse(302, headers={"Location": anvil.server.get_app_origin() + '/signin'})
 
     discourse_url = params['return_sso_url'].replace('https://', '').replace('/session/sso_login', '')
     tenant = app_tables.tenants.get(discourse_url=q.ilike('%'+discourse_url+'%'))

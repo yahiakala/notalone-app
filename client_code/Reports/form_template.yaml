@@ -1,9 +1,9 @@
-container:
-  type: ColumnPanel
-  event_bindings: {show: form_show}
 components:
-- name: rp_reports
+- layout_properties: {grid_position: 'EPAZGR,CECDWU'}
+  name: rp_reports
   properties: {item_template: Reports.ReportRow}
   type: RepeatingPanel
-  layout_properties: {grid_position: 'EPAZGR,CECDWU'}
+container:
+  event_bindings: {show: form_show}
+  type: ColumnPanel
 is_package: true

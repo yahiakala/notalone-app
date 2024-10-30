@@ -43,6 +43,7 @@ def get_tenant_single(user=None, tenant=None):
         # permissions = get_permissions(tenant.get_id(), user, tenant, usermap)
         tenant, usermap, permissions = validate_user(tenant.get_id(), user, tenant=tenant)
         if 'delete_members' in permissions:
+            # TODO: do not return client writable
             return app_tables.tenants.client_writable().get()
     
     return tenant_dict
@@ -98,7 +99,10 @@ def get_users_iterable(tenant_id, user):
     tenant, usermap, permissions = validate_user(tenant_id, user)
     if 'see_members' not in permissions:
         return []
-    return app_tables.usermap.client_readable(q.only_cols('user', 'notes'), tenant=tenant)
+    return app_tables.usermap.client_readable(
+        q.only_cols('user', 'first_name', 'last_name', 'notes'),
+        tenant=tenant
+    )
 
 
 def get_screenerlink(tenant_id, user, usermap=None, permissions=None, tenant=None):
@@ -112,7 +116,7 @@ def get_screenerlink(tenant_id, user, usermap=None, permissions=None, tenant=Non
     interview_role = app_tables.roles.get(tenant=tenant, name='Interviewer')
     
     screeners = app_tables.usermap.search(
-        booking_link=q.not_(None),
+        booking_link=q.not_(None, ''),
         tenant=tenant,
         roles=[interview_role]
     )

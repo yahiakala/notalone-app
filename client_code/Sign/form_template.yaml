@@ -1,52 +1,52 @@
-container:
-  type: ColumnPanel
-  properties: {role: null}
 components:
-- name: spacer_1
+- layout_properties: {grid_position: 'UUEUAQ,BIZINF'}
+  name: spacer_1
   properties: {height: '50', visible: false}
   type: Spacer
-  layout_properties: {grid_position: 'UUEUAQ,BIZINF'}
-- name: fp_outer
-  properties:
-    align: center
-    role: [vertically-centered]
-    visible: false
-    vertical_align: middle
-  type: FlowPanel
-  layout_properties: {grid_position: 'MMQKIH,AEIXVO', full_width_row: false}
-  components:
-  - name: cp_login
+- components:
+  - components:
+    - layout_properties: {grid_position: 'QCIIZV,JUYABG'}
+      name: lbl_title
+      properties: {align: center, bold: true, role: title, text: Welcome to notalone, visible: false}
+      type: Label
+    - layout_properties: {grid_position: 'GETEEV,FJKRXP'}
+      name: img_logo
+      properties: {display_mode: shrink_to_fit, height: '', source: _/theme/Not Alone_thin.png}
+      type: Image
+    - event_bindings: {click: btn_signin_click}
+      layout_properties: {grid_position: 'NVVDWP,PDHNKJ'}
+      name: btn_signin
+      properties:
+        align: full
+        icon: ''
+        role: [soft-button, filled-button]
+        text: Sign in
+      type: Button
+    - event_bindings: {click: btn_signup_click}
+      layout_properties: {grid_position: 'RYXCZI,GBTWMP'}
+      name: btn_signup
+      properties:
+        align: full
+        icon: ''
+        role: [soft-button, outlined-button]
+        text: Sign up
+      type: Button
+    layout_properties: {}
+    name: cp_login
     properties:
       role: [elevated-card, narrow-col]
       visible: true
     type: ColumnPanel
-    components:
-    - name: lbl_title
-      properties: {align: center, text: Welcome to notalone, bold: true, role: title, visible: false}
-      type: Label
-      layout_properties: {grid_position: 'QCIIZV,JUYABG'}
-    - name: img_logo
-      properties: {display_mode: shrink_to_fit, source: _/theme/Not Alone_thin.png, height: ''}
-      type: Image
-      layout_properties: {grid_position: 'GETEEV,FJKRXP'}
-    - name: btn_signin
-      properties:
-        text: Sign in
-        icon: ''
-        role: [soft-button, filled-button]
-        align: full
-      type: Button
-      layout_properties: {grid_position: 'NVVDWP,PDHNKJ'}
-      event_bindings: {click: btn_signin_click}
-    - name: btn_signup
-      properties:
-        text: Sign up
-        icon: ''
-        role: [soft-button, outlined-button]
-        align: full
-      type: Button
-      layout_properties: {grid_position: 'RYXCZI,GBTWMP'}
-      event_bindings: {click: btn_signup_click}
-    layout_properties: {}
   event_bindings: {show: form_show}
+  layout_properties: {full_width_row: false, grid_position: 'MMQKIH,AEIXVO'}
+  name: fp_outer
+  properties:
+    align: center
+    role: [vertically-centered]
+    vertical_align: middle
+    visible: false
+  type: FlowPanel
+container:
+  properties: {role: null}
+  type: ColumnPanel
 is_package: true

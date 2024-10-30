@@ -1,45 +1,45 @@
-container:
-  type: ColumnPanel
-  properties: {col_widths: '{"MMKOUJ":10,"DLHAAZ":50,"IIVKSR":10,"GNVITU":10,"PVFMOF":50}'}
-  event_bindings: {show: form_show}
 components:
-- name: btn_back
-  properties: {text: Back, role: outlined-button, align: left, icon: 'fa:angle-left'}
-  type: Button
+- event_bindings: {click: btn_back_click}
   layout_properties: {grid_position: 'JJUSQA,VQEIFS'}
-  event_bindings: {click: btn_back_click}
-- name: lbl_name
-  properties: {text: Role Name, role: input-prompt, spacing_above: small}
+  name: btn_back
+  properties: {align: left, icon: 'fa:angle-left', role: outlined-button, text: Back}
+  type: Button
+- layout_properties: {grid_position: 'KJPGZX,MMKOUJ'}
+  name: lbl_name
+  properties: {role: input-prompt, spacing_above: small, text: Role Name}
   type: Label
-  layout_properties: {grid_position: 'KJPGZX,MMKOUJ'}
-- name: tb_name
+- layout_properties: {grid_position: 'KJPGZX,DLHAAZ'}
+  name: tb_name
   properties:
     role: [outlined, skeleton]
   type: TextBox
-  layout_properties: {grid_position: 'KJPGZX,DLHAAZ'}
-- name: lbl_permissions_copy
+- layout_properties: {grid_position: 'ROPPKG,GNVITU'}
+  name: lbl_permissions_copy
   properties: {role: input-prompt, text: Permissions}
   type: Label
-  layout_properties: {grid_position: 'ROPPKG,GNVITU'}
-- name: msdd_permissions
+- data_bindings:
+  - {code: '''fit''', property: width, writeback: false}
+  event_bindings: {change: msdd_permissions_change}
+  layout_properties: {grid_position: 'ROPPKG,PVFMOF'}
+  name: msdd_permissions
   properties: {enabled: true}
   type: form:dep_dmhomulhrajp9w:MultiSelectDropDown
-  layout_properties: {grid_position: 'ROPPKG,PVFMOF'}
-  data_bindings:
-  - {property: width, code: '''fit''', writeback: false}
-  event_bindings: {change: msdd_permissions_change}
-- name: rp_files
+- layout_properties: {grid_position: 'LFMZJR,PYDSFE'}
+  name: rp_files
   properties: {item_template: RoleDetail.FileRow, visible: true}
   type: RepeatingPanel
-  layout_properties: {grid_position: 'LFMZJR,PYDSFE'}
-- name: fl_add_file
-  properties: {text: Add File, icon_align: left, align: center, visible: false}
-  type: FileLoader
+- event_bindings: {change: fl_add_file_change}
   layout_properties: {grid_position: 'CTSYQG,ZYKTUG'}
-  event_bindings: {change: fl_add_file_change}
-- name: btn_save
-  properties: {text: Save Changes, role: filled-button, enabled: true}
-  type: Button
+  name: fl_add_file
+  properties: {align: center, icon_align: left, text: Add File, visible: false}
+  type: FileLoader
+- event_bindings: {click: btn_save_click}
   layout_properties: {grid_position: 'CCLAFW,DBMTVT'}
-  event_bindings: {click: btn_save_click}
+  name: btn_save
+  properties: {enabled: true, role: filled-button, text: Save Changes}
+  type: Button
+container:
+  event_bindings: {show: form_show}
+  properties: {col_widths: '{"MMKOUJ":10,"DLHAAZ":50,"IIVKSR":10,"GNVITU":10,"PVFMOF":50}'}
+  type: ColumnPanel
 is_package: true

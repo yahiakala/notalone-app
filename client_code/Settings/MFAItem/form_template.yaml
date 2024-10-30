@@ -1,46 +1,46 @@
-is_package: true
-container: {type: ColumnPanel}
 components:
-- name: cp_mfa
-  properties: {role: outlined-card}
-  type: ColumnPanel
-  layout_properties: {grid_position: 'ZWAJOT,PCHASW'}
-  components:
-  - name: flow_panel_1
+- components:
+  - components:
+    - data_bindings:
+      - {code: '''ID: '' + self.item[''id'']', property: text, writeback: false}
+      name: lbl_id
+      properties: {}
+      type: Label
+    - data_bindings:
+      - {code: '''TYPE: '' + self.item[''type''].upper()', property: text, writeback: false}
+      name: lbl_type
+      properties: {}
+      type: Label
+    - event_bindings: {click: btn_delete_click}
+      layout_properties: {}
+      name: btn_delete
+      properties: {role: filled-button, text: Remove}
+      type: Button
+    layout_properties: {grid_position: 'HYPNXB,JDWYLU'}
+    name: flow_panel_1
     properties: {align: justify}
     type: FlowPanel
-    layout_properties: {grid_position: 'HYPNXB,JDWYLU'}
-    components:
-    - name: lbl_id
-      properties: {}
-      type: Label
-      data_bindings:
-      - {property: text, code: '''ID: '' + self.item[''id'']', writeback: false}
-    - name: lbl_type
-      properties: {}
-      type: Label
-      data_bindings:
-      - {property: text, code: '''TYPE: '' + self.item[''type''].upper()', writeback: false}
-    - name: btn_delete
-      properties: {text: Remove, role: filled-button}
-      type: Button
-      layout_properties: {}
-      event_bindings: {click: btn_delete_click}
-  - name: cp_pw
-    properties: {role: outlined-card, col_widths: '{}', visible: false}
-    type: ColumnPanel
-    layout_properties: {grid_position: 'YMJAST,VRIKMA'}
-    components:
-    - name: flow_panel_2
+  - components:
+    - components:
+      - layout_properties: {expand: true}
+        name: tb_enter_pw
+        properties: {hide_text: true, placeholder: Enter password to continue, role: outlined}
+        type: TextBox
+      - event_bindings: {click: btn_confirm_click}
+        name: btn_confirm
+        properties: {align: right, background: 'theme:Error', role: filled-button, text: Confirm}
+        type: Button
+      layout_properties: {grid_position: 'DYJDNM,TYSHMI'}
+      name: flow_panel_2
       properties: {align: justify}
       type: FlowPanel
-      layout_properties: {grid_position: 'DYJDNM,TYSHMI'}
-      components:
-      - name: tb_enter_pw
-        properties: {role: outlined, placeholder: Enter password to continue, hide_text: true}
-        type: TextBox
-        layout_properties: {expand: true}
-      - name: btn_confirm
-        properties: {text: Confirm, role: filled-button, background: 'theme:Error', align: right}
-        type: Button
-        event_bindings: {click: btn_confirm_click}
+    layout_properties: {grid_position: 'YMJAST,VRIKMA'}
+    name: cp_pw
+    properties: {col_widths: '{}', role: outlined-card, visible: false}
+    type: ColumnPanel
+  layout_properties: {grid_position: 'ZWAJOT,PCHASW'}
+  name: cp_mfa
+  properties: {role: outlined-card}
+  type: ColumnPanel
+container: {type: ColumnPanel}
+is_package: true

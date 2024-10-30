@@ -1,20 +1,20 @@
-container: {type: ColumnPanel}
 components:
-- name: label_1
-  properties: {text: Please wait while we update our records with your payment confirmation. This could take up to 5 minutes., align: center}
+- layout_properties: {grid_position: 'SUEQCU,INEETC'}
+  name: label_1
+  properties: {align: center, text: Please wait while we update our records with your payment confirmation. This could take up to 5 minutes.}
   type: Label
-  layout_properties: {grid_position: 'SUEQCU,INEETC'}
-- name: image_1
-  properties: {source: _/theme/loading6.gif, height: 39.8984375}
+- layout_properties: {grid_position: 'PGORQV,LHUAOV'}
+  name: image_1
+  properties: {height: 39.8984375, source: _/theme/loading6.gif}
   type: Image
-  layout_properties: {grid_position: 'PGORQV,LHUAOV'}
-- name: lbl_confirmed
-  properties: {text: Your payment is now confirmed. You can access the forum using the button on the top right., align: center, visible: false, role: headline}
+- layout_properties: {grid_position: 'ZBJEOB,TNZCDC'}
+  name: lbl_confirmed
+  properties: {align: center, role: headline, text: Your payment is now confirmed. You can access the forum using the button on the top right., visible: false}
   type: Label
-  layout_properties: {grid_position: 'ZBJEOB,TNZCDC'}
-- name: ti_payment
+- event_bindings: {tick: ti_payment_tick}
+  layout_properties: {grid_position: 'HPBPMG,AFHINJ'}
+  name: ti_payment
   properties: {interval: 1}
   type: Timer
-  layout_properties: {grid_position: 'HPBPMG,AFHINJ'}
-  event_bindings: {tick: ti_payment_tick}
+container: {type: ColumnPanel}
 is_package: true

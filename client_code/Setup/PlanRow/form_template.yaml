@@ -1,25 +1,25 @@
-is_package: true
-container:
-  type: DataRowPanel
-  data_bindings: []
-  properties: {role: table-row}
 components:
-- name: fp_actions
+- components:
+  - event_bindings: {click: btn_edit_click}
+    layout_properties: {}
+    name: btn_edit
+    properties: {icon: 'fa:pencil', role: outlined-button, text: ''}
+    type: Button
+  - event_bindings: {click: btn_delete_click}
+    layout_properties: {}
+    name: btn_delete
+    properties: {icon: 'fa:trash', role: outlined-button, text: ''}
+    type: Button
+  layout_properties: {column: CFLVXO}
+  name: fp_actions
   properties: {}
   type: FlowPanel
-  layout_properties: {column: CFLVXO}
-  components:
-  - name: btn_edit
-    properties: {text: '', role: outlined-button, icon: 'fa:pencil'}
-    type: Button
-    layout_properties: {}
-    event_bindings: {click: btn_edit_click}
-  - name: btn_delete
-    properties: {text: '', icon: 'fa:trash', role: outlined-button}
-    type: Button
-    layout_properties: {}
-    event_bindings: {click: btn_delete_click}
-- name: lbl_roles
+- layout_properties: {column: PUBCMA}
+  name: lbl_roles
   properties: {}
   type: Label
-  layout_properties: {column: PUBCMA}
+container:
+  data_bindings: []
+  properties: {role: table-row}
+  type: DataRowPanel
+is_package: true

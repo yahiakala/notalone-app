@@ -24,7 +24,11 @@ class Members(MembersTemplate):
             
             if 'role' in self.url_dict:
                 self.start_search()
-                self.members = anvil.server.call('search_users_by_role', Global.tenant_id, self.url_dict['role'])
+                self.members = anvil.server.call(
+                    'search_users_by_role',
+                    Global.tenant_id,
+                    self.url_dict['role']
+                )
                 self.rp_members.items = self.members
                 self.pagination_1.data_grid = self.dg_members
                 self.pagination_1.repeating_panel = self.rp_members
@@ -33,9 +37,9 @@ class Members(MembersTemplate):
             if self.members == [None, None, None]:
                 self.members = Global.users.search(
                     q.fetch_only(
-                        'user',
+                        'user', 'first_name', 'last_name',
                         user=q.fetch_only(
-                            'email', 'first_name', 'last_name', 'last_login', 'signed_up'
+                            'email', 'last_login', 'signed_up'
                         )
                     )
                 )
@@ -61,18 +65,17 @@ class Members(MembersTemplate):
 
     def btn_clear_search_click(self, **event_args):
         """This method is called when the button is clicked"""
+        self.start_search()
         with anvil.server.no_loading_indicator:
             self.members = Global.users.search(
                 q.fetch_only(
-                    'user',
+                    'user', 'first_name', 'last_name',
                     user=q.fetch_only(
-                        'email', 'first_name', 'last_name', 'last_login', 'signed_up'
+                        'email', 'last_login', 'signed_up'
                     )
                 )
             )
-            self.rp_members.items = self.members
-            self.reset_buttons()
-            # self.form_show()
+            self.end_search()
             self.tb_mb_search.text = None
             self.btn_clear_search.enabled = False
 

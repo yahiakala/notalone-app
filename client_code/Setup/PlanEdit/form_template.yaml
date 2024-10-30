@@ -1,55 +1,55 @@
-container: {type: ColumnPanel}
 components:
-- name: label_1
-  properties: {text: Plan ID, role: input-prompt}
+- layout_properties: {grid_position: 'WXNWYX,ZGKYLU'}
+  name: label_1
+  properties: {role: input-prompt, text: Plan ID}
   type: Label
-  layout_properties: {grid_position: 'WXNWYX,ZGKYLU'}
-- name: tb_plan_id
+- layout_properties: {grid_position: 'WXNWYX,KZBUEA'}
+  name: tb_plan_id
   properties: {role: outlined}
   type: TextBox
-  layout_properties: {grid_position: 'WXNWYX,KZBUEA'}
-- name: label_1_copy
-  properties: {text: Plan Name, role: input-prompt}
+- layout_properties: {grid_position: 'FLNKUA,TRWQQS'}
+  name: label_1_copy
+  properties: {role: input-prompt, text: Plan Name}
   type: Label
-  layout_properties: {grid_position: 'FLNKUA,TRWQQS'}
-- name: tb_plan_name
+- layout_properties: {grid_position: 'FLNKUA,AXPMDS'}
+  name: tb_plan_name
   properties: {role: outlined}
   type: TextBox
-  layout_properties: {grid_position: 'FLNKUA,AXPMDS'}
-- name: label_1_copy_2
-  properties: {text: Plan Amount, role: input-prompt}
+- layout_properties: {grid_position: 'AQTBBN,VVJHOP'}
+  name: label_1_copy_2
+  properties: {role: input-prompt, text: Plan Amount}
   type: Label
-  layout_properties: {grid_position: 'AQTBBN,VVJHOP'}
-- name: tb_plan_amt
+- layout_properties: {grid_position: 'AQTBBN,TAGIGI'}
+  name: tb_plan_amt
   properties: {role: outlined, type: number}
   type: TextBox
-  layout_properties: {grid_position: 'AQTBBN,TAGIGI'}
-- name: label_1_copy_3
-  properties: {text: 'Plan Frequency (Monthly, Yearly)', role: input-prompt}
+- layout_properties: {grid_position: 'TPYYUI,CEFTAD'}
+  name: label_1_copy_3
+  properties: {role: input-prompt, text: 'Plan Frequency (Monthly, Yearly)'}
   type: Label
-  layout_properties: {grid_position: 'TPYYUI,CEFTAD'}
-- name: tb_plan_frequency
+- layout_properties: {grid_position: 'TPYYUI,MDZBYG'}
+  name: tb_plan_frequency
   properties: {role: outlined}
   type: TextBox
-  layout_properties: {grid_position: 'TPYYUI,MDZBYG'}
-- name: lbl_roles_title
-  properties: {text: Roles, align: center, role: title}
+- layout_properties: {grid_position: 'GPEKWE,MMNIFA'}
+  name: lbl_roles_title
+  properties: {align: center, role: title, text: Roles}
   type: Label
-  layout_properties: {grid_position: 'GPEKWE,MMNIFA'}
-- name: msdd_roles
+- data_bindings:
+  - {code: '''auto''', property: width, writeback: false}
+  layout_properties: {full_width_row: false, grid_position: 'GVTYBZ,NKKIHQ'}
+  name: msdd_roles
   properties: {}
   type: form:dep_dmhomulhrajp9w:MultiSelectDropDown
-  layout_properties: {grid_position: 'GVTYBZ,NKKIHQ', full_width_row: false}
-  data_bindings:
-  - {property: width, code: '''auto''', writeback: false}
-- name: btn_save
-  properties: {text: Save, role: filled-button, align: right}
-  type: Button
+- event_bindings: {click: btn_save_click}
   layout_properties: {grid_position: 'RKOZRR,IKZCCT'}
-  event_bindings: {click: btn_save_click}
-- name: btn_cancel
-  properties: {text: Cancel, role: outlined-button, align: left}
+  name: btn_save
+  properties: {align: right, role: filled-button, text: Save}
   type: Button
+- event_bindings: {click: btn_cancel_click}
   layout_properties: {grid_position: 'RKOZRR,TDSXEX'}
-  event_bindings: {click: btn_cancel_click}
+  name: btn_cancel
+  properties: {align: left, role: outlined-button, text: Cancel}
+  type: Button
+container: {type: ColumnPanel}
 is_package: true
