@@ -1,7 +1,7 @@
 from ._anvil_designer import MemberDetailTemplate
 from anvil import *
 import anvil.server
-from anvil_extras import routing
+from anvil_extras import routing  # noqa
 from ..Global import Global
 from .PriceCard import PriceCard
 from anvil_squared.utils import print_timestamp
@@ -60,6 +60,18 @@ class MemberDetail(MemberDetailTemplate):
         if 'see_forum' in self.member['permissions']:
             self.cp_payment_status.visible = True
             self.cp_discord.visible = True
+            
+            # Update payment status text
+            if self.member['payment_status'] == 'CANCELLED':
+                expiry_date = self.member['payment_expiry']
+                if expiry_date:
+                    expiry_str = expiry_date.strftime('%B %d, %Y')
+                    self.lbl_fee_paid_copy.text = f"Subscription cancelled. Access expires on {expiry_str}."
+                else:
+                    self.lbl_fee_paid_copy.text = "No subscription."
+            else:
+                self.lbl_fee_paid_copy.text = "Membership is in good standing."
+            
             if self.member['paypal_sub_id']:
                 self.btn_cancel_sub.visible = True
 
@@ -130,6 +142,12 @@ class MemberDetail(MemberDetailTemplate):
                 try:
                     self.member = anvil.server.call('cancel_user_subscription', Global.tenant_id, self.email)
                     self.btn_cancel_sub.visible = False
+                    # Update payment status text after cancellation
+                    if self.member['payment_expiry']:
+                        expiry_str = self.member['payment_expiry'].strftime('%B %d, %Y')
+                        self.lbl_fee_paid_copy.text = f"Subscription cancelled. Access expires on {expiry_str}."
+                    else:
+                        self.lbl_fee_paid_copy.text = "No subscription."
                     alert("Subscription cancelled successfully")
                 except Exception as e:
                     alert(str(e))
@@ -144,7 +162,6 @@ class MemberDetail(MemberDetailTemplate):
         with anvil.server.no_loading_indicator:
             self.member, self.payment_url = anvil.server.call("create_sub", Global.tenant_id, item['id'])
             self.btn_save_click()
-            # window.open(self.payment_url)
             routing.clear_cache()
             window.location.href = self.payment_url  # same window
 
