@@ -77,7 +77,7 @@ class MemberDetail(MemberDetailTemplate):
         self.lbl_fee_paid_amt.role = None
         self.tb_booking_link.role = 'outlined'
 
-        if 'see_forum' not in self.member['permissions']:
+        if 'see_forum' not in self.member['permissions'] and 'profile' in routing.get_url_pattern():
             for plan in Global.tenant['paypal_plans']:
                 self.fp_pricing_table.add_component(PriceCard(item=plan))
             self.fp_pricing_table.visible = True
