@@ -14,9 +14,30 @@ from .helpers import (
 from .paypal import (
     cancel_subscription,
     create_subscription,
+    get_subscription,
     get_subscription_id,
     verify_webhook,
 )
+
+
+def get_paypal_credentials_and_verify(usermap, headers, body):
+    """Get PayPal credentials and verify webhook."""
+    client_id = anvil.secrets.decrypt_with_key(
+        "encryption_key", usermap["tenant"]["paypal_client_id"]
+    )
+    client_secret = anvil.secrets.decrypt_with_key(
+        "encryption_key", usermap["tenant"]["paypal_secret"]
+    )
+    webhook_id = anvil.secrets.decrypt_with_key(
+        "encryption_key", usermap["tenant"]["paypal_webhook_id"]
+    )
+
+    if not verify_webhook(client_id, client_secret, webhook_id, headers, body):
+        print("Webhook not verified.")
+        raise Exception("Webhook verification failed")
+    print("Webhook verified.")
+
+    return client_id, client_secret, webhook_id
 
 
 @anvil.server.callable(require_user=True)
@@ -34,9 +55,6 @@ def create_sub(tenant_id, plan_id):
     # TODO: add tenant id to the return urls and route the app properly
     return_url = anvil.server.get_app_origin() + "/payment-success"
     cancel_url = anvil.server.get_app_origin() + "/payment-cancel"
-    # print(return_url)
-    # print(cancel_url)
-    # return anvil.server.HttpResponse(302, headers={'Location': anvil.server.get_app_origin() + '/#profile'})
     response = create_subscription(
         client_id, client_secret, plan_id, return_url, cancel_url
     )
@@ -45,7 +63,6 @@ def create_sub(tenant_id, plan_id):
 
     usermap["fee"] = plan["amt"]
     usermap["paypal_sub_id"] = response["id"]
-    # TODO: also return usermap_row_to_dict
     membermap = usermap_row_to_dict(usermap)
     if "see_members" not in permissions:
         membermap["notes"] = ""
@@ -85,9 +102,6 @@ def cancel_user_subscription(tenant_id, email):
     # Cancel the subscription with PayPal
     cancel_subscription(client_id, client_secret, membermap["paypal_sub_id"])
 
-    # Update user's subscription status
-    # membermap['payment_status'] = 'CANCELLED'
-
     result_membermap = usermap_row_to_dict(membermap)
     if "see_members" not in permissions:
         result_membermap["notes"] = ""
@@ -119,40 +133,66 @@ def capture_sub(**params):
     print(raw_body)
 
     print(body["event_type"])
-    sub_id = get_subscription_id(body)
-    usermap = app_tables.usermap.get(paypal_sub_id=sub_id)
-    if not usermap:
-        print("Did not find user.")
-        return anvil.server.HttpResponse(200)
 
-    print("Found user:")
-    print(usermap["user"]["email"])
+    # Launch appropriate background task based on event type
+    if body["event_type"] == "PAYMENT.SALE.COMPLETED":
+        anvil.server.launch_background_task("update_sale_payment", headers, body)
+    else:
+        anvil.server.launch_background_task("update_subscription", headers, body)
 
-    client_id = anvil.secrets.decrypt_with_key(
-        "encryption_key", usermap["tenant"]["paypal_client_id"]
-    )
-    client_secret = anvil.secrets.decrypt_with_key(
-        "encryption_key", usermap["tenant"]["paypal_secret"]
-    )
-    webhook_id = anvil.secrets.decrypt_with_key(
-        "encryption_key", usermap["tenant"]["paypal_webhook_id"]
-    )
-
-    if not verify_webhook(client_id, client_secret, webhook_id, headers, body):
-        print("Webhook not verified.")
-        return anvil.server.HttpResponse(400)
-    print("Webhook verified.")
-
-    anvil.server.launch_background_task("update_subscription", usermap, headers, body)
     return anvil.server.HttpResponse(200)
 
 
 @anvil.server.background_task
-def update_subscription(usermap, headers, body):
+def update_sale_payment(headers, body):
+    """Handle PAYMENT.SALE.COMPLETED webhook events."""
     import datetime as dt
 
-    plan_id = body["resource"]["plan_id"]
+    billing_agreement_id = body["resource"].get("billing_agreement_id")
+    if not billing_agreement_id:
+        print("No billing agreement ID found in sale event.")
+        return
+    usermap = app_tables.usermap.get(paypal_sub_id=billing_agreement_id)
+    if not usermap:
+        print("Did not find user.")
+        return
+    print(usermap["user"]["email"])
 
+    # Verify webhook again in case of delayed execution
+    client_id, client_secret, _ = get_paypal_credentials_and_verify(
+        usermap, headers, body
+    )
+
+    subscription = get_subscription(client_id, client_secret, usermap["paypal_sub_id"])
+
+    # Update payment expiry from subscription
+    if (
+        "billing_info" in subscription
+        and "next_billing_time" in subscription["billing_info"]
+    ):
+        next_billing_time = subscription["billing_info"]["next_billing_time"]
+        billing_datetime = dt.datetime.strptime(next_billing_time, "%Y-%m-%dT%H:%M:%SZ")
+        usermap["payment_expiry"] = billing_datetime.date()
+
+
+@anvil.server.background_task
+def update_subscription(headers, body):
+    """Handle subscription-related webhook events."""
+    import datetime as dt
+
+    sub_id = get_subscription_id(body)
+    usermap = app_tables.usermap.get(paypal_sub_id=sub_id)
+    if not usermap:
+        print("Did not find user.")
+        return
+    print(usermap["user"]["email"])
+
+    # Verify webhook again in case of delayed execution
+    client_id, client_secret, _ = get_paypal_credentials_and_verify(
+        usermap, headers, body
+    )
+
+    plan_id = body["resource"]["plan_id"]
     plan = [i for i in usermap["tenant"]["paypal_plans"] if i["id"] == plan_id][0]
 
     if body["resource"]["status"] == "EXPIRED":
@@ -182,7 +222,6 @@ def update_subscription(usermap, headers, body):
         )
         if "next_billing_time" in body["resource"]["billing_info"]:
             next_billing_time = body["resource"]["billing_info"]["next_billing_time"]
-            # Convert the datetime string to a datetime object, then extract just the date
             billing_datetime = dt.datetime.strptime(
                 next_billing_time, "%Y-%m-%dT%H:%M:%SZ"
             )
