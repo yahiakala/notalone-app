@@ -95,7 +95,8 @@ def capture_sub(**params):
     sub_id = get_subscription_id(body)
     usermap = app_tables.usermap.get(paypal_sub_id=sub_id)
     if not usermap:
-        return anvil.server.HttpResponse(400)
+        print('Did not find user.')
+        return anvil.server.HttpResponse(200)
 
     print('Found user:')
     print(usermap['user']['email'])
