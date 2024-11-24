@@ -65,7 +65,7 @@ class MemberDetail(MemberDetailTemplate):
             if self.member['payment_status'] == 'CANCELLED' and 'see_forum' in self.member['permissions']:
                 self.lbl_fee_paid_copy.text = "Subscription cancelled but membership still in good standing."
             
-            if self.member['paypal_sub_id']:
+            if self.member['paypal_sub_id'] and self.member['payment_status'] == 'ACTIVE':
                 self.btn_cancel_sub.visible = True
 
         self.tb_booking_link.text = self.member['booking_link']
@@ -83,7 +83,7 @@ class MemberDetail(MemberDetailTemplate):
         self.lbl_fee_paid_amt.role = None
         self.tb_booking_link.role = 'outlined'
 
-        if 'see_forum' not in self.member['permissions'] and 'profile' in routing.get_url_pattern():
+        if self.member['payment_status'] != 'ACTIVE' and 'profile' in routing.get_url_pattern():
             for plan in Global.tenant['paypal_plans']:
                 self.fp_pricing_table.add_component(PriceCard(item=plan))
             self.fp_pricing_table.visible = True
@@ -138,7 +138,7 @@ class MemberDetail(MemberDetailTemplate):
                     self.lbl_fee_paid_copy.text = "Subscription cancelled but membership still in good standing."
                     alert("Subscription cancelled successfully")
                 except Exception as e:
-                    alert(str(e))
+                    alert(str(e.content))
                     self.btn_cancel_sub.text = "Cancel Subscription"
                     self.btn_cancel_sub.enabled = True
 

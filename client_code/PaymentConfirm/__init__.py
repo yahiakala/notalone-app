@@ -12,8 +12,6 @@ class PaymentConfirm(PaymentConfirmTemplate):
         self.init_components(**properties)
         print('paymentconfirm')
 
-        # Any code you write here will run before the form opens.
-
     def ti_payment_tick(self, **event_args):
         """This method is called Every [interval] seconds. Does not trigger if [interval] is 0."""
         self.email = Global.user['email']
