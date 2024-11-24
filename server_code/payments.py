@@ -64,7 +64,7 @@ def cancel_user_subscription(tenant_id, email):
     cancel_subscription(client_id, client_secret, membermap['paypal_sub_id'])
     
     # Update user's subscription status
-    membermap['payment_status'] = 'CANCELLED'
+    # membermap['payment_status'] = 'CANCELLED'
     
     result_membermap = usermap_row_to_dict(membermap)
     if 'see_members' not in permissions:
