@@ -132,15 +132,15 @@ class MemberDetail(MemberDetailTemplate):
             self.btn_cancel_sub.enabled = False
             
             with anvil.server.no_loading_indicator:
-                try:
-                    self.member = anvil.server.call('cancel_user_subscription', Global.tenant_id, self.email)
-                    self.btn_cancel_sub.visible = False
-                    self.lbl_fee_paid_copy.text = "Subscription cancelled but membership still in good standing."
-                    alert("Subscription cancelled successfully")
-                except Exception as e:
-                    alert(str(e.content))
-                    self.btn_cancel_sub.text = "Cancel Subscription"
-                    self.btn_cancel_sub.enabled = True
+                # try:
+                self.member = anvil.server.call('cancel_user_subscription', Global.tenant_id, self.email)
+                self.btn_cancel_sub.visible = False
+                self.lbl_fee_paid_copy.text = "Subscription cancelled but membership still in good standing."
+                alert("Subscription cancelled successfully")
+                # except Exception as e:
+                #     alert(str(e))
+                #     self.btn_cancel_sub.text = "Cancel Subscription"
+                #     self.btn_cancel_sub.enabled = True
 
     def pay_click(self, item, **event_args):
         """This method is called when the button is clicked"""

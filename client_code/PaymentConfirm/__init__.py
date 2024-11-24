@@ -18,7 +18,7 @@ class PaymentConfirm(PaymentConfirmTemplate):
         with anvil.server.no_loading_indicator:
             self.member = anvil.server.call('get_member_data', Global.tenant_id, self.email)
             print('ti_payment_tick')
-            if 'Member' in self.member['roles']:
+            if self.member['payment_status'] == 'ACTIVE':
                 self.ti_payment.interval = 0
                 Global.permissions = self.member['permissions']
                 print('Payment confirmed!')
