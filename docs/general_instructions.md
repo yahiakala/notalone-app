@@ -220,6 +220,37 @@ To test the application:
 4. Clear browser cache if you encounter unexpected behavior
 5. Report any issues found during testing
 
+## Import Guidelines
+
+### Avoid Top-Level Imports for Public Packages
+
+Public Python packages should be imported within functions or methods where they are used, rather than at the module level. This practice:
+- Reduces memory usage by only importing when needed
+- Improves startup time by deferring imports until they're required
+- Makes dependencies clearer and more localized
+
+```python
+# Incorrect - top-level import
+import datetime
+
+def process_date(date_string):
+    return datetime.datetime.strptime(date_string, '%Y-%m-%dT%H:%M:%SZ')
+
+# Correct - import within function
+def process_date(date_string):
+    import datetime as dt
+    return dt.datetime.strptime(date_string, '%Y-%m-%dT%H:%M:%SZ')
+```
+
+### Exceptions
+
+The following imports are allowed at the top level:
+- Internal project imports (e.g., `from .helpers import validate_user`)
+- Anvil framework imports (e.g., `import anvil.server`, `import anvil.users`)
+- Type hints in stub files
+
+This guideline helps maintain efficient resource usage and clear dependency management throughout the application.
+
 ## Best Practices
 
 While linting errors should be ignored, developers should still follow these best practices:
