@@ -182,9 +182,11 @@ def update_subscription(usermap, headers, body):
         )
         if "next_billing_time" in body["resource"]["billing_info"]:
             next_billing_time = body["resource"]["billing_info"]["next_billing_time"]
-            usermap["payment_expiry"] = dt.datetime.strptime(
+            # Convert the datetime string to a datetime object, then extract just the date
+            billing_datetime = dt.datetime.strptime(
                 next_billing_time, "%Y-%m-%dT%H:%M:%SZ"
             )
+            usermap["payment_expiry"] = billing_datetime.date()
 
 
 def notify_admins(usermap):
