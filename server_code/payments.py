@@ -213,7 +213,8 @@ def update_subscription(headers, body):
                     for i in usermap["roles"]
                     if i["name"] not in ["Applicant", "Approved"]
                 ]
-        notify_admins(usermap)
+        # if not usermap["payment_status"] or usermap["payment_status"] != 'ACTIVE':  # yet
+        #     notify_admins(usermap)
 
     usermap["payment_status"] = body["resource"]["status"]
     if "billing_info" in body["resource"]:
