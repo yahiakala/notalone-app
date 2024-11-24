@@ -119,7 +119,7 @@ def get_subscription(client_id, client_secret, subscription_id,
     return response.json()
 
 
-def cancel_subscription(client_id, client_secret, subscription_id, reason="Cancelled by user",
+def cancel_subscription(client_id, client_secret, subscription_id, reason="Cancelled",
                        access_token=None, verbose=False):
     """Cancel a PayPal subscription."""
     access_token = access_token or get_paypal_auth(client_id, client_secret)
