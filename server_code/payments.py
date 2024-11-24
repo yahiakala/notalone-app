@@ -98,6 +98,7 @@ def capture_sub(**params):
     #     print(f"not interested in this event: {body['event_type']}")
     #     return anvil.server.HttpResponse(200)
 
+    print(body['event_type'])
     sub_id = get_subscription_id(body)
     usermap = app_tables.usermap.get(paypal_sub_id=sub_id)
     if not usermap:
@@ -146,6 +147,8 @@ def update_subscription(usermap, headers, body):
     usermap['payment_status'] = body['resource']['status']
     if 'billing_info' in body['resource']:
         usermap['fee'] = float(body['resource']['billing_info']['last_payment']['amount']['value'])
+        # This should be converted to a python datetime. i.e. 2024-11-25T10:00:00Z
+        usermap['payment_expiry'] = body['resource']['billing_info']['next_billing_time']
 
 
 def notify_admins(usermap):
