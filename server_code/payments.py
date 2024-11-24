@@ -6,7 +6,7 @@ import anvil.users
 
 from .helpers import get_users_with_permission, validate_user, usermap_row_to_dict, upsert_role
 from .emails import notify_paid
-from .paypal import verify_webhook, create_subscription, get_subscription_id
+from .paypal import verify_webhook, create_subscription, get_subscription_id, cancel_subscription
 
 
 @anvil.server.callable(require_user=True)
@@ -37,6 +37,42 @@ def create_sub(tenant_id, plan_id):
     return membermap, response['links'][0]['href']
 
 
+@anvil.server.callable(require_user=True)
+def cancel_user_subscription(tenant_id, email):
+    """Cancel a user's PayPal subscription."""
+    user = anvil.users.get_user(allow_remembered=True)
+    tenant, usermap, permissions = validate_user(tenant_id, user)
+    
+    # Check if user has permission to cancel subscription
+    if email != user['email'] and 'edit_members' not in permissions:
+        raise Exception("You don't have permission to cancel other users' subscriptions")
+    
+    # Get the target user and validate
+    target_user = app_tables.users.get(email=email)
+    if not target_user:
+        raise Exception("User not found")
+    
+    # Get the membermap for the target user
+    _, membermap, _ = validate_user(tenant_id, target_user)
+    if not membermap or not membermap['paypal_sub_id']:
+        raise Exception("No active subscription found")
+    
+    client_id = anvil.secrets.decrypt_with_key('encryption_key', tenant['paypal_client_id'])
+    client_secret = anvil.secrets.decrypt_with_key('encryption_key', tenant['paypal_secret'])
+    
+    # Cancel the subscription with PayPal
+    cancel_subscription(client_id, client_secret, membermap['paypal_sub_id'])
+    
+    # Update user's subscription status
+    # membermap['payment_status'] = 'CANCELLED'
+    
+    result_membermap = usermap_row_to_dict(membermap)
+    if 'see_members' not in permissions:
+        result_membermap['notes'] = ''
+    
+    return result_membermap
+
+
 @anvil.server.route('/payment-success')
 def payment_success(**kwargs):
     return anvil.server.HttpResponse(302, headers={'Location': anvil.server.get_app_origin() + '/#app/paymentconfirm'})
@@ -55,17 +91,12 @@ def capture_sub(**params):
     raw_body = anvil.server.request.body.get_bytes().decode('utf-8')
     print(raw_body)
 
-    # listen_events = ['BILLING.SUBSCRIPTION.ACTIVATED',
-    #                  'BILLING.SUBSCRIPTION.EXPIRED',
-    #                  'BILLING.SUBSCRIPTION.UPDATED']
-    # if body['event_type'] not in listen_events:
-    #     print(f"not interested in this event: {body['event_type']}")
-    #     return anvil.server.HttpResponse(200)
-
+    print(body['event_type'])
     sub_id = get_subscription_id(body)
     usermap = app_tables.usermap.get(paypal_sub_id=sub_id)
     if not usermap:
-        return anvil.server.HttpResponse(400)
+        print('Did not find user.')
+        return anvil.server.HttpResponse(200)
 
     print('Found user:')
     print(usermap['user']['email'])
@@ -91,7 +122,7 @@ def update_subscription(usermap, headers, body):
 
     if body['resource']['status'] == 'EXPIRED':
         for role in plan['roles']:
-            # TODO: haven't tested this.
+            # TODO: Test more.
             usermap = upsert_role(usermap, 'Approved')
             usermap['roles'] = [i for i in usermap['roles'] if i['name'] != role]
     elif body['resource']['status'] == 'ACTIVE':
@@ -106,6 +137,9 @@ def update_subscription(usermap, headers, body):
     usermap['payment_status'] = body['resource']['status']
     if 'billing_info' in body['resource']:
         usermap['fee'] = float(body['resource']['billing_info']['last_payment']['amount']['value'])
+        # This should be converted to a python datetime. i.e. 2024-11-25T10:00:00Z
+        if 'next_billing_time' in body['resource']['billing_info']:
+            usermap['payment_expiry'] = body['resource']['billing_info']['next_billing_time']
 
 
 def notify_admins(usermap):
