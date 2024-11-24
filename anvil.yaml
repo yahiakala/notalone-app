@@ -206,7 +206,7 @@ db_schema:
     - admin_ui: {order: 9, width: 200}
       name: payment_expiry
       type: date
-    - admin_ui: {order: 10, width: 200}
+    - admin_ui: {order: 8.5, width: 200}
       name: payment_status
       type: string
     - admin_ui: {order: 11, width: 200}
