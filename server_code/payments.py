@@ -91,13 +91,6 @@ def capture_sub(**params):
     raw_body = anvil.server.request.body.get_bytes().decode('utf-8')
     print(raw_body)
 
-    # listen_events = ['BILLING.SUBSCRIPTION.ACTIVATED',
-    #                  'BILLING.SUBSCRIPTION.EXPIRED',
-    #                  'BILLING.SUBSCRIPTION.UPDATED']
-    # if body['event_type'] not in listen_events:
-    #     print(f"not interested in this event: {body['event_type']}")
-    #     return anvil.server.HttpResponse(200)
-
     print(body['event_type'])
     sub_id = get_subscription_id(body)
     usermap = app_tables.usermap.get(paypal_sub_id=sub_id)
