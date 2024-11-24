@@ -103,10 +103,6 @@ def capture_sub(**params):
     client_id = anvil.secrets.decrypt_with_key('encryption_key', usermap['tenant']['paypal_client_id'])
     client_secret = anvil.secrets.decrypt_with_key('encryption_key', usermap['tenant']['paypal_secret'])
     webhook_id = anvil.secrets.decrypt_with_key('encryption_key', usermap['tenant']['paypal_webhook_id'])
-
-    # print(client_id)
-    # print(client_secret)
-    # print(webhook_id)
     
     if not verify_webhook(client_id, client_secret, webhook_id, headers, body):    
         print('Webhook not verified.')
