@@ -4,6 +4,12 @@
 
 The Not Alone app implements a multi-tenant payment system using PayPal subscriptions. Each tenant can configure their own PayPal integration and subscription plans, which their members can then subscribe to.
 
+## Important PayPal Webhook Limitations
+
+**Note:** PayPal does not generate webhook events for merchant-initiated subscription cancellations (cancellations done through PayPal's interface). While subscriber-initiated cancellations trigger the BILLING.SUBSCRIPTION.CANCELLED webhook properly, cancellations done by merchants through PayPal's dashboard do not generate any webhook events. To handle this limitation, the app implements a periodic subscription status check.
+
+
+
 ## Tenant Configuration
 
 ### PayPal Integration Setup
@@ -46,14 +52,14 @@ When a user initiates a subscription:
 def create_sub(tenant_id, plan_id):
     # Validate user and tenant
     tenant, usermap, permissions = validate_user(tenant_id, user)
-    
+
     # Get PayPal credentials
     client_id = anvil.secrets.decrypt_with_key('encryption_key', tenant['paypal_client_id'])
     client_secret = anvil.secrets.decrypt_with_key('encryption_key', tenant['paypal_secret'])
-    
+
     # Create subscription
     response = create_subscription(client_id, client_secret, plan_id, return_url, cancel_url)
-    
+
     # Update user record
     usermap['fee'] = plan['amt']
     usermap['paypal_sub_id'] = response['id']
@@ -77,9 +83,9 @@ PayPal webhooks notify the application of subscription status changes:
 @anvil.server.http_endpoint('/capture-sub', methods=['POST'])
 def capture_sub(**params):
     # Verify webhook authenticity
-    if not verify_webhook(client_id, client_secret, webhook_id, headers, body):    
+    if not verify_webhook(client_id, client_secret, webhook_id, headers, body):
         return anvil.server.HttpResponse(400)
-    
+
     # Process subscription update in background
     anvil.server.launch_background_task('update_subscription', usermap, headers, body)
 ```
@@ -96,7 +102,7 @@ def update_subscription(usermap, headers, body):
         remove_subscription_roles(usermap, plan)
     elif body['resource']['status'] == 'ACTIVE':
         add_subscription_roles(usermap, plan)
-    
+
     # Update payment status and fee
     usermap['payment_status'] = body['resource']['status']
     usermap['fee'] = get_subscription_amount(body)
@@ -181,7 +187,7 @@ def calc_rev12():
     for tenant in app_tables.tenants.search():
         tenantfin = app_tables.finances.get(tenant=tenant)
         # Calculate total revenue (including PayPal fees)
-        total_rev = sum((user['fee'] * 0.97 - 0.3) 
+        total_rev = sum((user['fee'] * 0.97 - 0.3)
                        for user in active_paying_users(tenant))
         tenantfin['rev_12'] = total_rev
 ```
@@ -195,6 +201,7 @@ def calc_rev12():
 2. **Webhook Security**
    - Always verify webhook authenticity before processing
    - Use background tasks for webhook processing to prevent timeouts
+   - Be aware that merchant-initiated cancellations won't trigger webhooks
 
 3. **Error Handling**
    - Implement proper error handling for PayPal API calls
@@ -203,6 +210,7 @@ def calc_rev12():
 4. **Subscription Management**
    - Keep subscription IDs and status in sync with PayPal
    - Update user roles immediately upon subscription changes
+   - Run periodic status checks to catch merchant-initiated cancellations
 
 5. **Revenue Calculations**
    - Account for PayPal fees in revenue calculations
