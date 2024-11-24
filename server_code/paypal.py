@@ -142,6 +142,7 @@ def cancel_subscription(client_id, client_secret, subscription_id, reason="Cance
         return response
     except anvil.http.HttpError as e:
         print(f"Error {e.status} {e.content}")
+        print(e.content.get_bytes())
         raise anvil.http.HttpError(e.status, e.content)
 
 
