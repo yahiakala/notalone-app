@@ -241,6 +241,8 @@ def update_subscription(headers, body):
 @anvil.server.callable(require_user=True)
 def refresh_subscription_data(tenant_id, email):
     """Cancel a user's PayPal subscription."""
+    import datetime as dt
+    
     user = anvil.users.get_user(allow_remembered=True)
     tenant, usermap, permissions = validate_user(tenant_id, user)
 
@@ -268,8 +270,15 @@ def refresh_subscription_data(tenant_id, email):
     )
 
     subscription = get_subscription(client_id, client_secret, membermap["paypal_sub_id"])
-    print(subscription)
-    # payment_status, fee, payment_expiry
+
+    membermap['payment_status'] = subscription['status']
+    
+    next_billing_time = subscription["billing_info"]["next_billing_time"]
+    billing_datetime = dt.datetime.strptime(next_billing_time, "%Y-%m-%dT%H:%M:%SZ")
+    membermap["payment_expiry"] = billing_datetime.date()
+    
+    membermap['fee'] = subscription['last_payment']['amount']['value']
+    
     result_membermap = usermap_row_to_dict(membermap)
     if "see_members" not in permissions:
         result_membermap["notes"] = ""
