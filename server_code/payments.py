@@ -134,35 +134,17 @@ def capture_sub(**params):
 
     print(body["event_type"])
 
-    # Launch appropriate background task based on event type
+    # Launch appropriate task based on event type
     if body["event_type"] == "PAYMENT.SALE.COMPLETED":
         # anvil.server.launch_background_task("update_sale_payment", headers, body)
-        update_sale_payment(headers, body)
-        # billing_agreement_id = body["resource"].get("billing_agreement_id")
-        # if not billing_agreement_id:
-        #     print("No billing agreement ID found in sale event.")
-        #     return anvil.server.HttpResponse(400)
-        # usermap = app_tables.usermap.get(paypal_sub_id=billing_agreement_id)
-        # if not usermap:
-        #     print("Did not find user.")
-        #     return anvil.server.HttpResponse(400)
-        # print(usermap["user"]["email"])
+        proceed = update_sale_payment(headers, body)
     else:
         # anvil.server.launch_background_task("update_subscription", headers, body)
-        update_subscription(headers, body)
-        # sub_id = get_subscription_id(body)
-        # usermap = app_tables.usermap.get(paypal_sub_id=sub_id)
-        # if not usermap:
-        #     print("Did not find user.")
-        #     return anvil.server.HttpResponse(400)
-        # print(usermap["user"]["email"])
-    
-    # client_id, client_secret, _ = get_paypal_credentials_and_verify(
-    #     usermap, headers, body
-    # )
-    # print("Webhook verified.")
-    
+        proceed = update_subscription(headers, body)
 
+    if not proceed:
+        return anvil.server.HttpResponse(400)
+    
     return anvil.server.HttpResponse(200)
 
 
@@ -174,11 +156,11 @@ def update_sale_payment(headers, body):
     billing_agreement_id = body["resource"].get("billing_agreement_id")
     if not billing_agreement_id:
         print("No billing agreement ID found in sale event.")
-        return
+        return False
     usermap = app_tables.usermap.get(paypal_sub_id=billing_agreement_id)
     if not usermap:
         print("Did not find user.")
-        return
+        return False
     print(usermap["user"]["email"])
 
     # Verify webhook again in case of delayed execution
@@ -197,6 +179,8 @@ def update_sale_payment(headers, body):
         billing_datetime = dt.datetime.strptime(next_billing_time, "%Y-%m-%dT%H:%M:%SZ")
         usermap["payment_expiry"] = billing_datetime.date()
 
+    return True
+
 
 @anvil.server.background_task
 def update_subscription(headers, body):
@@ -207,7 +191,7 @@ def update_subscription(headers, body):
     usermap = app_tables.usermap.get(paypal_sub_id=sub_id)
     if not usermap:
         print("Did not find user.")
-        return
+        return False
     print(usermap["user"]["email"])
 
     # Verify webhook again in case of delayed execution
@@ -250,7 +234,9 @@ def update_subscription(headers, body):
                 next_billing_time, "%Y-%m-%dT%H:%M:%SZ"
             )
             usermap["payment_expiry"] = billing_datetime.date()
-
+    
+    return True
+    
 
 def notify_admins(usermap):
     screeners = get_users_with_permission(None, "see_members", usermap["tenant"])
