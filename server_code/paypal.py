@@ -69,6 +69,12 @@ def verify_webhook(client_id, client_secret, webhook_id,
     if response['verification_status'] == 'SUCCESS':
         return True
     else:
+        print(VERIFY_URL)
+        print(client_id)
+        print(client_secret)
+        print(webhook_id)
+        print(headers)
+        print(body)
         return False
 
 
