@@ -136,9 +136,39 @@ def capture_sub(**params):
 
     # Launch appropriate background task based on event type
     if body["event_type"] == "PAYMENT.SALE.COMPLETED":
-        anvil.server.launch_background_task("update_sale_payment", headers, body)
+        # anvil.server.launch_background_task("update_sale_payment", headers, body)
+        billing_agreement_id = body["resource"].get("billing_agreement_id")
+        if not billing_agreement_id:
+            print("No billing agreement ID found in sale event.")
+            return anvil.server.HttpResponse(400)
+        usermap = app_tables.usermap.get(paypal_sub_id=billing_agreement_id)
+        if not usermap:
+            print("Did not find user.")
+            return anvil.server.HttpResponse(400)
+        print(usermap["user"]["email"])
     else:
-        anvil.server.launch_background_task("update_subscription", headers, body)
+        # anvil.server.launch_background_task("update_subscription", headers, body)
+        sub_id = get_subscription_id(body)
+        usermap = app_tables.usermap.get(paypal_sub_id=sub_id)
+        if not usermap:
+            print("Did not find user.")
+            return anvil.server.HttpResponse(400)
+        print(usermap["user"]["email"])
+
+    client_id = anvil.secrets.decrypt_with_key(
+        "encryption_key", usermap["tenant"]["paypal_client_id"]
+    )
+    client_secret = anvil.secrets.decrypt_with_key(
+        "encryption_key", usermap["tenant"]["paypal_secret"]
+    )
+    webhook_id = anvil.secrets.decrypt_with_key(
+        "encryption_key", usermap["tenant"]["paypal_webhook_id"]
+    )
+
+    if not verify_webhook(client_id, client_secret, webhook_id, headers, body):
+        print("Webhook not verified.")
+        return anvil.server.HttpResponse(400)
+    print("Webhook verified.")
 
     return anvil.server.HttpResponse(200)
 
