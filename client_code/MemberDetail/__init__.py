@@ -219,3 +219,7 @@ class MemberDetail(MemberDetailTemplate):
     def btn_test_email_click(self, **event_args):
         """This method is called when the button is clicked"""
         anvil.server.call('send_test_email', Global.tenant_id, self.email)
+
+    def btn_refresh_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        self.member = anvil.server.call('refresh_subscription_data', Global.tenant_id, self.email)

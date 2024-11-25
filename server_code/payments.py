@@ -236,6 +236,45 @@ def update_subscription(headers, body):
             usermap["payment_expiry"] = billing_datetime.date()
     
     return True
+
+
+@anvil.server.callable(require_user=True)
+def refresh_subscription_data(tenant_id, email):
+    """Cancel a user's PayPal subscription."""
+    user = anvil.users.get_user(allow_remembered=True)
+    tenant, usermap, permissions = validate_user(tenant_id, user)
+
+    # Check if user has permission to cancel subscription
+    if email != user["email"] and "edit_members" not in permissions:
+        raise Exception(
+            "You don't have permission to refresh other users' subscriptions"
+        )
+
+    # Get the target user and validate
+    target_user = app_tables.users.get(email=email)
+    if not target_user:
+        raise Exception("User not found")
+
+    # Get the membermap for the target user
+    _, membermap, _ = validate_user(tenant_id, target_user)
+    if not membermap or not membermap["paypal_sub_id"]:
+        raise Exception("No active subscription found")
+
+    client_id = anvil.secrets.decrypt_with_key(
+        "encryption_key", tenant["paypal_client_id"]
+    )
+    client_secret = anvil.secrets.decrypt_with_key(
+        "encryption_key", tenant["paypal_secret"]
+    )
+
+    subscription = get_subscription(client_id, client_secret, membermap["paypal_sub_id"])
+    print(subscription)
+    # payment_status, fee, payment_expiry
+    result_membermap = usermap_row_to_dict(membermap)
+    if "see_members" not in permissions:
+        result_membermap["notes"] = ""
+
+    return result_membermap
     
 
 def notify_admins(usermap):

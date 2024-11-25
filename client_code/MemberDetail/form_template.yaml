@@ -305,6 +305,11 @@ components:
     name: cp_payment_status
     properties: {visible: false}
     type: ColumnPanel
+  - event_bindings: {click: btn_refresh_click}
+    layout_properties: {grid_position: 'AOTVCB,VCDNDH'}
+    name: btn_refresh
+    properties: {icon: 'fa:refresh', role: filled-button, text: Refresh, visible: true}
+    type: Button
   data_bindings: []
   layout_properties: {grid_position: 'MBRPGF,TZPVGS'}
   name: cp_membership_payments
