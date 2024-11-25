@@ -12,6 +12,17 @@ The Not Alone app implements a multi-tenant payment system using PayPal subscrip
 
 **Important:** For test deployments, the deployment URL **must** contain either 'debug' or 'test' in the URL (e.g., 'https://debug-myapp.anvil.app' or 'https://test-myapp.anvil.app'). This is required for the app to automatically use PayPal's sandbox APIs instead of production APIs. If the URL does not contain 'debug' or 'test', the app will use production PayPal APIs.
 
+## Webhook Configuration Requirements
+
+When setting up webhooks in PayPal, you must subscribe to the following events:
+- BILLING.SUBSCRIPTION.ACTIVATED
+- BILLING.SUBSCRIPTION.CANCELLED
+- BILLING.SUBSCRIPTION.EXPIRED
+- BILLING.SUBSCRIPTION.UPDATED
+- PAYMENT.SALE.COMPLETED (required for payment processing)
+
+The PAYMENT.SALE.COMPLETED event is particularly important as it's used to update payment expiry dates and process completed payments.
+
 ## Tenant Configuration
 
 ### PayPal Integration Setup
