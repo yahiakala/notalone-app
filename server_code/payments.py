@@ -155,20 +155,25 @@ def capture_sub(**params):
             return anvil.server.HttpResponse(400)
         print(usermap["user"]["email"])
 
-    client_id = anvil.secrets.decrypt_with_key(
-        "encryption_key", usermap["tenant"]["paypal_client_id"]
-    )
-    client_secret = anvil.secrets.decrypt_with_key(
-        "encryption_key", usermap["tenant"]["paypal_secret"]
-    )
-    webhook_id = anvil.secrets.decrypt_with_key(
-        "encryption_key", usermap["tenant"]["paypal_webhook_id"]
-    )
+    # client_id = anvil.secrets.decrypt_with_key(
+    #     "encryption_key", usermap["tenant"]["paypal_client_id"]
+    # )
+    # client_secret = anvil.secrets.decrypt_with_key(
+    #     "encryption_key", usermap["tenant"]["paypal_secret"]
+    # )
+    # webhook_id = anvil.secrets.decrypt_with_key(
+    #     "encryption_key", usermap["tenant"]["paypal_webhook_id"]
+    # )
 
-    if not verify_webhook(client_id, client_secret, webhook_id, headers, body):
-        print("Webhook not verified.")
-        return anvil.server.HttpResponse(400)
+    # if not verify_webhook(client_id, client_secret, webhook_id, headers, body):
+    #     print("Webhook not verified.")
+    #     return anvil.server.HttpResponse(400)
+    
+    client_id, client_secret, _ = get_paypal_credentials_and_verify(
+        usermap, headers, body
+    )
     print("Webhook verified.")
+    
 
     return anvil.server.HttpResponse(200)
 
