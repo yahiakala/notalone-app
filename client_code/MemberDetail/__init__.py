@@ -222,5 +222,11 @@ class MemberDetail(MemberDetailTemplate):
 
     def btn_refresh_click(self, **event_args):
         """This method is called when the button is clicked"""
-        self.member = anvil.server.call('refresh_subscription_data', Global.tenant_id, self.email)
-        self.form_show()
+        try:
+            self.member = anvil.server.call('refresh_subscription_data', Global.tenant_id, self.email)
+            self.form_show()
+        except Exception as e:
+            if 'No active subscription found' in str(e):
+                alert('No active subscription found.')
+            else:
+                raise

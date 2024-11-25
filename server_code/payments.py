@@ -277,7 +277,7 @@ def refresh_subscription_data(tenant_id, email):
     billing_datetime = dt.datetime.strptime(next_billing_time, "%Y-%m-%dT%H:%M:%SZ")
     membermap["payment_expiry"] = billing_datetime.date()
     
-    membermap['fee'] = subscription['last_payment']['amount']['value']
+    membermap['fee'] = float(subscription['billing_info']['last_payment']['amount']['value'])
     
     result_membermap = usermap_row_to_dict(membermap)
     if "see_members" not in permissions:
