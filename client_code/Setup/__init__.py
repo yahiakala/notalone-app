@@ -42,6 +42,7 @@ class Setup(SetupTemplate):
                 }
                 for i in Global.roles
             ]
+            self.msdd_new_roles.selected = self.tenant['new_roles']
             
             self.tenant_secrets = self.tenant_secrets or anvil.server.call('get_tenanted_data', Global.tenant_id, 'tenant_secrets')
             self.sv_discourse_api.secret = self.tenant_secrets['discourse_api_key']
