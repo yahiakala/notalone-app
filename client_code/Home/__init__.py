@@ -15,3 +15,9 @@ class Home(HomeTemplate):
         self.groups = []
         self.user = Global.user
         self.init_components(**properties)
+
+    def btn_donate_click(self, **event_args):
+        """This method is called when the button is clicked"""
+        import anvil.js
+        if Global.tenant['donate_url']:
+            anvil.js.window.location.href = Global.tenant['donate_url']

@@ -171,6 +171,9 @@ db_schema:
     - admin_ui: {order: 15, width: 200}
       name: smtp_email
       type: string
+    - admin_ui: {order: 16, width: 200}
+      name: donate_url
+      type: string
     server: full
     title: Tenants
   usermap:

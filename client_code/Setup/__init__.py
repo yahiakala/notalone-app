@@ -34,6 +34,7 @@ class Setup(SetupTemplate):
             self.tb_discourse_url.text = self.tenant['discourse_url']
             self.tb_discord.text = self.tenant['discord_invite']
             self.rp_paypal_plans.items = self.tenant['paypal_plans'] or []
+            self.tb_donate_url.text = self.tenant['donate_url']
             self.msdd_new_roles.items = [
                 {
                     'key': i['name'],
@@ -61,6 +62,7 @@ class Setup(SetupTemplate):
             self.sv_paypal_client_id.tb_secret.role = 'outlined'
             self.sv_paypal_secret.tb_secret.role = 'outlined'
             self.sv_webhook_id.tb_secret.role = 'outlined'
+            self.tb_donate_url.role = 'outlined'
 
     def sv_discourse_secret_reset(self, **event_args):
         with anvil.server.no_loading_indicator:
@@ -82,7 +84,6 @@ class Setup(SetupTemplate):
 
     def remove_plan(self, item, **event_args):
         self.rp_paypal_plans.items = [i for i in self.rp_paypal_plans.items if i['id'] != item['id']]
-        
 
     def btn_save_click(self, **event_args):
         """This method is called when the button is clicked"""
@@ -102,7 +103,8 @@ class Setup(SetupTemplate):
                 'logo': self.img_logo.source,
                 'discord_invite': self.tb_discord.text,
                 'paypal_plans': self.rp_paypal_plans.items,
-                'new_roles': self.msdd_new_roles.selected
+                'new_roles': self.msdd_new_roles.selected,
+                'donate_url': self.tb_donate_url.text
             }
             anvil.server.call('update_tenant_data', Global.tenant_id, new_tenant_data)
             Global.tenant = new_tenant_data
