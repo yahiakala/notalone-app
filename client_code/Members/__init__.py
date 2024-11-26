@@ -84,7 +84,7 @@ class Members(MembersTemplate):
             self.tb_mb_search.text = None
             self.btn_clear_search.enabled = False
             # Hide role label when clearing search
-            self.lbl_role_filter.visible = False
+            self.lbl_role_name.visible = False
 
     def btn_qf_admins_click(self, **event_args):
         """Get admins."""
