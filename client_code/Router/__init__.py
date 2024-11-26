@@ -36,6 +36,7 @@ class Router(RouterTemplate):
         self.link_admin.tag.url_hash = 'app/admin'
         self.link_reports.tag.url_hash = 'app/reports'
         self.link_settings.tag.url_hash = 'app/settings'
+        self.usermap = Global.usermap
         
         self.populate_globals()
 
@@ -93,7 +94,7 @@ class Router(RouterTemplate):
         if 'see_forum' not in Global.permissions:
             routing.alert('Please make sure your membership is in good standing before accessing the forum.')
         elif not Global.usermap['consent_check']:
-            routing.alert('Please make sure you have consented to the code of conduct and saved your profile before accessing the forum.')
+            routing.alert('Please make sure you have consented to the code of conduct and refreshed the page before accessing the forum.')
         else:
             anvil.js.window.location.href = Global.tenant['discourse_url']
 
