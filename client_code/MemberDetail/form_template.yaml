@@ -194,11 +194,6 @@ components:
       name: btn_test_email
       properties: {role: outlined-button, text: Send Test Email}
       type: Button
-    - event_bindings: {click: btn_cancel_sub_click}
-      layout_properties: {}
-      name: btn_cancel_sub
-      properties: {align: center, background: 'theme:Error', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: '', icon: '', icon_align: left, italic: false, role: filled-button, spacing_above: small, spacing_below: small, text: Cancel Subscription, tooltip: '', underline: false, visible: false}
-      type: Button
     layout_properties: {grid_position: 'EADRFA,MUNGZC'}
     name: fp_remres
     properties: {align: center, background: '', border: '', foreground: '', role: null, spacing: medium, spacing_above: small, spacing_below: small, tooltip: '', visible: true}
@@ -305,6 +300,11 @@ components:
     name: cp_payment_status
     properties: {visible: false}
     type: ColumnPanel
+  - event_bindings: {click: btn_cancel_sub_click}
+    layout_properties: {grid_position: 'EOFOTA,POCTCE'}
+    name: btn_cancel_sub
+    properties: {align: center, background: 'theme:Error', bold: false, border: '', enabled: true, font: '', font_size: null, foreground: '', icon: '', icon_align: left, italic: false, role: filled-button, spacing_above: small, spacing_below: small, text: Cancel Subscription, tooltip: '', underline: false, visible: false}
+    type: Button
   - event_bindings: {click: btn_refresh_click}
     layout_properties: {grid_position: 'AOTVCB,VCDNDH'}
     name: btn_refresh
