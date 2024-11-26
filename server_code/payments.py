@@ -272,10 +272,11 @@ def refresh_subscription_data(tenant_id, email):
     subscription = get_subscription(client_id, client_secret, membermap["paypal_sub_id"])
 
     membermap['payment_status'] = subscription['status']
-    
-    next_billing_time = subscription["billing_info"]["next_billing_time"]
-    billing_datetime = dt.datetime.strptime(next_billing_time, "%Y-%m-%dT%H:%M:%SZ")
-    membermap["payment_expiry"] = billing_datetime.date()
+
+    if 'next_billing_time' in subscription['billing_info']:
+        next_billing_time = subscription["billing_info"]["next_billing_time"]
+        billing_datetime = dt.datetime.strptime(next_billing_time, "%Y-%m-%dT%H:%M:%SZ")
+        membermap["payment_expiry"] = billing_datetime.date()
     
     membermap['fee'] = float(subscription['billing_info']['last_payment']['amount']['value'])
     

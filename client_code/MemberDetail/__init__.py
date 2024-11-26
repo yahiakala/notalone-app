@@ -229,7 +229,7 @@ class MemberDetail(MemberDetailTemplate):
         with anvil.server.no_loading_indicator:
             try:
                 self.member = anvil.server.call('refresh_subscription_data', Global.tenant_id, self.email)
-                self.form_show()
+                routing.reload_page(hard=True)
             except Exception as e:
                 if 'No active subscription found' in str(e):
                     alert('No active subscription found.')
