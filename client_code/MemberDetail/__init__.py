@@ -67,6 +67,11 @@ class MemberDetail(MemberDetailTemplate):
             self.lbl_sub_status_value.visible = True
             self.lbl_sub_status_value.text = self.member["payment_status"]
 
+            # Disable delete button if payment status is ACTIVE
+            if self.member["payment_status"] == "ACTIVE":
+                self.btn_del.enabled = False
+                self.btn_del.tooltip = "Cannot delete user with active subscription. Cancel their subscription first."
+
         if self.member["fee"]:
             self.lbl_fee_paid.visible = True
             self.lbl_fee_paid_amt.visible = True
