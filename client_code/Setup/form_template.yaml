@@ -117,6 +117,15 @@ components:
   name: sv_webhook_id
   properties: {}
   type: form:dep_yfmcrf11pl29j4:SecretViewer
+- layout_properties: {grid_position: 'WXWDBR,NTYDJN'}
+  name: lbl_donate_url
+  properties: {icon: 'fa:info-circle', role: input-prompt, text: Donation Link, tooltip: Link for one time donations that users will see.}
+  type: Label
+- layout_properties: {grid_position: 'WXWDBR,ZPSCKC'}
+  name: tb_donate_url
+  properties:
+    role: [skeleton, outlined]
+  type: TextBox
 - layout_properties: {grid_position: 'JSAGVX,IBGCAL'}
   name: lbl_paypal_plans
   properties: {align: center, icon: 'fa:info-circle', role: input-prompt, spacing_above: medium, text: PayPal Plans, tooltip: This API key will be used for automatically posting welcome messages in your forum.}
@@ -170,6 +179,6 @@ components:
   type: Button
 container:
   event_bindings: {show: form_show}
-  properties: {col_widths: '{"IUQBBU":14,"NAHIWQ":15,"BAKJKP":15,"PLXZJR":15,"BDBRQE":45,"WEERLN":45,"NILUCE":45,"YXWODB":45,"UVIXIO":15,"FJXWKF":45,"QZSWXM":15,"JZLQIV":45,"NXWYID":15,"TDBVMS":45,"QAYIPQ":15,"FURJFU":45,"CGVQKS":15,"HPXGOA":45,"PJPARK":15,"FVPFTI":45,"IEZEYK":15,"RYHILR":45,"RHQCTF":15,"UBWJFD":45}'}
+  properties: {col_widths: '{"IUQBBU":14,"NAHIWQ":15,"BAKJKP":15,"PLXZJR":15,"BDBRQE":45,"WEERLN":45,"NILUCE":45,"YXWODB":45,"UVIXIO":15,"FJXWKF":45,"QZSWXM":15,"JZLQIV":45,"NXWYID":15,"TDBVMS":45,"QAYIPQ":15,"FURJFU":45,"CGVQKS":15,"HPXGOA":45,"PJPARK":15,"FVPFTI":45,"IEZEYK":15,"RYHILR":45,"RHQCTF":15,"UBWJFD":45,"NTYDJN":15,"ZPSCKC":45}'}
   type: ColumnPanel
 is_package: true
