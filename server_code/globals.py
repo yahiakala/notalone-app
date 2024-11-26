@@ -74,10 +74,18 @@ def get_tenanted_data(tenant_id, key):
         # return get_forumlink(tenant_id, user)
     elif key == 'roles':
         return get_roles(tenant_id, user)
-    # elif key == 'usermap':
-    #     return get_my_usermap(tenant_id, user)
+    elif key == 'usermap':
+        return get_my_usermap(tenant_id, user)
     elif key == 'tenant_secrets':
         return get_tenant_secrets(tenant_id, user)
+
+
+def get_my_usermap(tenant_id, user):
+    tenant, usermap, permissions = validate_user(tenant_id, user)
+    usermap_dict = usermap_row_to_dict(usermap)
+    if 'see_members' not in permissions:
+        usermap_dict['notes'] = ""
+    return usermap_dict
 
 
 def get_tenant_secrets(tenant_id, user):
