@@ -94,7 +94,7 @@ class Router(RouterTemplate):
         if 'see_forum' not in Global.permissions:
             routing.alert('Please make sure your membership is in good standing before accessing the forum.')
         elif not Global.usermap['consent_check']:
-            routing.alert('Please make sure you have consented to the code of conduct and refreshed the page before accessing the forum.')
+            routing.alert('Please make sure you have consented to the code of conduct in the profile page and saved before accessing the forum.')
         else:
             anvil.js.window.location.href = Global.tenant['discourse_url']
 
