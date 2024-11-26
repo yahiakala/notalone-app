@@ -278,28 +278,31 @@ components:
     name: fp_pricing_table
     properties: {align: center, visible: false}
     type: FlowPanel
-  - components:
-    - layout_properties: {grid_position: 'AEVPKF,BUZNTF'}
-      name: lbl_title_payment_status
-      properties: {align: center, background: '', bold: false, border: '', font: '', font_size: null, foreground: '', icon: '', icon_align: left, italic: false, role: title, spacing_above: small, spacing_below: small, text: Payment Status, tooltip: '', underline: false, visible: true}
-      type: Label
-    - layout_properties: {grid_position: 'SMXUDH,HDAIYD'}
-      name: lbl_fee_paid_copy
-      properties: {align: center, background: '', bold: false, border: '', font: '', font_size: null, foreground: '', icon: '', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: Membership is in good standing., tooltip: '', underline: false, visible: true}
-      type: Label
-    - layout_properties: {grid_position: 'JQNSNR,EAYBFC'}
-      name: lbl_fee_paid
-      properties: {align: right, background: '', bold: false, border: '', font: '', font_size: null, foreground: '', icon: '', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: 'Annual fee of subscription:', tooltip: '', underline: false, visible: true}
-      type: Label
-    - data_bindings: []
-      layout_properties: {grid_position: 'JQNSNR,DFSSCC'}
-      name: lbl_fee_paid_amt
-      properties: {align: left, background: '', bold: false, border: '', font: '', font_size: null, foreground: '', icon: '', icon_align: left, italic: false, role: skeleton, spacing_above: small, spacing_below: small, text: '', tooltip: '', underline: false, visible: true}
-      type: Label
-    layout_properties: {grid_position: 'LRGENT,DUMBAE'}
-    name: cp_payment_status
-    properties: {visible: false}
-    type: ColumnPanel
+  - layout_properties: {grid_position: 'WSBHKD,SIQFIJ'}
+    name: lbl_sub_status
+    properties: {align: right, text: 'Subscription Status:', visible: false}
+    type: Label
+  - layout_properties: {grid_position: 'WSBHKD,FXYTPH'}
+    name: lbl_sub_status_value
+    properties: {role: null, visible: false}
+    type: Label
+  - layout_properties: {grid_position: 'LOMXZA,VKMBMP'}
+    name: lbl_fee_paid
+    properties: {align: right, background: '', bold: false, border: '', font: '', font_size: null, foreground: '', icon: '', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: 'Annual Fee of Subscription:', tooltip: '', underline: false, visible: false}
+    type: Label
+  - data_bindings: []
+    layout_properties: {grid_position: 'LOMXZA,QIIBOW'}
+    name: lbl_fee_paid_amt
+    properties: {align: left, background: '', bold: false, border: '', font: '', font_size: null, foreground: '', icon: '', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: '', tooltip: '', underline: false, visible: false}
+    type: Label
+  - layout_properties: {grid_position: 'WAMGOA,RYQDYO'}
+    name: lbl_next_payment
+    properties: {align: right, text: 'Next Payment:', visible: false}
+    type: Label
+  - layout_properties: {grid_position: 'WAMGOA,PECCLR'}
+    name: lbl_next_payment_value
+    properties: {role: null, visible: false}
+    type: Label
   - event_bindings: {click: btn_cancel_sub_click}
     layout_properties: {grid_position: 'EOFOTA,POCTCE'}
     name: btn_cancel_sub
