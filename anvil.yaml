@@ -4,14 +4,15 @@ db_schema:
     client: none
     columns:
     - admin_ui: {order: 0, width: 200}
-      name: path
+      name: name
       type: string
     - admin_ui: {order: 1, width: 200}
       name: file
       type: media
-    - admin_ui: {order: 2, width: 200}
-      name: file_version
-      type: string
+    - admin_ui: {order: 3, width: 200}
+      name: roles
+      target: roles
+      type: link_multiple
     server: full
     title: Files
   finances:
