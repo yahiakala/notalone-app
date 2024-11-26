@@ -58,15 +58,28 @@ class MemberDetail(MemberDetailTemplate):
 
         self.lbl_fee_paid_amt.text = self.member['fee']
         if 'see_forum' in self.member['permissions']:
-            self.cp_payment_status.visible = True
             self.cp_discord.visible = True
             
-            # Update payment status text
-            if self.member['payment_status'] == 'CANCELLED' and 'see_forum' in self.member['permissions']:
-                self.lbl_fee_paid_copy.text = "Subscription cancelled but membership still in good standing."
+
+        if self.member['payment_status']:
+            self.lbl_sub_status.visible = True 
+            self.lbl_sub_status_value.visible = True 
+            self.lbl_sub_status_value.text = self.member['payment_status']
+
+        if self.member['fee']:
+            self.lbl_fee_paid.visible = True 
+            self.lbl_fee_paid_amt.visible = True
+            self.lbl_fee_paid_amt.text = self.member['fee']
+
+        if self.member['payment_expiry'] and self.member['payment_status']:
+            self.lbl_next_payment.visible = True 
+            self.lbl_next_payment_value.visible = True
+            self.lbl_next_payment_value.text = self.member['payment_expiry'].strftime('%Y-%m-%d')
+            if self.member['payment_status'] != 'ACTIVE':
+                self.lbl_next_payment.text = 'Membership Expiry Date:'
             
-            if self.member['paypal_sub_id'] and self.member['payment_status'] == 'ACTIVE':
-                self.btn_cancel_sub.visible = True
+        if self.member['paypal_sub_id'] and self.member['payment_status'] == 'ACTIVE':
+            self.btn_cancel_sub.visible = True
 
         self.tb_booking_link.text = self.member['booking_link']
 
