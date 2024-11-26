@@ -1,4 +1,8 @@
 components:
+- layout_properties: {grid_position: 'PVHRCT,DZJPHZ'}
+  name: lbl_role_name
+  properties: {align: center, visible: false}
+  type: Label
 - components:
   - event_bindings: {click: btn_qf_applicants_click}
     layout_properties: {}
