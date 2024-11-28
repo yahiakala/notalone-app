@@ -26,7 +26,6 @@ class MemberDetail(MemberDetailTemplate):
     def load_data(self):
         if "profile" in routing.get_url_pattern():
             self.email = Global.user["email"]
-            self.cp_booking_link.visible = True
         else:
             self.email = self.url_dict["user_email"]
             self.cp_admin.visible = True
