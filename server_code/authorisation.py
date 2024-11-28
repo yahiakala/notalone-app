@@ -55,8 +55,10 @@ def has_permission(permissions):
     if user is None:
         return False
     tenant = None
-    if config['tenanted']:
-        tenant = app_tables.tenants.get_by_id(anvil.server.session.get('tenant_id', None))
+    if config["tenanted"]:
+        tenant = app_tables.tenants.get_by_id(
+            anvil.server.session.get("tenant_id", None)
+        )
 
     if isinstance(permissions, str):
         required_permissions = set([permissions])

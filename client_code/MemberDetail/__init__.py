@@ -148,8 +148,8 @@ class MemberDetail(MemberDetailTemplate):
                 self.member,
             )
             routing.clear_cache()
-        
-        if 'profile' in routing.get_url_pattern():
+
+        if "profile" in routing.get_url_pattern():
             Global.usermap = self.member
 
         self.btn_save.italic = False

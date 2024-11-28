@@ -20,7 +20,7 @@
     <div class="left-nav-placeholder anvil-designer-only" anvil-if-slot-empty="left-nav" anvil-drop-slot="left-nav">
       <div class="prompt">To add a sidebar, drop a ColumnPanel here.</div>
     </div>
-    
+
     <div class="content">
       <div anvil-slot-repeat="default" class="anvil-measure-this"></div>
       <div class="placeholder drop-here" anvil-if-slot-empty="default" anvil-drop-slot="default">Drop a ColumnPanel here.</div>
@@ -30,23 +30,23 @@
   <div class="nav-shield"></div>
 </div>
 <div anvil-drop-default anvil-drop-redirect=".placeholder" anvil-drop-container=".anvil-container"></div>
- 
+
 <script>
   var ln = $('.structure > .nav-holder > .left-nav');
   var lnp = $('.structure > .nav-holder > .left-nav-placeholder');
   var appBar = $('.app-bar')[0];
-  
+
   function hideSidebar() {
     ln.animate({left: -ln.outerWidth()}, function() {
       ln.removeClass("in-transition shown").addClass("hidden");
       $('.nav-shield').removeClass("shown");
       $(window).trigger('resize');
     });
-    if (window.innerWidth > 998) { 
+    if (window.innerWidth > 998) {
       $('.content').animate({'margin-left':0}, function(){})
     }
   }
-  
+
   function showSidebar() {
     $('.nav-shield').addClass("shown");
     ln.addClass("shown").removeClass("hidden").css({left: "-100%"}).css({left: -ln.outerWidth()}).animate({left: 0}, function() {
@@ -55,10 +55,10 @@
     $(window).trigger('resize');
     if (window.innerWidth > 998) {
       $('.content').animate({'margin-left': ln.outerWidth().toString() + 'px'}, function(){})
-    } 
+    }
   }
-  
-  $('.sidebar-toggle, .nav-shield').off('click').on('click', function() { 
+
+  $('.sidebar-toggle, .nav-shield').off('click').on('click', function() {
     if (ln.is(":visible") || $('.nav-shield').is(".shown")) {
       hideSidebar();
     } else if(!ln.is(":empty")) {
@@ -70,7 +70,7 @@
       $('.nav-shield').trigger('click');
     }
   });
-  
+
   document.addEventListener('scroll', function() {
     if (appBar.classList.contains('scrolled')) {
       if (window.scrollY === 0) {
@@ -121,8 +121,8 @@
       }
     }
   }
-  
+
   addMarginToContent()
   window.addEventListener('resize', addMarginToContent);
- 
+
 </script>

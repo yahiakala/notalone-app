@@ -65,31 +65,31 @@ a>.anvil-component-icon.right_edge-icon,
 .column-panel.col-padding-huge > .anvil-panel-section > .anvil-panel-section-container > .anvil-panel-section-gutter { margin: 0 -20px; }
 
 .flow-panel.flow-spacing-tiny > .flow-panel-gutter { margin: 0 -2px; }
-.flow-panel.flow-spacing-tiny > .flow-panel-gutter > .flow-panel-item { 
+.flow-panel.flow-spacing-tiny > .flow-panel-gutter > .flow-panel-item {
   margin-left: 2px;
   margin-right: 2px;
 }
 
 .flow-panel.flow-spacing-small > .flow-panel-gutter { margin: 0 -4px; }
-.flow-panel.flow-spacing-small > .flow-panel-gutter > .flow-panel-item { 
+.flow-panel.flow-spacing-small > .flow-panel-gutter > .flow-panel-item {
   margin-left: 4px;
   margin-right: 4px;
 }
 
 .flow-panel.flow-spacing-medium > .flow-panel-gutter { margin: 0 -8px; }
-.flow-panel.flow-spacing-medium > .flow-panel-gutter > .flow-panel-item { 
+.flow-panel.flow-spacing-medium > .flow-panel-gutter > .flow-panel-item {
   margin-left: 8px;
   margin-right: 8px;
 }
 
 .flow-panel.flow-spacing-large > .flow-panel-gutter { margin: 0 -12px; }
-.flow-panel.flow-spacing-large > .flow-panel-gutter > .flow-panel-item { 
+.flow-panel.flow-spacing-large > .flow-panel-gutter > .flow-panel-item {
   margin-left: 12px;
   margin-right: 12px;
 }
 
 .flow-panel.flow-spacing-huge > .flow-panel-gutter { margin: 0 -20px; }
-.flow-panel.flow-spacing-huge > .flow-panel-gutter > .flow-panel-item{ 
+.flow-panel.flow-spacing-huge > .flow-panel-gutter > .flow-panel-item{
   margin-left: 20px;
   margin-right: 20px;
 }
@@ -256,7 +256,7 @@ color: %color:On Primary Container%;
     transition: right 0.5s;
     height: 100%;
   }
-  
+
   html:not(.designer) .nav-holder .left-nav.shown {
     display: block;
   }
@@ -403,7 +403,7 @@ color: %color:On Primary Container%;
   padding: 0 16px 0 72px;
   position: fixed;
   width: 100%;
-  
+
   line-height: 40px;
   font-size: 20px;
 
@@ -413,7 +413,7 @@ color: %color:On Primary Container%;
   -webkit-transition: background-color 250ms;
   -moz-transition: background-color 250ms;
   -o-transition: background-color 250ms;
-  
+
   z-index: 1;
 }
 
@@ -481,7 +481,7 @@ color: %color:On Primary Container%;
   padding: 5px 8px;
 }
 
-.anvil-highlight .app-bar-nav > .anvil-container:not(.has-components):not(a)::after {  
+.anvil-highlight .app-bar-nav > .anvil-container:not(.has-components):not(a)::after {
   content: "Drop Links here"
 }
 
@@ -554,7 +554,7 @@ body>div[data-notify="container"]>span[data-notify="message"] {
   display: block;
   padding: 20px 0 0;
   font-size: 16px;
-  color: %color:On Surface Variant%;  
+  color: %color:On Surface Variant%;
 }
 
 body>div[data-notify="container"].alert-success{
@@ -603,7 +603,7 @@ button.close > span, button.close {
   text-shadow: none;
   box-shadow: none;
   -webkit-box-shadow: none;
-  
+
   position: relative;
 }
 
@@ -632,7 +632,7 @@ button.close > span, button.close {
   background-color: %color:Light Overlay 1%;
 }
 
-.anvil-role-outlined-button > .btn:focus, .anvil-role-outlined-button > .btn:active, 
+.anvil-role-outlined-button > .btn:focus, .anvil-role-outlined-button > .btn:active,
 .anvil-role-outlined-button.file-loader>label:focus, .anvil-role-outlined-button.file-loader>label:active{
   background-color: %color:Light Overlay 2%;
   color: %color:Primary%;
@@ -640,22 +640,22 @@ button.close > span, button.close {
 
 .anvil-role-filled-button > .btn, .btn-primary, .anvil-role-filled-button.file-loader>label {
   background-color: %color:Primary%;
-  color: %color:On Primary%; 
+  color: %color:On Primary%;
 }
 
 .anvil-role-filled-button > .btn:hover, .btn-primary:hover, .anvil-role-filled-button.file-loader>label:hover {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 1px 3px 1px rgba(0, 0, 0, 0.15);
   background: linear-gradient(0deg, %color:Light Overlay 1%, %color:Light Overlay 1%), %color:Primary%;
-  color: %color:On Primary%; 
+  color: %color:On Primary%;
 }
 
-.anvil-role-filled-button > .btn:focus, .btn-primary:focus, .anvil-role-filled-button > .btn:active, 
+.anvil-role-filled-button > .btn:focus, .btn-primary:focus, .anvil-role-filled-button > .btn:active,
 .btn-primary:active, .anvil-role-filled-button > .btn:active:hover, .btn-primary:active:hover,
-.anvil-role-filled-button.file-loader>label:focus, .anvil-role-filled-button.file-loader>label:active, 
+.anvil-role-filled-button.file-loader>label:focus, .anvil-role-filled-button.file-loader>label:active,
 .anvil-role-filled-button.file-loader>label:active:focus
 {
   background: linear-gradient(0deg, %color:Light Overlay 2%, %color:Light Overlay 2%), %color:Primary%;
-  color: %color:On Primary%; 
+  color: %color:On Primary%;
 }
 
 .anvil-role-elevated-button > .btn, .anvil-role-elevated-button.file-loader>label {
@@ -664,8 +664,8 @@ button.close > span, button.close {
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 1px 3px 1px rgba(0, 0, 0, 0.15);
 }
 
-.anvil-role-elevated-button > .btn:focus, .anvil-role-elevated-button > .btn:active, 
-.anvil-role-elevated-button > .btn:active:focus, .anvil-role-elevated-button.file-loader>label:focus, 
+.anvil-role-elevated-button > .btn:focus, .anvil-role-elevated-button > .btn:active,
+.anvil-role-elevated-button > .btn:active:focus, .anvil-role-elevated-button.file-loader>label:focus,
 .anvil-role-elevated-button.file-loader>label:active, .anvil-role-elevated-button.file-loader>label:active:focus {
   background: linear-gradient(0deg, %color:Light Overlay 2%, %color:Light Overlay 2%), %color:Surface%;
   color: %color:Primary%;
@@ -682,7 +682,7 @@ button.close > span, button.close {
   background-color: %color:Secondary Container%;
 }
 
-.anvil-role-tonal-button > .btn:focus, .anvil-role-tonal-button > .btn:active, .anvil-role-tonal-button > .btn:active:focus, 
+.anvil-role-tonal-button > .btn:focus, .anvil-role-tonal-button > .btn:active, .anvil-role-tonal-button > .btn:active:focus,
 .anvil-role-tonal-button.file-loader>label:focus, .anvil-role-tonal-button.file-loader>label:active, .anvil-role-tonal-button.file-loader>label:focus:active {
   background: linear-gradient(0deg, %color:Dark Overlay 2%, %color:Dark Overlay 2%), %color:Secondary Container%;
   color: %color:On Secondary Container%;
@@ -699,12 +699,12 @@ button.close > span, button.close {
   color: %color:On Disabled%;
 }
 
-.anvil-role-tonal-button > .btn[disabled], .anvil-role-tonal-button> .btn[disabled]:hover, 
-.anvil-role-tonal-button.file-loader.anvil-disabled>label, .anvil-role-tonal-button.file-loader.anvil-disabled>label:hover, 
-.anvil-role-filled-button > .btn[disabled], .anvil-role-filled-button > .btn[disabled]:hover, 
-.anvil-role-filled-button.file-loader.anvil-disabled>label, .anvil-role-filled-button.file-loader.anvil-disabled>label:hover, 
-.anvil-role-elevated-button > .btn[disabled], .anvil-role-elevated-button > .btn[disabled]:hover, 
-.anvil-role-elevated-button.file-loader.anvil-disabled>label, .anvil-role-elevated-button.file-loader.anvil-disabled>label:hover { 
+.anvil-role-tonal-button > .btn[disabled], .anvil-role-tonal-button> .btn[disabled]:hover,
+.anvil-role-tonal-button.file-loader.anvil-disabled>label, .anvil-role-tonal-button.file-loader.anvil-disabled>label:hover,
+.anvil-role-filled-button > .btn[disabled], .anvil-role-filled-button > .btn[disabled]:hover,
+.anvil-role-filled-button.file-loader.anvil-disabled>label, .anvil-role-filled-button.file-loader.anvil-disabled>label:hover,
+.anvil-role-elevated-button > .btn[disabled], .anvil-role-elevated-button > .btn[disabled]:hover,
+.anvil-role-elevated-button.file-loader.anvil-disabled>label, .anvil-role-elevated-button.file-loader.anvil-disabled>label:hover {
   background: %color:Disabled Container%;
   color: %color:On Disabled%;
   box-shadow: none;
@@ -787,11 +787,11 @@ input.anvil-component, .anvil-component select, .anvil-datepicker input, textare
 }
 
 .anvil-dropdown select.form-control {
-  
+
   -webkit-appearance: none;
   -moz-appearance: none;
 /*   padding: 8px 2em 4px 0; */
-  
+
   /* ew ew ew - select elements are weird and don't obey line-height, so we just
      set the height explicitly. Ugh. */
   height: calc(1.5em + 13px); /* 8px + 4px padding + 1px border = 13px */
@@ -838,7 +838,7 @@ input.anvil-component::placeholder, textarea.anvil-component::placeholder  {
   color: %color:On Surface%;
 }
 
-input.anvil-component:hover, input.anvil-component:focus, textarea.anvil-component:hover, textarea.anvil-component:focus, 
+input.anvil-component:hover, input.anvil-component:focus, textarea.anvil-component:hover, textarea.anvil-component:focus,
 .anvil-component select:hover, .anvil-component select:focus, .anvil-datepicker input:hover, .anvil-datepicker input:focus {
   border-bottom: 2px solid %color:Primary%;
   padding-bottom: 7px;
@@ -846,8 +846,8 @@ input.anvil-component:hover, input.anvil-component:focus, textarea.anvil-compone
 }
 
 
-input.anvil-component[disabled], .anvil-component select[disabled], .anvil-datepicker input[disabled], textarea.anvil-component[disabled], 
-textarea.anvil-component.anvil-role-input-error[disabled], input.anvil-component.anvil-role-input-error[disabled], 
+input.anvil-component[disabled], .anvil-component select[disabled], .anvil-datepicker input[disabled], textarea.anvil-component[disabled],
+textarea.anvil-component.anvil-role-input-error[disabled], input.anvil-component.anvil-role-input-error[disabled],
 .anvil-component.anvil-role-input-error select[disabled], .anvil-datepicker.anvil-role-input-error input[disabled] {
   background-color: %color:Dark Overlay 1%;
   color: %color:On Disabled%;
@@ -860,7 +860,7 @@ textarea.anvil-component.anvil-role-input-error[disabled], input.anvil-component
 }
 
 /* Outlined role for text areas, text boxes, drop downs and date pickers */
-textarea.anvil-component.anvil-role-outlined, input.anvil-component.anvil-role-outlined, 
+textarea.anvil-component.anvil-role-outlined, input.anvil-component.anvil-role-outlined,
 .anvil-component.anvil-role-outlined select, .anvil-datepicker.anvil-role-outlined input {
   background-color: transparent;
   border: 1px solid %color:Outline%;
@@ -868,7 +868,7 @@ textarea.anvil-component.anvil-role-outlined, input.anvil-component.anvil-role-o
   color: %color:On Surface%;
 }
 
-textarea.anvil-component.anvil-role-outlined:hover, textarea.anvil-component.anvil-role-outlined:focus, 
+textarea.anvil-component.anvil-role-outlined:hover, textarea.anvil-component.anvil-role-outlined:focus,
 input.anvil-component.anvil-role-outlined:hover, input.anvil-component.anvil-role-outlined:focus,
 .anvil-component.anvil-role-outlined select:hover, .anvil-component.anvil-role-outlined select:focus,
 .anvil-datepicker.anvil-role-outlined input:hover, .anvil-datepicker.anvil-role-outlined input:focus{
@@ -876,7 +876,7 @@ input.anvil-component.anvil-role-outlined:hover, input.anvil-component.anvil-rol
   padding: 7px 15px;
 }
 
-textarea.anvil-component.anvil-role-outlined-error:hover, textarea.anvil-component.anvil-role-outlined-error:focus, 
+textarea.anvil-component.anvil-role-outlined-error:hover, textarea.anvil-component.anvil-role-outlined-error:focus,
 input.anvil-component.anvil-role-outlined-error:hover, input.anvil-component.anvil-role-outlined-error:focus,
 .anvil-component.anvil-role-outlined-error select:hover, .anvil-component.anvil-role-outlined-error select:focus,
 .anvil-datepicker.anvil-role-outlined-error input:hover, .anvil-datepicker.anvil-role-outlined-error input:focus{
@@ -884,9 +884,9 @@ input.anvil-component.anvil-role-outlined-error:hover, input.anvil-component.anv
   padding-bottom: 6px;
 }
 
-textarea.anvil-component.anvil-role-outlined[disabled], input.anvil-component.anvil-role-outlined[disabled], 
-.anvil-component.anvil-role-outlined select[disabled], .anvil-datepicker.anvil-role-outlined input[disabled], 
-textarea.anvil-component.anvil-role-outlined-error[disabled], input.anvil-component.anvil-role-outlined-error[disabled], 
+textarea.anvil-component.anvil-role-outlined[disabled], input.anvil-component.anvil-role-outlined[disabled],
+.anvil-component.anvil-role-outlined select[disabled], .anvil-datepicker.anvil-role-outlined input[disabled],
+textarea.anvil-component.anvil-role-outlined-error[disabled], input.anvil-component.anvil-role-outlined-error[disabled],
 .anvil-component.anvil-role-outlined-error select[disabled], .anvil-datepicker.anvil-role-outlined-error input[disabled] {
   border: 1px solid %color:On Disabled%;
   color: %color:On Disabled%;
@@ -894,9 +894,9 @@ textarea.anvil-component.anvil-role-outlined-error[disabled], input.anvil-compon
 }
 
 /* YK Fix */
-textarea.anvil-component.anvil-role-outlined[disabled]:hover, input.anvil-component.anvil-role-outlined[disabled]:hover, 
-.anvil-component.anvil-role-outlined select[disabled]:hover, .anvil-datepicker.anvil-role-outlined input[disabled]:hover, 
-textarea.anvil-component.anvil-role-outlined-error[disabled]:hover, input.anvil-component.anvil-role-outlined-error[disabled]:hover, 
+textarea.anvil-component.anvil-role-outlined[disabled]:hover, input.anvil-component.anvil-role-outlined[disabled]:hover,
+.anvil-component.anvil-role-outlined select[disabled]:hover, .anvil-datepicker.anvil-role-outlined input[disabled]:hover,
+textarea.anvil-component.anvil-role-outlined-error[disabled]:hover, input.anvil-component.anvil-role-outlined-error[disabled]:hover,
 .anvil-component.anvil-role-outlined-error select[disabled]:hover, .anvil-datepicker.anvil-role-outlined-error input[disabled]:hover {
   border: 1px solid %color:On Disabled%;
   color: %color:On Disabled%;
@@ -920,7 +920,7 @@ textarea.anvil-component.anvil-role-outlined-error[disabled]:hover, input.anvil-
   color: %color:On Disabled%;
 }
 
-textarea.anvil-component.anvil-role-outlined-error, input.anvil-component.anvil-role-outlined-error, 
+textarea.anvil-component.anvil-role-outlined-error, input.anvil-component.anvil-role-outlined-error,
 .anvil-component.anvil-role-outlined-error select, .anvil-datepicker.anvil-role-outlined-error input {
   color: %color:Error%;
   background-color: transparent;
@@ -928,10 +928,10 @@ textarea.anvil-component.anvil-role-outlined-error, input.anvil-component.anvil-
   border-radius: 4px;
 }
 
-textarea.anvil-component.anvil-role-input-error, input.anvil-component.anvil-role-input-error, 
+textarea.anvil-component.anvil-role-input-error, input.anvil-component.anvil-role-input-error,
 .anvil-component.anvil-role-input-error select, .anvil-datepicker.anvil-role-input-error input {
   color: %color:Error%;
-  border-color: %color:Error%; 
+  border-color: %color:Error%;
 }
 
 /* .daterangepicker .btn-success {
@@ -945,7 +945,7 @@ textarea.anvil-component.anvil-role-input-error, input.anvil-component.anvil-rol
   width: 15px;
   height: 15px;
   border-radius: 1px;
-  background-color: %color:Surface Variant%; 
+  background-color: %color:Surface Variant%;
 /*   color: %color:On Surface Variant%; */
 }
 
@@ -965,9 +965,9 @@ textarea.anvil-component.anvil-role-input-error, input.anvil-component.anvil-rol
   border-radius: 10px;
 }
 
-.checkbox input[type="checkbox"][disabled]:hover, .radio input[type="radio"][disabled]:hover, 
+.checkbox input[type="checkbox"][disabled]:hover, .radio input[type="radio"][disabled]:hover,
 .checkbox input[type="checkbox"][disabled], .radio input[type="radio"][disabled] {
-  background: %color:Disabled Container%; 
+  background: %color:Disabled Container%;
 }
 
 input[disabled] ~ span {
@@ -1173,14 +1173,14 @@ div.plot-container.plotly svg.main-svg {
     position: fixed;
     top: 0%;
     left: 50%;
-    
+
     width: 600px;
     height:500px;
 
     max-width: 100vw;
-    
+
     box-sizing: border-box;
-    
+
     border-radius: 0;
     box-shadow: none;/*0px 0px 10px 10px #fcfcfc;*/
     background-color: transparent;

@@ -1,7 +1,7 @@
-from ._anvil_designer import BudgetTemplateTemplate
 from anvil import *
 
 from ..Global import Global
+from ._anvil_designer import BudgetTemplateTemplate
 
 
 class BudgetTemplate(BudgetTemplateTemplate):
@@ -13,6 +13,7 @@ class BudgetTemplate(BudgetTemplateTemplate):
 
     def btn_del_budget_click(self, **event_args):
         """This method is called when the button is clicked"""
-        Global.finances['budgets'] = [i for i in Global.finances['budgets'] if self.item != i]
-        self.parent.raise_event('x-refresh')
-
+        Global.finances["budgets"] = [
+            i for i in Global.finances["budgets"] if self.item != i
+        ]
+        self.parent.raise_event("x-refresh")

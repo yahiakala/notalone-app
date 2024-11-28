@@ -43,7 +43,7 @@ components:
     type: TextBox
     properties:
       role: [outlined, skeleton]  # Initial skeleton state
-      
+
   - name: tb_lastname
     type: TextBox
     properties:
@@ -60,7 +60,7 @@ def form_show(self, **event_args):
 def load_data(self):
     # Fetch data from server
     self.member = anvil.server.call('get_member_data', Global.tenant_id, self.email)
-    
+
     # Populate fields and remove skeleton states
     self.tb_firstname.text = self.member['first_name']
     self.tb_lastname.text = self.member['last_name']
@@ -132,7 +132,7 @@ def load_data(self):
 # Initial state in YAML
 properties:
   role: [outlined, skeleton]
-  
+
 # After loading
 self.text_box.role = 'outlined'
 ```

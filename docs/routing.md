@@ -86,7 +86,7 @@ The Router component manages URL hashes for navigation links:
 ```python
 def __init__(self, **properties):
     self.init_components(**properties)
-    
+
     self.link_home.tag.url_hash = 'app/home'
     self.link_apply.tag.url_hash = 'app/apply'
     self.link_profile.tag.url_hash = 'app/profile'

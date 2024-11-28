@@ -54,7 +54,7 @@ In PayPal Developer Dashboard:
    ```
    Products > Create Product > Create Plan
    ```
-   
+
 2. For each plan, note:
    - Plan ID
    - Pricing details

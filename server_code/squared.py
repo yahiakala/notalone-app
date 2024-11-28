@@ -1,7 +1,6 @@
+import anvil.email
 import anvil.server
 import anvil.users
-import anvil.email
-
 from anvil_squared import auth
 
 
