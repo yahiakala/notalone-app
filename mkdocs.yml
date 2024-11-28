@@ -24,4 +24,4 @@ markdown_extensions:
       permalink: true
 
 repo_url: https://github.com/yahiakala/notalone-app
-edit_uri: edit/main/docs
+edit_uri: edit/master/docs
