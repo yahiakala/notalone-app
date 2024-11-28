@@ -234,7 +234,7 @@ Do you want to proceed with deletion?""",
             anvil.server.call("delete_user", Global.tenant_id, self.email)
             Global.users = None
             routing.clear_cache()
-            routing.set_url_hash('/app/members')
+            routing.set_url_hash('app/members')
 
     def btn_save_notes_click(self, **event_args):
         """This method is called when the button is clicked"""
