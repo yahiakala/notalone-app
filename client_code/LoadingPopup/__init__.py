@@ -1,7 +1,9 @@
-from ._anvil_designer import LoadingPopupTemplate
-from anvil import *
-from ..Global import Global
 import time
+
+from anvil import *
+
+from ..Global import Global
+from ._anvil_designer import LoadingPopupTemplate
 
 
 class LoadingPopup(LoadingPopupTemplate):
@@ -18,4 +20,4 @@ class LoadingPopup(LoadingPopupTemplate):
     def ti_load_tick(self, **event_args):
         """This method is called Every [interval] seconds. Does not trigger if [interval] is 0."""
         if self.check_if_loaded():
-            self.raise_event('x-close-alert', value=True)
+            self.raise_event("x-close-alert", value=True)

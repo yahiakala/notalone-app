@@ -144,7 +144,7 @@ def capture_sub(**params):
 
     if not proceed:
         return anvil.server.HttpResponse(400)
-    
+
     return anvil.server.HttpResponse(200)
 
 
@@ -234,7 +234,7 @@ def update_subscription(headers, body):
                 next_billing_time, "%Y-%m-%dT%H:%M:%SZ"
             )
             usermap["payment_expiry"] = billing_datetime.date()
-    
+
     return True
 
 
@@ -242,7 +242,7 @@ def update_subscription(headers, body):
 def refresh_subscription_data(tenant_id, email):
     """Cancel a user's PayPal subscription."""
     import datetime as dt
-    
+
     user = anvil.users.get_user(allow_remembered=True)
     tenant, usermap, permissions = validate_user(tenant_id, user)
 
@@ -269,23 +269,27 @@ def refresh_subscription_data(tenant_id, email):
         "encryption_key", tenant["paypal_secret"]
     )
 
-    subscription = get_subscription(client_id, client_secret, membermap["paypal_sub_id"])
+    subscription = get_subscription(
+        client_id, client_secret, membermap["paypal_sub_id"]
+    )
 
-    membermap['payment_status'] = subscription['status']
+    membermap["payment_status"] = subscription["status"]
 
-    if 'next_billing_time' in subscription['billing_info']:
+    if "next_billing_time" in subscription["billing_info"]:
         next_billing_time = subscription["billing_info"]["next_billing_time"]
         billing_datetime = dt.datetime.strptime(next_billing_time, "%Y-%m-%dT%H:%M:%SZ")
         membermap["payment_expiry"] = billing_datetime.date()
-    
-    membermap['fee'] = float(subscription['billing_info']['last_payment']['amount']['value'])
-    
+
+    membermap["fee"] = float(
+        subscription["billing_info"]["last_payment"]["amount"]["value"]
+    )
+
     result_membermap = usermap_row_to_dict(membermap)
     if "see_members" not in permissions:
         result_membermap["notes"] = ""
 
     return result_membermap
-    
+
 
 def notify_admins(usermap):
     screeners = get_users_with_permission(None, "see_members", usermap["tenant"])

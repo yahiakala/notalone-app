@@ -21,11 +21,11 @@
 <body>
     <iframe id="myIframe" src=""></iframe>
     <script>
-        
+
         function adjustIframe() {
             var leftNav = document.querySelector('.left-nav.anvil-measure-this');
             var topNav = document.querySelector('.app-bar');
-            
+
             if (leftNav) {
                 var leftNavWidth = leftNav.offsetWidth;
                 var topNavHeight = topNav.offsetHeight;
@@ -38,7 +38,7 @@
                 iframe.style.height = 'calc(100% - ' + topNavHeight + 'px)';
             }
         }
-        
+
         function setIframeSrc(url) {
             var iframe = document.getElementById('myIframe');
             iframe.src = url;

@@ -1,6 +1,7 @@
 """Temp stuff for migration"""
-from anvil.tables import app_tables
+
 import anvil.tables.query as q
+from anvil.tables import app_tables
 
 
 def migrate_tables():
@@ -9,9 +10,9 @@ def migrate_tables():
         usermap = app_tables.usermap.get(user=user)
         if not usermap:
             usermap = app_tables.usermap.add_row(user=user)
-        if user['tenant'] and not usermap['tenants']:
-            usermap['tenants'] = [user['tenant']]
-        usermap['roles'] = user['roles']
+        if user["tenant"] and not usermap["tenants"]:
+            usermap["tenants"] = [user["tenant"]]
+        usermap["roles"] = user["roles"]
 
 
 def tenants_to_tenant():
@@ -20,51 +21,62 @@ def tenants_to_tenant():
         usermap = app_tables.usermap.get(user=user)
         if not usermap:
             usermap = app_tables.usermap.add_row(user=user)
-        for key in ['tenant', 'fee', 'paypal_sub_id', 'consent_check', 'booking_link',
-                    'payment_expiry', 'payment_status', 'discord', 'phone', 'screening_slots']:
+        for key in [
+            "tenant",
+            "fee",
+            "paypal_sub_id",
+            "consent_check",
+            "booking_link",
+            "payment_expiry",
+            "payment_status",
+            "discord",
+            "phone",
+            "screening_slots",
+        ]:
             usermap[key] = user[key]
-        note = app_tables.notes.get(user=user, tenant=user['tenant'])
+        note = app_tables.notes.get(user=user, tenant=user["tenant"])
         if note:
-            usermap['notes'] = note['notes']
+            usermap["notes"] = note["notes"]
+
 
 def migrate_roles():
     users = app_tables.users.search(tenant=q.not_(None))
     for user in users:
-        usermap = app_tables.usermap.get(user=user, tenant=user['tenant'])
+        usermap = app_tables.usermap.get(user=user, tenant=user["tenant"])
         if not usermap:
-            usermap = app_tables.usermap.add_row(user=user, tenant=user['tenant'])
-            
-        if user['auth_members']:
-            upsert_role(usermap, 'Admin')
-        elif user['auth_screenings']:
-            upsert_role(usermap, 'Interviewer')
-        elif user['auth_forumchat']:
-            upsert_role(usermap, 'Member')
-        elif user['auth_profile']:
-            upsert_role(usermap, 'Approved')
-        elif user['auth_booking']:
-            upsert_role(usermap, 'Applicant')
+            usermap = app_tables.usermap.add_row(user=user, tenant=user["tenant"])
+
+        if user["auth_members"]:
+            upsert_role(usermap, "Admin")
+        elif user["auth_screenings"]:
+            upsert_role(usermap, "Interviewer")
+        elif user["auth_forumchat"]:
+            upsert_role(usermap, "Member")
+        elif user["auth_profile"]:
+            upsert_role(usermap, "Approved")
+        elif user["auth_booking"]:
+            upsert_role(usermap, "Applicant")
         else:
-            usermap['roles'] = None
+            usermap["roles"] = None
 
 
 def upsert_role(usermap, role_name):
-    role = app_tables.roles.get(tenant=usermap['tenant'], name=role_name)
-    if not usermap['roles']:
-        usermap['roles'] = [role]
-    elif role not in usermap['roles']:
-        usermap['roles'] = usermap['roles'] + [role]
+    role = app_tables.roles.get(tenant=usermap["tenant"], name=role_name)
+    if not usermap["roles"]:
+        usermap["roles"] = [role]
+    elif role not in usermap["roles"]:
+        usermap["roles"] = usermap["roles"] + [role]
 
 
 def migrate_firstlast():
     users = app_tables.users.search(tenant=q.not_(None))
     for user in users:
-        usermap = app_tables.usermap.get(user=user, tenant=user['tenant'])
+        usermap = app_tables.usermap.get(user=user, tenant=user["tenant"])
         if not usermap:
-            usermap = app_tables.usermap.add_row(user=user, tenant=user['tenant'])
+            usermap = app_tables.usermap.add_row(user=user, tenant=user["tenant"])
 
-        usermap['first_name'] = user['first_name']
-        usermap['last_name'] = user['last_name']
+        usermap["first_name"] = user["first_name"]
+        usermap["last_name"] = user["last_name"]
 
 
 def clear_tenant_data():
@@ -84,29 +96,39 @@ def clear_tenant_data():
 def migrate_all_july24():
     users = app_tables.users.search(tenant=q.not_(None))
     tenant = app_tables.tenants.get()
-    
+
     for user in users:
         usermap = app_tables.usermap.get(user=user, tenant=tenant)
         if not usermap:
             usermap = app_tables.usermap.add_row(user=user, tenant=tenant)
-        for key in ['fee', 'paypal_sub_id', 'consent_check', 'booking_link',
-                    'payment_expiry', 'payment_status', 'discord', 'phone', 'screening_slots',
-                    'first_name', 'last_name']:
+        for key in [
+            "fee",
+            "paypal_sub_id",
+            "consent_check",
+            "booking_link",
+            "payment_expiry",
+            "payment_status",
+            "discord",
+            "phone",
+            "screening_slots",
+            "first_name",
+            "last_name",
+        ]:
             usermap[key] = user[key]
-        
+
         note = app_tables.notes.get(user=user, tenant=tenant)
         if note:
-            usermap['notes'] = note['notes']
+            usermap["notes"] = note["notes"]
 
-        if user['auth_members']:
-            upsert_role(usermap, 'Admin')
-        if user['auth_screenings']:
-            upsert_role(usermap, 'Interviewer')
-        if user['auth_forumchat']:
-            upsert_role(usermap, 'Member')
-        elif user['auth_profile']:
-            upsert_role(usermap, 'Approved')
-        elif user['auth_booking']:
-            upsert_role(usermap, 'Applicant')
+        if user["auth_members"]:
+            upsert_role(usermap, "Admin")
+        if user["auth_screenings"]:
+            upsert_role(usermap, "Interviewer")
+        if user["auth_forumchat"]:
+            upsert_role(usermap, "Member")
+        elif user["auth_profile"]:
+            upsert_role(usermap, "Approved")
+        elif user["auth_booking"]:
+            upsert_role(usermap, "Applicant")
         else:
-            usermap['roles'] = None
+            usermap["roles"] = None

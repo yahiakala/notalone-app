@@ -28,9 +28,7 @@ class Members(MembersTemplate):
                 self.pagination_1.data_grid = self.dg_members
                 self.pagination_1.repeating_panel = self.rp_members
                 # Show role name in label
-                self.lbl_role_name.text = (
-                    f"Members with role: {self.url_dict['role']}"
-                )
+                self.lbl_role_name.text = f"Members with role: {self.url_dict['role']}"
                 self.lbl_role_name.visible = True
                 self.end_search()
             else:

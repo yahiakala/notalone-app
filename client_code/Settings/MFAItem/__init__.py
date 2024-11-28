@@ -1,5 +1,7 @@
-from ._anvil_designer import MFAItemTemplate
 from anvil import *
+
+from ._anvil_designer import MFAItemTemplate
+
 
 class MFAItem(MFAItemTemplate):
     def __init__(self, **properties):
@@ -16,7 +18,5 @@ class MFAItem(MFAItemTemplate):
         """Confirm delete MFA method."""
         self.cp_pw.visible = False
         self.parent.raise_event(
-            'x-remove-mfa-id',
-            id=self.item['id'],
-            password=self.tb_enter_pw.text
+            "x-remove-mfa-id", id=self.item["id"], password=self.tb_enter_pw.text
         )
