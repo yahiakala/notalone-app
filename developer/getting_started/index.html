@@ -1,0 +1,1722 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="User and Developer Documentation for NotAlone App">
+      
+      
+      
+      
+        <link rel="prev" href="../general_instructions/">
+      
+      
+        <link rel="next" href="../payments/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.46">
+    
+    
+      
+        <title>Getting Started Guide - NotAlone Documentation</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.6f8fc17f.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#getting-started-guide" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="NotAlone Documentation" class="md-header__button md-logo" aria-label="NotAlone Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            NotAlone Documentation
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Getting Started Guide
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/yahiakala/notalone-app" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+            
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  Welcome to NotAlone Documentation
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../admin/member_management/" class="md-tabs__link">
+          
+  
+  Admin
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="../css_roles/" class="md-tabs__link">
+          
+  
+  Developer
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../user/getting_started/" class="md-tabs__link">
+          
+  
+  User
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="NotAlone Documentation" class="md-nav__button md-logo" aria-label="NotAlone Documentation" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    NotAlone Documentation
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/yahiakala/notalone-app" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.7.1 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2024 Fonticons, Inc.--><path d="M439.55 236.05 244 40.45a28.87 28.87 0 0 0-40.81 0l-40.66 40.63 51.52 51.52c27.06-9.14 52.68 16.77 43.39 43.68l49.66 49.66c34.23-11.8 61.18 31 35.47 56.69-26.49 26.49-70.21-2.87-56-37.34L240.22 199v121.85c25.3 12.54 22.26 41.85 9.08 55a34.34 34.34 0 0 1-48.55 0c-17.57-17.6-11.07-46.91 11.25-56v-123c-20.8-8.51-24.6-30.74-18.64-45L142.57 101 8.45 235.14a28.86 28.86 0 0 0 0 40.81l195.61 195.6a28.86 28.86 0 0 0 40.8 0l194.69-194.69a28.86 28.86 0 0 0 0-40.81"/></svg>
+  </div>
+  <div class="md-source__repository">
+    GitHub
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Welcome to NotAlone Documentation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    Admin
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            Admin
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/member_management/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Member Management Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../admin/tenant_setup/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tenant Setup Guide
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Developer
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Developer
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../css_roles/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CSS Roles Documentation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../general_instructions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    General Instructions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Getting Started Guide
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    Getting Started Guide
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-fork-and-clone-repositories" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Fork and Clone Repositories
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Fork and Clone Repositories">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#main-application-repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      Main Application Repository
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-anvil-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Anvil Setup
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Anvil Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-free-account" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create Free Account
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clone-the-app" class="md-nav__link">
+    <span class="md-ellipsis">
+      Clone the App
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#local-development-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Local Development Setup
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-discourse-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Discourse Setup
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Discourse Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#digitalocean-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      DigitalOcean Deployment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#discourse-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Discourse Configuration
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-paypal-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. PayPal Integration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. PayPal Integration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#developer-account-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Developer Account Setup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#api-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      API Configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#webhook-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Webhook Setup
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-development-environment-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Development Environment Configuration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Development Environment Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#environment-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      Environment Variables
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#database-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Database Setup
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-running-the-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Running the Application
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Running the Application">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#start-local-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      Start Local Server
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#development-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Development Workflow
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Testing
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#paypal-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      PayPal Testing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#discourse-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Discourse Testing
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-common-issues-and-solutions" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. Common Issues and Solutions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Common Issues and Solutions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#anvil-connection-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Anvil Connection Issues
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paypal-webhook-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      PayPal Webhook Issues
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#discourse-api-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Discourse API Issues
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-contributing-guidelines" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. Contributing Guidelines
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-additional-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      10. Additional Resources
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#support" class="md-nav__link">
+    <span class="md-ellipsis">
+      Support
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../payments/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Payment System Documentation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../routing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Hash-Based Routing Documentation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../schema/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Database Schema Documentation
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../skeleton_loading/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Skeleton Loading States
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    User
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            User
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user/getting_started/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Getting Started with Not Alone
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#1-fork-and-clone-repositories" class="md-nav__link">
+    <span class="md-ellipsis">
+      1. Fork and Clone Repositories
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="1. Fork and Clone Repositories">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#main-application-repository" class="md-nav__link">
+    <span class="md-ellipsis">
+      Main Application Repository
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#2-anvil-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      2. Anvil Setup
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="2. Anvil Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#create-free-account" class="md-nav__link">
+    <span class="md-ellipsis">
+      Create Free Account
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#clone-the-app" class="md-nav__link">
+    <span class="md-ellipsis">
+      Clone the App
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#local-development-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Local Development Setup
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#3-discourse-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      3. Discourse Setup
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="3. Discourse Setup">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#digitalocean-deployment" class="md-nav__link">
+    <span class="md-ellipsis">
+      DigitalOcean Deployment
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#discourse-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      Discourse Configuration
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#4-paypal-integration" class="md-nav__link">
+    <span class="md-ellipsis">
+      4. PayPal Integration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="4. PayPal Integration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#developer-account-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Developer Account Setup
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#api-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      API Configuration
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#webhook-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Webhook Setup
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#5-development-environment-configuration" class="md-nav__link">
+    <span class="md-ellipsis">
+      5. Development Environment Configuration
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="5. Development Environment Configuration">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#environment-variables" class="md-nav__link">
+    <span class="md-ellipsis">
+      Environment Variables
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#database-setup" class="md-nav__link">
+    <span class="md-ellipsis">
+      Database Setup
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#6-running-the-application" class="md-nav__link">
+    <span class="md-ellipsis">
+      6. Running the Application
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="6. Running the Application">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#start-local-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      Start Local Server
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#development-workflow" class="md-nav__link">
+    <span class="md-ellipsis">
+      Development Workflow
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#7-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      7. Testing
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="7. Testing">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#paypal-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      PayPal Testing
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#discourse-testing" class="md-nav__link">
+    <span class="md-ellipsis">
+      Discourse Testing
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#8-common-issues-and-solutions" class="md-nav__link">
+    <span class="md-ellipsis">
+      8. Common Issues and Solutions
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="8. Common Issues and Solutions">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#anvil-connection-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Anvil Connection Issues
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#paypal-webhook-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      PayPal Webhook Issues
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#discourse-api-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Discourse API Issues
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#9-contributing-guidelines" class="md-nav__link">
+    <span class="md-ellipsis">
+      9. Contributing Guidelines
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#10-additional-resources" class="md-nav__link">
+    <span class="md-ellipsis">
+      10. Additional Resources
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#support" class="md-nav__link">
+    <span class="md-ellipsis">
+      Support
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+  
+    <a href="https://github.com/yahiakala/notalone-app/edit/master/docs/developer/getting_started.md" title="Edit this page" class="md-content__button md-icon">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M10 20H6V4h7v5h5v3.1l2-2V8l-6-6H6c-1.1 0-2 .9-2 2v16c0 1.1.9 2 2 2h4zm10.2-7c.1 0 .3.1.4.2l1.3 1.3c.2.2.2.6 0 .8l-1 1-2.1-2.1 1-1c.1-.1.2-.2.4-.2m0 3.9L14.1 23H12v-2.1l6.1-6.1z"/></svg>
+    </a>
+  
+  
+
+
+<h1 id="getting-started-guide">Getting Started Guide<a class="headerlink" href="#getting-started-guide" title="Permanent link">&para;</a></h1>
+<p>This guide will help you set up your development environment for contributing to the Not Alone app. The app is built using Anvil's web framework and integrates with several external services.</p>
+<h2 id="prerequisites">Prerequisites<a class="headerlink" href="#prerequisites" title="Permanent link">&para;</a></h2>
+<p>Before starting, ensure you have:
+- A GitHub account
+- A PayPal developer account
+- A DigitalOcean account (for Discourse hosting)
+- Basic knowledge of Python and web development</p>
+<h2 id="1-fork-and-clone-repositories">1. Fork and Clone Repositories<a class="headerlink" href="#1-fork-and-clone-repositories" title="Permanent link">&para;</a></h2>
+<h3 id="main-application-repository">Main Application Repository<a class="headerlink" href="#main-application-repository" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p>Fork the Not Alone repository:
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="c1"># Visit https://github.com/yahiakala/notalone-app</span>
+<a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a><span class="c1"># Click &quot;Fork&quot; button</span>
+</code></pre></div></p>
+</li>
+<li>
+<p>Clone your fork:
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>git<span class="w"> </span>clone<span class="w"> </span>https://github.com/YOUR_USERNAME/notalone-app.git
+<a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="nb">cd</span><span class="w"> </span>notalone-app
+</code></pre></div></p>
+</li>
+<li>
+<p>Add upstream remote:
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>git<span class="w"> </span>remote<span class="w"> </span>add<span class="w"> </span>upstream<span class="w"> </span>https://github.com/yahiakala/notalone-app.git
+</code></pre></div></p>
+</li>
+</ol>
+<h2 id="2-anvil-setup">2. Anvil Setup<a class="headerlink" href="#2-anvil-setup" title="Permanent link">&para;</a></h2>
+<h3 id="create-free-account">Create Free Account<a class="headerlink" href="#create-free-account" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Visit <a href="https://anvil.works">anvil.works</a></li>
+<li>Sign up for a free account</li>
+<li>Choose the "Free" plan (sufficient for development)</li>
+</ol>
+<h3 id="clone-the-app">Clone the App<a class="headerlink" href="#clone-the-app" title="Permanent link">&para;</a></h3>
+<ol>
+<li>In Anvil dashboard, click "New App"</li>
+<li>Choose "Clone from GitHub"</li>
+<li>Enter your forked repository URL</li>
+<li>Select "Material Design Theme"</li>
+</ol>
+<h3 id="local-development-setup">Local Development Setup<a class="headerlink" href="#local-development-setup" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p>Install Anvil CLI:
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>pip<span class="w"> </span>install<span class="w"> </span>anvil-app-server
+</code></pre></div></p>
+</li>
+<li>
+<p>Configure local server:
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>anvil-app-server<span class="w"> </span>--app<span class="w"> </span>notalone-app
+</code></pre></div></p>
+</li>
+</ol>
+<h2 id="3-discourse-setup">3. Discourse Setup<a class="headerlink" href="#3-discourse-setup" title="Permanent link">&para;</a></h2>
+<h3 id="digitalocean-deployment">DigitalOcean Deployment<a class="headerlink" href="#digitalocean-deployment" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Create DigitalOcean account</li>
+<li>From Marketplace, select "Discourse"</li>
+<li>Choose a plan:</li>
+<li>Basic droplet ($5/month sufficient for development)</li>
+<li>Any region</li>
+<li>
+<p>Add SSH key for secure access</p>
+</li>
+<li>
+<p>Configure domain/subdomain:
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>discourse.yourdomain.com
+</code></pre></div></p>
+</li>
+</ol>
+<h3 id="discourse-configuration">Discourse Configuration<a class="headerlink" href="#discourse-configuration" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p>Access admin panel:
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>https://discourse.yourdomain.com/admin
+</code></pre></div></p>
+</li>
+<li>
+<p>Generate API credentials:</p>
+</li>
+<li>Navigate to API settings</li>
+<li>Create new API key</li>
+<li>
+<p>Note down:</p>
+<ul>
+<li>API Key</li>
+<li>API Username</li>
+<li>API URL</li>
+</ul>
+</li>
+<li>
+<p>Configure webhook settings:
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="p">{</span>
+<a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">  </span><span class="nt">&quot;discourse_url&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;https://discourse.yourdomain.com&quot;</span><span class="p">,</span>
+<a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">  </span><span class="nt">&quot;discourse_api_key&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;your_api_key&quot;</span><span class="p">,</span>
+<a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="w">  </span><span class="nt">&quot;discourse_username&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;system&quot;</span>
+<a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="p">}</span>
+</code></pre></div></p>
+</li>
+</ol>
+<h2 id="4-paypal-integration">4. PayPal Integration<a class="headerlink" href="#4-paypal-integration" title="Permanent link">&para;</a></h2>
+<h3 id="developer-account-setup">Developer Account Setup<a class="headerlink" href="#developer-account-setup" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Create PayPal developer account:</li>
+<li>Visit <a href="https://developer.paypal.com">developer.paypal.com</a></li>
+<li>
+<p>Sign up for developer account</p>
+</li>
+<li>
+<p>Create sandbox accounts:</p>
+</li>
+<li>Create business account</li>
+<li>Create personal account for testing</li>
+</ol>
+<h3 id="api-configuration">API Configuration<a class="headerlink" href="#api-configuration" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p>Create app in PayPal:
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a>My Apps &amp; Credentials &gt; Create App
+</code></pre></div></p>
+</li>
+<li>
+<p>Note credentials:</p>
+</li>
+<li>Client ID</li>
+<li>
+<p>Client Secret</p>
+</li>
+<li>
+<p>Create subscription plan:
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-9-1" name="__codelineno-9-1" href="#__codelineno-9-1"></a>Products &gt; Create Product &gt; Create Plan
+</code></pre></div></p>
+</li>
+</ol>
+<h3 id="webhook-setup">Webhook Setup<a class="headerlink" href="#webhook-setup" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p>Configure webhook URL:
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-10-1" name="__codelineno-10-1" href="#__codelineno-10-1"></a>https://your-anvil-app.anvil.app/_/api/capture-sub
+</code></pre></div></p>
+</li>
+<li>
+<p>Subscribe to events:</p>
+</li>
+<li>BILLING.SUBSCRIPTION.ACTIVATED</li>
+<li>BILLING.SUBSCRIPTION.CANCELLED</li>
+<li>BILLING.SUBSCRIPTION.EXPIRED</li>
+<li>BILLING.SUBSCRIPTION.UPDATED</li>
+</ol>
+<h2 id="5-development-environment-configuration">5. Development Environment Configuration<a class="headerlink" href="#5-development-environment-configuration" title="Permanent link">&para;</a></h2>
+<h3 id="environment-variables">Environment Variables<a class="headerlink" href="#environment-variables" title="Permanent link">&para;</a></h3>
+<p>Create a <code>.env</code> file in your project root:
+<div class="highlight"><pre><span></span><code><a id="__codelineno-11-1" name="__codelineno-11-1" href="#__codelineno-11-1"></a><span class="nv">PAYPAL_CLIENT_ID</span><span class="o">=</span>your_client_id
+<a id="__codelineno-11-2" name="__codelineno-11-2" href="#__codelineno-11-2"></a><span class="nv">PAYPAL_SECRET</span><span class="o">=</span>your_client_secret
+<a id="__codelineno-11-3" name="__codelineno-11-3" href="#__codelineno-11-3"></a><span class="nv">DISCOURSE_API_KEY</span><span class="o">=</span>your_api_key
+<a id="__codelineno-11-4" name="__codelineno-11-4" href="#__codelineno-11-4"></a><span class="nv">DISCOURSE_URL</span><span class="o">=</span>your_discourse_url
+</code></pre></div></p>
+<h3 id="database-setup">Database Setup<a class="headerlink" href="#database-setup" title="Permanent link">&para;</a></h3>
+<p>The app uses Anvil's built-in database. Create required tables:</p>
+<ol>
+<li>Users table</li>
+<li>Usermap table</li>
+<li>Tenants table</li>
+<li>Roles table</li>
+<li>Permissions table</li>
+<li>Files table</li>
+<li>RoleFiles table</li>
+<li>Notes table</li>
+<li>Forum table</li>
+<li>Finances table</li>
+</ol>
+<p>Refer to <code>docs/schema.md</code> for detailed table structures.</p>
+<h2 id="6-running-the-application">6. Running the Application<a class="headerlink" href="#6-running-the-application" title="Permanent link">&para;</a></h2>
+<h3 id="start-local-server">Start Local Server<a class="headerlink" href="#start-local-server" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p>Run Anvil server:
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-12-1" name="__codelineno-12-1" href="#__codelineno-12-1"></a>anvil-app-server<span class="w"> </span>--app<span class="w"> </span>notalone-app
+</code></pre></div></p>
+</li>
+<li>
+<p>Access local app:
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-13-1" name="__codelineno-13-1" href="#__codelineno-13-1"></a>http://localhost:3030
+</code></pre></div></p>
+</li>
+</ol>
+<h3 id="development-workflow">Development Workflow<a class="headerlink" href="#development-workflow" title="Permanent link">&para;</a></h3>
+<ol>
+<li>
+<p>Create feature branch:
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-14-1" name="__codelineno-14-1" href="#__codelineno-14-1"></a>git<span class="w"> </span>checkout<span class="w"> </span>-b<span class="w"> </span>feature/your-feature-name
+</code></pre></div></p>
+</li>
+<li>
+<p>Make changes and test locally</p>
+</li>
+<li>
+<p>Commit changes:
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-15-1" name="__codelineno-15-1" href="#__codelineno-15-1"></a>git<span class="w"> </span>add<span class="w"> </span>.
+<a id="__codelineno-15-2" name="__codelineno-15-2" href="#__codelineno-15-2"></a>git<span class="w"> </span>commit<span class="w"> </span>-m<span class="w"> </span><span class="s2">&quot;Description of changes&quot;</span>
+</code></pre></div></p>
+</li>
+<li>
+<p>Push to your fork:
+   <div class="highlight"><pre><span></span><code><a id="__codelineno-16-1" name="__codelineno-16-1" href="#__codelineno-16-1"></a>git<span class="w"> </span>push<span class="w"> </span>origin<span class="w"> </span>feature/your-feature-name
+</code></pre></div></p>
+</li>
+<li>
+<p>Create pull request on GitHub</p>
+</li>
+</ol>
+<h2 id="7-testing">7. Testing<a class="headerlink" href="#7-testing" title="Permanent link">&para;</a></h2>
+<h3 id="paypal-testing">PayPal Testing<a class="headerlink" href="#paypal-testing" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Use sandbox accounts for testing payments</li>
+<li>Test subscription flows:</li>
+<li>Creation</li>
+<li>Cancellation</li>
+<li>Updates</li>
+<li>Webhook processing</li>
+</ol>
+<h3 id="discourse-testing">Discourse Testing<a class="headerlink" href="#discourse-testing" title="Permanent link">&para;</a></h3>
+<ol>
+<li>Create test categories and topics</li>
+<li>Test API integration:</li>
+<li>User creation</li>
+<li>Post creation</li>
+<li>Category management</li>
+</ol>
+<h2 id="8-common-issues-and-solutions">8. Common Issues and Solutions<a class="headerlink" href="#8-common-issues-and-solutions" title="Permanent link">&para;</a></h2>
+<h3 id="anvil-connection-issues">Anvil Connection Issues<a class="headerlink" href="#anvil-connection-issues" title="Permanent link">&para;</a></h3>
+<p>If you encounter connection issues:
+1. Check Anvil server status
+2. Verify uplink key configuration
+3. Check network connectivity</p>
+<h3 id="paypal-webhook-issues">PayPal Webhook Issues<a class="headerlink" href="#paypal-webhook-issues" title="Permanent link">&para;</a></h3>
+<p>If webhooks aren't received:
+1. Verify webhook URL is accessible
+2. Check webhook signature verification
+3. Validate event types in PayPal dashboard</p>
+<h3 id="discourse-api-issues">Discourse API Issues<a class="headerlink" href="#discourse-api-issues" title="Permanent link">&para;</a></h3>
+<p>If Discourse integration fails:
+1. Verify API credentials
+2. Check API endpoint URLs
+3. Confirm API user permissions</p>
+<h2 id="9-contributing-guidelines">9. Contributing Guidelines<a class="headerlink" href="#9-contributing-guidelines" title="Permanent link">&para;</a></h2>
+<ol>
+<li>Follow existing code style</li>
+<li>Add tests for new features</li>
+<li>Update documentation</li>
+<li>Create detailed pull request descriptions</li>
+</ol>
+<h2 id="10-additional-resources">10. Additional Resources<a class="headerlink" href="#10-additional-resources" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="https://anvil.works/docs">Anvil Documentation</a></li>
+<li><a href="https://developer.paypal.com/docs">PayPal Developer Docs</a></li>
+<li><a href="https://docs.discourse.org">Discourse API Guide</a></li>
+<li>Project-specific docs in <code>/docs</code> directory</li>
+</ul>
+<h2 id="support">Support<a class="headerlink" href="#support" title="Permanent link">&para;</a></h2>
+<p>For development support:
+1. Check existing documentation
+2. Search GitHub issues
+3. Create new issue if needed
+4. Join development discussions</p>
+<p>Remember to always work in your own fork and create pull requests for changes you want to contribute to the main project.</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["navigation.tabs", "navigation.sections", "navigation.expand", "search.highlight", "content.code.copy", "content.action.edit"], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+    
+  </body>
+</html>
