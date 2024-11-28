@@ -4,3 +4,4 @@ __pycache__
 .anvil-data
 *.deployment*
 /cline*
+/site*
