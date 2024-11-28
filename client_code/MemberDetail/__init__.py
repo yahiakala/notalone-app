@@ -173,9 +173,9 @@ class MemberDetail(MemberDetailTemplate):
                     "cancel_user_subscription", Global.tenant_id, self.email
                 )
                 self.btn_cancel_sub.visible = False
-                self.lbl_fee_paid_copy.text = (
-                    "Subscription cancelled but membership still in good standing."
-                )
+                # self.lbl_fee_paid_copy.text = (
+                #     "Subscription cancelled but membership still in good standing."
+                # )
                 anvil.alert("Subscription cancelled successfully")
                 # except Exception as e:
                 #     alert(str(e))
@@ -234,7 +234,7 @@ Do you want to proceed with deletion?""",
             anvil.server.call("delete_user", Global.tenant_id, self.email)
             Global.users = None
             routing.clear_cache()
-            routing.go_back()
+            routing.set_url_hash('/app/members')
 
     def btn_save_notes_click(self, **event_args):
         """This method is called when the button is clicked"""
