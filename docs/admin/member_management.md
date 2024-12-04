@@ -21,15 +21,13 @@ Click on an applicant to view their information:
 ### Application Actions
 
 For each application, you can:
-1. **Approve**
-   - Grants member access
-   - Triggers welcome email
-   - Creates member profile
 
-3. **Decline**
-   - Sends rejection notification
-   - Archives application
-   - Records reason for decline (in the notes section)
+1. **Approve**
+    - Removes 'Applicant' role and adds 'Approved' role.
+    - Triggers welcome email
+
+2. **Decline**
+    - Removes the 'Applicant' role.
 
 ## Managing Members
 
@@ -40,6 +38,7 @@ The Members screen provides a comprehensive view of all members:
 ![Members Screen](images/members_screen.png)
 
 Features include:
+
 1. Search functionality
 2. Filter options
 3. Status indicators
