@@ -40,15 +40,16 @@ After verifying your account, you'll need to complete your profile:
 
 ![Profile Setup - Basic Information](images/profile_1.png)
 
-1. Fill out the required information:
-   - Full name
-   - Phone number
-   - Discord username (optional)
+Fill out the required information:
+    - Full name
+    - Phone number
+    - Discord username (optional)
 
 ![Profile Setup - Additional Details](images/profile_2.png)
 
-2. Consent to the code of conduct (linked)
-3. Subscribe to membership payments (if your group requires it)
+Consent to the code of conduct (linked)
+
+Subscribe to membership payments (if your group requires it)
 
 ## Consent Agreement
 
@@ -99,7 +100,7 @@ Once all requirements are met (profile, consent, interview if required, and paym
 
 1. Click the Forum tab in the main navigation menu
 2. You can then:
-   - Browse existing discussions
-   - Create new topics
-   - Reply to other members
-   - Follow topics of interest
+    - Browse existing discussions
+    - Create new topics
+    - Reply to other members
+    - Follow topics of interest
