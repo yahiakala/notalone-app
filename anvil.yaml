@@ -3,13 +3,13 @@ db_schema:
   files:
     client: none
     columns:
-    - admin_ui: {order: 0, width: 200}
+    - admin_ui: {width: 200}
       name: name
       type: string
-    - admin_ui: {order: 1, width: 200}
+    - admin_ui: {width: 200}
       name: file
       type: media
-    - admin_ui: {order: 3, width: 200}
+    - admin_ui: {width: 200}
       name: roles
       target: roles
       type: link_multiple
@@ -18,17 +18,17 @@ db_schema:
   finances:
     client: none
     columns:
-    - admin_ui: {order: 0, width: 200}
-      name: rev_12
-      type: number
-    - admin_ui: {order: 1, width: 200}
-      name: budgets
-      type: simpleObject
-    - admin_ui: {order: -1, width: 200}
+    - admin_ui: {width: 200}
       name: tenant
       target: tenants
       type: link_single
-    - admin_ui: {order: 3, width: 200}
+    - admin_ui: {width: 200}
+      name: rev_12
+      type: number
+    - admin_ui: {width: 200}
+      name: budgets
+      type: simpleObject
+    - admin_ui: {width: 200}
       name: rev_12_active
       type: number
     server: full
@@ -73,7 +73,7 @@ db_schema:
     - admin_ui: {width: 200}
       name: name
       type: string
-    - admin_ui: {order: 1, width: 200}
+    - admin_ui: {width: 200}
       name: description
       type: string
     server: full
@@ -81,13 +81,13 @@ db_schema:
   rolefiles:
     client: none
     columns:
-    - admin_ui: {order: 0, width: 200}
+    - admin_ui: {width: 200}
       name: name
       type: string
-    - admin_ui: {order: 1, width: 200}
+    - admin_ui: {width: 200}
       name: file
       type: media
-    - admin_ui: {order: 2, width: 200}
+    - admin_ui: {width: 200}
       name: role
       target: roles
       type: link_single
@@ -96,22 +96,9 @@ db_schema:
   roles:
     client: none
     columns:
-    - admin_ui: {order: -1, width: 200}
+    - admin_ui: {width: 200}
       name: name
       type: string
-    - admin_ui: {order: 1, width: 200}
-      name: reports_to
-      type: string
-    - admin_ui: {order: 2, width: 200}
-      name: tenant
-      target: tenants
-      type: link_single
-    - admin_ui: {order: 3, width: 200}
-      name: guide
-      type: media
-    - admin_ui: {order: 4, width: 200}
-      name: last_update
-      type: date
     - admin_ui: {width: 200}
       name: permissions
       target: permissions
@@ -119,23 +106,27 @@ db_schema:
     - admin_ui: {width: 200}
       name: can_edit
       type: bool
+    - admin_ui: {width: 200}
+      name: reports_to
+      type: string
+    - admin_ui: {width: 200}
+      name: tenant
+      target: tenants
+      type: link_single
+    - admin_ui: {width: 200}
+      name: guide
+      type: media
+    - admin_ui: {width: 200}
+      name: last_update
+      type: date
     server: full
     title: Roles
   tenants:
     client: none
     columns:
-    - admin_ui: {order: -1, width: 200}
-      name: email
-      type: string
-    - admin_ui: {order: -2, width: 348}
-      name: name
-      type: string
     - admin_ui: {width: 200}
       name: waiver
       type: string
-    - admin_ui: {order: 3, width: 200}
-      name: logo
-      type: media
     - admin_ui: {width: 200}
       name: discourse_api_key
       type: string
@@ -151,28 +142,37 @@ db_schema:
     - admin_ui: {width: 200}
       name: paypal_secret
       type: string
-    - admin_ui: {order: -1.5, width: 200}
+    - admin_ui: {width: 348}
+      name: name
+      type: string
+    - admin_ui: {width: 200}
       name: discourse_url
       type: string
-    - admin_ui: {order: 10, width: 200}
+    - admin_ui: {width: 200}
+      name: email
+      type: string
+    - admin_ui: {width: 200}
+      name: logo
+      type: media
+    - admin_ui: {width: 200}
       name: discord_invite
       type: string
-    - admin_ui: {order: 11, width: 200}
+    - admin_ui: {width: 200}
       name: paypal_webhook_id
       type: string
-    - admin_ui: {order: 12, width: 200}
+    - admin_ui: {width: 200}
       name: paypal_webhook_certificate
       type: string
-    - admin_ui: {order: 13, width: 200}
+    - admin_ui: {width: 200}
       name: new_roles
       type: simpleObject
-    - admin_ui: {order: 14, width: 200}
+    - admin_ui: {width: 200}
       name: custom_reports
       type: simpleObject
-    - admin_ui: {order: 15, width: 200}
+    - admin_ui: {width: 200}
       name: smtp_email
       type: string
-    - admin_ui: {order: 16, width: 200}
+    - admin_ui: {width: 200}
       name: donate_url
       type: string
     server: full
@@ -188,149 +188,81 @@ db_schema:
       name: roles
       target: roles
       type: link_multiple
-    - admin_ui: {order: 1, width: 200}
+    - admin_ui: {width: 200}
       name: tenant
       target: tenants
       type: link_single
-    - admin_ui: {order: 4, width: 200}
-      name: notes
-      type: string
-    - admin_ui: {order: 5, width: 200}
-      name: fee
-      type: number
-    - admin_ui: {order: 6, width: 200}
-      name: paypal_sub_id
-      type: string
-    - admin_ui: {order: 7, width: 200}
-      name: consent_check
-      type: bool
-    - admin_ui: {order: 8, width: 200}
-      name: booking_link
-      type: string
-    - admin_ui: {order: 9, width: 200}
-      name: payment_expiry
-      type: date
-    - admin_ui: {order: 8.5, width: 200}
-      name: payment_status
-      type: string
-    - admin_ui: {order: 11, width: 200}
-      name: discord
-      type: string
-    - admin_ui: {order: 12, width: 200}
-      name: phone
-      type: string
-    - admin_ui: {order: 13, width: 200}
-      name: screening_slots
-      type: simpleObject
-    - admin_ui: {order: 3, width: 200}
+    - admin_ui: {width: 200}
       name: first_name
       type: string
-    - admin_ui: {order: 3.5, width: 200}
+    - admin_ui: {width: 200}
       name: last_name
       type: string
+    - admin_ui: {width: 200}
+      name: notes
+      type: string
+    - admin_ui: {width: 200}
+      name: fee
+      type: number
+    - admin_ui: {width: 200}
+      name: paypal_sub_id
+      type: string
+    - admin_ui: {width: 200}
+      name: consent_check
+      type: bool
+    - admin_ui: {width: 200}
+      name: payment_status
+      type: string
+    - admin_ui: {width: 200}
+      name: booking_link
+      type: string
+    - admin_ui: {width: 200}
+      name: payment_expiry
+      type: date
+    - admin_ui: {width: 200}
+      name: discord
+      type: string
+    - admin_ui: {width: 200}
+      name: phone
+      type: string
+    - admin_ui: {width: 200}
+      name: screening_slots
+      type: simpleObject
     server: full
     title: Usermap
   users:
     client: none
     columns:
-    - admin_ui: {order: -1, width: 200}
+    - admin_ui: {width: 200}
       name: email
       type: string
-    - admin_ui: {order: 1, width: 200}
-      name: enabled
-      type: bool
-    - admin_ui: {order: 2, width: 200}
-      name: last_login
-      type: datetime
-    - admin_ui: {order: 3, width: 203}
-      name: password_hash
-      type: string
-    - admin_ui: {order: 4, width: 200}
-      name: n_password_failures
-      type: number
-    - admin_ui: {order: 3.9375, width: 200}
-      name: confirmed_email
-      type: bool
-    - admin_ui: {order: 6, width: 200}
-      name: remembered_logins
-      type: simpleObject
-    - admin_ui: {order: 7, width: 200}
-      name: mfa
-      type: simpleObject
-    - admin_ui: {order: 3.875, width: 200}
-      name: signed_up
-      type: datetime
-    - admin_ui: {order: 3.5, width: 200}
-      name: first_name
-      type: string
-    - admin_ui: {order: 3.75, width: 136}
-      name: last_name
-      type: string
-    - admin_ui: {order: 12, width: 200}
-      name: fb_url
-      type: string
-    - admin_ui: {width: 200}
-      name: fee
-      type: number
-    - admin_ui: {width: 200}
-      name: consent_check
-      type: bool
-    - admin_ui: {width: 200}
-      name: paypal_sub_id
-      type: string
-    - admin_ui: {width: 200}
-      name: booking_link
-      type: string
-    - admin_ui: {width: 200}
-      name: payment_expiry
-      type: date
-    - admin_ui: {order: 21, width: 200}
-      name: payment_status
-      type: string
-    - admin_ui: {width: 200}
-      name: good_standing
-      type: bool
-    - admin_ui: {order: 1.5, width: 200}
-      name: tenant
-      target: tenants
-      type: link_single
-    - admin_ui: {order: 22, width: 200}
-      name: auth_screenings
-      type: bool
-    - admin_ui: {order: 23, width: 200}
-      name: auth_members
-      type: bool
-    - admin_ui: {order: 24, width: 200}
-      name: auth_profile
-      type: bool
-    - admin_ui: {order: 21.75, width: 200}
-      name: vol_exempt
-      type: bool
-    - admin_ui: {order: 29, width: 200}
-      name: auth_forumchat
-      type: bool
-    - admin_ui: {order: 31, width: 200}
-      name: auth_booking
-      type: bool
-    - admin_ui: {order: 32, width: 200}
-      name: auth_dev
-      type: bool
-    - admin_ui: {width: 200}
-      name: roles
-      target: roles
-      type: link_multiple
-    - admin_ui: {order: 27.5, width: 200}
-      name: discord
-      type: string
-    - admin_ui: {width: 200}
-      name: screening_slots
-      type: simpleObject
     - admin_ui: {width: 200}
       name: email_confirmation_key
       type: string
-    - admin_ui: {order: 31, width: 200}
-      name: phone
+    - admin_ui: {width: 200}
+      name: enabled
+      type: bool
+    - admin_ui: {width: 200}
+      name: last_login
+      type: datetime
+    - admin_ui: {width: 203}
+      name: password_hash
       type: string
+    - admin_ui: {width: 200}
+      name: signed_up
+      type: datetime
+    - admin_ui: {width: 200}
+      name: confirmed_email
+      type: bool
+    - admin_ui: {width: 200}
+      name: n_password_failures
+      type: number
+    - admin_ui: {width: 200}
+      name: remembered_logins
+      type: simpleObject
+    - admin_ui: {width: 200}
+      name: mfa
+      type: simpleObject
     server: full
     title: Users
 dependencies:
