@@ -19,14 +19,6 @@ Before starting, ensure you have:
 
 ## 2. Fork and Clone Repositories
 
-### Anvil Squared Repository
-1. Fork the anvil-squared library
-    - Visit https://github.com/yahiakala/anvil-squared
-    - Click "Fork" button
-    - Go to your Anvil.works account and click "Clone from GitHub" under the "Create a new app" section.
-    - Enter the URL to your forked repo, and authenticate with your GitHub account.
-    - Click "Clone App"
-
 ### Main Application Repository
 
 1. Fork the Not Alone repository:
@@ -39,8 +31,8 @@ Before starting, ensure you have:
 2. Set up dependencies
     - Go to Settings > Dependencies
     - Use the pencil icon to edit your dependencies, but do not change the versions.
-    - Make sure the anvil_extras dependency is set to point to a third party dependency with dependency ID C6ZZPAPN4YYF5NVJ. [See here for more info](https://github.com/anvilistas/anvil-extras)
-    - Make sure the anvil_squared dependency is set to point to your clone of the app as a local dependency. Use the pencil icon. Do not change the tag.
+    - Make sure the anvil_extras dependency is set to point to a third party dependency with dependency ID C6ZZPAPN4YYF5NVJ. [See here for more info](https://github.com/anvilistas/anvil-extras). Use the pencil icon. Do not change the tag.
+    - Make sure the anvil_squared dependency is set to point to a third party dependency with dependency ID KDKDM3MG6IQHC2FK. Use the pencil icon. Do not change the tag.
 
 ### Local Development Setup
 
