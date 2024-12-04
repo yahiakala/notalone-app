@@ -9,6 +9,39 @@ theme:
     - search.highlight
     - content.code.copy
     - content.action.edit
+  palette:
+    - media: "(prefers-color-scheme)"
+      toggle:
+        icon: material/brightness-auto
+        name: Switch to light mode
+    - media: "(prefers-color-scheme: light)"
+      scheme: default
+      toggle:
+        icon: material/brightness-7
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      scheme: slate
+      toggle:
+        icon: material/brightness-4
+        name: Switch to light mode
+
+nav:
+  - Home: index.md
+  - User Guide:
+    - Getting Started: user/getting_started.md
+  - Administrator Guide:
+    - Member Management: admin/member_management.md
+    - Tenant Setup: admin/tenant_setup.md
+    - PayPal Setup: admin/paypal_setup.md
+    - Discourse Setup: admin/discourse_setup.md
+  - Developer Guide:
+    - Getting Started: developer/getting_started.md
+    - General Instructions: developer/general_instructions.md
+    - CSS Roles: developer/css_roles.md
+    - Payments: developer/payments.md
+    - Routing: developer/routing.md
+    - Schema: developer/schema.md
+    - Skeleton Loading: developer/skeleton_loading.md
 
 markdown_extensions:
   - admonition
