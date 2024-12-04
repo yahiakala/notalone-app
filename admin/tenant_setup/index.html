@@ -14,7 +14,7 @@
         <link rel="prev" href="../member_management/">
       
       
-        <link rel="next" href="../../developer/css_roles/">
+        <link rel="next" href="../paypal_setup/">
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
@@ -22,11 +22,14 @@
     
     
       
-        <title>Tenant Setup Guide - NotAlone Documentation</title>
+        <title>Tenant Setup - NotAlone Documentation</title>
       
     
     
       <link rel="stylesheet" href="../../assets/stylesheets/main.6f8fc17f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -55,7 +58,14 @@
   </head>
   
   
-    <body dir="ltr">
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -98,12 +108,48 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Tenant Setup Guide
+              Tenant Setup
             
           </span>
         </div>
       </div>
     </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
     
     
       <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
@@ -184,10 +230,28 @@
   
     
   
-  Welcome to NotAlone Documentation
+  Home
 
       </a>
     </li>
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../user/getting_started/" class="md-tabs__link">
+          
+  
+  User Guide
+
+        </a>
+      </li>
+    
   
 
       
@@ -203,7 +267,7 @@
         <a href="../member_management/" class="md-tabs__link">
           
   
-  Admin
+  Administrator Guide
 
         </a>
       </li>
@@ -218,28 +282,10 @@
     
     
       <li class="md-tabs__item">
-        <a href="../../developer/css_roles/" class="md-tabs__link">
+        <a href="../../developer/getting_started/" class="md-tabs__link">
           
   
-  Developer
-
-        </a>
-      </li>
-    
-  
-
-      
-        
-  
-  
-  
-    
-    
-      <li class="md-tabs__item">
-        <a href="../../user/getting_started/" class="md-tabs__link">
-          
-  
-  User
+  Developer Guide
 
         </a>
       </li>
@@ -303,11 +349,81 @@
         
   
   <span class="md-ellipsis">
-    Welcome to NotAlone Documentation
+    Home
   </span>
   
 
       </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+          
+        
+        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    User Guide
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            User Guide
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../user/getting_started/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Getting Started
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
     </li>
   
 
@@ -336,24 +452,24 @@
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
-          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
             
   
   <span class="md-ellipsis">
-    Admin
+    Administrator Guide
   </span>
   
 
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
-          <label class="md-nav__title" for="__nav_2">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
-            Admin
+            Administrator Guide
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -368,7 +484,7 @@
         
   
   <span class="md-ellipsis">
-    Member Management Guide
+    Member Management
   </span>
   
 
@@ -398,7 +514,7 @@
           
   
   <span class="md-ellipsis">
-    Tenant Setup Guide
+    Tenant Setup
   </span>
   
 
@@ -409,7 +525,7 @@
         
   
   <span class="md-ellipsis">
-    Tenant Setup Guide
+    Tenant Setup
   </span>
   
 
@@ -463,63 +579,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#paypal-integration" class="md-nav__link">
-    <span class="md-ellipsis">
-      PayPal Integration
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="PayPal Integration">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1-paypal-business-account-setup" class="md-nav__link">
-    <span class="md-ellipsis">
-      1. PayPal Business Account Setup
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-create-subscription-plans" class="md-nav__link">
-    <span class="md-ellipsis">
-      2. Create Subscription Plans
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#webhook-configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      Webhook Configuration
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Webhook Configuration">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1-create-paypal-webhook" class="md-nav__link">
-    <span class="md-ellipsis">
-      1. Create PayPal Webhook
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -529,55 +588,6 @@
 
               
             
-          </ul>
-        </nav>
-      
-    </li>
-  
-
-    
-      
-      
-  
-  
-  
-  
-    
-    
-    
-      
-      
-        
-      
-    
-    
-    <li class="md-nav__item md-nav__item--nested">
-      
-        
-        
-          
-        
-        <input class="md-nav__toggle md-toggle md-toggle--indeterminate" type="checkbox" id="__nav_3" >
-        
-          
-          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
-            
-  
-  <span class="md-ellipsis">
-    Developer
-  </span>
-  
-
-            <span class="md-nav__icon md-icon"></span>
-          </label>
-        
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
-          <label class="md-nav__title" for="__nav_3">
-            <span class="md-nav__icon md-icon"></span>
-            Developer
-          </label>
-          <ul class="md-nav__list" data-md-scrollfix>
-            
               
                 
   
@@ -585,11 +595,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../../developer/css_roles/" class="md-nav__link">
+      <a href="../paypal_setup/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    CSS Roles Documentation
+    PayPal Setup
   </span>
   
 
@@ -606,116 +616,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../../developer/general_instructions/" class="md-nav__link">
+      <a href="../discourse_setup/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    General Instructions
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../developer/getting_started/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Getting Started Guide
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../developer/payments/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Payment System Documentation
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../developer/routing/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Hash-Based Routing Documentation
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../developer/schema/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Database Schema Documentation
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../../developer/skeleton_loading/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Skeleton Loading States
+    Discourse Setup
   </span>
   
 
@@ -760,7 +665,7 @@
             
   
   <span class="md-ellipsis">
-    User
+    Developer Guide
   </span>
   
 
@@ -770,7 +675,7 @@
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
-            User
+            Developer Guide
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -781,11 +686,137 @@
   
   
     <li class="md-nav__item">
-      <a href="../../user/getting_started/" class="md-nav__link">
+      <a href="../../developer/getting_started/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Getting Started with Not Alone
+    Getting Started
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/general_instructions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    General Instructions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/css_roles/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CSS Roles
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/payments/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Payments
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/routing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Routing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/schema/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Schema
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../developer/skeleton_loading/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Skeleton Loading
   </span>
   
 
@@ -861,63 +892,6 @@
   
 </li>
       
-        <li class="md-nav__item">
-  <a href="#paypal-integration" class="md-nav__link">
-    <span class="md-ellipsis">
-      PayPal Integration
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="PayPal Integration">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1-paypal-business-account-setup" class="md-nav__link">
-    <span class="md-ellipsis">
-      1. PayPal Business Account Setup
-    </span>
-  </a>
-  
-</li>
-        
-          <li class="md-nav__item">
-  <a href="#2-create-subscription-plans" class="md-nav__link">
-    <span class="md-ellipsis">
-      2. Create Subscription Plans
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#webhook-configuration" class="md-nav__link">
-    <span class="md-ellipsis">
-      Webhook Configuration
-    </span>
-  </a>
-  
-    <nav class="md-nav" aria-label="Webhook Configuration">
-      <ul class="md-nav__list">
-        
-          <li class="md-nav__item">
-  <a href="#1-create-paypal-webhook" class="md-nav__link">
-    <span class="md-ellipsis">
-      1. Create PayPal Webhook
-    </span>
-  </a>
-  
-</li>
-        
-      </ul>
-    </nav>
-  
-</li>
-      
     </ul>
   
 </nav>
@@ -944,39 +918,34 @@
 <h1 id="tenant-setup-guide">Tenant Setup Guide<a class="headerlink" href="#tenant-setup-guide" title="Permanent link">&para;</a></h1>
 <p>This guide walks you through setting up a new tenant in the Not Alone app, including PayPal integration, webhook configuration, and admin settings.</p>
 <h2 id="initial-setup">Initial Setup<a class="headerlink" href="#initial-setup" title="Permanent link">&para;</a></h2>
+<p>Before setting up your tenant, you must configure <a href="../discourse_setup/">Discourse</a> and <a href="../paypal_setup/">PayPal</a>.</p>
 <h3 id="1-basic-information">1. Basic Information<a class="headerlink" href="#1-basic-information" title="Permanent link">&para;</a></h3>
 <p>After logging in as a tenant admin, navigate to the Admin screen (<code>#app/admin</code>) and configure:</p>
 <p><img alt="Admin screen overview showing main configuration options" src="../images/admin_1.png" /></p>
-<ol>
-<li>Organization Details:</li>
+<p>Organization Details:</p>
+<ul>
 <li>Organization name</li>
 <li>Contact email</li>
 <li>Upload organization logo</li>
 <li>Set waiver/terms document URL</li>
-</ol>
+</ul>
 <p><img alt="PayPal integration settings showing API credentials and subscription configuration" src="../images/admin_2.png" /></p>
-<ol>
-<li>Integration Settings:</li>
+<p>Integration Settings:</p>
+<ul>
 <li>Discourse forum URL</li>
 <li>Discourse Connect secret (for authenticating users)</li>
 <li>Discourse API key (for automations)</li>
 <li>PayPal Client ID and Secret</li>
 <li>Payment webhook ID</li>
-</ol>
+</ul>
 <p><img alt="Discourse forum integration settings including API keys and SSO configuration" src="../images/admin_3.png" /></p>
-<ol>
-<li>
 <p>PayPal Plan Settings</p>
 <ul>
 <li>Enter your PayPal plan information</li>
 <li>Enter Plan Name, Plan ID (from PayPal), frequency, etc.</li>
 <li>Assign roles to members who pay through this subscription.</li>
 </ul>
-</li>
-<li>
 <p>Discord invite link (optional)</p>
-</li>
-</ol>
 <h3 id="2-role-configuration">2. Role Configuration<a class="headerlink" href="#2-role-configuration" title="Permanent link">&para;</a></h3>
 <p>Set up roles for your organization:</p>
 <p><img alt="Roles overview screen" src="../images/roles_0.png" /></p>
@@ -985,78 +954,29 @@
 <li>Some basic roles are already defined and not editable. To create custom roles, see below.</li>
 </ol>
 <p><img alt="Role creation and configuration" src="../images/roles_1.png" /></p>
-<ol>
-<li>For each role, configure:</li>
+<p>For each role, configure:</p>
+<ul>
 <li>Role name</li>
 <li>Associated permissions</li>
 <li>Upload role guide document (if applicable)</li>
-</ol>
+</ul>
 <p><img alt="Role permissions and document management" src="../images/roles_2.png" /></p>
 <p>By clicking on 'Details' in the Roles screen, you can see which permissions belong to each role.
 You can also see (end edit) which files are attached for each role. These files serve as guides.</p>
 <p>Configure permissions for different roles:</p>
-<ol>
-<li>Basic Permissions:</li>
+<p>Basic Permissions:</p>
+<ul>
 <li><code>see_members</code>: View member list</li>
 <li><code>edit_members</code>: Modify member details</li>
 <li><code>see_forum</code>: Access community forum</li>
-<li>
-<p><code>see_financials</code>: View financial reports</p>
-</li>
-<li>
+<li><code>see_financials</code>: View financial reports</li>
+</ul>
 <p>Administrative Permissions:</p>
-</li>
+<ul>
 <li><code>delete_admin</code>: Full administrative access</li>
 <li><code>delete_members</code>: Ability to delete members</li>
-</ol>
-<p><img alt="Role detail" src="../images/role_detail.png" /></p>
-<h2 id="paypal-integration">PayPal Integration<a class="headerlink" href="#paypal-integration" title="Permanent link">&para;</a></h2>
-<h3 id="1-paypal-business-account-setup">1. PayPal Business Account Setup<a class="headerlink" href="#1-paypal-business-account-setup" title="Permanent link">&para;</a></h3>
-<p>Before configuring in Not Alone:</p>
-<ol>
-<li>Create a PayPal Business account if you don't have one</li>
-<li>Navigate to PayPal Developer Dashboard</li>
-<li>Create a new app to get API credentials:</li>
-<li>Client ID</li>
-<li>Client Secret</li>
-</ol>
-<h3 id="2-create-subscription-plans">2. Create Subscription Plans<a class="headerlink" href="#2-create-subscription-plans" title="Permanent link">&para;</a></h3>
-<p>In PayPal Developer Dashboard:</p>
-<ol>
-<li>
-<p>Create subscription plans:
-   <div class="highlight"><pre><span></span><code><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>Products &gt; Create Product &gt; Create Plan
-</code></pre></div></p>
-</li>
-<li>
-<p>For each plan, note:</p>
-</li>
-<li>Plan ID</li>
-<li>Pricing details</li>
-<li>Billing cycle</li>
-</ol>
-<h2 id="webhook-configuration">Webhook Configuration<a class="headerlink" href="#webhook-configuration" title="Permanent link">&para;</a></h2>
-<h3 id="1-create-paypal-webhook">1. Create PayPal Webhook<a class="headerlink" href="#1-create-paypal-webhook" title="Permanent link">&para;</a></h3>
-<p>In PayPal Developer Dashboard:</p>
-<ol>
-<li>Navigate to Webhooks section</li>
-<li>Create new webhook:</li>
-<li>URL: <code>https://your-app-url/capture-sub</code></li>
-<li>
-<p>Events to track:</p>
-<ul>
-<li>BILLING.SUBSCRIPTION.ACTIVATED</li>
-<li>BILLING.SUBSCRIPTION.CANCELLED</li>
-<li>BILLING.SUBSCRIPTION.EXPIRED</li>
-<li>BILLING.SUBSCRIPTION.UPDATED</li>
-<li>PAYMENT.SALE.COMPLETED</li>
 </ul>
-</li>
-<li>
-<p>Note the:</p>
-</li>
-<li>Webhook ID</li>
-</ol>
+<p><img alt="Role detail" src="../images/role_detail.png" /></p>
 
 
 

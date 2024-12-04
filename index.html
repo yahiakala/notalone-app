@@ -12,7 +12,7 @@
       
       
       
-        <link rel="next" href="admin/member_management/">
+        <link rel="next" href="user/getting_started/">
       
       
       <link rel="icon" href="assets/images/favicon.png">
@@ -25,6 +25,9 @@
     
     
       <link rel="stylesheet" href="assets/stylesheets/main.6f8fc17f.min.css">
+      
+        
+        <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -53,7 +56,14 @@
   </head>
   
   
-    <body dir="ltr">
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo">
   
     
     <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
@@ -96,12 +106,48 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Welcome to NotAlone Documentation
+              Home
             
           </span>
         </div>
       </div>
     </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="m14.3 16-.7-2h-3.2l-.7 2H7.8L11 7h2l3.2 9zM20 8.69V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12zm-9.15 3.96h2.3L12 9z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: light)" data-md-color-scheme="default" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to dark mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Switch to dark mode" for="__palette_2" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="(prefers-color-scheme: dark)" data-md-color-scheme="slate" data-md-color-primary="indigo" data-md-color-accent="indigo"  aria-label="Switch to light mode"  type="radio" name="__palette" id="__palette_2">
+    
+      <label class="md-header__button md-icon" title="Switch to light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
     
     
       <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
@@ -184,7 +230,7 @@
   
     
   
-  Welcome to NotAlone Documentation
+  Home
 
       </a>
     </li>
@@ -198,46 +244,46 @@
     
     
       <li class="md-tabs__item">
-        <a href="admin/member_management/" class="md-tabs__link">
-          
-  
-  Admin
-
-        </a>
-      </li>
-    
-  
-
-      
-        
-  
-  
-  
-    
-    
-      <li class="md-tabs__item">
-        <a href="developer/css_roles/" class="md-tabs__link">
-          
-  
-  Developer
-
-        </a>
-      </li>
-    
-  
-
-      
-        
-  
-  
-  
-    
-    
-      <li class="md-tabs__item">
         <a href="user/getting_started/" class="md-tabs__link">
           
   
-  User
+  User Guide
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="admin/member_management/" class="md-tabs__link">
+          
+  
+  Administrator Guide
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="developer/getting_started/" class="md-tabs__link">
+          
+  
+  Developer Guide
 
         </a>
       </li>
@@ -310,7 +356,7 @@
           
   
   <span class="md-ellipsis">
-    Welcome to NotAlone Documentation
+    Home
   </span>
   
 
@@ -321,7 +367,7 @@
         
   
   <span class="md-ellipsis">
-    Welcome to NotAlone Documentation
+    Home
   </span>
   
 
@@ -429,7 +475,7 @@
             
   
   <span class="md-ellipsis">
-    Admin
+    User Guide
   </span>
   
 
@@ -439,7 +485,7 @@
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_2">
             <span class="md-nav__icon md-icon"></span>
-            Admin
+            User Guide
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -450,32 +496,11 @@
   
   
     <li class="md-nav__item">
-      <a href="admin/member_management/" class="md-nav__link">
+      <a href="user/getting_started/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Member Management Guide
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="admin/tenant_setup/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Tenant Setup Guide
+    Getting Started
   </span>
   
 
@@ -520,7 +545,7 @@
             
   
   <span class="md-ellipsis">
-    Developer
+    Administrator Guide
   </span>
   
 
@@ -530,7 +555,7 @@
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
-            Developer
+            Administrator Guide
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -541,11 +566,11 @@
   
   
     <li class="md-nav__item">
-      <a href="developer/css_roles/" class="md-nav__link">
+      <a href="admin/member_management/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    CSS Roles Documentation
+    Member Management
   </span>
   
 
@@ -562,11 +587,11 @@
   
   
     <li class="md-nav__item">
-      <a href="developer/general_instructions/" class="md-nav__link">
+      <a href="admin/tenant_setup/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    General Instructions
+    Tenant Setup
   </span>
   
 
@@ -583,11 +608,11 @@
   
   
     <li class="md-nav__item">
-      <a href="developer/getting_started/" class="md-nav__link">
+      <a href="admin/paypal_setup/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Getting Started Guide
+    PayPal Setup
   </span>
   
 
@@ -604,74 +629,11 @@
   
   
     <li class="md-nav__item">
-      <a href="developer/payments/" class="md-nav__link">
+      <a href="admin/discourse_setup/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Payment System Documentation
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="developer/routing/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Hash-Based Routing Documentation
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="developer/schema/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Database Schema Documentation
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="developer/skeleton_loading/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Skeleton Loading States
+    Discourse Setup
   </span>
   
 
@@ -716,7 +678,7 @@
             
   
   <span class="md-ellipsis">
-    User
+    Developer Guide
   </span>
   
 
@@ -726,7 +688,7 @@
         <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_4">
             <span class="md-nav__icon md-icon"></span>
-            User
+            Developer Guide
           </label>
           <ul class="md-nav__list" data-md-scrollfix>
             
@@ -737,11 +699,137 @@
   
   
     <li class="md-nav__item">
-      <a href="user/getting_started/" class="md-nav__link">
+      <a href="developer/getting_started/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
-    Getting Started with Not Alone
+    Getting Started
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="developer/general_instructions/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    General Instructions
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="developer/css_roles/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    CSS Roles
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="developer/payments/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Payments
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="developer/routing/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Routing
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="developer/schema/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Schema
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="developer/skeleton_loading/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Skeleton Loading
   </span>
   
 
