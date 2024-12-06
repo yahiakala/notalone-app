@@ -44,51 +44,51 @@ components:
   - event_bindings: {click: nav_click}
     layout_properties: {grid_position: 'VGTJDT,PXJVDH'}
     name: link_home
-    properties: {align: left, background: '', bold: false, border: '', col_spacing: medium, col_widths: '', font: '', font_size: null, foreground: '', icon: '', icon_align: left, italic: false, role: selected, spacing_above: small, spacing_below: small, text: Home, tooltip: '', underline: false, url: '', visible: true, wrap_on: mobile}
+    properties: {align: left, background: '', bold: false, border: '', col_spacing: medium, col_widths: '', font: '', font_size: null, foreground: '', icon: 'fa:home', icon_align: left, italic: false, role: selected, spacing_above: small, spacing_below: small, text: Home, tooltip: '', underline: false, url: '', visible: true, wrap_on: mobile}
     type: Link
   - event_bindings: {click: nav_click}
     layout_properties: {grid_position: 'OCDXSZ,QLXCGE'}
     name: link_apply
-    properties: {align: left, background: '', bold: false, border: '', col_spacing: medium, col_widths: '', font: '', font_size: null, foreground: '', icon: '', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: Apply Now, tooltip: '', underline: false, url: '', visible: false, wrap_on: mobile}
+    properties: {align: left, background: '', bold: false, border: '', col_spacing: medium, col_widths: '', font: '', font_size: null, foreground: '', icon: 'fa:hand-o-up', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: Apply Now, tooltip: '', underline: false, url: '', visible: false, wrap_on: mobile}
     type: Link
   - components: []
     event_bindings: {click: nav_click}
     layout_properties: {grid_position: 'PVDRMI,XPFOZY'}
     name: link_profile
-    properties: {align: left, background: '', bold: false, border: '', col_spacing: medium, col_widths: '', font: '', font_size: null, foreground: '', icon: '', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: Profile, tooltip: '', underline: false, url: '', visible: false, wrap_on: mobile}
+    properties: {align: left, background: '', bold: false, border: '', col_spacing: medium, col_widths: '', font: '', font_size: null, foreground: '', icon: 'fa:user', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: Profile, tooltip: '', underline: false, url: '', visible: false, wrap_on: mobile}
     type: Link
   - event_bindings: {click: nav_click}
     layout_properties: {grid_position: 'ESIECH,NMQAGT'}
     name: link_settings
-    properties: {align: left, background: '', bold: false, border: '', col_spacing: medium, col_widths: '', font: '', font_size: null, foreground: '', icon: '', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: Settings, tooltip: '', underline: false, url: '', visible: true, wrap_on: mobile}
+    properties: {align: left, background: '', bold: false, border: '', col_spacing: medium, col_widths: '', font: '', font_size: null, foreground: '', icon: 'fa:gear', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: Settings, tooltip: '', underline: false, url: '', visible: true, wrap_on: mobile}
     type: Link
   - event_bindings: {click: nav_click}
     layout_properties: {grid_position: 'VAEWZT,CGKTBU'}
     name: link_members
-    properties: {align: left, background: '', bold: false, border: '', col_spacing: medium, col_widths: '', font: '', font_size: null, foreground: '', icon: '', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: Members, tooltip: '', underline: false, url: '', visible: false, wrap_on: mobile}
+    properties: {align: left, background: '', bold: false, border: '', col_spacing: medium, col_widths: '', font: '', font_size: null, foreground: '', icon: 'fa:address-card', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: Members, tooltip: '', underline: false, url: '', visible: false, wrap_on: mobile}
     type: Link
   - components: []
     event_bindings: {click: nav_click}
     layout_properties: {grid_position: 'FXEWLL,PYXVXJ'}
     name: link_fin
-    properties: {align: left, background: '', bold: false, border: '', col_spacing: medium, col_widths: '', font: '', font_size: null, foreground: '', icon: '', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: Financials, tooltip: '', underline: false, url: '', visible: false, wrap_on: mobile}
+    properties: {align: left, background: '', bold: false, border: '', col_spacing: medium, col_widths: '', font: '', font_size: null, foreground: '', icon: 'fa:dollar', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: Financials, tooltip: '', underline: false, url: '', visible: false, wrap_on: mobile}
     type: Link
   - components: []
     event_bindings: {click: nav_click}
     layout_properties: {grid_position: 'PFCERG,VDMIUR'}
     name: link_volunteers
-    properties: {align: left, background: '', bold: false, border: '', col_spacing: medium, col_widths: '', font: '', font_size: null, foreground: '', icon: '', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: Roles, tooltip: '', underline: false, url: '', visible: false, wrap_on: mobile}
+    properties: {align: left, background: '', bold: false, border: '', col_spacing: medium, col_widths: '', font: '', font_size: null, foreground: '', icon: 'fa:users', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: Roles, tooltip: '', underline: false, url: '', visible: false, wrap_on: mobile}
     type: Link
   - components: []
     event_bindings: {click: nav_click}
     layout_properties: {grid_position: 'THDLEJ,SMVLFT'}
     name: link_admin
-    properties: {align: left, background: '', bold: false, border: '', col_spacing: medium, col_widths: '', font: '', font_size: null, foreground: '', icon: '', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: Admin, tooltip: '', underline: false, url: '', visible: false, wrap_on: mobile}
+    properties: {align: left, background: '', bold: false, border: '', col_spacing: medium, col_widths: '', font: '', font_size: null, foreground: '', icon: 'fa:gears', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: Admin, tooltip: '', underline: false, url: '', visible: false, wrap_on: mobile}
     type: Link
   - event_bindings: {click: nav_click}
     layout_properties: {grid_position: 'TRJFJI,DYZYTB'}
     name: link_reports
-    properties: {align: left, background: '', bold: false, border: '', col_spacing: medium, col_widths: '', font: '', font_size: null, foreground: '', icon: '', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: Reports, tooltip: '', underline: false, url: '', visible: false, wrap_on: mobile}
+    properties: {align: left, background: '', bold: false, border: '', col_spacing: medium, col_widths: '', font: '', font_size: null, foreground: '', icon: 'fa:file-text', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: Reports, tooltip: '', underline: false, url: '', visible: false, wrap_on: mobile}
     type: Link
   layout_properties: {slot: left-nav}
   name: cp_sidebar
