@@ -2,6 +2,7 @@
 *.pyo
 __pycache__
 .anvil-data
+.DS_Store
 *.deployment*
 /cline*
 /site*
