@@ -65,6 +65,7 @@ class Signin(SigninTemplate):
                 "login_with_email_custom",
                 self.lbl_error,
             )
+            # self.user = anvil.users.login_with_email(self.tb_email.text, self.tb_password.text)
             self.route_user()
             self.btn_signin.text = "Sign in"
             self.btn_signin.italic = False
