@@ -13,6 +13,16 @@ components:
     name: lbl_email
     properties: {align: left, background: '', bold: false, border: '', font: '', font_size: null, foreground: '', icon: '', icon_align: left, italic: false, role: null, spacing_above: small, spacing_below: small, text: Email, tooltip: '', underline: false, visible: true}
     type: Label
+  - event_bindings: {click: btn_copy_email_click}
+    layout_properties: {grid_position: 'HKINEJ,GUDGXY'}
+    name: btn_copy_email
+    properties:
+      icon: fa:copy
+      role: [soft-button, outlined-button]
+      spacing:
+        padding: [null, '14', null, '14']
+      text: ''
+    type: Button
   - data_bindings: []
     layout_properties: {grid_position: 'HKINEJ,OGGOPT'}
     name: tb_email
@@ -130,7 +140,7 @@ components:
     type: Label
   layout_properties: {grid_position: 'BNBKTE,UTASBW'}
   name: cp_basic
-  properties: {col_widths: '{"CPUQXK":10,"QWXXQK":50,"ZLOKBT":10,"GVMFKW":50,"BSAFMB":10,"RLHKRF":50,"DDZPCS":10,"OGGOPT":50}', role: outlined-card}
+  properties: {col_widths: '{"CPUQXK":10,"QWXXQK":50,"ZLOKBT":10,"GVMFKW":50,"BSAFMB":10,"RLHKRF":50,"DDZPCS":7,"OGGOPT":67,"GUDGXY":6}', role: outlined-card}
   type: ColumnPanel
 - components:
   - layout_properties: {grid_position: 'ZDFNLF,HIEVSD'}

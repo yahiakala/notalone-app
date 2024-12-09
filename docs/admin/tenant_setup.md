@@ -4,6 +4,8 @@ This guide walks you through setting up a new tenant in the Not Alone app, inclu
 
 ## Initial Setup
 
+Before setting up your tenant, you must configure [Discourse](discourse_setup.md) and [PayPal](paypal_setup.md).
+
 ### 1. Basic Information
 
 After logging in as a tenant admin, navigate to the Admin screen (`#app/admin`) and configure:
@@ -75,47 +77,3 @@ Administrative Permissions:
 
 
 ![Role detail](images/role_detail.png)
-
-## PayPal Integration
-
-### 1. PayPal Business Account Setup
-
-Before configuring in Not Alone:
-
-1. Create a PayPal Business account if you don't have one
-2. Navigate to PayPal Developer Dashboard
-3. Create a new app to get API credentials:
-    - Client ID
-    - Client Secret
-
-### 2. Create Subscription Plans
-
-In PayPal Developer Dashboard:
-
-1. Create subscription plans:
-   ```
-   Products > Create Product > Create Plan
-   ```
-
-2. For each plan, note:
-    - Plan ID
-    - Pricing details
-    - Billing cycle
-
-## Webhook Configuration
-
-### Create PayPal Webhook
-
-In PayPal Developer Dashboard:
-
-1. Navigate to Webhooks section
-2. Create new webhook:
-   - URL: `https://your-app-url/capture-sub`
-   - Events to track:
-     - BILLING.SUBSCRIPTION.ACTIVATED
-     - BILLING.SUBSCRIPTION.CANCELLED
-     - BILLING.SUBSCRIPTION.EXPIRED
-     - BILLING.SUBSCRIPTION.UPDATED
-     - PAYMENT.SALE.COMPLETED
-
-3. Note the Webhook ID

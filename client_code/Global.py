@@ -19,3 +19,4 @@ _tenanted_dict = {
 }
 
 Global = GlobalCache(_global_dict, _tenanted_dict)
+AppName = "NotAlone"

@@ -9,17 +9,7 @@ The Not Alone application uses several interconnected tables to manage users, ro
 ### Users
 Primary user account information and authentication.
 
-**Note:** Several columns in this table are obsolete and have been superseded by columns in the `usermap` table. The following columns should be considered deprecated:
-- fee
-- consent_check
-- paypal_sub_id
-- booking_link
-- payment_expiry
-- payment_status
-- roles
-- discord
-- screening_slots
-- phone
+**Note:** Several columns in this table are obsolete and have been superseded by columns in the `usermap` table.
 
 #### Columns
 - email (string): Primary identifier for users
@@ -31,18 +21,6 @@ Primary user account information and authentication.
 - remembered_logins (simpleObject): Stored login sessions
 - mfa (simpleObject): Multi-factor authentication settings
 - signed_up (datetime): Account creation timestamp
-- first_name (string): User's first name
-- last_name (string): User's last name
-- fb_url (string): Facebook profile URL
-- good_standing (boolean): User status indicator
-- tenant (link_single → tenants): Associated tenant organization
-- auth_screenings (boolean): Screening permission flag
-- auth_members (boolean): Member management permission flag
-- auth_profile (boolean): Profile management permission flag
-- vol_exempt (boolean): Volunteer exemption status
-- auth_forumchat (boolean): Forum/chat permission flag
-- auth_booking (boolean): Booking permission flag
-- auth_dev (boolean): Developer permission flag
 - email_confirmation_key (string): Email verification token
 
 ### Usermap
