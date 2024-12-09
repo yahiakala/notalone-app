@@ -5,7 +5,7 @@ from anvil import *
 from anvil_extras import routing
 from anvil_squared import utils
 
-from ..Global import Global
+from ..Global import Global, AppName
 from ._anvil_designer import SignupTemplate
 
 
@@ -46,15 +46,25 @@ class Signup(SignupTemplate):
         """Signup with email/password"""
         if self.user:
             self.route_user()
+            return
 
-        self.user = utils.signup_with_email(
-            self.tb_email,
-            self.tb_password,
-            self.tb_password_repeat,
-            "Notalone",
-            "signup_with_email_custom",
-            self.lbl_error,
-        )
+        # Disable button and show processing state
+        self.btn_signup.enabled = False
+        self.btn_signup.text = "Signing up..."
+
+        # Make server call without loading indicator
+        with anvil.server.no_loading_indicator:
+            self.user = utils.signup_with_email(
+                self.tb_email,
+                self.tb_password,
+                self.tb_password_repeat,
+                self.lbl_error,
+                AppName,
+            )
+
+        # Restore button state
+        self.btn_signup.text = "Sign up"
+        self.btn_signup.enabled = True
 
     def tb_signup_lost_focus(self, **event_args):
         """This method is called when the TextBox loses focus."""

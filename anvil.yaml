@@ -271,7 +271,7 @@ dependencies:
   version: {version_tag: v2.6.0}
 - dep_id: dep_dpwmywm5c9x8
   resolution_hints: {app_id: KDKDM3MG6IQHC2FK, name: Anvil Squared, package_name: anvil_squared}
-  version: {version_tag: v1.0.0}
+  version: {branch: master}
 metadata: {description: notalone, logo_img: 'asset:notalone-2.png', title: notalone}
 name: notalone oss
 native_deps:
@@ -293,6 +293,9 @@ runtime_options:
   version: 3
 scheduled_tasks: null
 secrets:
+  SQUARED:
+    type: secret
+    value: {HJFXN7MPSBFVFU64: jpa6SNz1UuHeR5cj9d0/OwqDbg7/UwGQsA5Udg6a8jxHFWX94uSYleBWDpNWx7ikYIEnelikg+ggy44/xJnCC4wiZW/VP9Csm1KO4ZH70TYTNYa6Qf+LVilZdfZR2SxJ0DL79syj8/9QmCp+jJLR0bSTaXzQ6mqH}
   encryption_key:
     type: key
     value: {HJFXN7MPSBFVFU64: WrOH/lPHiaFcunmkqmbXhezOdj2nCezLbvflGkkTChmtMNuaNjn2T1u5040rzvHUJxvEXcWP5HABsMMoqxf23B1Mus3uGP/LAJMwS4KhmqEXD3QMXcpmTF6GBzIqUyyWUyYIacoTiXasy2sirUtiqLWgdoT+hFo=, T4BTSIBAI26CJ3RZ: l+TpS8nkOBcBEWM1IlatDl+c+zkivrSRhSRSmkZnvHPhENEfBT2eYBdYvIqKRpjAlQ1aHpHBK55gf6kgIyEMjGVmRx6a2KfSngdFUO3NgOviO+5nzSf+lcxIb21oEhE/s8g4jJELubTwRgJzp3sLSH9GFQA4qRo=}
