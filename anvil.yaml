@@ -268,7 +268,7 @@ db_schema:
 dependencies:
 - dep_id: dep_dmhomulhrajp9w
   resolution_hints: {app_id: CVAFGUBPSRFZNPZD, name: anvil_extras, package_name: anvil_extras}
-  version: {branch: published}
+  version: {branch: master}
 - dep_id: dep_dpwmywm5c9x8
   resolution_hints: {app_id: KDKDM3MG6IQHC2FK, name: Anvil Squared, package_name: anvil_squared}
   version: {version_tag: v1.0.1}
