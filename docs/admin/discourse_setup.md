@@ -3,8 +3,13 @@
 ### Mailjet Instructions
 
 1. Go to Mailjet and get an SMTP setting for your forum
+   - For detailed instructions on setting up Mailjet SMTP, including SPF and DKIM configuration, see our [Mailjet Setup Guide](mailjet_setup.md)
 
 ### DigitalOcean Deployment
+
+Watch this video if you want to see a tutorial on how to install discourse:
+
+<iframe width="560" height="315" src="https://www.youtube.com/embed/sjFlBgSiyCY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 1. Create DigitalOcean account
 2. From Marketplace, select "Discourse"
