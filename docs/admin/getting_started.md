@@ -88,7 +88,15 @@ Set your settings for accelerated tables, user settings, and smtp settings:
 
 ![SMTP Settings](images/smtp_settings.png)
 
+Add the required data tables:
 
+![Add Data Tables](images/deployment_app_add_db.png)
+
+![Add Data Tables](images/deployment_app_add_db2.png)
+
+![Add Data Tables](images/deployment_app_add_db3.png)
+
+And sync the database schema to your source code schema.
 
 ## Additional Resources
 
