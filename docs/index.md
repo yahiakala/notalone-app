@@ -17,6 +17,8 @@ Welcome to the official documentation for NotAlone, a comprehensive platform des
 - [Tenant Setup](admin/tenant_setup.md) - Configure your organization's settings
 
 ### For Developers
+**Important:** Before proceeding with development, please complete the [Administrator Guide](admin/getting_started.md) first. Understanding the administrative setup is crucial for effective development.
+
 - [General Instructions](developer/general_instructions.md) - Development guidelines
 - [Routing](developer/routing.md) - Application routing system
 - [Schema](developer/schema.md) - Database schema and data structures
