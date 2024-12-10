@@ -80,6 +80,12 @@ Copy the startup.py file
 
 ![Startup file](images/deployment_app_startup.png)
 
+If you have configured an SMTP email,
+create a single server module and write this code to override the server callable.
+Insert your SMTP email here:
+
+![SMTP Email override](images/deployment_app_override_callable.png)
+
 Set your settings for accelerated tables, user settings, and smtp settings:
 
 ![Accelerated Tables](images/deployment_app_accel_tables.png)
