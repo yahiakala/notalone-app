@@ -289,7 +289,7 @@ runtime_options:
   client_version: '3'
   legacy_features: {__dict__: true, bootstrap3: true, class_names: true, root_container: true}
   server_spec: null
-  server_version: python3-full
+  server_version: python3-sandbox
   version: 3
 scheduled_tasks: null
 secrets:
