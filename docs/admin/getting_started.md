@@ -22,7 +22,7 @@ See [PayPal Setup](paypal_setup.md)
 
 1. Visit [anvil.works](https://anvil.works)
 2. Sign up for a free account
-3. Choose the "Free" plan (sufficient for development)
+3. Choose the "Free" plan (sufficient for development). Note that to use the full features, you will need a paid plan.
 
 ## 4. Repository Setup
 
@@ -38,6 +38,7 @@ If you plan to contribute changes back to the main project:
     - Go to your Anvil.works account and click "Clone from GitHub" under the "Create a new app" section
     - Enter the URL to your forked repo, and authenticate with your GitHub account
     - Click "Clone App"
+    - Ignore the warning about upgrading your plan.
 
 ### Option B: Clone the Repository (For Using as Is)
 
@@ -48,6 +49,7 @@ If you just want to use the app without contributing changes:
     - Click "Clone from GitHub" under the "Create a new app" section
     - Enter https://github.com/yahiakala/notalone-app
     - Click "Clone App"
+    - Ignore the warning about upgrading your plan.
 
 ### Setting up Dependencies
 
