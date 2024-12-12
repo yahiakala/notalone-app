@@ -80,6 +80,10 @@ Copy the startup.py file
 
 ![Startup file](images/deployment_app_startup.png)
 
+If you have configured an SMTP email,
+create a secret in your app called SMTP_EMAIL. Enter your email into that.
+Otherwise the app will send authentication emails from a generic email.
+
 Set your settings for accelerated tables, user settings, and smtp settings:
 
 ![Accelerated Tables](images/deployment_app_accel_tables.png)
