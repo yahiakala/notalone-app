@@ -290,4 +290,4 @@ Do you want to proceed with deletion?""",
     def btn_copy_email_click(self, **event_args):
         """This method is called when the button is clicked"""
         from anvil.js.window import navigator
-        navigator.clipboard.writeText(self.item["text"])
+        navigator.clipboard.writeText(self.tb_email.text)

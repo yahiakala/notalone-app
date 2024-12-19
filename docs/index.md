@@ -6,14 +6,19 @@ Welcome to the official documentation for NotAlone, a comprehensive platform des
 
 ### For Users
 - [Getting Started Guide](user/getting_started.md) - Learn how to use NotAlone as a member
+- [Member Management](user/member_management.md) - Learn how to manage members and applications
 - Profile management, settings, and basic features
 
 ### For Administrators
-- [Member Management](admin/member_management.md) - Learn how to manage members and applications
+- [Getting Started](admin/getting_started.md) - Initial setup and configuration
+- [PayPal Setup](admin/paypal_setup.md) - Configure payment processing
+- [Discourse Setup](admin/discourse_setup.md) - Set up community forums
+- [Mailjet Setup](admin/mailjet_setup.md) - Configure email services
 - [Tenant Setup](admin/tenant_setup.md) - Configure your organization's settings
 
 ### For Developers
-- [Getting Started](developer/getting_started.md) - Development environment setup
+**Important:** Before proceeding with development, please complete the [Administrator Guide](admin/getting_started.md) first. Understanding the administrative setup is crucial for effective development.
+
 - [General Instructions](developer/general_instructions.md) - Development guidelines
 - [Routing](developer/routing.md) - Application routing system
 - [Schema](developer/schema.md) - Database schema and data structures

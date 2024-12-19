@@ -29,13 +29,14 @@ nav:
   - Home: index.md
   - User Guide:
     - Getting Started: user/getting_started.md
+    - Member Management: user/member_management.md
   - Administrator Guide:
-    - Member Management: admin/member_management.md
-    - Tenant Setup: admin/tenant_setup.md
+    - Getting Started: admin/getting_started.md
     - PayPal Setup: admin/paypal_setup.md
     - Discourse Setup: admin/discourse_setup.md
+    - Mailjet Setup: admin/mailjet_setup.md
+    - Tenant Setup: admin/tenant_setup.md
   - Developer Guide:
-    - Getting Started: developer/getting_started.md
     - General Instructions: developer/general_instructions.md
     - CSS Roles: developer/css_roles.md
     - Payments: developer/payments.md
