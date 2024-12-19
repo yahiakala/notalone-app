@@ -1,0 +1,11 @@
+components:
+- data_bindings:
+  - {code: 'self.item[''name'']', property: text, writeback: false}
+  - {code: 'self.item[''description'']', property: tooltip, writeback: false}
+  event_bindings: {click: btn_chip_click}
+  layout_properties: {grid_position: 'CATHHN,JXSORY'}
+  name: btn_chip
+  properties: {icon: 'fa:window-close-o', icon_align: right, role: outlined-button, text: Chip}
+  type: Button
+container: {type: ColumnPanel}
+is_package: true
