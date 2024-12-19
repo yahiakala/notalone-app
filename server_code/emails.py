@@ -57,6 +57,7 @@ def email_accept_applicant(tenant, email):
 def send_test_email(tenant_id, email):
     user = anvil.users.get_user(allow_remembered=True)
     tenant, usermap, permissions = validate_user(tenant_id, user)
+    # TODO: remove refs to smtp_email, use secret
     anvil.email.send(
         to=email,
         from_address=tenant["smtp_email"] or "noreply",
