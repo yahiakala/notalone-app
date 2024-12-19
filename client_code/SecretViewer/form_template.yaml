@@ -1,0 +1,54 @@
+components:
+- components:
+  - event_bindings: {change: tb_secret_change}
+    layout_properties: {expand: true, width: 300}
+    name: tb_secret
+    properties: {enabled: false, hide_text: true, role: outlined, spacing_above: small, spacing_below: none}
+    type: TextBox
+  - event_bindings: {click: btn_view_click}
+    layout_properties: {}
+    name: btn_view
+    properties: {icon: 'fa:eye', role: filled-button, spacing_above: none, spacing_below: none, text: '', tooltip: View key}
+    type: Button
+  - event_bindings: {click: btn_edit_click}
+    layout_properties: {}
+    name: btn_edit
+    properties: {icon: 'fa:pencil', role: filled-button, spacing_above: none, spacing_below: none, text: '', tooltip: Reset key}
+    type: Button
+  - event_bindings: {click: btn_reset_click}
+    layout_properties: {}
+    name: btn_reset
+    properties: {icon: 'fa:refresh', role: filled-button, spacing_above: none, spacing_below: none, text: '', tooltip: Reset key}
+    type: Button
+  - event_bindings: {click: btn_copy_click}
+    layout_properties: {}
+    name: btn_copy
+    properties: {icon: 'fa:copy', role: filled-button, spacing_above: none, spacing_below: none, text: '', tooltip: Reset key}
+    type: Button
+  - event_bindings: {click: btn_confirm_click}
+    layout_properties: {}
+    name: btn_confirm
+    properties: {background: green, icon: 'fa:check', role: filled-button, spacing_above: none, spacing_below: none, text: '', tooltip: Reset key, visible: false}
+    type: Button
+  - event_bindings: {click: btn_cancel_click}
+    layout_properties: {}
+    name: btn_cancel
+    properties: {background: red, icon: 'fa:close', role: filled-button, spacing_above: none, spacing_below: none, text: '', tooltip: Reset key, visible: false}
+    type: Button
+  layout_properties: {grid_position: 'GCXVZQ,ZYSCVD'}
+  name: fp_secret
+  properties: {align: right, spacing_above: small, spacing_below: none, vertical_align: middle}
+  type: FlowPanel
+container:
+  properties: {spacing_above: none, spacing_below: none}
+  type: ColumnPanel
+custom_component: true
+events:
+- {default_event: true, name: reset}
+- {name: copy}
+- {name: view}
+- {name: edit}
+- {name: change}
+is_package: true
+properties:
+- {default_binding_prop: true, default_value: '', important: true, name: secret, type: string}

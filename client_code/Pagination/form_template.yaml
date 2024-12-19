@@ -1,0 +1,98 @@
+components:
+- event_bindings: {click: btn_prev_arrow_click}
+  layout_properties: {grid_position: 'SXQBFT,BIFXSP'}
+  name: btn_prev_arrow
+  properties:
+    align: right
+    font_size: 14
+    icon: fa:arrow-left
+    role: [page-button, gray-text]
+    text: Previous
+    visible: true
+  type: Button
+- components:
+  - event_bindings: {click: btn_first_click}
+    layout_properties: {}
+    name: btn_first
+    properties:
+      font_size: 14
+      role: [page-button, gray-text]
+      text: '1'
+    type: Button
+  - event_bindings: {click: btn_dots_1_click}
+    layout_properties: {}
+    name: btn_dots_1
+    properties:
+      enabled: false
+      font_size: 14
+      role: [page-button, gray-text]
+      text: '...'
+    type: Button
+  - event_bindings: {click: btn_prev_click}
+    layout_properties: {}
+    name: btn_prev
+    properties:
+      font_size: 14
+      role: [page-button, gray-text]
+      text: '4'
+    type: Button
+  - layout_properties: {}
+    name: btn_curr_page
+    properties:
+      font_size: 14
+      role: [filled-button, page-button]
+      text: '5'
+    type: Button
+  - layout_properties: {}
+    name: img_load
+    properties: {height: '30', source: _/theme/loading6.gif, visible: false}
+    type: Image
+  - event_bindings: {click: btn_next_click}
+    layout_properties: {}
+    name: btn_next
+    properties:
+      font_size: 14
+      role: [page-button, gray-text]
+      text: '6'
+    type: Button
+  - event_bindings: {click: btn_dots_2_click}
+    layout_properties: {}
+    name: btn_dots_2
+    properties:
+      enabled: false
+      font_size: 14
+      role: [page-button, gray-text]
+      text: '...'
+    type: Button
+  - event_bindings: {click: btn_last_click}
+    layout_properties: {}
+    name: btn_last
+    properties:
+      font_size: 14
+      role: [page-button, gray-text]
+      text: '100'
+    type: Button
+  layout_properties: {grid_position: 'SXQBFT,OSHDJC'}
+  name: fp_pagination
+  properties: {align: center, spacing: none, vertical_align: middle, visible: false}
+  type: FlowPanel
+- event_bindings: {click: btn_next_arrow_click}
+  layout_properties: {grid_position: 'SXQBFT,KLWXIV'}
+  name: btn_next_arrow
+  properties:
+    align: left
+    font_size: 14
+    icon: fa:arrow-right
+    icon_align: right
+    role: [page-button, gray-text]
+    text: Next
+    visible: true
+  type: Button
+container:
+  properties: {col_widths: '{"BIFXSP":10,"OSHDJC":40,"KLWXIV":10}'}
+  type: ColumnPanel
+custom_component: true
+is_package: true
+properties:
+- {default_binding_prop: true, important: true, name: data_grid, type: object}
+- {important: true, name: repeating_panel, type: object}
