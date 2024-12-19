@@ -1,8 +1,6 @@
 from anvil import *
 
 from ._anvil_designer import ChipTemplate
-
-
 class Chip(ChipTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.

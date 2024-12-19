@@ -58,10 +58,10 @@ components:
     rows_per_page: 10
     show_page_controls: false
   type: DataGrid
-- layout_properties: {grid_position: 'CJIKQP,XYXHFR'}
+- layout_properties: {grid_position: 'OXZEYU,GTLRBX'}
   name: pagination_1
   properties: {}
-  type: form:dep_yfmcrf11pl29j4:Pagination
+  type: form:Components.Pagination
 container:
   event_bindings: {show: form_show}
   properties: {col_widths: '{"GEHGAQ":50,"DASHTL":10}'}

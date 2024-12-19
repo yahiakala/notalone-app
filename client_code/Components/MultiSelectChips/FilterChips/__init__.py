@@ -1,9 +1,7 @@
 from anvil import *
 
-from ...utils import print_timestamp
+from anvil_squared.utils import print_timestamp
 from ._anvil_designer import FilterChipsTemplate
-
-
 class FilterChips(FilterChipsTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.

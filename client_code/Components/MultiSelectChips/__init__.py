@@ -1,6 +1,6 @@
 from anvil import *
 
-from ..utils import print_timestamp
+from anvil_squared.utils import print_timestamp
 from ._anvil_designer import MultiSelectChipsTemplate
 from .Chip import Chip
 from .FilterChips import FilterChips

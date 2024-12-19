@@ -2,8 +2,6 @@ from anvil import *
 from anvil.js.window import navigator
 
 from ._anvil_designer import SecretViewerTemplate
-
-
 class SecretViewer(SecretViewerTemplate):
     def __init__(self, **properties):
         # Set Form properties and Data Bindings.
