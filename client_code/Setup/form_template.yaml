@@ -77,18 +77,18 @@ components:
   properties: {icon: 'fa:info-circle', role: input-prompt, spacing_above: medium, text: Discourse Connect Secret}
   type: Label
 - event_bindings: {reset: sv_discourse_secret_reset}
-  layout_properties: {grid_position: 'TBNPMT,NILUCE'}
+  layout_properties: {grid_position: 'TBNPMT,SDKBGA'}
   name: sv_discourse_secret
   properties: {}
-  type: form:dep_yfmcrf11pl29j4:SecretViewer
+  type: form:Components.SecretViewer
 - layout_properties: {grid_position: 'IZBCBD,NAHIWQ'}
   name: lbl_discourse_api
   properties: {icon: 'fa:info-circle', role: input-prompt, spacing_above: medium, text: Discourse API Key, tooltip: This API key will be used for automatically posting welcome messages in your forum.}
   type: Label
-- layout_properties: {grid_position: 'IZBCBD,YXWODB'}
+- layout_properties: {grid_position: 'IZBCBD,PHNQBY'}
   name: sv_discourse_api
   properties: {}
-  type: form:dep_yfmcrf11pl29j4:SecretViewer
+  type: form:Components.SecretViewer
 - layout_properties: {grid_position: 'DQSKDD,YEJLHL'}
   name: lbl_title_paypal
   properties: {align: center, icon: 'fa:paypal', role: title, text: PayPal Settings}
@@ -97,26 +97,26 @@ components:
   name: lbl_paypal_client_id
   properties: {icon: 'fa:info-circle', role: input-prompt, spacing_above: medium, text: PayPal Client ID, tooltip: This API key will be used for automatically posting welcome messages in your forum.}
   type: Label
-- layout_properties: {grid_position: 'WKWROP,WEERLN'}
+- layout_properties: {grid_position: 'WKWROP,CWPNHH'}
   name: sv_paypal_client_id
   properties: {}
-  type: form:dep_yfmcrf11pl29j4:SecretViewer
+  type: form:Components.SecretViewer
 - layout_properties: {grid_position: 'FEDURM,PLXZJR'}
   name: lbl_paypal_secret
   properties: {icon: 'fa:info-circle', role: input-prompt, spacing_above: medium, text: PayPal Secret, tooltip: This API key will be used for automatically posting welcome messages in your forum.}
   type: Label
-- layout_properties: {grid_position: 'FEDURM,BDBRQE'}
+- layout_properties: {grid_position: 'FEDURM,OFRPYJ'}
   name: sv_paypal_secret
   properties: {}
-  type: form:dep_yfmcrf11pl29j4:SecretViewer
+  type: form:Components.SecretViewer
 - layout_properties: {grid_position: 'UQPFNT,IEZEYK'}
   name: lbl_webhook_id
   properties: {icon: 'fa:info-circle', role: input-prompt, spacing_above: medium, text: PayPal Webhook ID}
   type: Label
-- layout_properties: {grid_position: 'UQPFNT,RYHILR'}
+- layout_properties: {grid_position: 'UQPFNT,YETXGU'}
   name: sv_webhook_id
   properties: {}
-  type: form:dep_yfmcrf11pl29j4:SecretViewer
+  type: form:Components.SecretViewer
 - layout_properties: {grid_position: 'WXWDBR,NTYDJN'}
   name: lbl_donate_url
   properties: {icon: 'fa:info-circle', role: input-prompt, text: Donation Link, tooltip: Link for one time donations that users will see.}
@@ -179,6 +179,6 @@ components:
   type: Button
 container:
   event_bindings: {show: form_show}
-  properties: {col_widths: '{"IUQBBU":14,"NAHIWQ":15,"BAKJKP":15,"PLXZJR":15,"BDBRQE":45,"WEERLN":45,"NILUCE":45,"YXWODB":45,"UVIXIO":15,"FJXWKF":45,"QZSWXM":15,"JZLQIV":45,"NXWYID":15,"TDBVMS":45,"QAYIPQ":15,"FURJFU":45,"CGVQKS":15,"HPXGOA":45,"PJPARK":15,"FVPFTI":45,"IEZEYK":15,"RYHILR":45,"RHQCTF":15,"UBWJFD":45,"NTYDJN":15,"ZPSCKC":45}'}
+  properties: {col_widths: '{"IUQBBU":12,"NAHIWQ":15,"BAKJKP":12,"PLXZJR":12,"UVIXIO":15,"FJXWKF":45,"QZSWXM":15,"JZLQIV":45,"NXWYID":15,"TDBVMS":45,"QAYIPQ":15,"FURJFU":45,"CGVQKS":15,"HPXGOA":45,"PJPARK":15,"FVPFTI":45,"IEZEYK":12,"RHQCTF":15,"UBWJFD":45,"NTYDJN":14,"ZPSCKC":46,"SDKBGA":38,"PHNQBY":45,"CWPNHH":39,"OFRPYJ":39,"YETXGU":39}'}
   type: ColumnPanel
 is_package: true
