@@ -395,6 +395,7 @@ def update_tenant_data(tenant_id, new_dict):
         return None
     print(new_dict["name"])
     for safe_key in [
+        "email",
         "name",
         "waiver",
         "logo",

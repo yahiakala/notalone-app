@@ -61,7 +61,7 @@ components:
 - layout_properties: {grid_position: 'CJIKQP,XYXHFR'}
   name: pagination_1
   properties: {}
-  type: form:dep_yfmcrf11pl29j4:Pagination
+  type: form:dep_dpwmywm5c9x8:Pagination
 container:
   event_bindings: {show: form_show}
   properties: {col_widths: '{"GEHGAQ":50,"DASHTL":10}'}

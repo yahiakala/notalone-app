@@ -180,7 +180,7 @@ components:
   - layout_properties: {grid_position: 'CWXQYQ,LAKKTT'}
     name: msc_roles
     properties: {}
-    type: form:dep_yfmcrf11pl29j4:MultiSelectChips
+    type: form:dep_dpwmywm5c9x8:MultiSelectChips
   - components:
     - event_bindings: {click: btn_del_click}
       layout_properties: {}

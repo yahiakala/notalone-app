@@ -16,6 +16,7 @@ def notify_paid(usermap, membermap):
     <p>Regards,</p>
     <p>NotAlone App on behalf of {membermap['tenant']['name']}</p>
     """
+    # TODO: remove refs to smtp_email and use secret
     anvil.email.send(
         to=usermap["user"]["email"],
         from_address=membermap["tenant"]["smtp_email"] or "noreply",
@@ -43,6 +44,7 @@ def email_accept_applicant(tenant, email):
 
     screeners = get_users_with_permission(None, "see_members", tenant)
     screener_list = [i["user"]["email"] for i in screeners]
+    # TODO: remove refs to smtp_email and use secret
     anvil.email.send(
         to=email,
         bcc=screener_list,
@@ -57,6 +59,7 @@ def email_accept_applicant(tenant, email):
 def send_test_email(tenant_id, email):
     user = anvil.users.get_user(allow_remembered=True)
     tenant, usermap, permissions = validate_user(tenant_id, user)
+    # TODO: remove refs to smtp_email and use secret
     anvil.email.send(
         to=email,
         from_address=tenant["smtp_email"] or "noreply",
