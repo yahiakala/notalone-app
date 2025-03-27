@@ -273,6 +273,8 @@ def refresh_subscription_data(tenant_id, email):
         client_id, client_secret, membermap["paypal_sub_id"]
     )
 
+    print('Debug - printing subscription')
+    print(subscription)
     membermap["payment_status"] = subscription["status"]
 
     if "next_billing_time" in subscription["billing_info"]:
