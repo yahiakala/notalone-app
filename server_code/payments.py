@@ -272,6 +272,7 @@ def refresh_subscription_data(tenant_id, email):
     subscription = get_subscription(
         client_id, client_secret, membermap["paypal_sub_id"]
     )
+    print(subscription)
 
     membermap["payment_status"] = subscription["status"]
 
