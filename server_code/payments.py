@@ -202,7 +202,7 @@ def update_subscription(headers, body):
     plan_id = body["resource"]["plan_id"]
     plan = [i for i in usermap["tenant"]["paypal_plans"] if i["id"] == plan_id][0]
 
-    if body["resource"]["status"] == "EXPIRED":
+    if body["resource"]["status"] in ["EXPIRED", "SUSPENDED"]:
         for role in plan["roles"]:
             # TODO: Test more.
             usermap = upsert_role(usermap, "Approved")
