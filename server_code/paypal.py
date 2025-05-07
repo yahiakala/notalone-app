@@ -7,6 +7,7 @@ if (
     or "debug" in anvil.server.get_app_origin()
     or "test" in anvil.server.get_app_origin()
     or "dizzy-" in anvil.server.get_app_origin()
+    or "weird-" in anvil.server.get_app_origin()
 ):
     TOKEN_URL = "https://api-m.sandbox.paypal.com/v1/oauth2/token"
     SUBSCRIPTION_URL = "https://api-m.sandbox.paypal.com/v1/billing/subscriptions"
