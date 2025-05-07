@@ -295,10 +295,10 @@ scheduled_tasks: null
 secrets:
   SQUARED:
     type: secret
-    value: {HJFXN7MPSBFVFU64: jpa6SNz1UuHeR5cj9d0/OwqDbg7/UwGQsA5Udg6a8jxHFWX94uSYleBWDpNWx7ikYIEnelikg+ggy44/xJnCC4wiZW/VP9Csm1KO4ZH70TYTNYa6Qf+LVilZdfZR2SxJ0DL79syj8/9QmCp+jJLR0bSTaXzQ6mqH}
+    value: {GC6D6JEYRODNN3KL: s/fgMcXYmoOBSmB7uzShmxPJFEpMqo7BoShscqxV1QfT5XlQ4opEJhH7dZec597Njh7c0p6dgN+e9+Um/LpqiMFN4hbNrl4apyNE33f3fghLagvKgQ9Zmk/za01YgAKeobVMLk8BpDK+zkYARYkjwu8hw6y+ClQ=, HJFXN7MPSBFVFU64: jpa6SNz1UuHeR5cj9d0/OwqDbg7/UwGQsA5Udg6a8jxHFWX94uSYleBWDpNWx7ikYIEnelikg+ggy44/xJnCC4wiZW/VP9Csm1KO4ZH70TYTNYa6Qf+LVilZdfZR2SxJ0DL79syj8/9QmCp+jJLR0bSTaXzQ6mqH}
   encryption_key:
     type: key
-    value: {HJFXN7MPSBFVFU64: WrOH/lPHiaFcunmkqmbXhezOdj2nCezLbvflGkkTChmtMNuaNjn2T1u5040rzvHUJxvEXcWP5HABsMMoqxf23B1Mus3uGP/LAJMwS4KhmqEXD3QMXcpmTF6GBzIqUyyWUyYIacoTiXasy2sirUtiqLWgdoT+hFo=, T4BTSIBAI26CJ3RZ: l+TpS8nkOBcBEWM1IlatDl+c+zkivrSRhSRSmkZnvHPhENEfBT2eYBdYvIqKRpjAlQ1aHpHBK55gf6kgIyEMjGVmRx6a2KfSngdFUO3NgOviO+5nzSf+lcxIb21oEhE/s8g4jJELubTwRgJzp3sLSH9GFQA4qRo=}
+    value: {GC6D6JEYRODNN3KL: hSmVFQA2RPJuJvPsKgAPtEvLsrn0dIWb64ftfr4mgo9wXwlR5xNt8qcUt7zTNUAOCYTbOZ+PsVBxoui5sEZClABUgfiJyR7zZmBXbWGNJ64uo4rDFGr099Hns+DSFM61X5zU9dtTC/H6Sj0pwH5e36qBFp5WqUM=, HJFXN7MPSBFVFU64: WrOH/lPHiaFcunmkqmbXhezOdj2nCezLbvflGkkTChmtMNuaNjn2T1u5040rzvHUJxvEXcWP5HABsMMoqxf23B1Mus3uGP/LAJMwS4KhmqEXD3QMXcpmTF6GBzIqUyyWUyYIacoTiXasy2sirUtiqLWgdoT+hFo=, T4BTSIBAI26CJ3RZ: l+TpS8nkOBcBEWM1IlatDl+c+zkivrSRhSRSmkZnvHPhENEfBT2eYBdYvIqKRpjAlQ1aHpHBK55gf6kgIyEMjGVmRx6a2KfSngdFUO3NgOviO+5nzSf+lcxIb21oEhE/s8g4jJELubTwRgJzp3sLSH9GFQA4qRo=}
 services:
 - client_config: {enable_v2: true}
   server_config: {}
