@@ -184,7 +184,7 @@ db_schema:
       name: user
       target: users
       type: link_single
-    - admin_ui: {width: 200}
+    - admin_ui: {order: 1, width: 292}
       name: roles
       target: roles
       type: link_multiple
